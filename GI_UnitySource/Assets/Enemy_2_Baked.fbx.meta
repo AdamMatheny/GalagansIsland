@@ -1,0 +1,537 @@
+fileFormatVersion: 2
+guid: a0ca22c08569ce748a7f7bafe959a5a9
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: body
+    100002: //RootNode
+    100004: enemy_2_modeled:front1
+    100006: enemy_2_modeled:greasePencilFrontArtDrawPlane
+    100008: enemy_2_modeled:greasePencilFrontRenderPlane
+    100010: enemy_2_modeled:greasePencilPerspArtDrawPlane
+    100012: enemy_2_modeled:greasePencilPerspRenderPlane
+    100014: enemy_2_modeled:pCube40
+    100016: enemy_2_modeled:persp1
+    100018: enemy_2_modeled:polySurface1
+    100020: enemy_2_modeled:polySurface10
+    100022: enemy_2_modeled:polySurface11
+    100024: enemy_2_modeled:polySurface12
+    100026: enemy_2_modeled:polySurface13
+    100028: enemy_2_modeled:polySurface14
+    100030: enemy_2_modeled:polySurface15
+    100032: enemy_2_modeled:polySurface16
+    100034: enemy_2_modeled:polySurface17
+    100036: enemy_2_modeled:polySurface18
+    100038: enemy_2_modeled:polySurface19
+    100040: enemy_2_modeled:polySurface2
+    100042: enemy_2_modeled:polySurface20
+    100044: enemy_2_modeled:polySurface21
+    100046: enemy_2_modeled:polySurface22
+    100048: enemy_2_modeled:polySurface23
+    100050: enemy_2_modeled:polySurface24
+    100052: enemy_2_modeled:polySurface25
+    100054: enemy_2_modeled:polySurface26
+    100056: enemy_2_modeled:polySurface27
+    100058: enemy_2_modeled:polySurface28
+    100060: enemy_2_modeled:polySurface29
+    100062: enemy_2_modeled:polySurface3
+    100064: enemy_2_modeled:polySurface30
+    100066: enemy_2_modeled:polySurface31
+    100068: enemy_2_modeled:polySurface32
+    100070: enemy_2_modeled:polySurface33
+    100072: enemy_2_modeled:polySurface34
+    100074: enemy_2_modeled:polySurface35
+    100076: enemy_2_modeled:polySurface36
+    100078: enemy_2_modeled:polySurface37
+    100080: enemy_2_modeled:polySurface38
+    100082: enemy_2_modeled:polySurface39
+    100084: enemy_2_modeled:polySurface4
+    100086: enemy_2_modeled:polySurface40
+    100088: enemy_2_modeled:polySurface41
+    100090: enemy_2_modeled:polySurface42
+    100092: enemy_2_modeled:polySurface5
+    100094: enemy_2_modeled:polySurface6
+    100096: enemy_2_modeled:polySurface7
+    100098: enemy_2_modeled:polySurface8
+    100100: enemy_2_modeled:polySurface9
+    100102: enemy_2_modeled:top1
+    100104: L1
+    100106: L2
+    100108: L3
+    100110: L4
+    100112: L5
+    100114: L_arm_1
+    100116: L_arm_2
+    100118: L_leg
+    100120: R1
+    100122: R2
+    100124: R3
+    100126: R4
+    100128: R5
+    100130: R_arm_1
+    100132: R_arm_2
+    100134: R_leg
+    100136: yenemy:zenemy:top1
+    100138: yenemy:zenemy:top2
+    100140: yenemy:zenemy:transform1
+    100142: yenemy:zenemy:transform10
+    100144: yenemy:zenemy:transform11
+    100146: yenemy:zenemy:transform12
+    100148: yenemy:zenemy:transform13
+    100150: yenemy:zenemy:transform14
+    100152: yenemy:zenemy:transform15
+    100154: yenemy:zenemy:transform16
+    100156: yenemy:zenemy:transform17
+    100158: yenemy:zenemy:transform18
+    100160: yenemy:zenemy:transform19
+    100162: yenemy:zenemy:transform2
+    100164: yenemy:zenemy:transform20
+    100166: yenemy:zenemy:transform21
+    100168: yenemy:zenemy:transform22
+    100170: yenemy:zenemy:transform23
+    100172: yenemy:zenemy:transform24
+    100174: yenemy:zenemy:transform25
+    100176: yenemy:zenemy:transform26
+    100178: yenemy:zenemy:transform27
+    100180: yenemy:zenemy:transform28
+    100182: yenemy:zenemy:transform29
+    100184: yenemy:zenemy:transform3
+    100186: yenemy:zenemy:transform30
+    100188: yenemy:zenemy:transform31
+    100190: yenemy:zenemy:transform32
+    100192: yenemy:zenemy:transform33
+    100194: yenemy:zenemy:transform34
+    100196: yenemy:zenemy:transform35
+    100198: yenemy:zenemy:transform36
+    100200: yenemy:zenemy:transform37
+    100202: yenemy:zenemy:transform38
+    100204: yenemy:zenemy:transform39
+    100206: yenemy:zenemy:transform4
+    100208: yenemy:zenemy:transform40
+    100210: yenemy:zenemy:transform41
+    100212: yenemy:zenemy:transform42
+    100214: yenemy:zenemy:transform5
+    100216: yenemy:zenemy:transform6
+    100218: yenemy:zenemy:transform7
+    100220: yenemy:zenemy:transform8
+    100222: yenemy:zenemy:transform9
+    400000: body
+    400002: //RootNode
+    400004: enemy_2_modeled:front1
+    400006: enemy_2_modeled:greasePencilFrontArtDrawPlane
+    400008: enemy_2_modeled:greasePencilFrontRenderPlane
+    400010: enemy_2_modeled:greasePencilPerspArtDrawPlane
+    400012: enemy_2_modeled:greasePencilPerspRenderPlane
+    400014: enemy_2_modeled:pCube40
+    400016: enemy_2_modeled:persp1
+    400018: enemy_2_modeled:polySurface1
+    400020: enemy_2_modeled:polySurface10
+    400022: enemy_2_modeled:polySurface11
+    400024: enemy_2_modeled:polySurface12
+    400026: enemy_2_modeled:polySurface13
+    400028: enemy_2_modeled:polySurface14
+    400030: enemy_2_modeled:polySurface15
+    400032: enemy_2_modeled:polySurface16
+    400034: enemy_2_modeled:polySurface17
+    400036: enemy_2_modeled:polySurface18
+    400038: enemy_2_modeled:polySurface19
+    400040: enemy_2_modeled:polySurface2
+    400042: enemy_2_modeled:polySurface20
+    400044: enemy_2_modeled:polySurface21
+    400046: enemy_2_modeled:polySurface22
+    400048: enemy_2_modeled:polySurface23
+    400050: enemy_2_modeled:polySurface24
+    400052: enemy_2_modeled:polySurface25
+    400054: enemy_2_modeled:polySurface26
+    400056: enemy_2_modeled:polySurface27
+    400058: enemy_2_modeled:polySurface28
+    400060: enemy_2_modeled:polySurface29
+    400062: enemy_2_modeled:polySurface3
+    400064: enemy_2_modeled:polySurface30
+    400066: enemy_2_modeled:polySurface31
+    400068: enemy_2_modeled:polySurface32
+    400070: enemy_2_modeled:polySurface33
+    400072: enemy_2_modeled:polySurface34
+    400074: enemy_2_modeled:polySurface35
+    400076: enemy_2_modeled:polySurface36
+    400078: enemy_2_modeled:polySurface37
+    400080: enemy_2_modeled:polySurface38
+    400082: enemy_2_modeled:polySurface39
+    400084: enemy_2_modeled:polySurface4
+    400086: enemy_2_modeled:polySurface40
+    400088: enemy_2_modeled:polySurface41
+    400090: enemy_2_modeled:polySurface42
+    400092: enemy_2_modeled:polySurface5
+    400094: enemy_2_modeled:polySurface6
+    400096: enemy_2_modeled:polySurface7
+    400098: enemy_2_modeled:polySurface8
+    400100: enemy_2_modeled:polySurface9
+    400102: enemy_2_modeled:top1
+    400104: L1
+    400106: L2
+    400108: L3
+    400110: L4
+    400112: L5
+    400114: L_arm_1
+    400116: L_arm_2
+    400118: L_leg
+    400120: R1
+    400122: R2
+    400124: R3
+    400126: R4
+    400128: R5
+    400130: R_arm_1
+    400132: R_arm_2
+    400134: R_leg
+    400136: yenemy:zenemy:top1
+    400138: yenemy:zenemy:top2
+    400140: yenemy:zenemy:transform1
+    400142: yenemy:zenemy:transform10
+    400144: yenemy:zenemy:transform11
+    400146: yenemy:zenemy:transform12
+    400148: yenemy:zenemy:transform13
+    400150: yenemy:zenemy:transform14
+    400152: yenemy:zenemy:transform15
+    400154: yenemy:zenemy:transform16
+    400156: yenemy:zenemy:transform17
+    400158: yenemy:zenemy:transform18
+    400160: yenemy:zenemy:transform19
+    400162: yenemy:zenemy:transform2
+    400164: yenemy:zenemy:transform20
+    400166: yenemy:zenemy:transform21
+    400168: yenemy:zenemy:transform22
+    400170: yenemy:zenemy:transform23
+    400172: yenemy:zenemy:transform24
+    400174: yenemy:zenemy:transform25
+    400176: yenemy:zenemy:transform26
+    400178: yenemy:zenemy:transform27
+    400180: yenemy:zenemy:transform28
+    400182: yenemy:zenemy:transform29
+    400184: yenemy:zenemy:transform3
+    400186: yenemy:zenemy:transform30
+    400188: yenemy:zenemy:transform31
+    400190: yenemy:zenemy:transform32
+    400192: yenemy:zenemy:transform33
+    400194: yenemy:zenemy:transform34
+    400196: yenemy:zenemy:transform35
+    400198: yenemy:zenemy:transform36
+    400200: yenemy:zenemy:transform37
+    400202: yenemy:zenemy:transform38
+    400204: yenemy:zenemy:transform39
+    400206: yenemy:zenemy:transform4
+    400208: yenemy:zenemy:transform40
+    400210: yenemy:zenemy:transform41
+    400212: yenemy:zenemy:transform42
+    400214: yenemy:zenemy:transform5
+    400216: yenemy:zenemy:transform6
+    400218: yenemy:zenemy:transform7
+    400220: yenemy:zenemy:transform8
+    400222: yenemy:zenemy:transform9
+    4300000: yenemy:zenemy:top2
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: yenemy:zenemy:top2
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 24
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: body
+        weight: 1
+      - path: body/L1
+        weight: 1
+      - path: body/L1/L2
+        weight: 1
+      - path: body/L1/L2/L3
+        weight: 1
+      - path: body/L1/L2/L3/L4
+        weight: 1
+      - path: body/L1/L2/L3/L4/L5
+        weight: 1
+      - path: body/L_arm_1
+        weight: 1
+      - path: body/L_arm_1/L_arm_2
+        weight: 1
+      - path: body/L_leg
+        weight: 1
+      - path: body/R1
+        weight: 1
+      - path: body/R1/R2
+        weight: 1
+      - path: body/R1/R2/R3
+        weight: 1
+      - path: body/R1/R2/R3/R4
+        weight: 1
+      - path: body/R1/R2/R3/R4/R5
+        weight: 1
+      - path: body/R_arm_1
+        weight: 1
+      - path: body/R_arm_1/R_arm_2
+        weight: 1
+      - path: body/R_leg
+        weight: 1
+      - path: enemy_2_modeled:front1
+        weight: 1
+      - path: enemy_2_modeled:greasePencilFrontArtDrawPlane
+        weight: 1
+      - path: enemy_2_modeled:greasePencilFrontRenderPlane
+        weight: 1
+      - path: enemy_2_modeled:greasePencilPerspArtDrawPlane
+        weight: 1
+      - path: enemy_2_modeled:greasePencilPerspRenderPlane
+        weight: 1
+      - path: enemy_2_modeled:pCube40
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface1
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface1/yenemy:zenemy:transform42
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface2
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface2/yenemy:zenemy:transform41
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface3
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface3/yenemy:zenemy:transform40
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface4
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface4/yenemy:zenemy:transform39
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface5
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface5/yenemy:zenemy:transform38
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface6
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface6/yenemy:zenemy:transform37
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface7
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface7/yenemy:zenemy:transform36
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface8
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface8/yenemy:zenemy:transform35
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface9
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface9/yenemy:zenemy:transform34
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface10
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface10/yenemy:zenemy:transform33
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface11
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface11/yenemy:zenemy:transform32
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface12
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface12/yenemy:zenemy:transform31
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface13
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface13/yenemy:zenemy:transform30
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface14
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface14/yenemy:zenemy:transform29
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface15
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface15/yenemy:zenemy:transform28
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface16
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface16/yenemy:zenemy:transform27
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface17
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface17/yenemy:zenemy:transform26
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface18
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface18/yenemy:zenemy:transform25
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface19
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface19/yenemy:zenemy:transform24
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface20
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface20/yenemy:zenemy:transform23
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface21
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface21/yenemy:zenemy:transform22
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface22
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface22/yenemy:zenemy:transform21
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface23
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface23/yenemy:zenemy:transform20
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface24
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface24/yenemy:zenemy:transform19
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface25
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface25/yenemy:zenemy:transform18
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface26
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface26/yenemy:zenemy:transform17
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface27
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface27/yenemy:zenemy:transform16
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface28
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface28/yenemy:zenemy:transform15
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface29
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface29/yenemy:zenemy:transform14
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface30
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface30/yenemy:zenemy:transform13
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface31
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface31/yenemy:zenemy:transform12
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface32
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface32/yenemy:zenemy:transform11
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface33
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface33/yenemy:zenemy:transform10
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface34
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface34/yenemy:zenemy:transform9
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface35
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface35/yenemy:zenemy:transform8
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface36
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface36/yenemy:zenemy:transform7
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface37
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface37/yenemy:zenemy:transform6
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface38
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface38/yenemy:zenemy:transform5
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface39
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface39/yenemy:zenemy:transform4
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface40
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface40/yenemy:zenemy:transform3
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface41
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface41/yenemy:zenemy:transform2
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface42
+        weight: 1
+      - path: enemy_2_modeled:pCube40/enemy_2_modeled:polySurface42/yenemy:zenemy:transform1
+        weight: 1
+      - path: enemy_2_modeled:persp1
+        weight: 1
+      - path: enemy_2_modeled:top1
+        weight: 1
+      - path: yenemy:zenemy:top1
+        weight: 1
+      - path: yenemy:zenemy:top2
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 

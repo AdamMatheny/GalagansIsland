@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 8847ee5a0581bc745aa2ae10b8823691
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - targetStateListener: {fileID: 11400000, guid: 904257f2b30429c4daa4d33e78410378,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

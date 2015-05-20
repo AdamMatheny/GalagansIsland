@@ -1,0 +1,145 @@
+fileFormatVersion: 2
+guid: d4c76891e7ff3eb4d87572ab477a764e
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: body
+    100002: //RootNode
+    100004: il1
+    100006: il2
+    100008: irl1
+    100010: irl2
+    100012: l1
+    100014: l2
+    100016: l3
+    100018: pCube108
+    100020: r1
+    100022: r2
+    100024: r3
+    100026: yenemy:zenemy:top1
+    400000: body
+    400002: //RootNode
+    400004: il1
+    400006: il2
+    400008: irl1
+    400010: irl2
+    400012: l1
+    400014: l2
+    400016: l3
+    400018: pCube108
+    400020: r1
+    400022: r2
+    400024: r3
+    400026: yenemy:zenemy:top1
+    4300000: pCube108
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: pCube108
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 28
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: body
+        weight: 1
+      - path: body/il1
+        weight: 1
+      - path: body/il1/il2
+        weight: 1
+      - path: body/irl1
+        weight: 1
+      - path: body/irl1/irl2
+        weight: 1
+      - path: body/l1
+        weight: 1
+      - path: body/l1/l2
+        weight: 1
+      - path: body/l1/l2/l3
+        weight: 1
+      - path: body/r1
+        weight: 1
+      - path: body/r1/r2
+        weight: 1
+      - path: body/r1/r2/r3
+        weight: 1
+      - path: pCube108
+        weight: 1
+      - path: yenemy:zenemy:top1
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 

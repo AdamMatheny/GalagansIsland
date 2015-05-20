@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: e0f58af9f323e49df9f466ac78bc79c1
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - playerRespawnPoint: {instanceID: 0}
+  - bulletPrefab: {fileID: 193636, guid: 3ba1360603868624eaca944ac087cf95, type: 2}
+  - bulletSpawnTransform: {fileID: 493636, guid: 3ba1360603868624eaca944ac087cf95,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
