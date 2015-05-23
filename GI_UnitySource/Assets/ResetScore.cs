@@ -100,6 +100,9 @@ public class ResetScore : MonoBehaviour
 	public void ConfirmScoreReset()
 	{
 		PlayerPrefs.SetInt("highscore", 0);
+		PlayerPrefs.SetInt("AsteroidCount", 0);
+		PlayerPrefs.SetInt("AsteroidRequiredCount", 100);
+		PlayerPrefs.SetInt("SpawnLaserFist",0);
 		mAskingForConfirm = false;
 		mGUIFocusControl.mMainMenuButtonFocus = 2;
 

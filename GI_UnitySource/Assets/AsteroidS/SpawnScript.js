@@ -7,11 +7,13 @@ public var enemy : GameObject;
 public var spawnTime : float = 2;
 
 
-function Update(){
+function Update()
+{
 
 	spawnTime -= Time.timeScale;
 	
-	if(spawnTime <= 0){
+	if(spawnTime <= 0)
+	{
 	
 		addEnemy();
 		spawnTime = Random.value * 200;
@@ -19,7 +21,8 @@ function Update(){
 }
 
 // New function to spawn an enemy
-function addEnemy() {  
+function addEnemy() 
+{  
     // Variables to store the X position of the spawn object
     // See image below
     var x1 = transform.position.x - GetComponent.<Renderer>().bounds.size.x/2;

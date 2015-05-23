@@ -94,7 +94,7 @@ public class EnemyShipAI : MonoBehaviour
 	public Transform mTowPoint;
 	//Prefab for ship to spawn set in-editor `Adam
 	[SerializeField] GameObject mCapturedShip;
-	GameObject mShipInTow;
+	public GameObject mShipInTow;
 
 	//For enemies that we just want to fly across the screen and then disappear `Adam
 	public bool mLimitedLifespan = false;
@@ -104,7 +104,7 @@ public class EnemyShipAI : MonoBehaviour
 	public float mMinimumFirstAttackTime = 0f;
 
 	//For making the Grabbers invincible while attacking `Adam
-	bool mInvincible = false;
+	public bool mInvincible = false;
 
 
 	//For controlling animation ~Adam
@@ -157,9 +157,18 @@ public class EnemyShipAI : MonoBehaviour
 		}
 
 		//Make the Grabber not invincible while not attacking or towing
-		if(mGrabber && !mShipInTow)
+		if(mGrabber && !mShipInTow && mCurrentAIState != AIState.Attacking)
 		{
 			mInvincible = false;
+			GetComponentInChildren<Renderer>().material.color = Color.white;
+		}
+
+		if(mInvincible)
+		{
+			GetComponentInChildren<Renderer>().material.color = Color.magenta;
+		}
+		else
+		{
 			GetComponentInChildren<Renderer>().material.color = Color.white;
 		}
 
@@ -402,11 +411,11 @@ public class EnemyShipAI : MonoBehaviour
 		toPlayer.Normalize();
 
 		//Make a grabber enemy release its captured ship once it returns to its position in the swarm
-		if(mShipInTow != null)
-		{
-			mShipInTow.GetComponent<CapturedShip>().mInTow = false;
-			mShipInTow = null;
-		}
+//		if(mShipInTow != null)
+//		{
+//			mShipInTow.GetComponent<CapturedShip>().mInTow = false;
+//			mShipInTow = null;
+//		}
 
 		//Switch to attack mode if the attack timer has run out
 		if (mAttackFrequencyTimer <= 0.0f && (mMinimumFirstAttackTime < Time.time))
@@ -415,6 +424,8 @@ public class EnemyShipAI : MonoBehaviour
 			mSwitchCoolDown = mAttackLengthTimerDefault;
 		}
 		mRetreating = false;
+
+		mInvincible = false;
 	}//END of Swarm()
 
 	void AttackPlayer()
@@ -444,7 +455,6 @@ public class EnemyShipAI : MonoBehaviour
 		if(mGrabber && !mPlayer.GetComponent<PlayerShipController>().mShipRecovered && !mPlayer.GetComponent<PlayerShipController>().mShipStolen )
 		{
 			mInvincible = true;
-			GetComponentInChildren<Renderer>().material.color = Color.magenta;
 		}
 		else if (mGrabber && (mPlayer.GetComponent<PlayerShipController>().mShipRecovered || mPlayer.GetComponent<PlayerShipController>().mShipStolen) )
 		{
@@ -603,6 +613,11 @@ public class EnemyShipAI : MonoBehaviour
 
 	public void EnemyShipDie()
 	{
+		if(mShipInTow != null)
+		{
+			mShipInTow.GetComponent<CapturedShip>().mInTow = false;
+			mShipInTow = null;
+		}
 
 		if (Random.value * 100 <= secondaryExplosionChance) 
 		{
@@ -618,7 +633,6 @@ public class EnemyShipAI : MonoBehaviour
 		}
 		else 
 		{
-
 			GameObject deathParticles = Instantiate(mDeathEffect, transform.position + new Vector3(0f, 0f, -1f), Quaternion.identity) as GameObject;
 		}
 

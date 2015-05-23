@@ -3,22 +3,24 @@ using System.Collections;
 
 public class AsteroidCollision : MonoBehaviour 
 {
-
-	public GameObject pieceA;
-	public GameObject pieceB;
-	public GameObject pieceC;
-	public GameObject pieceD;
-	public GameObject pieceE;
-	public GameObject pieceF;
-	public GameObject pieceG;
-
+	
+	public GameObject[] mPieces;
 
 	public GameObject mLaserFistEmblem;
 	public GameObject mBigBlastEmblem;
 
+
 	void OnTriggerEnter(Collider other)
 	{
-		
+		if(other.gameObject.GetComponent<PlayerShipController>() != null)
+		{
+			if(transform.parent.transform.position.z < -2.63f && FindObjectOfType<ScoreManager>() != null)
+			{
+				FindObjectOfType<ScoreManager>().mPlayerSafeTime = 0.1f;
+			}
+
+		}
+
 		if (other.gameObject.GetComponent<PlayerBulletController> () != null) 
 		{
 			AsteroidDeath();
@@ -26,41 +28,45 @@ public class AsteroidCollision : MonoBehaviour
 		}
 	}
 
+	void OnTriggerStay(Collider other)
+	{
+		if(other.gameObject.GetComponent<PlayerShipController>() != null)
+		{
+			if(transform.parent.transform.position.z < -2.63f && FindObjectOfType<ScoreManager>() != null)
+			{
+				FindObjectOfType<ScoreManager>().mPlayerSafeTime = 0.1f;
+			}
+			
+		}
+		
+
+	}
+
 	public void AsteroidDeath()
 	{
 		//Update the Asteroid death count
 		PlayerPrefs.SetInt("AsteroidCount", PlayerPrefs.GetInt("AsteroidCount") + 1);
 
-		GameObject newAsteroidBit = Instantiate(pieceA, transform.position, Quaternion.identity) as GameObject;
-		newAsteroidBit.transform.localScale = transform.parent.localScale;
-		newAsteroidBit.transform.localScale = transform.parent.localScale;
-		newAsteroidBit = Instantiate(pieceB, transform.position, Quaternion.identity) as GameObject;
-		newAsteroidBit.transform.localScale = transform.parent.localScale;
-		newAsteroidBit = Instantiate(pieceC, transform.position, Quaternion.identity) as GameObject;
-		newAsteroidBit.transform.localScale = transform.parent.localScale;
-		newAsteroidBit = Instantiate(pieceD, transform.position, Quaternion.identity) as GameObject;
-		newAsteroidBit.transform.localScale = transform.parent.localScale;
-		newAsteroidBit = Instantiate(pieceE, transform.position, Quaternion.identity) as GameObject;
-		newAsteroidBit.transform.localScale = transform.parent.localScale;
-		newAsteroidBit = Instantiate(pieceF, transform.position, Quaternion.identity) as GameObject;
-		newAsteroidBit.transform.localScale = transform.parent.localScale;
-		newAsteroidBit = Instantiate(pieceD, transform.position, Quaternion.identity) as GameObject;
-		newAsteroidBit.transform.localScale = transform.parent.localScale;
+		for (int i = 0; i < mPieces.Length; i ++)
+		{
+			GameObject newAsteroidBit = Instantiate(mPieces[i], transform.position, Quaternion.identity) as GameObject;
+			newAsteroidBit.transform.localScale = transform.parent.localScale;
+			newAsteroidBit.transform.localScale = transform.parent.localScale;
+			if(transform.parent.transform.position.z > -2.63f)
+			{
+				newAsteroidBit.GetComponent<Renderer>().material.color = Color.gray;
+			}
 
-		newAsteroidBit = Instantiate(pieceA, transform.position, Quaternion.identity) as GameObject;
-		newAsteroidBit.transform.localScale = transform.parent.localScale;
-		newAsteroidBit = Instantiate(pieceB, transform.position, Quaternion.identity) as GameObject;
-		newAsteroidBit.transform.localScale = transform.parent.localScale;
-		newAsteroidBit = Instantiate(pieceC, transform.position, Quaternion.identity) as GameObject;
-		newAsteroidBit.transform.localScale = transform.parent.localScale;
-		newAsteroidBit = Instantiate(pieceD, transform.position, Quaternion.identity) as GameObject;
-		newAsteroidBit.transform.localScale = transform.parent.localScale;
-		newAsteroidBit = Instantiate(pieceE, transform.position, Quaternion.identity) as GameObject;
-		newAsteroidBit.transform.localScale = transform.parent.localScale;
-		newAsteroidBit = Instantiate(pieceF, transform.position, Quaternion.identity) as GameObject;
-		newAsteroidBit.transform.localScale = transform.parent.localScale;
-		newAsteroidBit = Instantiate(pieceD, transform.position, Quaternion.identity) as GameObject;
-		newAsteroidBit.transform.localScale = transform.parent.localScale;
+
+			newAsteroidBit = Instantiate(mPieces[mPieces.Length-(i+1)], transform.position, Quaternion.identity) as GameObject;
+			newAsteroidBit.transform.localScale = transform.parent.localScale;
+			newAsteroidBit.transform.localScale = transform.parent.localScale;
+			if(transform.parent.transform.position.z > -2.63f)
+			{
+				newAsteroidBit.GetComponent<Renderer>().material.color = Color.gray;
+			}
+		}
+
 
 		//float spawnChance = Random.Range(1,1000);
 		//if(spawnChance == 777)

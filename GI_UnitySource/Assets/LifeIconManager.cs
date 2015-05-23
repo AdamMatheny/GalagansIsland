@@ -22,11 +22,13 @@ public class LifeIconManager : MonoBehaviour
 		{
 			if(mScoreManager.mLivesRemaining >= mIconNumber)
 			{
-				GetComponent<Image>().enabled = true;
+				//GetComponent<Image>().enabled = true;
+				GetComponent<Animator>().SetBool("LifeLost", false);
 			}
 			else
 			{
-				GetComponent<Image>().enabled = false;
+				//GetComponent<Image>().enabled = false;
+				GetComponent<Animator>().SetBool("LifeLost", true);
 			}
 		}
 		else

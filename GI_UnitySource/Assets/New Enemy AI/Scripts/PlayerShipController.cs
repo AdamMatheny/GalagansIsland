@@ -81,7 +81,7 @@ public class PlayerShipController : MonoBehaviour
 
 	//For deleting duplicate ships when we change levels ~Adam
 	public int mShipCreationLevel;
-	[SerializeField] private bool mToggleFireOn = false;
+	public bool mToggleFireOn = true;
 	
 	//For tracking where the ship was last frame so we can see how much/in what direction its moving ~Adam
 	public Vector3 mLastFramePosition;
@@ -97,6 +97,12 @@ public class PlayerShipController : MonoBehaviour
 	//For Super Screen-Wiper powerup ~Adam
 	public GameObject mLaserFist;
 	public GameObject mBigBlast;
+
+
+
+	//For making the ship flash when hit
+	public GameObject mMainShipHitSprite;
+	public GameObject mSecondShipHitSprite;
 
 	// Use this for initialization
 	void Start () 
@@ -134,14 +140,16 @@ public class PlayerShipController : MonoBehaviour
 		
 		if (cheats) {
 			
-			if(Input.GetKeyDown(KeyCode.Q)){
-				
+			if(Input.GetKeyDown(KeyCode.Q))
+			{
 				Application.LoadLevel(Application.loadedLevel + 1);
+				mShipStolen = false;
 			}
 			
-			if(Input.GetKeyDown(KeyCode.R)){
-				
+			if(Input.GetKeyDown(KeyCode.R))
+			{
 				Application.LoadLevel(Application.loadedLevel - 1);
+				mShipStolen = false;
 			}
 		}
 		
@@ -385,17 +393,20 @@ public class PlayerShipController : MonoBehaviour
 			mToggleFireOn = false;
 			mMainShip.GetComponent<Renderer>().material.color = Color.Lerp(mMainShip.GetComponent<Renderer>().material.color,Color.red,0.05f);
 			mSecondShip.GetComponent<Renderer>().material.color = Color.Lerp(mSecondShip.GetComponent<Renderer>().material.color,Color.red,0.05f);
+			Debug.Log("Ship should be red");
 		}
 		else if (isOverheated || heatLevel/maxHeatLevel > 0.9f) 
 		{
 			mMainShip.GetComponent<Renderer>().material.color = Color.Lerp(mMainShip.GetComponent<Renderer>().material.color,Color.yellow,0.1f);
 			mSecondShip.GetComponent<Renderer>().material.color = Color.Lerp(mSecondShip.GetComponent<Renderer>().material.color,Color.yellow,0.1f);
+			Debug.Log("Ship should be yellow");
 		}
 
 		else
 		{
 			mMainShip.GetComponent<Renderer>().material.color = Color.Lerp(mMainShip.GetComponent<Renderer>().material.color,Color.white,0.1f);
 			mSecondShip.GetComponent<Renderer>().material.color = Color.Lerp(mSecondShip.GetComponent<Renderer>().material.color,Color.white,0.1f);
+			Debug.Log("Ship should be white");
 		}
 
 		//firing bullets
@@ -602,9 +613,9 @@ public class PlayerShipController : MonoBehaviour
 		{
 			transform.position = new Vector3(20f, transform.position.y, transform.position.z);
 		}
-		if(transform.position.y < -33f)
+		if(transform.position.y < -31f)
 		{
-			transform.position = new Vector3(transform.position.x, -33f, transform.position.z);
+			transform.position = new Vector3(transform.position.x, -31f, transform.position.z);
 		}
 		if (transform.position.y > 23f)
 		{

@@ -26,6 +26,10 @@ public class ScoreManager : MonoBehaviour
 	int mShieldInterval = 300;
 	[SerializeField] private GameObject mShieldEmblem;
 
+	//For the UI of showing a meter depicting tim until next powerup
+	[SerializeField] private Image mPowerUpMeter;
+	[SerializeField] private GameObject mPowerUpMeterBack;
+
 	public float mPlayerSafeTime = 0f;
 	// Use this for initialization
 	[SerializeField] private GameObject mPlayerAvatar;
@@ -46,6 +50,7 @@ public class ScoreManager : MonoBehaviour
 	//For using the new UI system so we can use an image for a font ~Adam
 	public Text mLevelInfoText;
 	public Text mHighScoreText;
+
 
 	void StoreHighscore(int newHighscore)
 	{
@@ -134,20 +139,35 @@ public class ScoreManager : MonoBehaviour
 //			mExtraLifeScore += mExtraLifeInteraval;
 //		}
 
+		if(mPowerUpScore < mShieldScore)
+		{
+			float barAdjust = 710.9f * (mPowerUpInterval-(mPowerUpScore-mScore))/mPowerUpInterval;
+			//Debug.Log (mPowerUpMeter.rectTransform.sizeDelta);
+			mPowerUpMeter.rectTransform.sizeDelta = new Vector2( barAdjust, mPowerUpMeter.rectTransform.sizeDelta.y); 
+			//mPowerUpMeter.rectTransform.rect = new Rect(mPowerUpMeter.rectTransform.rect.x, mPowerUpMeter.rectTransform.rect.y, barAdjust, mPowerUpMeter.rectTransform.rect.height);
+		}
+		else
+		{
+			float barAdjust = 710.9f * (mShieldInterval-(mShieldScore-mScore))/mShieldInterval;
+		//	Debug.Log (mPowerUpMeter.rectTransform.sizeDelta);
+			mPowerUpMeter.rectTransform.sizeDelta = new Vector2( barAdjust, mPowerUpMeter.rectTransform.sizeDelta.y); 
+		}
 		//Spawn a triple bullet power up every 500 kills (assuming 1 point per kill) ~Adam
 		if(mScore >= mPowerUpScore)
 		{
 			float spawnXPos = Random.Range(-18f,18f);
-			float spawnyPos = Random.Range(-25f,23f);
+			float spawnyPos = Random.Range(-17f,23f);
 			Instantiate(mTripleBulletEmblem, new Vector3(spawnXPos, spawnyPos, -2f), Quaternion.identity);
+			mPowerUpMeterBack.GetComponent<Animator>().Play("PowerPointMeterFlash_Anim");
 			mPowerUpScore += mPowerUpInterval;
 		}
 		//Spawn a shield power up every 300 kills (assuming 1 point per kill) ~Adam
 		if(mScore >= mShieldScore)
 		{
 			float spawnXPos = Random.Range(-18f,18f);
-			float spawnyPos = Random.Range(-25f,23f);
+			float spawnyPos = Random.Range(-17f,23f);
 			Instantiate(mShieldEmblem, new Vector3(spawnXPos, spawnyPos, -2f), Quaternion.identity);
+			mPowerUpMeterBack.GetComponent<Animator>().Play("PowerPointMeterFlash_Anim");
 			mShieldScore += mShieldInterval;
 		}
 
@@ -163,13 +183,16 @@ public class ScoreManager : MonoBehaviour
 		{
 			if(mPlayerSafeTime > 0)
 			{
-				mPlayerAvatar.GetComponent<PlayerShipController>().mMainShip.GetComponent<Renderer>().material.color = Color.gray;
-				mPlayerAvatar.GetComponent<PlayerShipController>().mSecondShip.GetComponent<Renderer>().material.color = Color.gray;
+				mPlayerAvatar.GetComponent<PlayerShipController>().mMainShipHitSprite.SetActive(true);
+				if(mPlayerAvatar.GetComponent<PlayerShipController>().mShipRecovered)
+				{
+					mPlayerAvatar.GetComponent<PlayerShipController>().mSecondShipHitSprite.SetActive(true);
+				}
 			}
 			else
 			{
-//				mPlayerAvatar.GetComponent<PlayerShipController>().mMainShip.GetComponent<Renderer>().material.color = Color.white;
-//				mPlayerAvatar.GetComponent<PlayerShipController>().mSecondShip.GetComponent<Renderer>().material.color = Color.white;
+				mPlayerAvatar.GetComponent<PlayerShipController>().mMainShipHitSprite.SetActive(false);
+				mPlayerAvatar.GetComponent<PlayerShipController>().mSecondShipHitSprite.SetActive(false);
 			}
 		}
 

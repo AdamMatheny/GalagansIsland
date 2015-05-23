@@ -71,6 +71,7 @@ public class LevelKillCounter : MonoBehaviour
 			{
 				FindObjectOfType<PlayerShipController>().mShipStolen = false;
 				Application.LoadLevel(Application.loadedLevel+1);
+				FindObjectOfType<PlayerShipController>().mShipStolen = false;
 			}
 		}
 

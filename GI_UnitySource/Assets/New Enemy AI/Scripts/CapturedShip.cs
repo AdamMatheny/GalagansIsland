@@ -28,7 +28,10 @@ public class CapturedShip : MonoBehaviour
 	void Start () 
 	{
 		mPlayer = FindObjectOfType<PlayerShipController>();
-
+		if(mPlayer != null)
+		{
+			mPlayer.mShipStolen = true;
+		}
 		//Randomly decide the direction the ship will move upon being released
 		mMovingRight = (Random.value < 0.5);
 
@@ -43,6 +46,14 @@ public class CapturedShip : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		if(mPlayer == null)
+		{
+			mPlayer = FindObjectOfType<PlayerShipController>();
+			if(mPlayer != null)
+			{
+				mPlayer.mShipStolen = true;
+			}
+		}
 		//Being towed away by the grabbing enemy
 		if(mGrabbingEnemy != null && mInTow == true)
 		{
@@ -103,7 +114,7 @@ public class CapturedShip : MonoBehaviour
 		//Get destroyed when colliding with a bullet
 		//Invulnerable while still being towed around
 		//Upon destruction, the player is awarded with a second ship that stays attached to their main ship, enabling them to fire double the amount of projectiles, and is destroyed in the place of losing a life the next time the player is hit
-		if (other.gameObject.tag == "Player Bullet" && (!mInTow || mGrabbingEnemy == null) )
+		if (other.gameObject.tag == "Player Bullet" && (!mInTow || mGrabbingEnemy == null || !mGrabbingEnemy.mInvincible) )
 		{
 			//Create a particle death effect
 			Instantiate(mDeathEffect, transform.position, Quaternion.identity);

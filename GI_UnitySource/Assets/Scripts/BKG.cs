@@ -15,9 +15,10 @@ public class BKG : MonoBehaviour
 	float mRenderOffest = 0f;
 
 	//For making the scrolling persist between levels ~Adam
-	ScoreManager mScoreManager;
+	[SerializeField] private ScoreManager mScoreManager;
 	[SerializeField] private bool mCheckLastOffset = true;
 	[SerializeField] private bool mFadeAway = false;
+	[SerializeField] private bool mFirstOfKind = false;
 
 	//For setting how far the background can scroll horizontally ~Adam
 	[SerializeField] private float mXMin;
@@ -55,12 +56,23 @@ public class BKG : MonoBehaviour
 		{
 			mRenderOffest = mScoreManager.mBackgroundOffset;
 			transform.position = new Vector3(mScoreManager.mBackgroundPosition.x, mScoreManager.mBackgroundPosition.y, transform.position.z);
+			desiredPosition = transform.position;
+		}
+		if(mFirstOfKind)
+		{
+			mRenderOffest = 0f;
+			//mScoreManager.mBackgroundOffset = 0f;
 		}
     }
 
     // Update is called once per frame
     void Update()
     {
+		if(mScoreManager == null)
+		{
+			mScoreManager = FindObjectOfType<ScoreManager>();
+		}
+
 		if(mFadeAway)
 		{
 			GetComponent<Renderer>().material.color = Color.Lerp(GetComponent<Renderer>().material.color, new Color(0f,0f,1f,0f), 0.01f);
@@ -97,9 +109,16 @@ public class BKG : MonoBehaviour
 
 		GetComponent<Renderer>().material.SetTextureOffset("_MainTex", new Vector2(0, mRenderOffest));
         
-		mScoreManager.mBackgroundOffset = mRenderOffest;
-		mScoreManager.mBackgroundPosition = transform.position;
+	}
 
+	void LateUpdate()
+	{
+		if(!mFadeAway)
+		{
+			mScoreManager.mBackgroundOffset = mRenderOffest;
+			mScoreManager.mBackgroundPosition = transform.position;
+		}
+	//	Debug.Log("Updating Score Manager background position.");
 		if(transform.position.x > mXMax)
 		{
 			transform.position = new Vector3(mXMax, transform.position.y, transform.position.z);
@@ -108,5 +127,6 @@ public class BKG : MonoBehaviour
 		{
 			transform.position = new Vector3(mXMin, transform.position.y, transform.position.z);
 		}
+
 	}
 }
