@@ -55,7 +55,7 @@ public class PlayerShipController : MonoBehaviour
 	public bool isOverheated = false;
 	public float heatLevel = 0f;
 	public float mBaseHeatMax = 60f;
-	[SerializeField] private float maxHeatLevel;
+	public float maxHeatLevel;
 	[SerializeField] private Texture2D mOverheatTimerTex;
 	[SerializeField] private Texture2D mOverheatWarningTex;
 
@@ -393,20 +393,17 @@ public class PlayerShipController : MonoBehaviour
 			mToggleFireOn = false;
 			mMainShip.GetComponent<Renderer>().material.color = Color.Lerp(mMainShip.GetComponent<Renderer>().material.color,Color.red,0.05f);
 			mSecondShip.GetComponent<Renderer>().material.color = Color.Lerp(mSecondShip.GetComponent<Renderer>().material.color,Color.red,0.05f);
-			Debug.Log("Ship should be red");
 		}
-		else if (isOverheated || heatLevel/maxHeatLevel > 0.9f) 
+		else if (heatLevel/maxHeatLevel > 0.9f) 
 		{
 			mMainShip.GetComponent<Renderer>().material.color = Color.Lerp(mMainShip.GetComponent<Renderer>().material.color,Color.yellow,0.1f);
 			mSecondShip.GetComponent<Renderer>().material.color = Color.Lerp(mSecondShip.GetComponent<Renderer>().material.color,Color.yellow,0.1f);
-			Debug.Log("Ship should be yellow");
 		}
 
 		else
 		{
 			mMainShip.GetComponent<Renderer>().material.color = Color.Lerp(mMainShip.GetComponent<Renderer>().material.color,Color.white,0.1f);
 			mSecondShip.GetComponent<Renderer>().material.color = Color.Lerp(mSecondShip.GetComponent<Renderer>().material.color,Color.white,0.1f);
-			Debug.Log("Ship should be white");
 		}
 
 		//firing bullets
@@ -469,11 +466,18 @@ public class PlayerShipController : MonoBehaviour
 					//Reset the timer to fire bullets.  The later the level, the smaller the time between shots
 					if(mSpinning == 0)
 					{
-						mBulletFireTime = Time.time + bulletShootSpeed - (0.15f / 25f * Application.loadedLevel);
+						if(Application.loadedLevelName != "Credits")
+						{
+							mBulletFireTime = Time.time + bulletShootSpeed - (0.15f / 25f * Application.loadedLevel);
+						}
+						else
+						{
+							mBulletFireTime = Time.time + (bulletShootSpeed - (0.15f / 25f * 15f));
+						}
 					}
 					else
 					{
-						mBulletFireTime = Time.time + (bulletShootSpeed - (0.15f / 25f * Application.loadedLevel))/3f;
+							mBulletFireTime = Time.time + (bulletShootSpeed - (0.15f / 25f * Application.loadedLevel))/3f;
 					}
 				}
 			}
@@ -490,7 +494,7 @@ public class PlayerShipController : MonoBehaviour
 				}
 				else
 				{
-					heatLevel -= Time.deltaTime * 2f;
+					heatLevel -= Time.deltaTime * 3f;
 				}
 			}
 		}
@@ -641,6 +645,7 @@ public class PlayerShipController : MonoBehaviour
 	
 	void OnGUI()
 	{
+		//For the spread fire timer that follows the ship -Adam
 		if(mThreeBullet)
 		{
 			Vector3 screenPos = Camera.main.WorldToScreenPoint(this.transform.position);
@@ -669,28 +674,30 @@ public class PlayerShipController : MonoBehaviour
 //			GUI.DrawTexture(new Rect(screenPos.x-Screen.width*0.016f, Screen.height-screenPos.y+Screen.height*0.027f, Screen.width*0.0008f*30+Screen.width*0.008f, Screen.height*0.012f),mBulletTimerTubeTex); 
 //			GUI.DrawTexture(new Rect(screenPos.x-Screen.width*0.012f, Screen.height-screenPos.y+Screen.height*0.027f, Screen.width*0.0008f*mShieldTimer, Screen.height*0.012f),mShieldTimerTex); 
 //		}
+
+
 		//For drawing meters on the side of the screen
-		if(Application.loadedLevelName != "Credits")
-		{
-			GUI.DrawTexture(new Rect(Screen.width * .9f, Screen.height * 0.890f, Screen.width * .09f, Screen.height * .1f), mSideMetersTex);
-			GUI.DrawTexture(new Rect(Screen.width * .901f, Screen.height * 0.892f, Screen.width*.0542f*(heatLevel/90f), Screen.height*0.03f),mOverheatTimerTex);
-			if(isOverheated)
-			{
-				GUI.DrawTexture(new Rect(Screen.width * .901f, Screen.height * 0.892f, Screen.width*.0542f, Screen.height*0.03f),mOverheatWarningTex);
-			}
-			else
-			{
-				GUI.DrawTexture(new Rect(Screen.width * .901f+Screen.width*.0502f*(maxHeatLevel/90f), Screen.height * 0.892f, Screen.width*.004f, Screen.height*0.03f),mOverheatWarningTex);
-			}
-			if(mThreeBullet)
-			{
-				GUI.DrawTexture(new Rect(Screen.width * .901f, Screen.height * 0.9235f, Screen.width*.0542f*Mathf.Max(mThreeBulletTimer/30f,0f), Screen.height*0.03f),mBulletTimerTex); 
-			}
-			if(mShielded)
-			{
-				GUI.DrawTexture(new Rect(Screen.width * .901f, Screen.height * 0.955f, Screen.width*.0542f*(mShieldTimer/30f), Screen.height*0.03f),mShieldTimerTex); 
-			}
-		}
+//		if(Application.loadedLevelName != "Credits")
+//		{
+//			GUI.DrawTexture(new Rect(Screen.width * .9f, Screen.height * 0.890f, Screen.width * .09f, Screen.height * .1f), mSideMetersTex);
+//			GUI.DrawTexture(new Rect(Screen.width * .901f, Screen.height * 0.892f, Screen.width*.0542f*(heatLevel/90f), Screen.height*0.03f),mOverheatTimerTex);
+//			if(isOverheated)
+//			{
+//				GUI.DrawTexture(new Rect(Screen.width * .901f, Screen.height * 0.892f, Screen.width*.0542f, Screen.height*0.03f),mOverheatWarningTex);
+//			}
+//			else
+//			{
+//				GUI.DrawTexture(new Rect(Screen.width * .901f+Screen.width*.0502f*(maxHeatLevel/90f), Screen.height * 0.892f, Screen.width*.004f, Screen.height*0.03f),mOverheatWarningTex);
+//			}
+//			if(mThreeBullet)
+//			{
+//				GUI.DrawTexture(new Rect(Screen.width * .901f, Screen.height * 0.9235f, Screen.width*.0542f*Mathf.Max(mThreeBulletTimer/30f,0f), Screen.height*0.03f),mBulletTimerTex); 
+//			}
+//			if(mShielded)
+//			{
+//				GUI.DrawTexture(new Rect(Screen.width * .901f, Screen.height * 0.955f, Screen.width*.0542f*(mShieldTimer/30f), Screen.height*0.03f),mShieldTimerTex); 
+//			}
+//		}
 
 	}
 	

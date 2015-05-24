@@ -188,10 +188,16 @@ public class PauseManager : MonoBehaviour
 		else
 		{
 			GUI.SetNextControlName("Pause");
-			if (GUI.Button (new Rect (Screen.width * .81f, Screen.height * 0.890f, Screen.width * .09f, Screen.height * .1f), "", mPauseButtonStyle)) 
+			if (GUI.Button (new Rect (Screen.width * .91f, Screen.height * 0.890f, Screen.width * .09f, Screen.height * .1f), "", mPauseButtonStyle)) 
 			{
 				Pause();
 			}
+			//For when we had meters attached to the side
+//			GUI.SetNextControlName("Pause");
+//			if (GUI.Button (new Rect (Screen.width * .81f, Screen.height * 0.890f, Screen.width * .09f, Screen.height * .1f), "", mPauseButtonStyle)) 
+//			{
+//				Pause();
+//			}
 		}
 
 

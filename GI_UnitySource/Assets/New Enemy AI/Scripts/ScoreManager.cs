@@ -29,6 +29,7 @@ public class ScoreManager : MonoBehaviour
 	//For the UI of showing a meter depicting tim until next powerup
 	[SerializeField] private Image mPowerUpMeter;
 	[SerializeField] private GameObject mPowerUpMeterBack;
+	[SerializeField] private Text mPowerUpMeterScoreDisplay;
 
 	public float mPlayerSafeTime = 0f;
 	// Use this for initialization
@@ -139,18 +140,23 @@ public class ScoreManager : MonoBehaviour
 //			mExtraLifeScore += mExtraLifeInteraval;
 //		}
 
-		if(mPowerUpScore < mShieldScore)
+		//For showing the meter that says how close the player is to a power up
+		if(mPowerUpMeterScoreDisplay != null && mPowerUpMeter != null && mPowerUpMeterBack != null)
 		{
-			float barAdjust = 710.9f * (mPowerUpInterval-(mPowerUpScore-mScore))/mPowerUpInterval;
-			//Debug.Log (mPowerUpMeter.rectTransform.sizeDelta);
-			mPowerUpMeter.rectTransform.sizeDelta = new Vector2( barAdjust, mPowerUpMeter.rectTransform.sizeDelta.y); 
-			//mPowerUpMeter.rectTransform.rect = new Rect(mPowerUpMeter.rectTransform.rect.x, mPowerUpMeter.rectTransform.rect.y, barAdjust, mPowerUpMeter.rectTransform.rect.height);
-		}
-		else
-		{
-			float barAdjust = 710.9f * (mShieldInterval-(mShieldScore-mScore))/mShieldInterval;
-		//	Debug.Log (mPowerUpMeter.rectTransform.sizeDelta);
-			mPowerUpMeter.rectTransform.sizeDelta = new Vector2( barAdjust, mPowerUpMeter.rectTransform.sizeDelta.y); 
+			mPowerUpMeterScoreDisplay.text = "Score: " + mScore;
+			if(mPowerUpScore < mShieldScore)
+			{
+				float barAdjust = 1f*(mPowerUpInterval-(mPowerUpScore-mScore))/mPowerUpInterval;
+				Debug.Log(barAdjust);
+				mPowerUpMeter.rectTransform.localScale = new Vector3(barAdjust, 1f,1f); 
+				//mPowerUpMeter.rectTransform.rect = new Rect(mPowerUpMeter.rectTransform.rect.x, mPowerUpMeter.rectTransform.rect.y, barAdjust, mPowerUpMeter.rectTransform.rect.height);
+			}
+			else
+			{
+				float barAdjust = 1f*(mShieldInterval-(mShieldScore-mScore))/mShieldInterval;
+				Debug.Log(barAdjust);
+				mPowerUpMeter.rectTransform.localScale = new Vector3(barAdjust, 1f,1f); 
+			}
 		}
 		//Spawn a triple bullet power up every 500 kills (assuming 1 point per kill) ~Adam
 		if(mScore >= mPowerUpScore)

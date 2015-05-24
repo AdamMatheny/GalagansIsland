@@ -21,16 +21,17 @@ public class AsteroidScript : MonoBehaviour {
 
 		speed = Random.Range (-1, -10);
 
-		zedPos = Random.Range (-3.5f, 1.68f);
+		zedPos = Random.Range (-3.3f, 1.68f);
 		transform.position = new Vector3 (transform.position.x, transform.position.y, zedPos);
 
-		if(transform.position.z > -2.63f)
-		{
-			transform.GetComponent<Renderer>().material.color = Color.gray;
-		}
+		//From when we were experimenting with being able to hide under asteroids -Adam
+//		if(transform.position.z > -2.63f)
+//		{
+//			transform.GetComponent<Renderer>().material.color = Color.gray;
+//		}
 
 
-		scaleSize = Random.Range (8, 20);
+		scaleSize = Random.Range (10, 16);
 		transform.localScale = new Vector3 (scaleSize, scaleSize, 1f);
 	
 		rb = GetComponent<Rigidbody2D>();

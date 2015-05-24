@@ -12,14 +12,15 @@ public class AsteroidCollision : MonoBehaviour
 
 	void OnTriggerEnter(Collider other)
 	{
-		if(other.gameObject.GetComponent<PlayerShipController>() != null)
-		{
-			if(transform.parent.transform.position.z < -2.63f && FindObjectOfType<ScoreManager>() != null)
-			{
-				FindObjectOfType<ScoreManager>().mPlayerSafeTime = 0.1f;
-			}
-
-		}
+		//From when we were experimenting with being able to hide under asteroids -Adam
+//		if(other.gameObject.GetComponent<PlayerShipController>() != null)
+//		{
+//			if(transform.parent.transform.position.z < -2.63f && FindObjectOfType<ScoreManager>() != null)
+//			{
+//				FindObjectOfType<ScoreManager>().mPlayerSafeTime = 0.1f;
+//			}
+//
+//		}
 
 		if (other.gameObject.GetComponent<PlayerBulletController> () != null) 
 		{
@@ -28,19 +29,20 @@ public class AsteroidCollision : MonoBehaviour
 		}
 	}
 
-	void OnTriggerStay(Collider other)
-	{
-		if(other.gameObject.GetComponent<PlayerShipController>() != null)
-		{
-			if(transform.parent.transform.position.z < -2.63f && FindObjectOfType<ScoreManager>() != null)
-			{
-				FindObjectOfType<ScoreManager>().mPlayerSafeTime = 0.1f;
-			}
-			
-		}
-		
-
-	}
+	//From when we were experimenting with being able to hide under asteroids -Adam
+//	void OnTriggerStay(Collider other)
+//	{
+//		if(other.gameObject.GetComponent<PlayerShipController>() != null)
+//		{
+//			if(transform.parent.transform.position.z < -2.63f && FindObjectOfType<ScoreManager>() != null)
+//			{
+//				FindObjectOfType<ScoreManager>().mPlayerSafeTime = 0.1f;
+//			}
+//			
+//		}
+//		
+//
+//	}
 
 	public void AsteroidDeath()
 	{

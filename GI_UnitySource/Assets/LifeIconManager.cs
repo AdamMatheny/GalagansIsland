@@ -13,7 +13,7 @@ public class LifeIconManager : MonoBehaviour
 	{
 		mScoreManager = FindObjectOfType<ScoreManager>();
 
-	}
+	}//END of Start()
 	
 	// Update is called once per frame
 	void Update () 
@@ -24,6 +24,11 @@ public class LifeIconManager : MonoBehaviour
 			{
 				//GetComponent<Image>().enabled = true;
 				GetComponent<Animator>().SetBool("LifeLost", false);
+				//GetComponent<Animator>().Play("LifeIcon_Idle");
+				if(GetComponent<Image>().enabled == false)
+				{
+					ToggleLifeIcon();
+				}
 			}
 			else
 			{
@@ -33,7 +38,24 @@ public class LifeIconManager : MonoBehaviour
 		}
 		else
 		{
+			GetComponent<Image>().enabled = false;
 			mScoreManager = FindObjectOfType<ScoreManager>();
 		}
+
+	}//END of Update()
+
+	public void ToggleLifeIcon()
+	{
+		GetComponent<Image>().enabled = !GetComponent<Image>().enabled;
+		if(GetComponent<Image>().enabled)
+		{
+			//GetComponent<Animator>().Play("LifeIcon_Idle");
+		}
+		else
+		{
+			GetComponent<Animator>().StopPlayback();
+		}
+
+		GetComponent<Animator>().enabled = GetComponent<Image>().enabled;
 	}
 }

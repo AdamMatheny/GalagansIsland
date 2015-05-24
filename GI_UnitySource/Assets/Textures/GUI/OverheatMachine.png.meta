@@ -1,9 +1,12 @@
 fileFormatVersion: 2
-guid: 0c3fcbe17fdc9a34699e3981df1cd1d6
-timeCreated: 1427651419
+guid: 2ae524a85fa058b41bbc62da2954951a
+timeCreated: 1432405849
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: OverheatMachine_0
+    21300002: OverheatMachine_1
+    21300004: OverheatMachine_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -37,7 +40,7 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -48,7 +51,37 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: OverheatMachine_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 200
+        height: 144
+      alignment: 9
+      pivot: {x: .125, y: .219999999}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: OverheatMachine_1
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 0
+        width: 200
+        height: 144
+      alignment: 9
+      pivot: {x: .125, y: .219999999}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: OverheatMachine_2
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 200
+        height: 144
+      alignment: 9
+      pivot: {x: .125, y: .219999999}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 
