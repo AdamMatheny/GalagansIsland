@@ -226,7 +226,7 @@ public class PlayerShipController : MonoBehaviour
 		}
 		
 		//Increase movement speed as we progress through levels
-		mMovementSpeed = mBaseMovementSpeed + (6f/25f*Application.loadedLevel);
+		mMovementSpeed = mBaseMovementSpeed + (4f/25f*Application.loadedLevel);
 		
 		//Make the player drift toward the bottom of the screen
 		// transform.position += new Vector3(0f,mDropSpeed*-1f, 0f);
@@ -266,7 +266,7 @@ public class PlayerShipController : MonoBehaviour
 		//Make the player drift faster towards the bottom while firing ~Adam
 		if(mToggleFireOn)
 		{
-			transform.position += new Vector3(0f,-0.0025f*Application.loadedLevel, 0f);
+			transform.position += new Vector3(0f,-0.003f*Application.loadedLevel, 0f);
 			//Decrease the timer on triple bullets while firing ~Adam
 			mThreeBulletTimer -= Time.deltaTime;
 		}
@@ -618,9 +618,9 @@ public class PlayerShipController : MonoBehaviour
 		{
 			transform.position = new Vector3(20f, transform.position.y, transform.position.z);
 		}
-		if(transform.position.y < -31f)
+		if(transform.position.y < -33f)
 		{
-			transform.position = new Vector3(transform.position.x, -31f, transform.position.z);
+			transform.position = new Vector3(transform.position.x, -33f, transform.position.z);
 		}
 		if (transform.position.y > 23f)
 		{

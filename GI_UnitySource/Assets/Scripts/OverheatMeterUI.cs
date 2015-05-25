@@ -6,6 +6,9 @@ public class OverheatMeterUI : MonoBehaviour
 {
 	[SerializeField] private Image mOverHeatBar;
 	[SerializeField] private Image mOverHeatOverlay;
+	[SerializeField] private ParticleSystem mSteamUp;
+	[SerializeField] private ParticleSystem mSteamDown;
+
 
 	PlayerShipController mPlayer;
 
@@ -20,6 +23,16 @@ public class OverheatMeterUI : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+
+		if(mSteamUp == null)
+		{
+			mSteamUp = GameObject.Find("OverheatSteamUp").GetComponent<ParticleSystem>();
+		}
+		if(mSteamDown == null)
+		{
+			mSteamDown = GameObject.Find("OverheatSteamDown").GetComponent<ParticleSystem>();
+		}
+
 		//Safety in case the player ship connection is lost -Adam
 		if(mPlayer == null)
 		{
@@ -36,18 +49,39 @@ public class OverheatMeterUI : MonoBehaviour
 			{
 				mOverHeatOverlay.enabled = true;
 				GetComponent<Animator>().speed = 0f;
+				if(mSteamUp != null & mSteamDown != null)
+				{
+					mSteamUp.Play();
+					mSteamDown.Stop();
+				}
 			}
 			else
 			{
-
+				if(mSteamUp != null & mSteamDown != null)
+				{
+					mSteamDown.Play();
+					mSteamUp.Stop();
+				}
 				mOverHeatOverlay.enabled = false;
 				if(mPlayer.heatLevel/mPlayer.maxHeatLevel > 0.9f)
 				{
 					GetComponent<Animator>().speed = 5f;
+					if(mSteamDown != null)
+					{
+						mSteamDown.startSpeed = 5f;
+						mSteamDown.startLifetime = 0.5f;
+						mSteamDown.emissionRate = 50f;
+					}
 				}
 				else
 				{
 					GetComponent<Animator>().speed = 1f;
+					if(mSteamDown != null)
+					{
+						mSteamDown.startSpeed = 1f;
+						mSteamDown.startLifetime = 2f;
+						mSteamDown.emissionRate = 10f;
+					}
 				}
 			}
 		}
