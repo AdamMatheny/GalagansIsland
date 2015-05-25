@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class LifeIconManager : MonoBehaviour 
 {
-	ScoreManager mScoreManager;
+	[SerializeField] private ScoreManager mScoreManager;
 	[SerializeField] private int mIconNumber;
 
 
