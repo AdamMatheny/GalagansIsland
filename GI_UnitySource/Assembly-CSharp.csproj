@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProductVersion>10.0.20506</ProductVersion>
+	<SchemaVersion>2.0</SchemaVersion>
+	<ProjectGuid>{565F5941-94C0-885D-E246-05B5013742A4}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace></RootNamespace>
+	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
+	<BaseDirectory>Assets</BaseDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>Temp\bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE;UNITY_5_0_1;UNITY_5_0;UNITY_5;ENABLE_LICENSE_RENAME;ENABLE_NEW_BUGREPORTER;ENABLE_2D_PHYSICS;ENABLE_4_6_FEATURES;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_NEW_HIERARCHY;ENABLE_PHYSICS;ENABLE_PHYSICS_PHYSX3;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_AUDIOMIXER_SUSPEND;ENABLE_NONPRO;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_MONO;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>Temp\bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+	<Reference Include="System" />
+    <Reference Include="System.XML" />
+	<Reference Include="System.Core" />
+	<Reference Include="System.Xml.Linq" />
+	<Reference Include="UnityEngine">
+	  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEditor">
+	  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	</Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\52SpecialEffectPack\Legacy Effect Editor\csLegacyEffectChanger.cs" />
+     <Compile Include="Assets\52SpecialEffectPack\Legacy Effect Editor\csLegacyEffectEditor.cs" />
+     <Compile Include="Assets\AsteroidCollision.cs" />
+     <Compile Include="Assets\AsteroidPiece.cs" />
+     <Compile Include="Assets\AsteroidS\AsteroidScript.cs" />
+     <Compile Include="Assets\ChangePositionAtCreation.cs" />
+     <Compile Include="Assets\DestroyEffectCS.cs" />
+     <Compile Include="Assets\DestroyOnBoss.cs" />
+     <Compile Include="Assets\Dont_Destroy.cs" />
+     <Compile Include="Assets\EndGame.cs" />
+     <Compile Include="Assets\EnemyBulletController.cs" />
+     <Compile Include="Assets\EscapeGame.cs" />
+     <Compile Include="Assets\GetSome.cs" />
+     <Compile Include="Assets\HighScore.cs" />
+     <Compile Include="Assets\Laser.cs" />
+     <Compile Include="Assets\LifeIconManager.cs" />
+     <Compile Include="Assets\NEWPLAYER.cs" />
+     <Compile Include="Assets\New Enemy AI\BossSpecial\BossHitboxFollower.cs" />
+     <Compile Include="Assets\New Enemy AI\BossSpecial\BossParticleCollisionHandler.cs" />
+     <Compile Include="Assets\New Enemy AI\BossSpecial\CreditsBlock.cs" />
+     <Compile Include="Assets\New Enemy AI\BossSpecial\CreditsBossLevelLifeRegen.cs" />
+     <Compile Include="Assets\New Enemy AI\BossSpecial\CreditsSpawner.cs" />
+     <Compile Include="Assets\New Enemy AI\BossSpecial\SkullBossController.cs" />
+     <Compile Include="Assets\New Enemy AI\BossSpecial\SkullBossHorn.cs" />
+     <Compile Include="Assets\New Enemy AI\BossSpecial\SkullBossShield.cs" />
+     <Compile Include="Assets\New Enemy AI\Scripts\BigBlastEmblem.cs" />
+     <Compile Include="Assets\New Enemy AI\Scripts\CameraShaker.cs" />
+     <Compile Include="Assets\New Enemy AI\Scripts\CapturedShip.cs" />
+     <Compile Include="Assets\New Enemy AI\Scripts\EnemyShipAI.cs" />
+     <Compile Include="Assets\New Enemy AI\Scripts\EnemyShipDeathEffect.cs" />
+     <Compile Include="Assets\New Enemy AI\Scripts\EnemyShipSpawner.cs" />
+     <Compile Include="Assets\New Enemy AI\Scripts\InvincibleBox.cs" />
+     <Compile Include="Assets\New Enemy AI\Scripts\LaserFistPowerup.cs" />
+     <Compile Include="Assets\New Enemy AI\Scripts\LaserfistEmblem.cs" />
+     <Compile Include="Assets\New Enemy AI\Scripts\LevelKillCounter.cs" />
+     <Compile Include="Assets\New Enemy AI\Scripts\PauseManager.cs" />
+     <Compile Include="Assets\New Enemy AI\Scripts\PlayerShipController.cs" />
+     <Compile Include="Assets\New Enemy AI\Scripts\ScoreManager.cs" />
+     <Compile Include="Assets\New Enemy AI\Scripts\ShieldEmblem.cs" />
+     <Compile Include="Assets\New Enemy AI\Scripts\SwarmGrid.cs" />
+     <Compile Include="Assets\New Enemy AI\Scripts\SwarmGridSlot.cs" />
+     <Compile Include="Assets\New Enemy AI\Scripts\TripleBulletEmblem.cs" />
+     <Compile Include="Assets\New Menu\MenuItemActivator.cs" />
+     <Compile Include="Assets\New Menu\TitleLaser.cs" />
+     <Compile Include="Assets\PersistantObject.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Actions\ActivateAction.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Actions\BlendShapeAnimationAction.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Actions\DeactivateAction.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Actions\DisableBehaviorAction.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Actions\EnableBehaviorAction.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Actions\HideAction.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Actions\RotationAction.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Actions\ScaleAction.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Actions\SendMessageAction.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Actions\ShowAction.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Actions\TrackingAction.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Actions\TranslateAction.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Actions Utils\BaseAction.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Actions Utils\Bool3D.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Actions Utils\CameraARCalibation.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Actions Utils\Draw3DSegmentation.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Actions Utils\DrawImages.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Actions Utils\MinMax2D.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Actions Utils\PointCloudViewer.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Actions Utils\RotationConstraints.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Actions Utils\RotationMax2D.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Actions Utils\ScaleConstraints.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Actions Utils\SmoothingUtility.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Actions Utils\Transformation3D.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Actions Utils\VirtualWorldBoxAction.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Debug\DebugAction.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\HiddenBehaviour.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\RealSenseInput\MCTTypes.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\RealSenseInput\SenseOption.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\RealSenseInput\SenseToolkitManager.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\RealSenseInput\SenseToolkitSpeechManager.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\AlwaysTrueRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\BaseRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\BlobDetectedRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\BlobLostRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\BlobTrackingRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\FaceDetectedRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\FaceLostRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\FaceTrackingRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\FacialExpressionAnimationRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\FacialExpressionDetectedRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\FacialExpressionLostRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\GestureDetectedRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\GestureLostRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\HandClosedRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\HandDetectedRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\HandLostRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\HandMoveRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\HandOpennedRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\HandTrackingRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\ObjectDetectedRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\ObjectLostRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\ObjectTrackingRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\SpeechDetectedRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\TwoHandsDetectedRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\TwoHandsInteractionRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\TwoHandsLostRule.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\Utils\BlobUtilityClass.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\Utils\SpeechCommand.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Rules\Utils\TrackingUtilityClass.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Triggers\AnimationTrigger.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Triggers\EventTrigger.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Triggers\RotationTrigger.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Triggers\ScaleTrigger.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Triggers\TrackTrigger.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Triggers\TranslationTrigger.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Internals\Triggers\Trigger.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Samples\SampleTriggerRegistration.cs" />
+     <Compile Include="Assets\RSUnityToolkit\Samples\TargetCounter.cs" />
+     <Compile Include="Assets\ResetScore.cs" />
+     <Compile Include="Assets\RotateLeft.cs" />
+     <Compile Include="Assets\RotateRight.cs" />
+     <Compile Include="Assets\RotationExplosion.cs" />
+     <Compile Include="Assets\Scripts\BKG.cs" />
+     <Compile Include="Assets\Scripts\BulletLeft.cs" />
+     <Compile Include="Assets\Scripts\BulletRight.cs" />
+     <Compile Include="Assets\Scripts\CameraController.cs" />
+     <Compile Include="Assets\Scripts\ControlButtons.cs" />
+     <Compile Include="Assets\Scripts\DeathTriggerScript.cs" />
+     <Compile Include="Assets\Scripts\DestroyOnCollision.cs" />
+     <Compile Include="Assets\Scripts\EnemyBehavior.cs" />
+     <Compile Include="Assets\Scripts\EnemyControllerScript.cs" />
+     <Compile Include="Assets\Scripts\EnemyRespawner.cs" />
+     <Compile Include="Assets\Scripts\EnemySpawning.cs" />
+     <Compile Include="Assets\Scripts\MainMenuGUIFocusController.cs" />
+     <Compile Include="Assets\Scripts\OverheatMeterUI.cs" />
+     <Compile Include="Assets\Scripts\ParallaxController.cs" />
+     <Compile Include="Assets\Scripts\ParticleLayering.cs" />
+     <Compile Include="Assets\Scripts\PlayerAnimationEvents.cs" />
+     <Compile Include="Assets\Scripts\PlayerBulletController.cs" />
+     <Compile Include="Assets\Scripts\PlayerColliderListener.cs" />
+     <Compile Include="Assets\Scripts\PlayerStateController.cs" />
+     <Compile Include="Assets\Scripts\PlayerStateListener.cs" />
+     <Compile Include="Assets\Scripts\PowerTimerMeterUI.cs" />
+     <Compile Include="Assets\Scripts\ScoreWatcher.cs" />
+     <Compile Include="Assets\Scripts\SelfDestruct.cs" />
+     <Compile Include="Assets\Scripts\TakeDamageFromPlayerBullet.cs" />
+     <Compile Include="Assets\Scripts\UIManagerScript.cs" />
+     <Compile Include="Assets\Scripts\UnleashTheHorde.cs" />
+     <Compile Include="Assets\Scripts\VoiceRecognitionMenu.cs" />
+     <Compile Include="Assets\SecondaryShake.cs" />
+     <Compile Include="Assets\SpaceUnity\Scripts\SU_Asteroid.cs" />
+     <Compile Include="Assets\SpaceUnity\Scripts\SU_AsteroidField.cs" />
+     <Compile Include="Assets\SpaceUnity\Scripts\SU_Moon.cs" />
+     <Compile Include="Assets\SpaceUnity\Scripts\SU_Planet.cs" />
+     <Compile Include="Assets\SpaceUnity\Scripts\SU_SpaceParticles.cs" />
+     <Compile Include="Assets\SpaceUnity\Scripts\SU_SpaceSceneCamera.cs" />
+     <Compile Include="Assets\SpaceUnity\Scripts\SU_SpaceSceneSwitcher.cs" />
+     <Compile Include="Assets\SpaceUnity\_Demo\Scrips\SU_CameraFollow.cs" />
+     <Compile Include="Assets\SpaceUnity\_Demo\Scrips\SU_Explosion.cs" />
+     <Compile Include="Assets\SpaceUnity\_Demo\Scrips\SU_LaserImpact.cs" />
+     <Compile Include="Assets\SpaceUnity\_Demo\Scrips\SU_LaserShot.cs" />
+     <Compile Include="Assets\SpaceUnity\_Demo\Scrips\SU_SpaceSceneSwitcherDemoGUI.cs" />
+     <Compile Include="Assets\SpaceUnity\_Demo\Scrips\SU_Spaceship.cs" />
+     <Compile Include="Assets\SpaceUnity\_Demo\Scrips\SU_Thruster.cs" />
+     <Compile Include="Assets\Spew.cs" />
+     <Compile Include="Assets\SpewwyCode.cs" />
+     <Compile Include="Assets\StickWithPlayer.cs" />
+     <Compile Include="Assets\VoiceRcognitionGame.cs" />
+     <Compile Include="Assets\cursorScript.cs" />
+     <Compile Include="Assets\spin.cs" />
+     <None Include="Assets\SpaceUnity\Read First.txt" />
+     <None Include="Assets\SpaceUnity\Shaders\PlanetRings.shader" />
+     <None Include="Assets\basic Pixel Art Particles\readme.txt" />
+     <None Include="Assets\8 Bit Retro Rampage Free\Readme.txt" />
+     <None Include="Assets\SpaceUnity\Shaders\PlanetSelfIllum.shader" />
+     <None Include="Assets\SpaceUnity\Shaders\PlanetStandard.shader" />
+     <None Include="Assets\SpaceUnity\Shaders\PlanetAtmosphere.shader" />
+     <None Include="Assets\SpaceUnity\Shaders\Resources\AsteroidTransparent.shader" />
+     <None Include="Assets\RSUnityToolkit\Internals\Materials\Occlusion.shader" />
+ <Reference Include="UnityEngine.UI">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="libpxcclr.unity">
+ <HintPath>C:/Users/Nidaoke/Documents/GitHub/GalagansIsland/GI_UnitySource/Assets/Plugins.Managed/libpxcclr.unity.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+ <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iossupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	   Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  
+</Project>

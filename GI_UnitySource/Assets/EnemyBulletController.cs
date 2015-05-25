@@ -13,6 +13,8 @@ public class EnemyBulletController : MonoBehaviour
 	public bool mFixedFireDir = false;
 	public Vector3 mFireDir;
 
+	public GameObject bulletExplosion;
+
 	public void Start()
 	{
 		mPlayer = FindObjectOfType<PlayerShipController>().gameObject;
@@ -76,10 +78,33 @@ public class EnemyBulletController : MonoBehaviour
 			//Debug.Log("Hit a player bullet!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
 			if(mShootable)
 			{
+
+				if(bulletExplosion != null){
+
+					Instantiate(bulletExplosion, transform.position, Quaternion.identity);
+				}
+
 				Destroy(other.gameObject);
 				Destroy(this.gameObject);
 			}
 		}
+
+		/*if (other.tag == "PlayerSlow") {
+
+			Debug.Log("ACTIVATE SLOWMO!");					No idea why this isn't working. I'm assuming it has something to do with the player physics
+
+			Time.timeScale = .8f;
+		}*/
+	}
+
+	void OnTriggerExit (Collider other){
+
+		/*if (other.tag == "PlayerSlow") {
+
+			Debug.Log("EXITED");							No idea why this isn't working. I'm assuming it has something to do with the player physics
+
+			Time.timeScale = 1;
+		}*/
 	}
 
 

@@ -11,6 +11,12 @@ public class LaserFistPowerup : MonoBehaviour
 	Vector3 mLaserCenterStart = new Vector3(0f,0f,0f);
 	Vector3 mLaserSizeStart = new Vector3(0.1f,0.1f, 3f);
 
+	public float maxTime;
+	public float time;
+
+	public GameObject bigBoom;
+
+
 	float mLaserFistTimer = 0f;
 
 	// Use this for initialization
@@ -22,6 +28,19 @@ public class LaserFistPowerup : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+
+		if (bigBoom != null) {
+
+			if (time > 0) {
+				
+				time -= Time.deltaTime;
+			} else {
+				
+				time = maxTime;
+				bigBoom.SetActive(true);
+			}
+		}
+
 		mLaserFistTimer += Time.deltaTime;
 
 		if(GetComponent<Animator>().GetBool("Expanding"))

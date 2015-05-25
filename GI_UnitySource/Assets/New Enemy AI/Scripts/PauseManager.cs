@@ -46,7 +46,7 @@ public class PauseManager : MonoBehaviour
 
 			//Cursor.visible = false;
 		} 
-		else 
+		else if(Time.timeScale == 0)
 		{
 			//if(Input.GetButtonDown("Vertical"))
 			//{
@@ -154,7 +154,7 @@ public class PauseManager : MonoBehaviour
 			mPauseMenuStyle.hover.background = mContinueTexHighlight;
 			mPauseMenuStyle.active.background = mContinueTexHighlight;
 			GUI.SetNextControlName("Continue");
-			if (GUI.Button (new Rect (Screen.width*0.36f, Screen.height*0.21f, Screen.width*0.28f, Screen.height*0.18f), "", mPauseMenuStyle)) 
+			if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.21f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
 			{
 				UnPause();
 			}
@@ -162,7 +162,7 @@ public class PauseManager : MonoBehaviour
 			mPauseMenuStyle.hover.background = mReturnTexHighlight;
 			mPauseMenuStyle.active.background = mReturnTexHighlight;
 			GUI.SetNextControlName("ReturnToMenu");
-			if (GUI.Button (new Rect (Screen.width*0.36f, Screen.height*0.41f, Screen.width*0.28f, Screen.height*0.18f), "", mPauseMenuStyle)) 
+			if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.41f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
 			{
 				Time.timeScale = 1;
 				Destroy(FindObjectOfType<PlayerShipController>().gameObject);
@@ -174,7 +174,7 @@ public class PauseManager : MonoBehaviour
 			mPauseMenuStyle.hover.background = mQuitTexHighlight;
 			mPauseMenuStyle.active.background = mQuitTexHighlight;
 			GUI.SetNextControlName("QuitGame");
-			if (GUI.Button (new Rect (Screen.width*0.36f, Screen.height*0.61f, Screen.width*0.28f, Screen.height*0.18f), "", mPauseMenuStyle)) 
+			if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.61f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
 			{
 				Application.Quit();
 			}

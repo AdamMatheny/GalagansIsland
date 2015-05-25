@@ -136,7 +136,8 @@ public class PlayerShipController : MonoBehaviour
 	void Update () 
 	{
 		maxHeatLevel = mBaseHeatMax +  mBaseHeatMax * Application.loadedLevel/26f;
-		
+
+		mMovementSpeed *= Time.deltaTime / Time.timeScale;
 		
 		if (cheats) {
 			

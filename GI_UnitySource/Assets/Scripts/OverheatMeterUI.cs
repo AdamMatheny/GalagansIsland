@@ -6,11 +6,13 @@ public class OverheatMeterUI : MonoBehaviour
 {
 	[SerializeField] private Image mOverHeatBar;
 	[SerializeField] private Image mOverHeatOverlay;
+
 	PlayerShipController mPlayer;
 
 	// Use this for initialization
 	void Start () 
 	{
+
 		//Find the player ship -Adam
 		mPlayer = FindObjectOfType<PlayerShipController>();
 	}//END of Start()
@@ -37,6 +39,7 @@ public class OverheatMeterUI : MonoBehaviour
 			}
 			else
 			{
+
 				mOverHeatOverlay.enabled = false;
 				if(mPlayer.heatLevel/mPlayer.maxHeatLevel > 0.9f)
 				{

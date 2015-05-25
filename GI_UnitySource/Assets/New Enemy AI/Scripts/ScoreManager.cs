@@ -121,6 +121,8 @@ public class ScoreManager : MonoBehaviour
 			Application.LoadLevel("EndGame");
 			mLevelInfoText.text = "Lives: " + mLivesRemaining + "\nScore: " + mScore + "\nGame Over";
 
+
+
 			this.enabled = false;
 			//Destroy(this.gameObject);
 			
@@ -128,10 +130,10 @@ public class ScoreManager : MonoBehaviour
 
 		mPlayerSafeTime-=Time.deltaTime;
 
-		if(mScore < 0)
+		/*if(mScore < 0)
 		{
 			mScore = 0;
-		}
+		}*/
 
 //		//Grant an extra life every 1000 kills (assuming 1 point per kill) ~Adam
 //		if(mScore >= mExtraLifeScore)
@@ -143,19 +145,28 @@ public class ScoreManager : MonoBehaviour
 		//For showing the meter that says how close the player is to a power up
 		if(mPowerUpMeterScoreDisplay != null && mPowerUpMeter != null && mPowerUpMeterBack != null)
 		{
-			mPowerUpMeterScoreDisplay.text = "Score: " + mScore;
-			if(mPowerUpScore < mShieldScore)
-			{
-				float barAdjust = 1f*(mPowerUpInterval-(mPowerUpScore-mScore))/mPowerUpInterval;
-				Debug.Log(barAdjust);
-				mPowerUpMeter.rectTransform.localScale = new Vector3(barAdjust, 1f,1f); 
-				//mPowerUpMeter.rectTransform.rect = new Rect(mPowerUpMeter.rectTransform.rect.x, mPowerUpMeter.rectTransform.rect.y, barAdjust, mPowerUpMeter.rectTransform.rect.height);
-			}
-			else
-			{
-				float barAdjust = 1f*(mShieldInterval-(mShieldScore-mScore))/mShieldInterval;
-				Debug.Log(barAdjust);
-				mPowerUpMeter.rectTransform.localScale = new Vector3(barAdjust, 1f,1f); 
+
+			if(mScore < 0){
+
+				mPowerUpMeter.rectTransform.localScale = new Vector3(0f, 1f, 1f);
+				mPowerUpMeterScoreDisplay.text = "Loser. Try Shooting.";
+			}else{
+
+				mPowerUpMeterScoreDisplay.text = "Score: " + mScore;
+
+				if(mPowerUpScore < mShieldScore)
+				{
+					float barAdjust = 1f*(mPowerUpInterval-(mPowerUpScore-mScore))/mPowerUpInterval;
+					Debug.Log(barAdjust);
+					mPowerUpMeter.rectTransform.localScale = new Vector3(barAdjust, 1f,1f); 
+					//mPowerUpMeter.rectTransform.rect = new Rect(mPowerUpMeter.rectTransform.rect.x, mPowerUpMeter.rectTransform.rect.y, barAdjust, mPowerUpMeter.rectTransform.rect.height);
+				}
+				else
+				{
+					float barAdjust = 1f*(mShieldInterval-(mShieldScore-mScore))/mShieldInterval;
+					//Debug.Log(barAdjust);
+					mPowerUpMeter.rectTransform.localScale = new Vector3(barAdjust, 1f,1f); 
+				}
 			}
 		}
 		//Spawn a triple bullet power up every 500 kills (assuming 1 point per kill) ~Adam
@@ -204,7 +215,7 @@ public class ScoreManager : MonoBehaviour
 
 
 		mLevelInfoText.text = "Lives: " + mLivesRemaining + "\nScore: " + mScore + "\n" + mLevelNames[Application.loadedLevel];
-		mHighScoreText.text = "High Score: " + PlayerPrefs.GetInt("highscore", 0);
+		mHighScoreText.text = "High Score \n" + PlayerPrefs.GetInt("highscore", 0);
 
 		StoreHighscore (mScore);
 
