@@ -9,6 +9,7 @@ public class OverheatMeterUI : MonoBehaviour
 	[SerializeField] private ParticleSystem mSteamUp;
 	[SerializeField] private ParticleSystem mSteamDown;
 
+	bool mCanPlaySteamNoise = true;
 
 	PlayerShipController mPlayer;
 
@@ -28,6 +29,13 @@ public class OverheatMeterUI : MonoBehaviour
 		{
 			mSteamUp = GameObject.Find("OverheatSteamUp").GetComponent<ParticleSystem>();
 		}
+		else
+		{
+			if(mPlayer.heatLevel/mPlayer.maxHeatLevel < 0.9f && !mSteamUp.GetComponent<AudioSource>().isPlaying)
+			{
+				mCanPlaySteamNoise = true;
+			}
+		}
 		if(mSteamDown == null)
 		{
 			mSteamDown = GameObject.Find("OverheatSteamDown").GetComponent<ParticleSystem>();
@@ -39,8 +47,9 @@ public class OverheatMeterUI : MonoBehaviour
 			mPlayer = FindObjectOfType<PlayerShipController>();
 		}
 
-		else
+		else if(GetComponent<Image>().canvas.isActiveAndEnabled) //Only do stuff when the canvas is actually turned on
 		{
+			Debug.Log("Doing ovheating stuff, " + Application.loadedLevelName);
 			//Make the bar move up and down
 			mOverHeatBar.GetComponent<RectTransform>().localScale = new Vector3(1f, mPlayer.heatLevel/mPlayer.maxHeatLevel, 1f);
 
@@ -71,6 +80,11 @@ public class OverheatMeterUI : MonoBehaviour
 						mSteamDown.startSpeed = 5f;
 						mSteamDown.startLifetime = 0.5f;
 						mSteamDown.emissionRate = 50f;
+						if(mSteamUp != null && mCanPlaySteamNoise)
+						{
+							mSteamUp.GetComponent<AudioSource>().Play();
+							mCanPlaySteamNoise = false;
+						}
 					}
 				}
 				else
@@ -83,6 +97,15 @@ public class OverheatMeterUI : MonoBehaviour
 						mSteamDown.emissionRate = 10f;
 					}
 				}
+			}
+		}
+		//Hide the steam if the canvas it turned off or the ship is missing
+		else
+		{
+			if(mSteamUp != null & mSteamDown != null)
+			{
+				mSteamUp.Stop();
+				mSteamDown.Stop();
 			}
 		}
 	}//END of Update()

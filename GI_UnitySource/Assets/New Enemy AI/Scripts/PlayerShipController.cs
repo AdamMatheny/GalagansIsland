@@ -266,7 +266,7 @@ public class PlayerShipController : MonoBehaviour
 		//Make the player drift faster towards the bottom while firing ~Adam
 		if(mToggleFireOn)
 		{
-			transform.position += new Vector3(0f,-0.003f*Application.loadedLevel, 0f);
+			transform.position += new Vector3(0f,-0.00255f*Application.loadedLevel, 0f);
 			//Decrease the timer on triple bullets while firing ~Adam
 			mThreeBulletTimer -= Time.deltaTime;
 		}
@@ -473,7 +473,7 @@ public class PlayerShipController : MonoBehaviour
 						}
 						else
 						{
-							mBulletFireTime = Time.time + (bulletShootSpeed - (0.15f / 25f * 15f));
+							mBulletFireTime = Time.time + (bulletShootSpeed - (0.15f / 25f * 21f));
 						}
 					}
 					else
