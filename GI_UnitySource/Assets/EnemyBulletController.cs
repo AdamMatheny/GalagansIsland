@@ -63,6 +63,13 @@ public class EnemyBulletController : MonoBehaviour
 			if (mSelfDestructTimer < Time.time)
 				Destroy(gameObject);
 		}
+		if (Vector3.Distance(this.transform.position, mPlayer.transform.position) <= 2f)
+		{
+			if(FindObjectOfType<SlowTimeController>()!= null)
+			{
+				FindObjectOfType<SlowTimeController>().SlowDownTime(0.4f,1f);
+			}
+		}
 		if (Vector3.Distance(this.transform.position, mPlayer.transform.position) <= 1f)
 		{
 			Debug.Log("The player was shot");
@@ -79,7 +86,8 @@ public class EnemyBulletController : MonoBehaviour
 			if(mShootable)
 			{
 
-				if(bulletExplosion != null){
+				if(bulletExplosion != null)
+				{
 
 					Instantiate(bulletExplosion, transform.position, Quaternion.identity);
 				}

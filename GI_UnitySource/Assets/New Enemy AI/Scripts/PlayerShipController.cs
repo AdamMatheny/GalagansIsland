@@ -137,8 +137,7 @@ public class PlayerShipController : MonoBehaviour
 	{
 		maxHeatLevel = mBaseHeatMax +  mBaseHeatMax * Application.loadedLevel/26f;
 
-		mMovementSpeed *= Time.deltaTime / Time.timeScale;
-		
+
 		if (cheats) {
 			
 			if(Input.GetKeyDown(KeyCode.Q))
@@ -226,7 +225,7 @@ public class PlayerShipController : MonoBehaviour
 		}
 		
 		//Increase movement speed as we progress through levels
-		mMovementSpeed = mBaseMovementSpeed + (4f/25f*Application.loadedLevel);
+		mMovementSpeed = ( mBaseMovementSpeed + (4f/25f*Application.loadedLevel) ) /Time.timeScale;
 		
 		//Make the player drift toward the bottom of the screen
 		// transform.position += new Vector3(0f,mDropSpeed*-1f, 0f);
@@ -469,16 +468,16 @@ public class PlayerShipController : MonoBehaviour
 					{
 						if(Application.loadedLevelName != "Credits")
 						{
-							mBulletFireTime = Time.time + bulletShootSpeed - (0.15f / 25f * Application.loadedLevel);
+							mBulletFireTime = Time.time + bulletShootSpeed - (0.25f / 25f * Application.loadedLevel);
 						}
 						else
 						{
-							mBulletFireTime = Time.time + (bulletShootSpeed - (0.15f / 25f * 21f));
+							mBulletFireTime = Time.time + (bulletShootSpeed - (0.25f / 25f * 21f));
 						}
 					}
 					else
 					{
-							mBulletFireTime = Time.time + (bulletShootSpeed - (0.15f / 25f * Application.loadedLevel))/3f;
+							mBulletFireTime = Time.time + (bulletShootSpeed - (0.25f / 25f * Application.loadedLevel))/3f;
 					}
 				}
 			}
@@ -531,7 +530,7 @@ public class PlayerShipController : MonoBehaviour
 		}
 		
 		//Move the ship by the mMoveDir vector if not paused
-		if(Time.timeScale == 1)
+		if(Time.timeScale != 0f)
 		{
 			if (Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.Android)
 			{
@@ -647,7 +646,7 @@ public class PlayerShipController : MonoBehaviour
 	void OnGUI()
 	{
 		//For the spread fire timer that follows the ship -Adam
-		if(mThreeBullet)
+		/* if(mThreeBullet)
 		{
 			Vector3 screenPos = Camera.main.WorldToScreenPoint(this.transform.position);
 			//Draw the triple bullet timer ~Adam
@@ -657,7 +656,7 @@ public class PlayerShipController : MonoBehaviour
 			//GUI.DrawTexture(new Rect(screenPos.x-Screen.width*0.012f, Screen.height-screenPos.y+Screen.height*0.022f, Screen.width*0.0008f*mThreeBulletTimer, Screen.height*0.012f),mBulletTimerTex); 
 			GUI.DrawTexture(new Rect(screenPos.x+Screen.width*0.016f, Screen.height-screenPos.y+Screen.height*0.025f, Screen.width*0.006f, -1f*(Screen.height*0.045f*mThreeBulletTimer/30f)),mBulletTimerTexVert); 
 
-		}
+		} */
 //		elase if(mShielded && !mThreeBullet)
 //		{
 //			Vector3 screenPos = Camera.main.WorldToScreenPoint(this.transform.position);

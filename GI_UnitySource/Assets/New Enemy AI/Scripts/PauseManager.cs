@@ -36,6 +36,16 @@ public class PauseManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+//		if(Input.GetAxis ("Vertical") < 0)
+//		{
+//			Debug.Log("Down button pressed");
+//		}
+//		else if(Input.GetAxis ("Vertical") > 0)
+//		{
+//			Debug.Log("Up button pressed");
+//		}
+
+
 		if(mUIFocusTimer > 0f)
 		{
 			mUIFocusTimer -= 0.01f;
@@ -48,13 +58,15 @@ public class PauseManager : MonoBehaviour
 		} 
 		else if(Time.timeScale == 0)
 		{
+
 			//if(Input.GetButtonDown("Vertical"))
 			//{
 				//For using keyboard/Gamepad to navigate pause menu ~Adam
 				if(mUIFocusTimer <= 0f)
 				{
-					if(Input.GetAxis ("Vertical") < 0)
+					if(Input.GetAxisRaw ("Vertical") < 0)
 					{
+					Debug.Log("Down button pressed");
 						switch(mPauseButtonFocus)
 						{
 						case 1:
@@ -73,9 +85,10 @@ public class PauseManager : MonoBehaviour
 							break;
 						}
 					}
-					else if(Input.GetAxis ("Vertical") > 0)
+					else if(Input.GetAxisRaw ("Vertical") > 0)
 					{
-						switch(mPauseButtonFocus)
+					Debug.Log("Up button pressed");
+					switch(mPauseButtonFocus)
 						{
 						case 1:
 							mPauseButtonFocus = 3;

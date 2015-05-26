@@ -119,7 +119,7 @@ public class ScoreManager : MonoBehaviour
 			//Destroy(FindObjectOfType<PlayerShipController>().gameObject); //Looks like for some reason I had this line in there that would have prevented the EndGame scene from loading... Oops...~Adam
 			Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
 			Application.LoadLevel("EndGame");
-			mLevelInfoText.text = "Game Over";
+			mLevelInfoText.text = "\nGame Over";
 
 
 
@@ -213,8 +213,21 @@ public class ScoreManager : MonoBehaviour
 			}
 		}
 
-
-		mLevelInfoText.text = mLevelNames[Application.loadedLevel];
+		switch(Application.loadedLevelName)
+		{
+		case "Level26_Boss":
+			mLevelInfoText.text = " \nGame Over";
+			break;
+		case "Credits":
+			mLevelInfoText.text = "Thank you for playing!";
+			break;
+		case "EndGame":
+			mLevelInfoText.text = " \nGame Over";
+			break;
+		default:
+			mLevelInfoText.text = "Level "+ Application.loadedLevel + ":\n" + mLevelNames[Application.loadedLevel];
+			break;
+		}
 		mHighScoreText.text = "High Score \n" + PlayerPrefs.GetInt("highscore", 0);
 
 		StoreHighscore (mScore);

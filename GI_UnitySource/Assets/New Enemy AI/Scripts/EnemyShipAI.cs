@@ -656,7 +656,10 @@ public class EnemyShipAI : MonoBehaviour
 		{
 			mKillCounter.UpdateKillCounter();
 		}
-		
+		if(FindObjectOfType<SlowTimeController>()!= null)
+		{
+			FindObjectOfType<SlowTimeController>().SlowDownTime(0.1f,1f);
+		}
 		Destroy(gameObject);
 	}
 }

@@ -6,6 +6,8 @@ public class OverheatMeterUI : MonoBehaviour
 {
 	[SerializeField] private Image mOverHeatBar;
 	[SerializeField] private Image mOverHeatOverlay;
+	[SerializeField] private Image mBlankBulb;
+	[SerializeField] private Image mRedBulb;
 	[SerializeField] private ParticleSystem mSteamUp;
 	[SerializeField] private ParticleSystem mSteamDown;
 
@@ -49,7 +51,6 @@ public class OverheatMeterUI : MonoBehaviour
 
 		else if(GetComponent<Image>().canvas.isActiveAndEnabled) //Only do stuff when the canvas is actually turned on
 		{
-			Debug.Log("Doing ovheating stuff, " + Application.loadedLevelName);
 			//Make the bar move up and down
 			mOverHeatBar.GetComponent<RectTransform>().localScale = new Vector3(1f, mPlayer.heatLevel/mPlayer.maxHeatLevel, 1f);
 
@@ -58,11 +59,14 @@ public class OverheatMeterUI : MonoBehaviour
 			{
 				mOverHeatOverlay.enabled = true;
 				GetComponent<Animator>().speed = 0f;
-				if(mSteamUp != null & mSteamDown != null)
+				if(mSteamUp != null && mSteamDown != null)
 				{
 					mSteamUp.Play();
+					mSteamUp.GetComponentInChildren<ParticleSystem>().Play();
 					mSteamDown.Stop();
 				}
+				mRedBulb.enabled = false;
+				mBlankBulb.enabled = false;
 			}
 			else
 			{
@@ -70,10 +74,14 @@ public class OverheatMeterUI : MonoBehaviour
 				{
 					mSteamDown.Play();
 					mSteamUp.Stop();
+					mSteamUp.GetComponentInChildren<ParticleSystem>().Stop();
 				}
 				mOverHeatOverlay.enabled = false;
 				if(mPlayer.heatLevel/mPlayer.maxHeatLevel > 0.9f)
 				{
+					mRedBulb.enabled = true;
+					mBlankBulb.enabled = false;
+
 					GetComponent<Animator>().speed = 5f;
 					if(mSteamDown != null)
 					{
@@ -89,6 +97,9 @@ public class OverheatMeterUI : MonoBehaviour
 				}
 				else
 				{
+					mRedBulb.enabled = false;
+					mBlankBulb.enabled = true;
+
 					GetComponent<Animator>().speed = 1f;
 					if(mSteamDown != null)
 					{
@@ -105,6 +116,7 @@ public class OverheatMeterUI : MonoBehaviour
 			if(mSteamUp != null & mSteamDown != null)
 			{
 				mSteamUp.Stop();
+				mSteamUp.GetComponentInChildren<ParticleSystem>().Stop();
 				mSteamDown.Stop();
 			}
 		}
