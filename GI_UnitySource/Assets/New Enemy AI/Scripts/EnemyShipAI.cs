@@ -658,7 +658,7 @@ public class EnemyShipAI : MonoBehaviour
 		}
 		if(FindObjectOfType<SlowTimeController>()!= null)
 		{
-			FindObjectOfType<SlowTimeController>().SlowDownTime(0.1f,1f);
+			FindObjectOfType<SlowTimeController>().SlowDownTime(0.8f,1f);
 		}
 		Destroy(gameObject);
 	}

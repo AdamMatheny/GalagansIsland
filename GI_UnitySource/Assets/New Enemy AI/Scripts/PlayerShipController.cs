@@ -225,7 +225,7 @@ public class PlayerShipController : MonoBehaviour
 		}
 		
 		//Increase movement speed as we progress through levels
-		mMovementSpeed = ( mBaseMovementSpeed + (4f/25f*Application.loadedLevel) ) /Time.timeScale;
+		mMovementSpeed = ( mBaseMovementSpeed + (6f/25f*Application.loadedLevel) ) /Time.timeScale;
 		
 		//Make the player drift toward the bottom of the screen
 		// transform.position += new Vector3(0f,mDropSpeed*-1f, 0f);
