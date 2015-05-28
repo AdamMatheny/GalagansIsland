@@ -157,7 +157,6 @@ public class ScoreManager : MonoBehaviour
 				if(mPowerUpScore < mShieldScore)
 				{
 					float barAdjust = 1f*(mPowerUpInterval-(mPowerUpScore-mScore))/mPowerUpInterval;
-					Debug.Log(barAdjust);
 					mPowerUpMeter.rectTransform.localScale = new Vector3(barAdjust, 1f,1f); 
 					//mPowerUpMeter.rectTransform.rect = new Rect(mPowerUpMeter.rectTransform.rect.x, mPowerUpMeter.rectTransform.rect.y, barAdjust, mPowerUpMeter.rectTransform.rect.height);
 				}
@@ -228,7 +227,7 @@ public class ScoreManager : MonoBehaviour
 			mLevelInfoText.text = "Level "+ Application.loadedLevel + ":\n" + mLevelNames[Application.loadedLevel];
 			break;
 		}
-		mHighScoreText.text = "High Score \n" + PlayerPrefs.GetInt("highscore", 0);
+		mHighScoreText.text = "High Score:\n" + PlayerPrefs.GetInt("highscore", 0);
 
 		StoreHighscore (mScore);
 

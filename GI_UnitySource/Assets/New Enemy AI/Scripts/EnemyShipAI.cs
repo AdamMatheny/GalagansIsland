@@ -585,7 +585,7 @@ public class EnemyShipAI : MonoBehaviour
 			//Debug.Log("Player was hit by the enemy at grid slot " + mSwarmGridPosition.name +" in grid " + mSwarmGrid.name + "!!!");
 
 			//If the enemy that hit the player is a Grabber and there is not currently a stolen ship in play, steal a ship from the player
-			if(mGrabber && mPlayer.GetComponent<PlayerShipController>().mShipStolen == false && mTowPoint != null)
+			if(mGrabber && !mPlayer.GetComponent<PlayerShipController>().mShipStolen  &&!mPlayer.GetComponent<PlayerShipController>().mShipRecovered && mTowPoint != null)
 			{
 				mPlayer.GetComponent<PlayerShipController>().mShipStolen = true;
 				GameObject capturedShipToSpawn;

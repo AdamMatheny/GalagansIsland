@@ -33,7 +33,7 @@ public class PowerTimerMeterUI : MonoBehaviour
 		else
 		{
 
-			//Display overlay when overheated
+
 			if(mPlayer.mThreeBullet)
 			{
 				//Make the bar move up and down

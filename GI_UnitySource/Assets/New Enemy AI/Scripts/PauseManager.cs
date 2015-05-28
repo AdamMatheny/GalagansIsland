@@ -158,24 +158,83 @@ public class PauseManager : MonoBehaviour
 	void OnGUI()
 	{
 		mPauseMenuStyle.fontSize = Mathf.RoundToInt(Screen.width*0.01f);
+		if(!Application.isMobilePlatform)
+		{
+			if (Time.timeScale == 0)
+			{
+				GUI.Box(new Rect(0,0, Screen.width,Screen.height),"");
 
-		if (Time.timeScale == 0)
+				mPauseMenuStyle.normal.background = mContinueTex;
+				mPauseMenuStyle.hover.background = mContinueTexHighlight;
+				mPauseMenuStyle.active.background = mContinueTexHighlight;
+				GUI.SetNextControlName("Continue");
+				if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.21f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
+				{
+					UnPause();
+				}
+				mPauseMenuStyle.normal.background = mReturnTex;
+				mPauseMenuStyle.hover.background = mReturnTexHighlight;
+				mPauseMenuStyle.active.background = mReturnTexHighlight;
+				GUI.SetNextControlName("ReturnToMenu");
+				if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.41f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
+				{
+					Time.timeScale = 1;
+					Destroy(FindObjectOfType<PlayerShipController>().gameObject);
+					Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
+					Destroy(FindObjectOfType<ScoreManager>().gameObject);
+					Application.LoadLevel(0);
+				}
+				mPauseMenuStyle.normal.background = mQuitTex;
+				mPauseMenuStyle.hover.background = mQuitTexHighlight;
+				mPauseMenuStyle.active.background = mQuitTexHighlight;
+				GUI.SetNextControlName("QuitGame");
+				if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.61f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
+				{
+					Application.Quit();
+				}
+//				GUI.SetNextControlName("Pause");
+//				if (GUI.Button (new Rect (Screen.width * .81f, Screen.height * 0.890f, Screen.width * .09f, Screen.height * .1f), "", mPauseButtonStyle)) 
+//				{
+//					UnPause();
+//				}
+
+			}
+	//		else
+	//		{
+	//			GUI.SetNextControlName("Pause");
+	//			if (GUI.Button (new Rect (Screen.width * .91f, Screen.height * 0.890f, Screen.width * .09f, Screen.height * .1f), "", mPauseButtonStyle)) 
+	//			{
+	//				Pause();
+	//			}
+	//			//For when we had meters attached to the side
+	////			GUI.SetNextControlName("Pause");
+	////			if (GUI.Button (new Rect (Screen.width * .81f, Screen.height * 0.890f, Screen.width * .09f, Screen.height * .1f), "", mPauseButtonStyle)) 
+	////			{
+	////				Pause();
+	////			}
+	//		}
+
+
+
+			GUI.FocusControl(mPauseMenuButtonNames[mPauseButtonFocus]);
+		}
+
+		//Change layout slightly for mobile portrait view ~Adam
+		else
 		{
 			GUI.Box(new Rect(0,0, Screen.width,Screen.height),"");
-
+			
 			mPauseMenuStyle.normal.background = mContinueTex;
 			mPauseMenuStyle.hover.background = mContinueTexHighlight;
 			mPauseMenuStyle.active.background = mContinueTexHighlight;
-			GUI.SetNextControlName("Continue");
-			if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.21f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
+			if (GUI.Button (new Rect (Screen.width*0.2f, Screen.height*0.21f, Screen.width*0.6f, Screen.height*0.14f), "", mPauseMenuStyle)) 
 			{
 				UnPause();
 			}
 			mPauseMenuStyle.normal.background = mReturnTex;
 			mPauseMenuStyle.hover.background = mReturnTexHighlight;
 			mPauseMenuStyle.active.background = mReturnTexHighlight;
-			GUI.SetNextControlName("ReturnToMenu");
-			if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.41f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
+			if (GUI.Button (new Rect (Screen.width*0.2f, Screen.height*0.41f, Screen.width*0.6f, Screen.height*0.14f), "", mPauseMenuStyle)) 
 			{
 				Time.timeScale = 1;
 				Destroy(FindObjectOfType<PlayerShipController>().gameObject);
@@ -186,37 +245,13 @@ public class PauseManager : MonoBehaviour
 			mPauseMenuStyle.normal.background = mQuitTex;
 			mPauseMenuStyle.hover.background = mQuitTexHighlight;
 			mPauseMenuStyle.active.background = mQuitTexHighlight;
-			GUI.SetNextControlName("QuitGame");
-			if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.61f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
+			if (GUI.Button (new Rect (Screen.width*0.2f, Screen.height*0.61f, Screen.width*0.6f, Screen.height*0.14f), "", mPauseMenuStyle)) 
 			{
 				Application.Quit();
 			}
-			GUI.SetNextControlName("Pause");
-			if (GUI.Button (new Rect (Screen.width * .81f, Screen.height * 0.890f, Screen.width * .09f, Screen.height * .1f), "", mPauseButtonStyle)) 
-			{
-				UnPause();
-			}
 
+			
 		}
-//		else
-//		{
-//			GUI.SetNextControlName("Pause");
-//			if (GUI.Button (new Rect (Screen.width * .91f, Screen.height * 0.890f, Screen.width * .09f, Screen.height * .1f), "", mPauseButtonStyle)) 
-//			{
-//				Pause();
-//			}
-//			//For when we had meters attached to the side
-////			GUI.SetNextControlName("Pause");
-////			if (GUI.Button (new Rect (Screen.width * .81f, Screen.height * 0.890f, Screen.width * .09f, Screen.height * .1f), "", mPauseButtonStyle)) 
-////			{
-////				Pause();
-////			}
-//		}
-
-
-
-		GUI.FocusControl(mPauseMenuButtonNames[mPauseButtonFocus]);
-
 	}//END of OnGUI
 
 

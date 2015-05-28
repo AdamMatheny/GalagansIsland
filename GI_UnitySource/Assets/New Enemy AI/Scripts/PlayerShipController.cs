@@ -299,15 +299,15 @@ public class PlayerShipController : MonoBehaviour
 		}
 		
 		//Movement input for mouse/touch
-		if(Input.GetMouseButton(0) && (Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.Android))
+		if(Input.GetMouseButton(0) && (Application.isMobilePlatform))
 		{
 			Vector3 screenPos = Camera.main.WorldToScreenPoint(this.transform.position);
 			//Debug.Log(screenPos + ", " + Input.mousePosition);
-			Vector3 translationDirection = Vector3.Normalize(Input.mousePosition-screenPos);
+			Vector3 translationDirection = Vector3.Normalize(Input.mousePosition+new Vector3(0f,10f,0f)-screenPos);
 			//Debug.Log(translationDirection*mMovementSpeed*Time.deltaTime);
 			
 			//For making the ship drift down when not trying to go up
-			if(Input.mousePosition.y > screenPos.y-10f)
+			if(Input.mousePosition.y+10f > screenPos.y-10f)
 			{
 				mDriftDown = false;
 			}
@@ -532,7 +532,7 @@ public class PlayerShipController : MonoBehaviour
 		//Move the ship by the mMoveDir vector if not paused
 		if(Time.timeScale != 0f)
 		{
-			if (Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.Android)
+			if (Application.isMobilePlatform)
 			{
 					if(mMoveDir.y < 0f && !(vertical == 0.0f && !Input.GetMouseButton(0)))
 				{

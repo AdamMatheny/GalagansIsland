@@ -29,57 +29,58 @@ public class ResetScore : MonoBehaviour
 
 	void OnGUI()
 	{
-
-		mHighScoreStyle.fontSize = Mathf.RoundToInt(Screen.width*0.01f);
-		mHighScoreDisplayStyle.fontSize = Mathf.RoundToInt(Screen.width*0.01f);
-//		GUI.Box(new Rect (Screen.width * 0.01f, Screen.height * 0.01f, Screen.width * 0.12f, Screen.height * .065f), "High Score: " + PlayerPrefs.GetInt ("highscore", 0), mHighScoreDisplayStyle);
-		mHighScoreUIText.text = "High Score: " + PlayerPrefs.GetInt ("highscore", 0);
-		if(!mAskingForConfirm)
+		if(!Application.isMobilePlatform)
 		{
-			mHighScoreStyle.normal.background = mResetTexStart;
-			mHighScoreStyle.hover.background = mResetTexHighlightStart;
-			mHighScoreStyle.focused.background = mResetTexHighlightStart;
-			GUI.SetNextControlName("ResetStart");
-
-			if (GUI.Button (new Rect (Screen.width * .01f, Screen.height * 0.890f, Screen.width * .1f, Screen.height * .1f), "", mHighScoreStyle)) 
+			mHighScoreStyle.fontSize = Mathf.RoundToInt(Screen.width*0.01f);
+			mHighScoreDisplayStyle.fontSize = Mathf.RoundToInt(Screen.width*0.01f);
+	//		GUI.Box(new Rect (Screen.width * 0.01f, Screen.height * 0.01f, Screen.width * 0.12f, Screen.height * .065f), "High Score: " + PlayerPrefs.GetInt ("highscore", 0), mHighScoreDisplayStyle);
+			mHighScoreUIText.text = "High Score: " + PlayerPrefs.GetInt ("highscore", 0);
+			if(!mAskingForConfirm)
 			{
-				StartScoreReset();
+				mHighScoreStyle.normal.background = mResetTexStart;
+				mHighScoreStyle.hover.background = mResetTexHighlightStart;
+				mHighScoreStyle.focused.background = mResetTexHighlightStart;
+				GUI.SetNextControlName("ResetStart");
+
+				if (GUI.Button (new Rect (Screen.width * .01f, Screen.height * 0.890f, Screen.width * .1f, Screen.height * .1f), "", mHighScoreStyle)) 
+				{
+					StartScoreReset();
+				}
+
+			}
+			else
+			{
+				mHighScoreStyle.normal.background = mResetTexAsk;
+				mHighScoreStyle.hover.background = mResetTexAsk;
+				mHighScoreStyle.focused.background = mResetTexAsk;
+				GUI.SetNextControlName("ResetAskText");
+				GUI.Box(new Rect (Screen.width * 0.01f, Screen.height * 0.5f, Screen.width * 0.2f, Screen.height * 0.2f), "", mHighScoreStyle);
+				mHighScoreStyle.normal.background = mResetTexConfirm;
+				mHighScoreStyle.hover.background = mResetTexHighlightConfirm;
+				mHighScoreStyle.focused.background = mResetTexHighlightConfirm;
+				GUI.SetNextControlName("ResetConfirm");
+				if (GUI.Button (new Rect (Screen.width * .05f, Screen.height * 0.65f, Screen.width * .05f, Screen.height * .05f), "", mHighScoreStyle)) 
+				{
+					ConfirmScoreReset();
+				}
+
+				mHighScoreStyle.normal.background = mResetTexCancel;
+				mHighScoreStyle.hover.background = mResetTexHighlightCancel;
+				mHighScoreStyle.focused.background = mResetTexHighlightCancel;
+				GUI.SetNextControlName("ResetCancel");
+				if (GUI.Button (new Rect (Screen.width * .125f, Screen.height * 0.65f, Screen.width * .05f, Screen.height * .05f), "", mHighScoreStyle))
+				{
+					CancelScoreReset();
+				}
+
+
+
 			}
 
+
+			GUI.FocusControl(mGUIFocusControl.mMainMenuButtonNames[mGUIFocusControl.mMainMenuButtonFocus]);
 		}
-		else
-		{
-			mHighScoreStyle.normal.background = mResetTexAsk;
-			mHighScoreStyle.hover.background = mResetTexAsk;
-			mHighScoreStyle.focused.background = mResetTexAsk;
-			GUI.SetNextControlName("ResetAskText");
-			GUI.Box(new Rect (Screen.width * 0.01f, Screen.height * 0.5f, Screen.width * 0.2f, Screen.height * 0.2f), "", mHighScoreStyle);
-			mHighScoreStyle.normal.background = mResetTexConfirm;
-			mHighScoreStyle.hover.background = mResetTexHighlightConfirm;
-			mHighScoreStyle.focused.background = mResetTexHighlightConfirm;
-			GUI.SetNextControlName("ResetConfirm");
-			if (GUI.Button (new Rect (Screen.width * .05f, Screen.height * 0.65f, Screen.width * .05f, Screen.height * .05f), "", mHighScoreStyle)) 
-			{
-				ConfirmScoreReset();
-			}
-
-			mHighScoreStyle.normal.background = mResetTexCancel;
-			mHighScoreStyle.hover.background = mResetTexHighlightCancel;
-			mHighScoreStyle.focused.background = mResetTexHighlightCancel;
-			GUI.SetNextControlName("ResetCancel");
-			if (GUI.Button (new Rect (Screen.width * .125f, Screen.height * 0.65f, Screen.width * .05f, Screen.height * .05f), "", mHighScoreStyle))
-			{
-				CancelScoreReset();
-			}
-
-
-
-		}
-
-
-		GUI.FocusControl(mGUIFocusControl.mMainMenuButtonNames[mGUIFocusControl.mMainMenuButtonFocus]);
-
-	}
+	}//END of OnGUI()
 
 	//Functions to be called by GUI buttons so we can fake pressing buttons with a Game Pad
 

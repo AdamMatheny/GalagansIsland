@@ -115,11 +115,21 @@ public class GetSome : MonoBehaviour
 
 			//Quit Game button ~Adam
 			//mButtonStyle.fontSize = Mathf.RoundToInt(Screen.width*0.01f);
-			GUI.SetNextControlName("QuitGame");
-			if (GUI.Button (new Rect (Screen.width * .89f, Screen.height * 0.890f, Screen.width * .1f, Screen.height * .1f), "", mButtonStyle)) 
+			if(!Application.isMobilePlatform)
 			{
-				Application.Quit();
+				GUI.SetNextControlName("QuitGame");
+				if (GUI.Button (new Rect (Screen.width * .89f, Screen.height * 0.890f, Screen.width * .1f, Screen.height * .1f), "", mButtonStyle)) 
+				{
+					Application.Quit();
+				}
 			}
+			else
+			{
+				GUI.SetNextControlName("QuitGame");
+				if (GUI.Button (new Rect (Screen.width * .59f, Screen.height * 0.870f, Screen.width * .41f, Screen.height * .115f), "", mButtonStyle)) 
+				{
+					Application.Quit();
+				}			}
 		}
 
 		GUI.FocusControl(mGUIFocusControl.mMainMenuButtonNames[mGUIFocusControl.mMainMenuButtonFocus]);
