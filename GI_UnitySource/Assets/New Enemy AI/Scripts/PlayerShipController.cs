@@ -225,8 +225,14 @@ public class PlayerShipController : MonoBehaviour
 		}
 		
 		//Increase movement speed as we progress through levels
-		mMovementSpeed = ( mBaseMovementSpeed + (6f/25f*Application.loadedLevel) ) /Time.timeScale;
-		
+		if(Time.timeScale > 0f)
+		{
+			mMovementSpeed = ( mBaseMovementSpeed + (6f/25f*Application.loadedLevel) ) /Time.timeScale;
+		}
+		else
+		{
+			mMovementSpeed = ( mBaseMovementSpeed + (6f/25f*Application.loadedLevel) );
+		}
 		//Make the player drift toward the bottom of the screen
 		// transform.position += new Vector3(0f,mDropSpeed*-1f, 0f);
 		if(mMoveDir.y < 0f && mDriftDown)
@@ -299,7 +305,7 @@ public class PlayerShipController : MonoBehaviour
 		}
 		
 		//Movement input for mouse/touch
-		if(Input.GetMouseButton(0) && (Application.isMobilePlatform))
+		if(Input.GetMouseButton(0) && (Application.isMobilePlatform)  && Time.timeScale != 0f)
 		{
 			Vector3 screenPos = Camera.main.WorldToScreenPoint(this.transform.position);
 			//Debug.Log(screenPos + ", " + Input.mousePosition);
@@ -326,7 +332,7 @@ public class PlayerShipController : MonoBehaviour
 		// }
 		
 		//Taking in diretional Input from the keyboard
-		else if (horizontal != 0.0f || vertical != 0.0f)
+		else if (horizontal != 0.0f || vertical != 0.0f && Time.timeScale != 0f)
 		{
 			
 			

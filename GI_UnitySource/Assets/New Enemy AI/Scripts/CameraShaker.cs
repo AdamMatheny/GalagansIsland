@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using XInputDotNetPure; // Pluging for game pad rumble
 
 public class CameraShaker : MonoBehaviour 
 {
@@ -43,9 +44,12 @@ public class CameraShaker : MonoBehaviour
 		{
 			transform.position = mStartingPosition+(Random.insideUnitSphere * strength);
 			mShakeTime -= Time.deltaTime;
+			GamePad.SetVibration(0, strength, strength);
+
 		}
 		else
 		{
+			GamePad.SetVibration(0, 0, 0);
 			mShakeTime = 0f;
 			transform.position = mStartingPosition;
 		}
