@@ -222,35 +222,38 @@ public class PauseManager : MonoBehaviour
 		//Change layout slightly for mobile portrait view ~Adam
 		else
 		{
-			GUI.Box(new Rect(0,0, Screen.width,Screen.height),"");
-			
-			mPauseMenuStyle.normal.background = mContinueTex;
-			mPauseMenuStyle.hover.background = mContinueTexHighlight;
-			mPauseMenuStyle.active.background = mContinueTexHighlight;
-			if (GUI.Button (new Rect (Screen.width*0.2f, Screen.height*0.21f, Screen.width*0.6f, Screen.height*0.14f), "", mPauseMenuStyle)) 
-			{
-				UnPause();
-			}
-			mPauseMenuStyle.normal.background = mReturnTex;
-			mPauseMenuStyle.hover.background = mReturnTexHighlight;
-			mPauseMenuStyle.active.background = mReturnTexHighlight;
-			if (GUI.Button (new Rect (Screen.width*0.2f, Screen.height*0.41f, Screen.width*0.6f, Screen.height*0.14f), "", mPauseMenuStyle)) 
-			{
-				Time.timeScale = 1;
-				Destroy(FindObjectOfType<PlayerShipController>().gameObject);
-				Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
-				Destroy(FindObjectOfType<ScoreManager>().gameObject);
-				Application.LoadLevel(0);
-			}
-			mPauseMenuStyle.normal.background = mQuitTex;
-			mPauseMenuStyle.hover.background = mQuitTexHighlight;
-			mPauseMenuStyle.active.background = mQuitTexHighlight;
-			if (GUI.Button (new Rect (Screen.width*0.2f, Screen.height*0.61f, Screen.width*0.6f, Screen.height*0.14f), "", mPauseMenuStyle)) 
-			{
-				Application.Quit();
-			}
+            if (Time.timeScale == 0)
+            {
 
-			
+                GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
+
+                mPauseMenuStyle.normal.background = mContinueTex;
+                mPauseMenuStyle.hover.background = mContinueTexHighlight;
+                mPauseMenuStyle.active.background = mContinueTexHighlight;
+                if (GUI.Button(new Rect(Screen.width * 0.2f, Screen.height * 0.21f, Screen.width * 0.6f, Screen.height * 0.14f), "", mPauseMenuStyle))
+                {
+                    UnPause();
+                }
+                mPauseMenuStyle.normal.background = mReturnTex;
+                mPauseMenuStyle.hover.background = mReturnTexHighlight;
+                mPauseMenuStyle.active.background = mReturnTexHighlight;
+                if (GUI.Button(new Rect(Screen.width * 0.2f, Screen.height * 0.41f, Screen.width * 0.6f, Screen.height * 0.14f), "", mPauseMenuStyle))
+                {
+                    Time.timeScale = 1;
+                    Destroy(FindObjectOfType<PlayerShipController>().gameObject);
+                    Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
+                    Destroy(FindObjectOfType<ScoreManager>().gameObject);
+                    Application.LoadLevel(0);
+                }
+                mPauseMenuStyle.normal.background = mQuitTex;
+                mPauseMenuStyle.hover.background = mQuitTexHighlight;
+                mPauseMenuStyle.active.background = mQuitTexHighlight;
+                if (GUI.Button(new Rect(Screen.width * 0.2f, Screen.height * 0.61f, Screen.width * 0.6f, Screen.height * 0.14f), "", mPauseMenuStyle))
+                {
+                    Application.Quit();
+                }
+
+            }
 		}
 	}//END of OnGUI
 

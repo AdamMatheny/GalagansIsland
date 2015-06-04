@@ -104,6 +104,11 @@ public class PlayerShipController : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+        if (Application.isMobilePlatform)
+        {
+            mBaseMovementSpeed = 20.0f;
+        }
+
 		mShipCreationLevel = Application.loadedLevel;
 		
 		PlayerShipController[] otherPlayerShips = FindObjectsOfType<PlayerShipController>();
@@ -306,11 +311,14 @@ public class PlayerShipController : MonoBehaviour
 		{
 			Vector3 screenPos = Camera.main.WorldToScreenPoint(this.transform.position);
 			//Debug.Log(screenPos + ", " + Input.mousePosition);
-			Vector3 translationDirection = Vector3.Normalize(Input.mousePosition+new Vector3(0f,10f,0f)-screenPos);
+
+            Vector3 transitionAboveFinger = new Vector3(0f, Screen.height * 0.1f, 0f);
+			Vector3 translationDirection = Vector3.Normalize(Input.mousePosition + transitionAboveFinger - screenPos);
+
 			//Debug.Log(translationDirection*mMovementSpeed*Time.deltaTime);
 			
 			//For making the ship drift down when not trying to go up
-			if(Input.mousePosition.y+10f > screenPos.y-10f)
+            if (Input.mousePosition.y + 10f + Screen.height * 0.1f > screenPos.y - 10f)
 			{
 				mDriftDown = false;
 			}
@@ -502,6 +510,10 @@ public class PlayerShipController : MonoBehaviour
 		{
 			
 			isOverheated = false;
+            if (Application.isMobilePlatform) //Start shooting when weapons are Cool. Lol, weapons are always cool.
+            {
+                mToggleFireOn = true;
+            }
 		}
 		
 		if(Input.GetButton("Thrusters"))

@@ -9,11 +9,9 @@ public class cursorScript : MonoBehaviour
 
 	void Start()
 	{
-		Cursor.SetCursor (sprite, center, CursorMode.Auto);
-	}
-
-	void Update()
-	{
-		//center = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        if (!Application.isMobilePlatform) //Use Cursor only on non Mobile Platforms
+        {
+            Cursor.SetCursor(sprite, center, CursorMode.Auto);
+        }
 	}
 }
