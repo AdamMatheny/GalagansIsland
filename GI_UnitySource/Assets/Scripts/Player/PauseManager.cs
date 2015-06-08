@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using InControl;
 
 public class PauseManager : MonoBehaviour 
 {
@@ -64,7 +65,7 @@ public class PauseManager : MonoBehaviour
 				//For using keyboard/Gamepad to navigate pause menu ~Adam
 				if(mUIFocusTimer <= 0f)
 				{
-					if(Input.GetAxisRaw ("Vertical") < 0)
+					if(Input.GetAxisRaw ("Vertical") < 0 || InputManager.ActiveDevice.DPadDown.WasPressed)
 					{
 					Debug.Log("Down button pressed");
 						switch(mPauseButtonFocus)
@@ -85,7 +86,7 @@ public class PauseManager : MonoBehaviour
 							break;
 						}
 					}
-					else if(Input.GetAxisRaw ("Vertical") > 0)
+				else if(Input.GetAxisRaw ("Vertical") > 0 || InputManager.ActiveDevice.DPadUp.WasPressed)
 					{
 					Debug.Log("Up button pressed");
 					switch(mPauseButtonFocus)
@@ -110,7 +111,7 @@ public class PauseManager : MonoBehaviour
 			//}
 			
 			
-			if(Input.GetButtonDown("Thrusters") || Input.GetButtonDown("FireGun") )
+			if(Input.GetButtonDown("Thrusters") || Input.GetButtonDown("FireGun") || InputManager.ActiveDevice.Action1.WasPressed)
 			{
 				switch(mPauseButtonFocus)
 				{
@@ -135,7 +136,7 @@ public class PauseManager : MonoBehaviour
 		}
 
 		//Press P to Pause/Unpause the game
-		if (Input.GetButtonDown ("PauseButton")) 
+		if (Input.GetButtonDown ("PauseButton"))// || InputManager.ActiveDevice.MenuWasPressed) 
 		{
 			
 			if(Time.timeScale != 1)

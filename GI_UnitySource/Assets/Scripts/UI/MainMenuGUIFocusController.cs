@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using InControl;
 
 public class MainMenuGUIFocusController : MonoBehaviour 
 {
@@ -33,9 +34,16 @@ public class MainMenuGUIFocusController : MonoBehaviour
 		{
 			mUIFocusTimer -= Time.deltaTime;
 		}
-
-		if (Input.GetButtonDown("Thrusters") || Input.GetButtonDown("FireGun"))
+		if(InputManager.ActiveDevice.Action1.WasPressed)
 		{
+			Debug.Log("Pressed Action 1");
+		}
+		if (Input.GetButtonDown("Thrusters") || Input.GetButtonDown("FireGun") || (InputManager.ActiveDevice.Action1.IsPressed && mUIFocusTimer<=0f))
+		{
+			if(InputManager.ActiveDevice.Action1.IsPressed)
+			{
+				mUIFocusTimer+=0.2f;
+			}
 			switch(mMainMenuButtonFocus)
 			{
 			case 0:
@@ -73,7 +81,7 @@ public class MainMenuGUIFocusController : MonoBehaviour
 	{
 
 		//Move from insert coin to quit game ~Adam
-		if(Input.GetAxis ("Horizontal") > 0f && mUIFocusTimer <= 0f && mMainMenuButtonFocus == 0 && mGameStarter.isActiveAndEnabled == true)
+		if((Input.GetAxis ("Horizontal") > 0f || InputManager.ActiveDevice.DPadRight.IsPressed) && mUIFocusTimer <= 0f && mMainMenuButtonFocus == 0 && mGameStarter.isActiveAndEnabled == true)
 		{
 			mMainMenuButtonFocus = 1;
 			mUIFocusTimer = 0.2f;
@@ -81,7 +89,7 @@ public class MainMenuGUIFocusController : MonoBehaviour
 
 
 		//Move from score quit game to insert coin ~Adam
-		else if(Input.GetAxis ("Horizontal") < 0f && mUIFocusTimer <= 0f && mMainMenuButtonFocus == 1)
+		else if((Input.GetAxis ("Horizontal") < 0f || InputManager.ActiveDevice.DPadLeft.IsPressed) && mUIFocusTimer <= 0f && mMainMenuButtonFocus == 1)
 		{
 			mMainMenuButtonFocus = 0;
 			mUIFocusTimer = 0.2f;
@@ -90,14 +98,14 @@ public class MainMenuGUIFocusController : MonoBehaviour
 
 
 		//Move from focusing on "Insert Coin" to focusing on score reset ~Adam
-		else if(Input.GetAxis ("Horizontal") < 0f && mUIFocusTimer<= 0f && mMainMenuButtonFocus == 0)
+		else if((Input.GetAxis ("Horizontal") < 0f || InputManager.ActiveDevice.DPadLeft.IsPressed) && mUIFocusTimer<= 0f && mMainMenuButtonFocus == 0)
 		{
 			mMainMenuButtonFocus = 2;
 			mUIFocusTimer = 0.2f;
 		}
 		
 		//Move from score reset to insert coin ~Adam
-		else if(Input.GetAxis ("Horizontal") > 0f && mUIFocusTimer <= 0f && mMainMenuButtonFocus == 2 && mGameStarter.isActiveAndEnabled == true)
+		else if((Input.GetAxis ("Horizontal") > 0f && mUIFocusTimer <= 0f || InputManager.ActiveDevice.DPadRight.IsPressed) && mMainMenuButtonFocus == 2 && mGameStarter.isActiveAndEnabled == true)
 		{
 			mMainMenuButtonFocus = 0;
 			mUIFocusTimer = 0.2f;
@@ -105,7 +113,7 @@ public class MainMenuGUIFocusController : MonoBehaviour
 
 
 		//Toggle between canceling/confirming the high score reset ~Adam
-		else if(Input.GetAxis ("Horizontal") != 0f && mUIFocusTimer<= 0f && (mMainMenuButtonFocus == 5 || mMainMenuButtonFocus == 4))
+		else if((Input.GetAxis ("Horizontal") != 0f || InputManager.ActiveDevice.DPadRight.IsPressed || InputManager.ActiveDevice.DPadLeft.IsPressed) && mUIFocusTimer<= 0f && (mMainMenuButtonFocus == 5 || mMainMenuButtonFocus == 4))
 		{
 			if(mMainMenuButtonFocus == 4)
 			{

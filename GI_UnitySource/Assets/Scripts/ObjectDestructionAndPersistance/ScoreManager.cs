@@ -282,6 +282,10 @@ public class ScoreManager : MonoBehaviour
 				else
 				{
 					mScore -= 10;
+					if(mScore <-1)
+					{
+						mScore = -1;
+					}
 					mLivesRemaining--;
 					mPlayerAvatar.GetComponent<PlayerShipController>().StartSpin();
 					Camera.main.GetComponent<CameraShaker>().ShakeCameraDeath();

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using InControl;
 
 public class PlayerShipController : MonoBehaviour 
 {
@@ -138,7 +139,7 @@ public class PlayerShipController : MonoBehaviour
 	void Update () 
 	{
 		maxHeatLevel = mBaseHeatMax +  mBaseHeatMax * Application.loadedLevel/26f;
-
+		GetComponent<AudioSource>().volume = 0.18f*(30f-Application.loadedLevel)/30f;
 
 		if (cheats) {
 			
@@ -282,7 +283,23 @@ public class PlayerShipController : MonoBehaviour
 		float horizontal = Input.GetAxis("Horizontal");
 		float vertical = Input.GetAxis("Vertical");
 
-		
+		if(InputManager.ActiveDevice.DPadDown.IsPressed)
+		{
+			vertical = -1f;
+		}
+		if(InputManager.ActiveDevice.DPadUp.IsPressed)
+		{
+			vertical = 1f;
+		}
+		if(InputManager.ActiveDevice.DPadLeft.IsPressed)
+		{
+			horizontal = -1f;
+		}
+		if(InputManager.ActiveDevice.DPadRight.IsPressed)
+		{
+			horizontal = 1f;
+		}
+
 		
 		//Delete the ship if we've returned to the title screen
 		if(Application.loadedLevel == 0)
@@ -394,8 +411,10 @@ public class PlayerShipController : MonoBehaviour
 		
 		//Toggle bullet firing
 		//if(Input.getbu("Fire2"))
-		if(Input.GetButtonDown("FireGun"))
+		//Debug.Log(InputManager.ActiveDevice.IsKnown);
+		if(InputManager.ActiveDevice.Action1.WasPressed || Input.GetButtonDown("FireGun"))
 		{
+			Debug.Log("InControl button pressed");
 			ToggleFire();
 		}
 		
@@ -457,7 +476,7 @@ public class PlayerShipController : MonoBehaviour
 						
 					}
 					GetComponent<AudioSource> ().Play ();
-					Camera.main.GetComponent<CameraShaker> ().ShakeCamera ();
+					//Camera.main.GetComponent<CameraShaker> ().ShakeCamera ();
 					if (mShipRecovered) 
 					{
 						GameObject secondBullet;
@@ -516,8 +535,12 @@ public class PlayerShipController : MonoBehaviour
             }
 		}
 		
-		if(Input.GetButton("Thrusters"))
+		if(InputManager.ActiveDevice.Action2.IsPressed || Input.GetButton("Thrusters"))
 		{
+			if(InputManager.ActiveDevice.Action2.IsPressed)
+			{
+				Debug.Log("InControl recognized Action2");
+			}
 			mDropSpeed -= mDropDeccelRate*3f;
 			if(mDropSpeed <= 0.01f)
 			{

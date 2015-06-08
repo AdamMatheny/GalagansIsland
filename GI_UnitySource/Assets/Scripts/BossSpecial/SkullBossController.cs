@@ -311,12 +311,18 @@ public class SkullBossController : MonoBehaviour
 		if(mLeftHornAlive || mRightHornAlive)
 		{
 //			Instantiate(mEyeBeam, mEyeball.transform.position+new Vector3(0f,0f,0.05f), Quaternion.identity);
-			mEyeBeamPartSmall.GetComponent<ParticleSystem>().Play();
+			if(!mEyeBeamPartSmall.GetComponent<ParticleSystem>().isPlaying)
+			{
+				mEyeBeamPartSmall.GetComponent<ParticleSystem>().Play();
+			}
 		}
 		else
 		{
 //			Instantiate(mEyeBeamAlt, mEyeball.transform.position+new Vector3(0f,0f,0.05f), Quaternion.identity);
-			mEyeBeamPartFinal.GetComponent<ParticleSystem>().Play();
+			if(!mEyeBeamPartFinal.GetComponent<ParticleSystem>().isPlaying)
+			{
+				mEyeBeamPartFinal.GetComponent<ParticleSystem>().Play();
+			}
 			mEyeBeamPartSmall.GetComponent<ParticleSystem>().Stop();
 		}
 	}//ENd of FireEyeBeam()
