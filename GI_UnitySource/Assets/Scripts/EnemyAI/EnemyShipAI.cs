@@ -130,6 +130,7 @@ public class EnemyShipAI : MonoBehaviour
 
 		mDefaultSpeed = mSpeed;
 		mSpeed = mFormSpeed;
+		transform.localScale= new Vector3(2f,2f,2f);
 	}//END of Start()
 	
 	// Update is called once per frame
