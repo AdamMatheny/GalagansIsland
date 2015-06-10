@@ -6,12 +6,12 @@ using XInputDotNetPure; // Required in C#
 
 public class PlayerShipController : MonoBehaviour 
 {
-	public GameObject playerClone;
+	public GameObject mPlayerClone;
 
 	bool playerIndexSet = false;
 	public PlayerIndex playerIndex;
-	GamePadState state;
-	GamePadState prevState;
+//	GamePadState state;
+//	GamePadState prevState;
 	
 	public bool cheats = false;
 	//For if we ever animate the ship ~Adam
@@ -112,11 +112,13 @@ public class PlayerShipController : MonoBehaviour
 	void Start () 
 	{
 
-		transform.localScale = new Vector3 (1.75f, 1.75f, 1.75f);
+		//transform.localScale = new Vector3 (1.75f, 1.75f, 1.75f);
 
+		//Adjust speed and scale for mobile ~Adam
 		if (Application.isMobilePlatform)
 		{
 			mBaseMovementSpeed = 20.0f;
+			transform.localScale = new Vector3(1.75f,1.75f,1.75f);
 		}
 		
 		mShipCreationLevel = Application.loadedLevel;
@@ -147,8 +149,8 @@ public class PlayerShipController : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		prevState = state;
-		state = GamePad.GetState(playerIndex);
+//		prevState = state;
+//		state = GamePad.GetState(playerIndex);
 
 		maxHeatLevel = mBaseHeatMax +  mBaseHeatMax * Application.loadedLevel/26f;
 		GetComponent<AudioSource>().volume = 0.18f*(30f-Application.loadedLevel)/30f;
@@ -182,7 +184,7 @@ public class PlayerShipController : MonoBehaviour
 			}
 		}
 		
-		
+
 		//Toggle shield sprites ~Adam
 		if(mShielded)
 		{
@@ -191,7 +193,7 @@ public class PlayerShipController : MonoBehaviour
 			
 			mMainShipShieldSprite.enabled = true;
 			mMainShipShieldSprite.GetComponent<Light>().enabled = true;
-			if(mShipRecovered)
+			if(mShipRecovered && Application.isMobilePlatform)
 			{
 				mSecondShipShieldSprite.enabled = true;
 				mSecondShipShieldSprite.GetComponent<Light>().enabled = true;
@@ -295,7 +297,7 @@ public class PlayerShipController : MonoBehaviour
 		float horizontal = Input.GetAxis("Horizontal");
 		float vertical = Input.GetAxis("Vertical");
 		
-		/*if(InputManager.ActiveDevice.DPadDown.IsPressed)
+		if(InputManager.ActiveDevice.DPadDown.IsPressed)
 		{
 			vertical = -1f;
 		}
@@ -310,7 +312,7 @@ public class PlayerShipController : MonoBehaviour
 		if(InputManager.ActiveDevice.DPadRight.IsPressed)
 		{
 			horizontal = 1f;
-		}*/
+		}
 		
 		
 		//Delete the ship if we've returned to the title screen
@@ -422,25 +424,20 @@ public class PlayerShipController : MonoBehaviour
 		//END of Keyboard Movement Controls
 		
 		//Toggle bullet firing
-		//if(Input.getbu("Fire2"))
 		//Debug.Log(InputManager.ActiveDevice.IsKnown);
-		/*if(InputManager.ActiveDevice.Action1.WasPressed || Input.GetButtonDown("FireGun"))
+		//Keyboard and mouse input and InControl Gamepad input ~Adam
+		if(InputManager.ActiveDevice.Action1.WasPressed || Input.GetButtonDown("FireGun"))
 		{
-			Debug.Log("InControl button pressed");
-			ToggleFire();
-		}*/
-
-		/*if(InputManager.ActiveDevice.Action1.WasPressed || Input.GetButtonDown("FireGun"))
-		{
-			Debug.Log("InControl button pressed");
-			ToggleFire();
-		}*/
-
-		if (state.Buttons.A == ButtonState.Pressed && prevState.Buttons.A == ButtonState.Released) {
-
 			Debug.Log("InControl button pressed");
 			ToggleFire();
 		}
+
+		//Jonathan's alternate control input
+//		if (state.Buttons.A == ButtonState.Pressed && prevState.Buttons.A == ButtonState.Released) {
+//
+//			Debug.Log("InControl button pressed");
+//			ToggleFire();
+//		}
 		
 		if (isOverheated) 
 		{
@@ -488,11 +485,12 @@ public class PlayerShipController : MonoBehaviour
 					if (mThreeBullet) 
 					{
 						
-						if(!mShipRecovered)
+						if(!mShipRecovered || !Application.isMobilePlatform)
 						{
 							Instantiate (mSideBullet, mBulletSpawns[2].position, mMainShip.transform.rotation * Quaternion.Euler (0f, 0f, 10f) * Quaternion.Euler (0f,0f,Random.Range(-5.0f,5.0f)));
 						}
-						else
+						//Do side ship instead of twin-stick ship on mobile
+						else if(mShipRecovered && Application.isMobilePlatform)
 						{
 							Instantiate (mSideBullet, mBulletSpawns[2].position, mMainShip.transform.rotation * Quaternion.Euler (0f, 0f, 5f) * Quaternion.Euler (0f,0f,Random.Range(-10.0f,3.0f)));
 						}
@@ -501,11 +499,12 @@ public class PlayerShipController : MonoBehaviour
 					}
 					GetComponent<AudioSource> ().Play ();
 					//Camera.main.GetComponent<CameraShaker> ().ShakeCamera ();
-					if (mShipRecovered) 
+					//Do side ship instead of twin-stick ship on mobile
+					if (mShipRecovered && Application.isMobilePlatform) 
 					{
 
 
-						/*GameObject secondBullet;
+						GameObject secondBullet;
 						secondBullet = Instantiate (mBulletPrefab, mBulletSpawns[1].position, mSecondShip.transform.rotation * Quaternion.Euler (0f,0f,Random.Range(-3.0f,3.0f))) as GameObject;
 						secondBullet.name = "SECONDBULLET";
 						if (mThreeBullet) 
@@ -513,7 +512,7 @@ public class PlayerShipController : MonoBehaviour
 							Instantiate (mSideBullet, mBulletSpawns[4].position, mSecondShip.transform.rotation * Quaternion.Euler (0f, 0f, 10f) * Quaternion.Euler (0f,0f,Random.Range(-5.0f,5.0f)));
 
 							Instantiate (mSideBullet, mBulletSpawns[5].position, mSecondShip.transform.rotation * Quaternion.Euler (0f, 0f, -5f) * Quaternion.Euler (0f,0f,Random.Range(-3.0f,10.0f)));
-						}*/
+						}
 					}
 					//Reset the timer to fire bullets.  The later the level, the smaller the time between shots
 					if(mSpinning == 0)
@@ -560,8 +559,9 @@ public class PlayerShipController : MonoBehaviour
 				mToggleFireOn = true;
 			}
 		}
-		
-		/*if(InputManager.ActiveDevice.Action2.IsPressed || Input.GetButton("Thrusters"))
+
+		//Keyboard and mouse input and InControl Gamepad input ~Adam
+		if(InputManager.ActiveDevice.Action2.IsPressed || Input.GetButton("Thrusters"))
 		{
 			if(InputManager.ActiveDevice.Action2.IsPressed)
 			{
@@ -587,31 +587,32 @@ public class PlayerShipController : MonoBehaviour
 					shipTrail.enableEmission = true;
 				}
 			}
-		}*/
-
-		if (state.Buttons.X == ButtonState.Pressed) {
-
-			mDropSpeed -= mDropDeccelRate*3f;
-			if(mDropSpeed <= 0.01f)
-			{
-				mDropSpeed = 0.00f;
-			}
-			
-			if(mMoveDir.y < -0.2f)
-			{
-				foreach (ParticleSystem shipTrail in this.GetComponentsInChildren<ParticleSystem>())
-				{
-					shipTrail.enableEmission = false;
-				}
-			}
-			else
-			{
-				foreach (ParticleSystem shipTrail in this.GetComponentsInChildren<ParticleSystem>())
-				{
-					shipTrail.enableEmission = true;
-				}
-			}
 		}
+
+		//Jonathan's alternative input method
+//		if (state.Buttons.X == ButtonState.Pressed) {
+//
+//			mDropSpeed -= mDropDeccelRate*3f;
+//			if(mDropSpeed <= 0.01f)
+//			{
+//				mDropSpeed = 0.00f;
+//			}
+//			
+//			if(mMoveDir.y < -0.2f)
+//			{
+//				foreach (ParticleSystem shipTrail in this.GetComponentsInChildren<ParticleSystem>())
+//				{
+//					shipTrail.enableEmission = false;
+//				}
+//			}
+//			else
+//			{
+//				foreach (ParticleSystem shipTrail in this.GetComponentsInChildren<ParticleSystem>())
+//				{
+//					shipTrail.enableEmission = true;
+//				}
+//			}
+//		}
 		
 		//Move the ship by the mMoveDir vector if not paused
 		if(Time.timeScale != 0f)
@@ -662,38 +663,45 @@ public class PlayerShipController : MonoBehaviour
 			//mSecondShipAnimator.SetBool("IsFiring", false);
 		}
 		
-		
-		//Control whether or not to render the second ship 
-		if (mShipRecovered)
-		{
-			playerClone.SetActive(true);
 
-			/*mSecondShip.GetComponent<SpriteRenderer>().enabled = true;
-			foreach (ParticleSystem shipTrail in mSecondShip.GetComponentsInChildren<ParticleSystem>())
+
+
+		//Control whether or not to render the second ship on the side on mobile
+		if(Application.isMobilePlatform)
+		{
+			if (mShipRecovered)
 			{
-				if(!(mMoveDir.y < 0f && mDriftDown))
+				mSecondShip.GetComponent<SpriteRenderer>().enabled = true;
+				foreach (ParticleSystem shipTrail in mSecondShip.GetComponentsInChildren<ParticleSystem>())
 				{
-					shipTrail.enableEmission = true;
+					if(!(mMoveDir.y < 0f && mDriftDown))
+					{
+						shipTrail.enableEmission = true;
+					}
 				}
-			}*/
-		}
-		else
-		{
-			playerClone.SetActive(false);
-
-			mSecondShip.GetComponent<SpriteRenderer>().enabled = false;
-			foreach (ParticleSystem shipTrail in mSecondShip.GetComponentsInChildren<ParticleSystem>())
+			}
+		
+			else
 			{
-				shipTrail.enableEmission = false;
+				mSecondShip.GetComponent<SpriteRenderer>().enabled = false;
+				foreach (ParticleSystem shipTrail in mSecondShip.GetComponentsInChildren<ParticleSystem>())
+				{
+					shipTrail.enableEmission = false;
+				}
 			}
 		}
-		
+		//If not mobile, base ship recoved on whether or not the clone ship is alive/active
+		else
+		{
+			mShipRecovered = (mPlayerClone != null);
+		}
+
 	}//END of Update()
 	
 	void LateUpdate () 
 	{
 		//Keep ship within screen bounds
-		if (transform.position.x < -17.5 && mShipRecovered)
+		if (transform.position.x < -17.5 && mShipRecovered && Application.isMobilePlatform)
 		{
 			transform.position = new Vector3(-17.5f, transform.position.y, transform.position.z);
 		}
@@ -731,63 +739,7 @@ public class PlayerShipController : MonoBehaviour
 		//mToggleFireOn = false;
 	}
 	
-	void OnGUI()
-	{
-		//For the spread fire timer that follows the ship -Adam
-		/* if(mThreeBullet)
-		{
-			Vector3 screenPos = Camera.main.WorldToScreenPoint(this.transform.position);
-			//Draw the triple bullet timer ~Adam
-			//GUI.DrawTexture(new Rect(screenPos.x-Screen.width*0.016f, Screen.height-screenPos.y+Screen.height*0.022f, Screen.width*0.0008f*30+Screen.width*0.008f, Screen.height*0.012f),mBulletTimerTubeTex); 
-			GUI.DrawTexture(new Rect(screenPos.x+Screen.width*0.016f, Screen.height-screenPos.y+Screen.height*0.0315f, Screen.width*0.006f, -1f*(Screen.height*0.045f+Screen.height*0.014f)),mBulletTimerTubeTex); 
 
-			//GUI.DrawTexture(new Rect(screenPos.x-Screen.width*0.012f, Screen.height-screenPos.y+Screen.height*0.022f, Screen.width*0.0008f*mThreeBulletTimer, Screen.height*0.012f),mBulletTimerTex); 
-			GUI.DrawTexture(new Rect(screenPos.x+Screen.width*0.016f, Screen.height-screenPos.y+Screen.height*0.025f, Screen.width*0.006f, -1f*(Screen.height*0.045f*mThreeBulletTimer/30f)),mBulletTimerTexVert); 
-
-		} */
-		//		elase if(mShielded && !mThreeBullet)
-		//		{
-		//			Vector3 screenPos = Camera.main.WorldToScreenPoint(this.transform.position);
-		//			//Draw the shield timer ~Adam
-		//			GUI.DrawTexture(new Rect(screenPos.x-Screen.width*0.016f, Screen.height-screenPos.y+Screen.height*0.022f, Screen.width*0.0008f*30+Screen.width*0.008f, Screen.height*0.012f),mBulletTimerTubeTex); 
-		//			GUI.DrawTexture(new Rect(screenPos.x-Screen.width*0.012f, Screen.height-screenPos.y+Screen.height*0.022f, Screen.width*0.0008f*mShieldTimer, Screen.height*0.012f),mShieldTimerTex); 
-		//		}
-		//		else if (mThreeBullet && mShielded)
-		//		{
-		//			Vector3 screenPos = Camera.main.WorldToScreenPoint(this.transform.position);
-		//			//Draw the triple bullet timer ~Adam
-		//			GUI.DrawTexture(new Rect(screenPos.x-Screen.width*0.016f, Screen.height-screenPos.y+Screen.height*0.015f, Screen.width*0.0008f*30+Screen.width*0.008f, Screen.height*0.012f),mBulletTimerTubeTex); 
-		//			GUI.DrawTexture(new Rect(screenPos.x-Screen.width*0.012f, Screen.height-screenPos.y+Screen.height*0.015f, Screen.width*0.0008f*mThreeBulletTimer, Screen.height*0.012f),mBulletTimerTex); 
-		//			//Draw the shield timer ~Adam
-		//			GUI.DrawTexture(new Rect(screenPos.x-Screen.width*0.016f, Screen.height-screenPos.y+Screen.height*0.027f, Screen.width*0.0008f*30+Screen.width*0.008f, Screen.height*0.012f),mBulletTimerTubeTex); 
-		//			GUI.DrawTexture(new Rect(screenPos.x-Screen.width*0.012f, Screen.height-screenPos.y+Screen.height*0.027f, Screen.width*0.0008f*mShieldTimer, Screen.height*0.012f),mShieldTimerTex); 
-		//		}
-		
-		
-		//For drawing meters on the side of the screen
-		//		if(Application.loadedLevelName != "Credits")
-		//		{
-		//			GUI.DrawTexture(new Rect(Screen.width * .9f, Screen.height * 0.890f, Screen.width * .09f, Screen.height * .1f), mSideMetersTex);
-		//			GUI.DrawTexture(new Rect(Screen.width * .901f, Screen.height * 0.892f, Screen.width*.0542f*(heatLevel/90f), Screen.height*0.03f),mOverheatTimerTex);
-		//			if(isOverheated)
-		//			{
-		//				GUI.DrawTexture(new Rect(Screen.width * .901f, Screen.height * 0.892f, Screen.width*.0542f, Screen.height*0.03f),mOverheatWarningTex);
-		//			}
-		//			else
-		//			{
-		//				GUI.DrawTexture(new Rect(Screen.width * .901f+Screen.width*.0502f*(maxHeatLevel/90f), Screen.height * 0.892f, Screen.width*.004f, Screen.height*0.03f),mOverheatWarningTex);
-		//			}
-		//			if(mThreeBullet)
-		//			{
-		//				GUI.DrawTexture(new Rect(Screen.width * .901f, Screen.height * 0.9235f, Screen.width*.0542f*Mathf.Max(mThreeBulletTimer/30f,0f), Screen.height*0.03f),mBulletTimerTex); 
-		//			}
-		//			if(mShielded)
-		//			{
-		//				GUI.DrawTexture(new Rect(Screen.width * .901f, Screen.height * 0.955f, Screen.width*.0542f*(mShieldTimer/30f), Screen.height*0.03f),mShieldTimerTex); 
-		//			}
-		//		}
-		
-	}
 	
 	public void StartSpin()
 	{
@@ -799,15 +751,7 @@ public class PlayerShipController : MonoBehaviour
 		}
 	}
 	
-	/*public void OnTriggerEnter(Collider other){
 
-Debug.Log (other);
-
-if (other.gameObject.GetComponent<Laser> () != null) {
-
-Debug.Log("Collided with IT!");
-}
-}*/
 	
 	public void SpinShip(float spinDir)
 	{

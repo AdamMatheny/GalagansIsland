@@ -7,6 +7,7 @@ using System.Collections;
 
 public class CapturedShip : MonoBehaviour 
 {
+	[SerializeField] private GameObject mCloneShip; //The clone ship that gets spawned on death
 
 	public bool mInTow = true;
 	PlayerShipController mPlayer;
@@ -111,21 +112,32 @@ public class CapturedShip : MonoBehaviour
 	void OnCollisionEnter(Collision other)
 	{
 
-		//Get destroyed when colliding with a bullet
-		//Invulnerable while still being towed around
-		//Upon destruction, the player is awarded with a second ship that stays attached to their main ship, enabling them to fire double the amount of projectiles, and is destroyed in the place of losing a life the next time the player is hit
+		//Get destroyed when colliding with a bullet -Adam
+		//Invulnerable while still being towed around -Adam
+		//Upon destruction, the player is awarded with a second ship that stays attached to their main ship, enabling them to fire double the amount of projectiles, and is destroyed in the place of losing a life the next time the player is hit -Ada,
 		if (other.gameObject.tag == "Player Bullet" && (!mInTow || mGrabbingEnemy == null || !mGrabbingEnemy.mInvincible) )
 		{
-			//Create a particle death effect
+			//Create a particle death effect -Adam
 			Instantiate(mDeathEffect, transform.position, Quaternion.identity);
-			//Destroy the bullet that hit the captured ship
+			//Destroy the bullet that hit the captured ship -ADam
 			Destroy(other.gameObject);
 
-			//Give the player a second ship, which can in turn be stolen back by grabber enemies
+			//Give the player a second ship, which can in turn be stolen back by grabber enemies -Adam
 			mPlayer.mShipStolen = false;
 			mPlayer.mShipRecovered = true;
-			Instantiate(mSecondShipSpawnEffect, mPlayer.mSecondShip.transform.position, Quaternion.identity);
-
+			//Give a ship attached to the side of the main ship if mobile and make an effect as it spawns -Adam
+			if(Application.isMobilePlatform)
+			{
+				Instantiate(mSecondShipSpawnEffect, mPlayer.mSecondShip.transform.position, Quaternion.identity);
+			}
+			//If not mobile, spawn a clone ship next to the player and make an effect as it spawns -Adam
+			else
+			{
+				GameObject newClone = Instantiate(mCloneShip,mPlayer.transform.position + Vector3.right*2f, Quaternion.identity) as GameObject;
+				newClone.GetComponent<PlayerShipCloneController>().mOriginalShip = mPlayer.GetComponent<PlayerShipController>();
+				Instantiate(mSecondShipSpawnEffect, newClone.transform.position, Quaternion.identity);
+				mPlayer.mPlayerClone = newClone;
+			}
 			Destroy(this.gameObject);
 
 		}

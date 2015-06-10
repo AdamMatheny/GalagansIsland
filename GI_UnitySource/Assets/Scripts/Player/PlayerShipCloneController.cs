@@ -6,12 +6,12 @@ using XInputDotNetPure;
 
 public class PlayerShipCloneController : MonoBehaviour 
 {
+	public PlayerShipController mOriginalShip;
+	public GameObject mCloneDeathEffect;
+
 	bool playerIndexSet = false;
 	public PlayerIndex playerIndex;
-	GamePadState state;
-	GamePadState prevState;
-	
-	public bool cheats = false;
+
 	//For if we ever animate the ship ~Adam
 	[SerializeField] private Animator mMainShipAnimator;
 	//[SerializeField] private Animator mSecondShipAnimator;
@@ -54,14 +54,14 @@ public class PlayerShipCloneController : MonoBehaviour
 	[SerializeField] private Transform[] mBulletSpawns;
 	
 	
-	//For Overheating
-	public bool overHeatProcess = true;
+	//For Overheating (We can just let the original ship handle overheating and sync to that
+//	public bool overHeatProcess = true;
 	public bool isOverheated = false;
-	public float heatLevel = 0f;
-	public float mBaseHeatMax = 60f;
-	public float maxHeatLevel;
-	[SerializeField] private Texture2D mOverheatTimerTex;
-	[SerializeField] private Texture2D mOverheatWarningTex;
+//	public float heatLevel = 0f;
+//	public float mBaseHeatMax = 60f;
+//	public float maxHeatLevel;
+//	[SerializeField] private Texture2D mOverheatTimerTex;
+//	[SerializeField] private Texture2D mOverheatWarningTex;
 	
 	//For when the player has 3 bullets  ~Adam
 	public bool mThreeBullet = true;
@@ -90,11 +90,12 @@ public class PlayerShipCloneController : MonoBehaviour
 	public Vector3 mLastFrameDifference = Vector3.zero;
 	float mLastNonZeroHorizontalDifference;
 	bool mDriftDown = true;
-	
+
+	//This ship is just going to die when hit, so don't bother with spinnning
 	//For spinning the ship around when the player gets hit ~Adam
-	float mSpinning = 0f;
-	float mSpinTimer = 0f;
-	float mSpinTimerDefault = 0.5f;
+//	float mSpinning = 0f;
+//	float mSpinTimer = 0f;
+//	float mSpinTimerDefault = 0.5f;
 	
 	//For Super Screen-Wiper powerup ~Adam
 	public GameObject mLaserFist;
@@ -110,25 +111,25 @@ public class PlayerShipCloneController : MonoBehaviour
 	void Start () 
 	{
 
-		transform.localScale = new Vector3 (1.75f, 1.75f, 1.75f);
-
+		//Adjust speed and scale for mobile ~Adam
 		if (Application.isMobilePlatform)
 		{
 			mBaseMovementSpeed = 20.0f;
+			transform.localScale = new Vector3(1.75f,1.75f,1.75f);
 		}
 		
 		mShipCreationLevel = Application.loadedLevel;
 		
-		PlayerShipCloneController[] otherPlayerShips = FindObjectsOfType<PlayerShipCloneController>();
-		//Debug.Log(otherPlayerShip.name);
-		foreach(PlayerShipCloneController othership in otherPlayerShips)
-		{
-			if(othership.mShipCreationLevel < this.mShipCreationLevel)
-			{
-				Debug.Log("Found another ship so destroying self.");
-				Destroy(this.gameObject);
-			}
-		}
+//		PlayerShipCloneController[] otherPlayerShips = FindObjectsOfType<PlayerShipCloneController>();
+//		//Debug.Log(otherPlayerShip.name);
+//		foreach(PlayerShipCloneController othership in otherPlayerShips)
+//		{
+//			if(othership.mShipCreationLevel < this.mShipCreationLevel)
+//			{
+//				Debug.Log("Found another ship so destroying self.");
+//				Destroy(this.gameObject);
+//			}
+//		}
 		
 		mLastFramePosition = transform.position;
 		
@@ -145,55 +146,50 @@ public class PlayerShipCloneController : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		prevState = state;
-		state = GamePad.GetState(playerIndex);
-		
-		maxHeatLevel = mBaseHeatMax +  mBaseHeatMax * Application.loadedLevel/26f;
-		GetComponent<AudioSource>().volume = 0.18f*(30f-Application.loadedLevel)/30f;
-		
-		if (cheats) {
-			
-			if(Input.GetKeyDown(KeyCode.Q))
-			{
-				Application.LoadLevel(Application.loadedLevel + 1);
-				mShipStolen = false;
-			}
-			
-			if(Input.GetKeyDown(KeyCode.R))
-			{
-				Application.LoadLevel(Application.loadedLevel - 1);
-				mShipStolen = false;
-			}
-		}
-		
-		//Spin the ships when hit
-		if(mSpinning != 0f)
+
+		//Synchronize with original ship
+		if(mOriginalShip != null)
 		{
-			mSpinTimer -= Time.deltaTime;
-			SpinShip(mSpinning);
-			
-			if (mSpinTimer <= 0f)
-			{
-				mSpinning = 0f;
-				mMainShip.transform.rotation = Quaternion.identity;
-				mSecondShip.transform.rotation = Quaternion.identity;
-			}
+			mToggleFireOn = mOriginalShip.mToggleFireOn;
+			mShielded = mOriginalShip.mShielded;
+			mThreeBullet = mOriginalShip.mThreeBullet;
+			isOverheated = mOriginalShip.isOverheated;
 		}
+
+
+		//maxHeatLevel = mBaseHeatMax +  mBaseHeatMax * Application.loadedLevel/26f;
+		//GetComponent<AudioSource>().volume = 0.18f*(30f-Application.loadedLevel)/30f;
 		
+
+		//This ship is just going to die instead of spinning ~Adam
+//		//Spin the ships when hit
+//		if(mSpinning != 0f)
+//		{
+//			mSpinTimer -= Time.deltaTime;
+//			SpinShip(mSpinning);
+//			
+//			if (mSpinTimer <= 0f)
+//			{
+//				mSpinning = 0f;
+//				mMainShip.transform.rotation = Quaternion.identity;
+//				mSecondShip.transform.rotation = Quaternion.identity;
+//			}
+//		}
+
 		
 		//Toggle shield sprites ~Adam
 		if(mShielded)
 		{
 			mMainShipShieldSprite.GetComponent<Animator>().SetInteger ("ShieldState", 1);
-			mSecondShipShieldSprite.GetComponent<Animator>().SetInteger ("ShieldState", 1);
+//			mSecondShipShieldSprite.GetComponent<Animator>().SetInteger ("ShieldState", 1);
 			
 			mMainShipShieldSprite.enabled = true;
 			mMainShipShieldSprite.GetComponent<Light>().enabled = true;
-			if(mShipRecovered)
-			{
-				mSecondShipShieldSprite.enabled = true;
-				mSecondShipShieldSprite.GetComponent<Light>().enabled = true;
-			}
+//			if(mShipRecovered)
+//			{
+//				mSecondShipShieldSprite.enabled = true;
+//				mSecondShipShieldSprite.GetComponent<Light>().enabled = true;
+//			}
 			//Decrease Shield time ~Adam
 			mShieldTimer -= Time.deltaTime;
 			if(mShieldTimer <= 0f)
@@ -203,7 +199,7 @@ public class PlayerShipCloneController : MonoBehaviour
 			if(mShieldTimer < 2f)
 			{
 				mMainShipShieldSprite.GetComponent<Animator>().SetInteger ("ShieldState", 0);
-				mSecondShipShieldSprite.GetComponent<Animator>().SetInteger ("ShieldState", 0);
+//				mSecondShipShieldSprite.GetComponent<Animator>().SetInteger ("ShieldState", 0);
 				
 			}
 			if(mShieldTimer < 5f)
@@ -213,12 +209,12 @@ public class PlayerShipCloneController : MonoBehaviour
 				//				mSecondShipShieldSprite.GetComponent<Animator>().speed = 0.5f;
 				//				mSecondShipShieldSprite.GetComponent<Animator>().Play("ShieldSprite_Flicker");
 				mMainShipShieldSprite.GetComponent<Renderer>().material.color = Color.Lerp (mMainShipShieldSprite.GetComponent<Renderer>().material.color, Color.red,0.1f);
-				mSecondShipShieldSprite.GetComponent<Renderer>().material.color = Color.Lerp (mSecondShipShieldSprite.GetComponent<Renderer>().material.color, Color.red,0.1f);
+//				mSecondShipShieldSprite.GetComponent<Renderer>().material.color = Color.Lerp (mSecondShipShieldSprite.GetComponent<Renderer>().material.color, Color.red,0.1f);
 			}
 			else
 			{
 				mMainShipShieldSprite.GetComponent<Renderer>().material.color = Color.white;
-				mSecondShipShieldSprite.GetComponent<Renderer>().material.color = Color.white;
+//				mSecondShipShieldSprite.GetComponent<Renderer>().material.color = Color.white;
 				//				mMainShipShieldSprite.GetComponent<Animator>().speed = 0f;
 				//				mMainShipShieldSprite.GetComponent<Animator>().Play("ShieldSprite_Solid");
 				//				mMainShipShieldSprite.GetComponent<Animator>().StopPlayback();
@@ -232,8 +228,8 @@ public class PlayerShipCloneController : MonoBehaviour
 		{
 			mMainShipShieldSprite.enabled = false;
 			mMainShipShieldSprite.GetComponent<Light>().enabled = false;
-			mSecondShipShieldSprite.enabled = false;
-			mSecondShipShieldSprite.GetComponent<Light>().enabled = false;
+//			mSecondShipShieldSprite.enabled = false;
+//			mSecondShipShieldSprite.GetComponent<Light>().enabled = false;
 			
 		}
 		
@@ -289,28 +285,20 @@ public class PlayerShipCloneController : MonoBehaviour
 			mThreeBulletTimer -= Time.deltaTime;
 		}
 		
-		float horizontal = state.ThumbSticks.Right.X;
-		float vertical = state.ThumbSticks.Right.Y;
-		
-		//float horizontal = Input.GetAxis("Horizontal");
-		//float vertical = Input.GetAxis("Vertical");
-		
-		/*if(InputManager.ActiveDevice.DPadDown.IsPressed)
+		//For keyboard controls ~Adam
+		float horizontal = Input.GetAxis("HorizontalClone");
+		float vertical = Input.GetAxis("VerticalClone");
+
+		//For gamepad controls ~Adam
+		if(InputManager.ActiveDevice.RightStickX != 0)
 		{
-			vertical = -1f;
+			horizontal = InputManager.ActiveDevice.RightStickX;
 		}
-		if(InputManager.ActiveDevice.DPadUp.IsPressed)
+		if(InputManager.ActiveDevice.RightStickY != 0)
 		{
-			vertical = 1f;
+			vertical = InputManager.ActiveDevice.RightStickY;
 		}
-		if(InputManager.ActiveDevice.DPadLeft.IsPressed)
-		{
-			horizontal = -1f;
-		}
-		if(InputManager.ActiveDevice.DPadRight.IsPressed)
-		{
-			horizontal = 1f;
-		}*/
+
 		
 		
 		//Delete the ship if we've returned to the title screen
@@ -321,14 +309,9 @@ public class PlayerShipCloneController : MonoBehaviour
 		
 		
 		
-		if(InputManager.ActiveDevice.Action1.WasPressed || Input.GetButtonDown("FireGun"))
-		{
-			Debug.Log("InControl button pressed");
-			ToggleFire();
-		}
+
 		
 		
-		//Keyboard Movement Controls
 		//For making the ship drift down when not trying to go up
 		if(vertical > 0f)
 		{
@@ -339,38 +322,10 @@ public class PlayerShipCloneController : MonoBehaviour
 			mDriftDown = true;
 		}
 		
-		//Movement input for mouse/touch
-		if(Input.GetMouseButton(0) && (Application.isMobilePlatform)  && Time.timeScale != 0f)
-		{
-			Vector3 screenPos = Camera.main.WorldToScreenPoint(this.transform.position);
-			//Debug.Log(screenPos + ", " + Input.mousePosition);
-			
-			Vector3 transitionAboveFinger = new Vector3(0f, Screen.height * 0.1f, 0f);
-			Vector3 translationDirection = Vector3.Normalize(Input.mousePosition + transitionAboveFinger - screenPos);
-			
-			//Debug.Log(translationDirection*mMovementSpeed*Time.deltaTime);
-			
-			//For making the ship drift down when not trying to go up
-			if (Input.mousePosition.y + 10f + Screen.height * 0.1f > screenPos.y - 10f)
-			{
-				mDriftDown = false;
-			}
-			else
-			{
-				mDriftDown = true;
-			}
-			//transform.Translate(new Vector3(translationDirection.x, translationDirection.y, 0f)*mMovementSpeed*Time.deltaTime);
-			//mMoveDir +=new Vector3(translationDirection.x, translationDirection.y, 0f)*0.5f*mMovementSpeed*Time.deltaTime;
-			mMoveDir = Vector3.Lerp(mMoveDir, new Vector3(translationDirection.x, translationDirection.y, 0f)*2f*mMovementSpeed*Time.deltaTime, 0.08f);
-			
-		}
+
 		
-		// if (Input.GetKey (KeyCode.Mouse0)) {
-		// transform.Translate(new Vector3(0.0f, (mMovementSpeed * Time.deltaTime) + .6f, 0.0f));
-		// }
-		
-		//Taking in diretional Input from the keyboard
-		else if (horizontal != 0.0f || vertical != 0.0f && Time.timeScale != 0f)
+		//Taking in diretional Input from the keyboard/Gamepad ~Adam
+		if (horizontal != 0.0f || vertical != 0.0f && Time.timeScale != 0f)
 		{
 			
 			
@@ -425,38 +380,11 @@ public class PlayerShipCloneController : MonoBehaviour
 		}
 		//END of Keyboard Movement Controls
 		
-		//Toggle bullet firing
-		//if(Input.getbu("Fire2"))
-		//Debug.Log(InputManager.ActiveDevice.IsKnown);
-		/*if(InputManager.ActiveDevice.Action1.WasPressed || Input.GetButtonDown("FireGun"))
-		{
-			Debug.Log("InControl button pressed");
-			ToggleFire();
-		}*/
 
-		if (state.Buttons.Y == ButtonState.Pressed && prevState.Buttons.Y == ButtonState.Released) {
-			
-			Debug.Log("InControl button pressed");
-			ToggleFire();
-		}
+
+
 		
-		if (isOverheated) 
-		{
-			mToggleFireOn = false;
-			mMainShip.GetComponent<Renderer>().material.color = Color.Lerp(mMainShip.GetComponent<Renderer>().material.color,Color.red,0.05f);
-			mSecondShip.GetComponent<Renderer>().material.color = Color.Lerp(mSecondShip.GetComponent<Renderer>().material.color,Color.red,0.05f);
-		}
-		else if (heatLevel/maxHeatLevel > 0.9f) 
-		{
-			mMainShip.GetComponent<Renderer>().material.color = Color.Lerp(mMainShip.GetComponent<Renderer>().material.color,Color.yellow,0.1f);
-			mSecondShip.GetComponent<Renderer>().material.color = Color.Lerp(mSecondShip.GetComponent<Renderer>().material.color,Color.yellow,0.1f);
-		}
-		
-		else
-		{
-			mMainShip.GetComponent<Renderer>().material.color = Color.Lerp(mMainShip.GetComponent<Renderer>().material.color,Color.white,0.1f);
-			mSecondShip.GetComponent<Renderer>().material.color = Color.Lerp(mSecondShip.GetComponent<Renderer>().material.color,Color.white,0.1f);
-		}
+
 		
 		//firing bullets
 		if (mToggleFireOn) 
@@ -464,17 +392,18 @@ public class PlayerShipCloneController : MonoBehaviour
 			
 			if(!isOverheated)
 			{
-				if(heatLevel < maxHeatLevel)
-				{
-					heatLevel += Time.deltaTime;
-				}
-				
-				if(heatLevel >= maxHeatLevel)
-				{
-					
-					heatLevel = maxHeatLevel;
-					isOverheated = true;
-				}
+				//Don't worry about modifying heat level, we're just reading of the original ship ~Adam
+//				if(heatLevel < maxHeatLevel)
+//				{
+//					heatLevel += Time.deltaTime;
+//				}
+//				
+//				if(heatLevel >= maxHeatLevel)
+//				{
+//					
+//					heatLevel = maxHeatLevel;
+//					isOverheated = true;
+//				}
 				
 				//Firing Bullets
 				if (Time.time > mBulletFireTime) 
@@ -497,23 +426,25 @@ public class PlayerShipCloneController : MonoBehaviour
 						Instantiate (mSideBullet, mBulletSpawns[3].position, mMainShip.transform.rotation * Quaternion.Euler (0f, 0f, -10f) * Quaternion.Euler (0f,0f,Random.Range(-5.0f,5.0f)));
 						
 					}
-					GetComponent<AudioSource> ().Play ();
-					//Camera.main.GetComponent<CameraShaker> ().ShakeCamera ();
-					if (mShipRecovered) 
-					{
-						GameObject secondBullet;
-						secondBullet = Instantiate (mBulletPrefab, mBulletSpawns[1].position, mSecondShip.transform.rotation * Quaternion.Euler (0f,0f,Random.Range(-3.0f,3.0f))) as GameObject;
-						secondBullet.name = "SECONDBULLET";
-						if (mThreeBullet) 
-						{
-							Instantiate (mSideBullet, mBulletSpawns[4].position, mSecondShip.transform.rotation * Quaternion.Euler (0f, 0f, 10f) * Quaternion.Euler (0f,0f,Random.Range(-5.0f,5.0f)));
-							
-							Instantiate (mSideBullet, mBulletSpawns[5].position, mSecondShip.transform.rotation * Quaternion.Euler (0f, 0f, -5f) * Quaternion.Euler (0f,0f,Random.Range(-3.0f,10.0f)));
-						}
-					}
+					//GetComponent<AudioSource> ().Play ();
+					//We're not making a side ship ~Adam
+//					if (mShipRecovered) 
+//					{
+//						GameObject secondBullet;
+//						secondBullet = Instantiate (mBulletPrefab, mBulletSpawns[1].position, mSecondShip.transform.rotation * Quaternion.Euler (0f,0f,Random.Range(-3.0f,3.0f))) as GameObject;
+//						secondBullet.name = "SECONDBULLET";
+//						if (mThreeBullet) 
+//						{
+//							Instantiate (mSideBullet, mBulletSpawns[4].position, mSecondShip.transform.rotation * Quaternion.Euler (0f, 0f, 10f) * Quaternion.Euler (0f,0f,Random.Range(-5.0f,5.0f)));
+//							
+//							Instantiate (mSideBullet, mBulletSpawns[5].position, mSecondShip.transform.rotation * Quaternion.Euler (0f, 0f, -5f) * Quaternion.Euler (0f,0f,Random.Range(-3.0f,10.0f)));
+//						}
+//					}
 					//Reset the timer to fire bullets.  The later the level, the smaller the time between shots
-					if(mSpinning == 0)
-					{
+
+					//Not spinning, just dying ~Adam
+//					if(mSpinning == 0)
+//					{
 						if(Application.loadedLevelName != "Credits")
 						{
 							mBulletFireTime = Time.time + bulletShootSpeed - (0.25f / 25f * Application.loadedLevel);
@@ -522,40 +453,41 @@ public class PlayerShipCloneController : MonoBehaviour
 						{
 							mBulletFireTime = Time.time + (bulletShootSpeed - (0.25f / 25f * 21f));
 						}
-					}
-					else
-					{
-						mBulletFireTime = Time.time + (bulletShootSpeed - (0.25f / 25f * Application.loadedLevel))/3f;
-					}
+//					}
+//					else
+//					{
+//						mBulletFireTime = Time.time + (bulletShootSpeed - (0.25f / 25f * Application.loadedLevel))/3f;
+//					}
 				}
 			}
 		}
-		else 
-		{
-			
-			if(heatLevel > 0)
-			{
-				
-				if(isOverheated)
-				{
-					heatLevel -= Time.deltaTime * maxHeatLevel/5f;
-				}
-				else
-				{
-					heatLevel -= Time.deltaTime * 3f;
-				}
-			}
-		}
-		
-		if (heatLevel <= 0f) 
-		{
-			
-			isOverheated = false;
-			if (Application.isMobilePlatform) //Start shooting when weapons are Cool. Lol, weapons are always cool.
-			{
-				mToggleFireOn = true;
-			}
-		}
+		//Not worrying about heat levels on the clone ~Adam
+//		else 
+//		{
+//			
+//			if(heatLevel > 0)
+//			{
+//				
+//				if(isOverheated)
+//				{
+//					heatLevel -= Time.deltaTime * maxHeatLevel/5f;
+//				}
+//				else
+//				{
+//					heatLevel -= Time.deltaTime * 3f;
+//				}
+//			}
+//		}
+//		
+//		if (heatLevel <= 0f) 
+//		{
+//			
+//			isOverheated = false;
+//			if (Application.isMobilePlatform) //Start shooting when weapons are Cool. Lol, weapons are always cool.
+//			{
+//				mToggleFireOn = true;
+//			}
+//		}
 		
 		if(InputManager.ActiveDevice.Action2.IsPressed || Input.GetButton("Thrusters"))
 		{
@@ -634,27 +566,27 @@ public class PlayerShipCloneController : MonoBehaviour
 			//mSecondShipAnimator.SetBool("IsFiring", false);
 		}
 		
-		
+		//We're not extra-duplicating this ship
 		//Control whether or not to render the second ship 
-		if (mShipRecovered)
-		{
-			mSecondShip.GetComponent<SpriteRenderer>().enabled = true;
-			foreach (ParticleSystem shipTrail in mSecondShip.GetComponentsInChildren<ParticleSystem>())
-			{
-				if(!(mMoveDir.y < 0f && mDriftDown))
-				{
-					shipTrail.enableEmission = true;
-				}
-			}
-		}
-		else
-		{
-			mSecondShip.GetComponent<SpriteRenderer>().enabled = false;
-			foreach (ParticleSystem shipTrail in mSecondShip.GetComponentsInChildren<ParticleSystem>())
-			{
-				shipTrail.enableEmission = false;
-			}
-		}
+//		if (mShipRecovered)
+//		{
+//			mSecondShip.GetComponent<SpriteRenderer>().enabled = true;
+//			foreach (ParticleSystem shipTrail in mSecondShip.GetComponentsInChildren<ParticleSystem>())
+//			{
+//				if(!(mMoveDir.y < 0f && mDriftDown))
+//				{
+//					shipTrail.enableEmission = true;
+//				}
+//			}
+//		}
+//		else
+//		{
+//			mSecondShip.GetComponent<SpriteRenderer>().enabled = false;
+//			foreach (ParticleSystem shipTrail in mSecondShip.GetComponentsInChildren<ParticleSystem>())
+//			{
+//				shipTrail.enableEmission = false;
+//			}
+//		}
 		
 	}//END of Update()
 	
@@ -756,47 +688,48 @@ public class PlayerShipCloneController : MonoBehaviour
 		//		}
 		
 	}
-	
-	public void StartSpin()
-	{
-		mSpinTimer = mSpinTimerDefault;
-		mSpinning = Random.Range(-1,1);
-		if (mSpinning == 0f)
-		{
-			mSpinning += 0.1f;
-		}
-	}
-	
-	/*public void OnTriggerEnter(Collider other){
 
-Debug.Log (other);
-
-if (other.gameObject.GetComponent<Laser> () != null) {
-
-Debug.Log("Collided with IT!");
-}
-}*/
+	//Not spinning, just dying ~Adam
+//	public void StartSpin()
+//	{
+//		mSpinTimer = mSpinTimerDefault;
+//		mSpinning = Random.Range(-1,1);
+//		if (mSpinning == 0f)
+//		{
+//			mSpinning += 0.1f;
+//		}
+//	}
 	
-	public void SpinShip(float spinDir)
-	{
-		if(spinDir > 0f)
-		{
-			mMainShip.transform.Rotate(Vector3.forward*Time.deltaTime*720f);
-			mSecondShip.transform.Rotate(Vector3.forward*Time.deltaTime*-720f);
-		}
-		else if (spinDir < 0f)
-		{
-			mMainShip.transform.Rotate(Vector3.forward*Time.deltaTime*-720f);
-			mSecondShip.transform.Rotate(Vector3.forward*Time.deltaTime*720f);
-		}
-		
-	}
+
+	
+//	public void SpinShip(float spinDir)
+//	{
+//		if(spinDir > 0f)
+//		{
+//			mMainShip.transform.Rotate(Vector3.forward*Time.deltaTime*720f);
+//			mSecondShip.transform.Rotate(Vector3.forward*Time.deltaTime*-720f);
+//		}
+//		else if (spinDir < 0f)
+//		{
+//			mMainShip.transform.Rotate(Vector3.forward*Time.deltaTime*-720f);
+//			mSecondShip.transform.Rotate(Vector3.forward*Time.deltaTime*720f);
+//		}
+//		
+//	}
 	
 	//For getting hit by boss beams ~Adam
 	void OnParticleCollision(GameObject other)
 	{
-		Debug.Log("The player was shot by a particle");
-		FindObjectOfType<ScoreManager>().LoseALife();
+		Debug.Log("The clone was shot by a particle");
+		CloneShipDie();
 	}
-	
+
+	public void CloneShipDie()
+	{
+		GameObject cloneDeathParticles;
+		cloneDeathParticles = Instantiate(mCloneDeathEffect, transform.position, Quaternion.identity) as GameObject;
+		Camera.main.GetComponent<CameraShaker>().ShakeCameraDeath();
+		Destroy(this.gameObject);
+	}
+
 }//END of MonoBehavior

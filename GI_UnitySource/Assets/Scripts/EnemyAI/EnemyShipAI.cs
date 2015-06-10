@@ -133,12 +133,10 @@ public class EnemyShipAI : MonoBehaviour
 		mDefaultSpeed = mSpeed;
 		mSpeed = mFormSpeed;
 
-		if (Application.isMobilePlatform) {
-
-			//transform.localScale = new Vector3 (2f, 2f, 2f);
-		} else {
-
-			//transform.localScale = new Vector3(2.75f, 2.75f, 2.75f);
+		//Scale up for mobile screen ~Adam
+		if(Application.isMobilePlatform)
+		{
+			transform.localScale = new Vector3(1.75f,1.75f,1.75f);
 		}
 	}//END of Start()
 	
@@ -617,6 +615,14 @@ public class EnemyShipAI : MonoBehaviour
 				mCurrentAIState = AIState.ApproachingSwarm;
 			}
 
+
+		}
+
+		//Kill a player clone ship on contact
+		if (other.gameObject.GetComponent<PlayerShipCloneController>() != null)
+		{
+			Debug.Log("Hit a clone ship");
+			other.gameObject.GetComponent<PlayerShipCloneController>().CloneShipDie();
 		}
 
 	}//END of OnCollisionEnter()
