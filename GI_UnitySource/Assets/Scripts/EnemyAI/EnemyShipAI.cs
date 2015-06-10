@@ -11,6 +11,8 @@ public class EnemyShipAI : MonoBehaviour
 //The Serialie Field private variables and public variables can be changed in the editor to assign different behaviors to multiple enemy prefabs, using a single script
 //Additionally, the public variables can be overwritten by in-editor settings on the enemy spawner prefab to adjust enemy behavior or difficulty on a level-by-level basis
 
+
+
 	public float secondaryExplosionChance = 25f;
 	public GameObject secondaryExplosion;
 
@@ -130,7 +132,14 @@ public class EnemyShipAI : MonoBehaviour
 
 		mDefaultSpeed = mSpeed;
 		mSpeed = mFormSpeed;
-		transform.localScale= new Vector3(2f,2f,2f);
+
+		if (Application.isMobilePlatform) {
+
+			//transform.localScale = new Vector3 (2f, 2f, 2f);
+		} else {
+
+			//transform.localScale = new Vector3(2.75f, 2.75f, 2.75f);
+		}
 	}//END of Start()
 	
 	// Update is called once per frame

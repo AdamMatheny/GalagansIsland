@@ -2,12 +2,10 @@
 using System.Collections;
 using UnityEngine.UI;
 using InControl;
-using XInputDotNetPure; // Required in C#
+using XInputDotNetPure;
 
-public class PlayerShipController : MonoBehaviour 
+public class PlayerShipCloneController : MonoBehaviour 
 {
-	public GameObject playerClone;
-
 	bool playerIndexSet = false;
 	public PlayerIndex playerIndex;
 	GamePadState state;
@@ -16,7 +14,7 @@ public class PlayerShipController : MonoBehaviour
 	public bool cheats = false;
 	//For if we ever animate the ship ~Adam
 	[SerializeField] private Animator mMainShipAnimator;
-	[SerializeField] private Animator mSecondShipAnimator;
+	//[SerializeField] private Animator mSecondShipAnimator;
 	
 	public float bulletShootSpeed = .4f;
 	
@@ -121,9 +119,9 @@ public class PlayerShipController : MonoBehaviour
 		
 		mShipCreationLevel = Application.loadedLevel;
 		
-		PlayerShipController[] otherPlayerShips = FindObjectsOfType<PlayerShipController>();
+		PlayerShipCloneController[] otherPlayerShips = FindObjectsOfType<PlayerShipCloneController>();
 		//Debug.Log(otherPlayerShip.name);
-		foreach(PlayerShipController othership in otherPlayerShips)
+		foreach(PlayerShipCloneController othership in otherPlayerShips)
 		{
 			if(othership.mShipCreationLevel < this.mShipCreationLevel)
 			{
@@ -149,7 +147,7 @@ public class PlayerShipController : MonoBehaviour
 	{
 		prevState = state;
 		state = GamePad.GetState(playerIndex);
-
+		
 		maxHeatLevel = mBaseHeatMax +  mBaseHeatMax * Application.loadedLevel/26f;
 		GetComponent<AudioSource>().volume = 0.18f*(30f-Application.loadedLevel)/30f;
 		
@@ -291,9 +289,11 @@ public class PlayerShipController : MonoBehaviour
 			mThreeBulletTimer -= Time.deltaTime;
 		}
 		
+		float horizontal = state.ThumbSticks.Right.X;
+		float vertical = state.ThumbSticks.Right.Y;
 		
-		float horizontal = Input.GetAxis("Horizontal");
-		float vertical = Input.GetAxis("Vertical");
+		//float horizontal = Input.GetAxis("Horizontal");
+		//float vertical = Input.GetAxis("Vertical");
 		
 		/*if(InputManager.ActiveDevice.DPadDown.IsPressed)
 		{
@@ -321,7 +321,11 @@ public class PlayerShipController : MonoBehaviour
 		
 		
 		
-		
+		if(InputManager.ActiveDevice.Action1.WasPressed || Input.GetButtonDown("FireGun"))
+		{
+			Debug.Log("InControl button pressed");
+			ToggleFire();
+		}
 		
 		
 		//Keyboard Movement Controls
@@ -430,14 +434,8 @@ public class PlayerShipController : MonoBehaviour
 			ToggleFire();
 		}*/
 
-		/*if(InputManager.ActiveDevice.Action1.WasPressed || Input.GetButtonDown("FireGun"))
-		{
-			Debug.Log("InControl button pressed");
-			ToggleFire();
-		}*/
-
-		if (state.Buttons.A == ButtonState.Pressed && prevState.Buttons.A == ButtonState.Released) {
-
+		if (state.Buttons.Y == ButtonState.Pressed && prevState.Buttons.Y == ButtonState.Released) {
+			
 			Debug.Log("InControl button pressed");
 			ToggleFire();
 		}
@@ -503,17 +501,15 @@ public class PlayerShipController : MonoBehaviour
 					//Camera.main.GetComponent<CameraShaker> ().ShakeCamera ();
 					if (mShipRecovered) 
 					{
-
-
-						/*GameObject secondBullet;
+						GameObject secondBullet;
 						secondBullet = Instantiate (mBulletPrefab, mBulletSpawns[1].position, mSecondShip.transform.rotation * Quaternion.Euler (0f,0f,Random.Range(-3.0f,3.0f))) as GameObject;
 						secondBullet.name = "SECONDBULLET";
 						if (mThreeBullet) 
 						{
 							Instantiate (mSideBullet, mBulletSpawns[4].position, mSecondShip.transform.rotation * Quaternion.Euler (0f, 0f, 10f) * Quaternion.Euler (0f,0f,Random.Range(-5.0f,5.0f)));
-
+							
 							Instantiate (mSideBullet, mBulletSpawns[5].position, mSecondShip.transform.rotation * Quaternion.Euler (0f, 0f, -5f) * Quaternion.Euler (0f,0f,Random.Range(-3.0f,10.0f)));
-						}*/
+						}
 					}
 					//Reset the timer to fire bullets.  The later the level, the smaller the time between shots
 					if(mSpinning == 0)
@@ -561,36 +557,12 @@ public class PlayerShipController : MonoBehaviour
 			}
 		}
 		
-		/*if(InputManager.ActiveDevice.Action2.IsPressed || Input.GetButton("Thrusters"))
+		if(InputManager.ActiveDevice.Action2.IsPressed || Input.GetButton("Thrusters"))
 		{
 			if(InputManager.ActiveDevice.Action2.IsPressed)
 			{
 				Debug.Log("InControl recognized Action2");
 			}
-			mDropSpeed -= mDropDeccelRate*3f;
-			if(mDropSpeed <= 0.01f)
-			{
-				mDropSpeed = 0.00f;
-			}
-			
-			if(mMoveDir.y < -0.2f)
-			{
-				foreach (ParticleSystem shipTrail in this.GetComponentsInChildren<ParticleSystem>())
-				{
-					shipTrail.enableEmission = false;
-				}
-			}
-			else
-			{
-				foreach (ParticleSystem shipTrail in this.GetComponentsInChildren<ParticleSystem>())
-				{
-					shipTrail.enableEmission = true;
-				}
-			}
-		}*/
-
-		if (state.Buttons.X == ButtonState.Pressed) {
-
 			mDropSpeed -= mDropDeccelRate*3f;
 			if(mDropSpeed <= 0.01f)
 			{
@@ -650,7 +622,7 @@ public class PlayerShipController : MonoBehaviour
 			}
 		}
 		mMainShipAnimator.speed = Application.loadedLevel/5f+1f;
-		mSecondShipAnimator.speed = Application.loadedLevel/5f+1f;
+		//mSecondShipAnimator.speed = Application.loadedLevel/5f+1f;
 		if(mToggleFireOn)
 		{
 			mMainShipAnimator.SetBool("IsFiring", true);
@@ -666,21 +638,17 @@ public class PlayerShipController : MonoBehaviour
 		//Control whether or not to render the second ship 
 		if (mShipRecovered)
 		{
-			playerClone.SetActive(true);
-
-			/*mSecondShip.GetComponent<SpriteRenderer>().enabled = true;
+			mSecondShip.GetComponent<SpriteRenderer>().enabled = true;
 			foreach (ParticleSystem shipTrail in mSecondShip.GetComponentsInChildren<ParticleSystem>())
 			{
 				if(!(mMoveDir.y < 0f && mDriftDown))
 				{
 					shipTrail.enableEmission = true;
 				}
-			}*/
+			}
 		}
 		else
 		{
-			playerClone.SetActive(false);
-
 			mSecondShip.GetComponent<SpriteRenderer>().enabled = false;
 			foreach (ParticleSystem shipTrail in mSecondShip.GetComponentsInChildren<ParticleSystem>())
 			{
