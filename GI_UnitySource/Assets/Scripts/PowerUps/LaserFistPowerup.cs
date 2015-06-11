@@ -29,15 +29,20 @@ public class LaserFistPowerup : MonoBehaviour
 	void Update () 
 	{
 
-		if (bigBoom != null) {
+		if (bigBoom != null) 
+		{
 
-			if (time > 0) {
+			if (time > 0) 
+			{
 				
 				time -= Time.deltaTime;
-			} else {
+			} 
+			else 
+			{
 				
 				time = maxTime;
 				bigBoom.SetActive(true);
+				mDeathBox.size *= 10f;
 			}
 		}
 
@@ -47,6 +52,7 @@ public class LaserFistPowerup : MonoBehaviour
 		{
 			mDeathBox.center = Vector3.Lerp(mDeathBox.center, mLaserCenterFull, 0.1f);
 			mDeathBox.size = Vector3.Lerp(mDeathBox.size, mLaserSizeFull, 0.1f);
+			Camera.main.GetComponent<CameraShaker>().ShakeCameraEnemy();
 		}
 		else
 		{
@@ -74,6 +80,14 @@ public class LaserFistPowerup : MonoBehaviour
 	public void StopLaserFist()
 	{
 		mLaserFistTimer = 0f;
+		if(bigBoom != null)
+		{
+			bigBoom.SetActive(false);
+		}
+
+		mDeathBox.center = mLaserCenterStart;
+		mDeathBox.size = mLaserSizeStart;
+		GetComponent<Animator>().SetBool("Expanding", false);
 		this.gameObject.SetActive(false);
 	}
 

@@ -99,7 +99,9 @@ public class PlayerShipController : MonoBehaviour
 	float mSpinTimerDefault = 0.5f;
 	
 	//For Super Screen-Wiper powerup ~Adam
+	public bool mHaveLaserFist = false;
 	public GameObject mLaserFist;
+	public bool mHaveBigBlast = false;
 	public GameObject mBigBlast;
 	
 	
@@ -143,6 +145,7 @@ public class PlayerShipController : MonoBehaviour
 	void Awake()
 	{
 		DontDestroyOnLoad (transform.gameObject);
+		InputManager.Setup();
 	}//END of Awake()
 	
 	
@@ -423,14 +426,31 @@ public class PlayerShipController : MonoBehaviour
 		}
 		//END of Keyboard Movement Controls
 		
-		//Toggle bullet firing
-		//Debug.Log(InputManager.ActiveDevice.IsKnown);
+		//Toggle bullet firing ~Adam
 		//Keyboard and mouse input and InControl Gamepad input ~Adam
 		if(InputManager.ActiveDevice.Action1.WasPressed || Input.GetButtonDown("FireGun"))
 		{
 			Debug.Log("InControl button pressed");
 			ToggleFire();
 		}
+
+		//Fire held super weapon ~Adam
+		//Can hold multiple super weapons.  They fire in a priority order: Big Blast, then Laser Fist ~Adam
+		//Have to wait for one to finish firing before firing another ~Adam
+		if( (InputManager.ActiveDevice.RightBumper.WasPressed || Input.GetButtonDown("FireSuperGun")) && !mBigBlast.activeSelf && !mLaserFist.activeSelf)
+		{
+			if(mHaveBigBlast)
+			{
+				mBigBlast.SetActive(true);
+				mHaveBigBlast = false;
+			}
+			else if(mHaveLaserFist)
+			{
+				mLaserFist.SetActive(true);
+				mHaveLaserFist = false;
+			}
+		}
+
 
 		//Jonathan's alternate control input
 //		if (state.Buttons.A == ButtonState.Pressed && prevState.Buttons.A == ButtonState.Released) {

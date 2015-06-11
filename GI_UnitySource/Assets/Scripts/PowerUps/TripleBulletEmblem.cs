@@ -24,5 +24,11 @@ public class TripleBulletEmblem : MonoBehaviour
 			other.GetComponent<PlayerShipController>().mThreeBulletTimer = 30f; 
 			Destroy(this.gameObject);
 		}
+		if(other.GetComponent<PlayerShipCloneController>() != null)
+		{
+			FindObjectOfType<PlayerShipController>().mThreeBullet = true;
+			FindObjectOfType<PlayerShipController>().mThreeBulletTimer = 30f;
+			Destroy(this.gameObject);
+		}
 	}
 }

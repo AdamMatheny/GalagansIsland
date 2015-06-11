@@ -86,6 +86,15 @@ public class CapturedShip : MonoBehaviour
 			{
 				mMovingRight = true;
 			}
+			if(transform.position.y < -30f)
+			{
+				transform.position = new Vector3(transform.position.x, -30f, transform.position.z);
+			}
+			if (transform.position.y > 23f)
+			{
+				transform.position = new Vector3(transform.position.x, 23, transform.position.z);
+			}
+
 
 			if(mMovingRight)
 			{

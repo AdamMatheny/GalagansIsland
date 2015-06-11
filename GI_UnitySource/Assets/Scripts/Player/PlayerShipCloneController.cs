@@ -91,11 +91,10 @@ public class PlayerShipCloneController : MonoBehaviour
 	float mLastNonZeroHorizontalDifference;
 	bool mDriftDown = true;
 
-	//This ship is just going to die when hit, so don't bother with spinnning
-	//For spinning the ship around when the player gets hit ~Adam
-//	float mSpinning = 0f;
-//	float mSpinTimer = 0f;
-//	float mSpinTimerDefault = 0.5f;
+	//For spinning the ship around when the player gets hit (while shielded) ~Adam
+	float mSpinning = 0f;
+	float mSpinTimer = 0f;
+	float mSpinTimerDefault = 0.5f;
 	
 	//For Super Screen-Wiper powerup ~Adam
 	public GameObject mLaserFist;
@@ -154,6 +153,8 @@ public class PlayerShipCloneController : MonoBehaviour
 			mShielded = mOriginalShip.mShielded;
 			mThreeBullet = mOriginalShip.mThreeBullet;
 			isOverheated = mOriginalShip.isOverheated;
+			mShieldTimer = mOriginalShip.mShieldTimer;
+			mMainShip.GetComponent<Renderer>().material.color = mOriginalShip.mMainShip.GetComponent<Renderer>().material.color;
 		}
 
 
@@ -161,20 +162,19 @@ public class PlayerShipCloneController : MonoBehaviour
 		//GetComponent<AudioSource>().volume = 0.18f*(30f-Application.loadedLevel)/30f;
 		
 
-		//This ship is just going to die instead of spinning ~Adam
-//		//Spin the ships when hit
-//		if(mSpinning != 0f)
-//		{
-//			mSpinTimer -= Time.deltaTime;
-//			SpinShip(mSpinning);
-//			
-//			if (mSpinTimer <= 0f)
-//			{
-//				mSpinning = 0f;
-//				mMainShip.transform.rotation = Quaternion.identity;
-//				mSecondShip.transform.rotation = Quaternion.identity;
-//			}
-//		}
+		//Spin the ships when hit (while shielded ~Adam
+		if(mSpinning != 0f)
+		{
+			mSpinTimer -= Time.deltaTime;
+			SpinShip(mSpinning);
+			
+			if (mSpinTimer <= 0f)
+			{
+				mSpinning = 0f;
+				mMainShip.transform.rotation = Quaternion.identity;
+				mSecondShip.transform.rotation = Quaternion.identity;
+			}
+		}
 
 		
 		//Toggle shield sprites ~Adam
@@ -442,9 +442,8 @@ public class PlayerShipCloneController : MonoBehaviour
 //					}
 					//Reset the timer to fire bullets.  The later the level, the smaller the time between shots
 
-					//Not spinning, just dying ~Adam
-//					if(mSpinning == 0)
-//					{
+					if(mSpinning == 0)
+					{
 						if(Application.loadedLevelName != "Credits")
 						{
 							mBulletFireTime = Time.time + bulletShootSpeed - (0.25f / 25f * Application.loadedLevel);
@@ -453,11 +452,11 @@ public class PlayerShipCloneController : MonoBehaviour
 						{
 							mBulletFireTime = Time.time + (bulletShootSpeed - (0.25f / 25f * 21f));
 						}
-//					}
-//					else
-//					{
-//						mBulletFireTime = Time.time + (bulletShootSpeed - (0.25f / 25f * Application.loadedLevel))/3f;
-//					}
+					}
+					else
+					{
+						mBulletFireTime = Time.time + (bulletShootSpeed - (0.25f / 25f * Application.loadedLevel))/3f;
+					}
 				}
 			}
 		}
@@ -629,107 +628,58 @@ public class PlayerShipCloneController : MonoBehaviour
 		Input.ResetInputAxes();
 		
 		//mToggleFireOn = false;
-	}
+	}//END of OnLevelWasLoaded()
 	
-	void OnGUI()
+
+
+	public void StartSpin()
 	{
-		//For the spread fire timer that follows the ship -Adam
-		/* if(mThreeBullet)
+		mSpinTimer = mSpinTimerDefault;
+		mSpinning = Random.Range(-1,1);
+		if (mSpinning == 0f)
 		{
-			Vector3 screenPos = Camera.main.WorldToScreenPoint(this.transform.position);
-			//Draw the triple bullet timer ~Adam
-			//GUI.DrawTexture(new Rect(screenPos.x-Screen.width*0.016f, Screen.height-screenPos.y+Screen.height*0.022f, Screen.width*0.0008f*30+Screen.width*0.008f, Screen.height*0.012f),mBulletTimerTubeTex); 
-			GUI.DrawTexture(new Rect(screenPos.x+Screen.width*0.016f, Screen.height-screenPos.y+Screen.height*0.0315f, Screen.width*0.006f, -1f*(Screen.height*0.045f+Screen.height*0.014f)),mBulletTimerTubeTex); 
-
-			//GUI.DrawTexture(new Rect(screenPos.x-Screen.width*0.012f, Screen.height-screenPos.y+Screen.height*0.022f, Screen.width*0.0008f*mThreeBulletTimer, Screen.height*0.012f),mBulletTimerTex); 
-			GUI.DrawTexture(new Rect(screenPos.x+Screen.width*0.016f, Screen.height-screenPos.y+Screen.height*0.025f, Screen.width*0.006f, -1f*(Screen.height*0.045f*mThreeBulletTimer/30f)),mBulletTimerTexVert); 
-
-		} */
-		//		elase if(mShielded && !mThreeBullet)
-		//		{
-		//			Vector3 screenPos = Camera.main.WorldToScreenPoint(this.transform.position);
-		//			//Draw the shield timer ~Adam
-		//			GUI.DrawTexture(new Rect(screenPos.x-Screen.width*0.016f, Screen.height-screenPos.y+Screen.height*0.022f, Screen.width*0.0008f*30+Screen.width*0.008f, Screen.height*0.012f),mBulletTimerTubeTex); 
-		//			GUI.DrawTexture(new Rect(screenPos.x-Screen.width*0.012f, Screen.height-screenPos.y+Screen.height*0.022f, Screen.width*0.0008f*mShieldTimer, Screen.height*0.012f),mShieldTimerTex); 
-		//		}
-		//		else if (mThreeBullet && mShielded)
-		//		{
-		//			Vector3 screenPos = Camera.main.WorldToScreenPoint(this.transform.position);
-		//			//Draw the triple bullet timer ~Adam
-		//			GUI.DrawTexture(new Rect(screenPos.x-Screen.width*0.016f, Screen.height-screenPos.y+Screen.height*0.015f, Screen.width*0.0008f*30+Screen.width*0.008f, Screen.height*0.012f),mBulletTimerTubeTex); 
-		//			GUI.DrawTexture(new Rect(screenPos.x-Screen.width*0.012f, Screen.height-screenPos.y+Screen.height*0.015f, Screen.width*0.0008f*mThreeBulletTimer, Screen.height*0.012f),mBulletTimerTex); 
-		//			//Draw the shield timer ~Adam
-		//			GUI.DrawTexture(new Rect(screenPos.x-Screen.width*0.016f, Screen.height-screenPos.y+Screen.height*0.027f, Screen.width*0.0008f*30+Screen.width*0.008f, Screen.height*0.012f),mBulletTimerTubeTex); 
-		//			GUI.DrawTexture(new Rect(screenPos.x-Screen.width*0.012f, Screen.height-screenPos.y+Screen.height*0.027f, Screen.width*0.0008f*mShieldTimer, Screen.height*0.012f),mShieldTimerTex); 
-		//		}
-		
-		
-		//For drawing meters on the side of the screen
-		//		if(Application.loadedLevelName != "Credits")
-		//		{
-		//			GUI.DrawTexture(new Rect(Screen.width * .9f, Screen.height * 0.890f, Screen.width * .09f, Screen.height * .1f), mSideMetersTex);
-		//			GUI.DrawTexture(new Rect(Screen.width * .901f, Screen.height * 0.892f, Screen.width*.0542f*(heatLevel/90f), Screen.height*0.03f),mOverheatTimerTex);
-		//			if(isOverheated)
-		//			{
-		//				GUI.DrawTexture(new Rect(Screen.width * .901f, Screen.height * 0.892f, Screen.width*.0542f, Screen.height*0.03f),mOverheatWarningTex);
-		//			}
-		//			else
-		//			{
-		//				GUI.DrawTexture(new Rect(Screen.width * .901f+Screen.width*.0502f*(maxHeatLevel/90f), Screen.height * 0.892f, Screen.width*.004f, Screen.height*0.03f),mOverheatWarningTex);
-		//			}
-		//			if(mThreeBullet)
-		//			{
-		//				GUI.DrawTexture(new Rect(Screen.width * .901f, Screen.height * 0.9235f, Screen.width*.0542f*Mathf.Max(mThreeBulletTimer/30f,0f), Screen.height*0.03f),mBulletTimerTex); 
-		//			}
-		//			if(mShielded)
-		//			{
-		//				GUI.DrawTexture(new Rect(Screen.width * .901f, Screen.height * 0.955f, Screen.width*.0542f*(mShieldTimer/30f), Screen.height*0.03f),mShieldTimerTex); 
-		//			}
-		//		}
-		
-	}
-
-	//Not spinning, just dying ~Adam
-//	public void StartSpin()
-//	{
-//		mSpinTimer = mSpinTimerDefault;
-//		mSpinning = Random.Range(-1,1);
-//		if (mSpinning == 0f)
-//		{
-//			mSpinning += 0.1f;
-//		}
-//	}
+			mSpinning += 0.1f;
+		}
+	}//END of StartSpin()
 	
 
 	
-//	public void SpinShip(float spinDir)
-//	{
-//		if(spinDir > 0f)
-//		{
-//			mMainShip.transform.Rotate(Vector3.forward*Time.deltaTime*720f);
-//			mSecondShip.transform.Rotate(Vector3.forward*Time.deltaTime*-720f);
-//		}
-//		else if (spinDir < 0f)
-//		{
-//			mMainShip.transform.Rotate(Vector3.forward*Time.deltaTime*-720f);
-//			mSecondShip.transform.Rotate(Vector3.forward*Time.deltaTime*720f);
-//		}
-//		
-//	}
+	public void SpinShip(float spinDir)
+	{
+		if(spinDir > 0f)
+		{
+			mMainShip.transform.Rotate(Vector3.forward*Time.deltaTime*720f);
+			mSecondShip.transform.Rotate(Vector3.forward*Time.deltaTime*-720f);
+		}
+		else if (spinDir < 0f)
+		{
+			mMainShip.transform.Rotate(Vector3.forward*Time.deltaTime*-720f);
+			mSecondShip.transform.Rotate(Vector3.forward*Time.deltaTime*720f);
+		}
+		
+	}//END of SpinShip()
 	
 	//For getting hit by boss beams ~Adam
 	void OnParticleCollision(GameObject other)
 	{
 		Debug.Log("The clone was shot by a particle");
 		CloneShipDie();
-	}
+	}//END of OnParticleCollision()
 
 	public void CloneShipDie()
 	{
-		GameObject cloneDeathParticles;
-		cloneDeathParticles = Instantiate(mCloneDeathEffect, transform.position, Quaternion.identity) as GameObject;
-		Camera.main.GetComponent<CameraShaker>().ShakeCameraDeath();
-		Destroy(this.gameObject);
-	}
+		//Spin if shielded when hit, otherwise die ~Adam
+		if(mShielded)
+		{
+			StartSpin();
+		}
+		else
+		{
+			GameObject cloneDeathParticles;
+			cloneDeathParticles = Instantiate(mCloneDeathEffect, transform.position, Quaternion.identity) as GameObject;
+			Camera.main.GetComponent<CameraShaker>().ShakeCameraDeath();
+			Destroy(this.gameObject);
+		}
+	}//END of CloneShipDie()
 
 }//END of MonoBehavior

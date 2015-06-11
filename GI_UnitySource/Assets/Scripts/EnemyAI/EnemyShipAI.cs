@@ -26,6 +26,8 @@ public class EnemyShipAI : MonoBehaviour
 
 	//The player's avatar ~Adam
 	Transform mPlayer;
+	//The player Clone shipe ~Adam
+	Transform mPlayerClone;
 	//Whether or not the ship has flown in a circle ~Adam
 	public bool mHasLooped = false;
 	//The point thta the ship will fly in a circle around on its way to the swarm if it isn't null ~Adam
@@ -119,6 +121,10 @@ public class EnemyShipAI : MonoBehaviour
 	{
 		//Find the other objects in the scene that we're going to be referencing
 		mPlayer = GameObject.FindGameObjectWithTag("Player").transform;
+		if(FindObjectOfType<PlayerShipCloneController>() != null)
+		{
+			mPlayerClone = FindObjectOfType<PlayerShipCloneController>().gameObject.transform;
+		}
 		mScoreManager = FindObjectOfType<ScoreManager>();
 		mKillCounter = FindObjectOfType<LevelKillCounter>();
 
@@ -243,7 +249,7 @@ public class EnemyShipAI : MonoBehaviour
 				}
 			}
 			//Otherwise, instantiate an enemy bullet if the player is below this enemy `Adam
-			else if (mShooter && Mathf.Abs(mPlayer.transform.position.x - transform.position.x) <= 2f)
+			else if (mShooter && Mathf.Abs(mPlayer.position.x - transform.position.x) <= 2f)
 			{
 				GameObject enemyBullet;
 				enemyBullet = Instantiate(mEnemyBullet, transform.position, Quaternion.identity) as GameObject;
@@ -414,8 +420,16 @@ public class EnemyShipAI : MonoBehaviour
 		transform.up = mSwarmGridPosition.transform.up;
 		#endregion
 
-		//If the player is in front of the enemy, there's a chance it'll fire
-		Vector3 toPlayer = mPlayer.transform.position - transform.position;
+		//Find the direction to the player (or the clone if it's closer) ~Adam
+		Vector3 toPlayer;
+		if(mPlayerClone != null && Vector3.Distance(transform.position,mPlayerClone.position) <= Vector3.Distance(transform.position,mPlayer.position) )
+		{
+			toPlayer = mPlayerClone.position - transform.position;
+		}
+		else
+		{
+			toPlayer = mPlayer.position - transform.position;
+		}
 		toPlayer.Normalize();
 
 		//Make a grabber enemy release its captured ship once it returns to its position in the swarm
@@ -446,10 +460,22 @@ public class EnemyShipAI : MonoBehaviour
 			mAnimator.SetBool("IsReturning", false);
 		}
 
+		//Find the direction to the player (or the clone if it's closer) ~Adam
+		Vector3 toPlayer;
+		if(mPlayerClone != null && Vector3.Distance(transform.position,mPlayerClone.position) <= Vector3.Distance(transform.position,mPlayer.position) )
+		{
+			toPlayer = mPlayerClone.position - transform.position;
+		}
+		else
+		{
+			toPlayer = mPlayer.position - transform.position;
+		}
+		toPlayer.Normalize();
+
 		#region Basic enemy movement was already written when I joined the project.  Before I joined, enemies would move toward the player for a few seconds, then move back to the swarm without actually affecting the player.
 
-		Vector3 toPlayer = mPlayer.transform.position - transform.position;
-		toPlayer.Normalize();
+//		Vector3 toPlayer = mPlayer.position - transform.position;
+//		toPlayer.Normalize();
 		Vector3 vel = transform.gameObject.GetComponent<Rigidbody>().velocity;
 		
 		vel += toPlayer;

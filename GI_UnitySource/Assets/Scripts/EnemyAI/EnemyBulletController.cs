@@ -97,7 +97,7 @@ public class EnemyBulletController : MonoBehaviour
 		}
 
 		//Detect distance to player and slow down time if close but not quite hitting ~Adam
-		if (Vector3.Distance(this.transform.position, mPlayer.transform.position) <= 2f)
+		if (Vector3.Distance(this.transform.position, mPlayer.transform.position) <= 2.5f)
 		{
 			if(FindObjectOfType<SlowTimeController>()!= null)
 			{
@@ -105,7 +105,7 @@ public class EnemyBulletController : MonoBehaviour
 			}
 		}
 		//Detect distance to player and kill the player and destroy self if close enough to "touch" ~Adam
-		if (Vector3.Distance(this.transform.position, mPlayer.transform.position) <= 1f)
+		if (Vector3.Distance(this.transform.position, mPlayer.transform.position) <= 1.5f)
 		{
 			Debug.Log("The player was shot");
 			mScoreController.LoseALife();
@@ -115,7 +115,7 @@ public class EnemyBulletController : MonoBehaviour
 		//Detect distance to player clone and kill the clone and destroy self if close enough to "touch" ~Adam
 		if(mPlayerClone != null)
 		{
-			if (Vector3.Distance(this.transform.position, mPlayerClone.transform.position) <= 1f)
+			if (Vector3.Distance(this.transform.position, mPlayerClone.transform.position) <= 1.5f)
 			{
 				Debug.Log("The clone was shot");
 				mPlayerClone.GetComponent<PlayerShipCloneController>().CloneShipDie();

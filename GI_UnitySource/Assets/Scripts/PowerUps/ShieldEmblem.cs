@@ -25,5 +25,11 @@ public class ShieldEmblem : MonoBehaviour
 			other.GetComponent<PlayerShipController>().mShieldTimer = 30f; 
 			Destroy(this.gameObject);
 		}
+		if(other.GetComponent<PlayerShipCloneController>() != null)
+		{
+			FindObjectOfType<PlayerShipController>().mShielded = true;
+			FindObjectOfType<PlayerShipController>().mShieldTimer = 30f;
+			Destroy(this.gameObject);
+		}
 	}
 }

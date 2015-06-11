@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: b56792305ba654248b8e4b1d2b7de5c6
-timeCreated: 1433891675
+timeCreated: 1433989303
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -54,22 +54,22 @@ TextureImporter:
     - name: New Ship Animation_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 86
         y: 0
-        width: 32
-        height: 32
+        width: 43
+        height: 43
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: New Ship Animation_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 129
         y: 0
-        width: 32
-        height: 32
+        width: 43
+        height: 43
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

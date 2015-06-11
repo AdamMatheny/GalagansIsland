@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 9cdd925e480cdec4da681608c0a4971b
-timeCreated: 1430710826
+timeCreated: 1433984854
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -71,8 +71,8 @@ TextureImporter:
         y: 0
         width: 120
         height: 432
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 9
+      pivot: {x: .535837471, y: .147332564}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Bigblast_1
       rect:
@@ -81,8 +81,8 @@ TextureImporter:
         y: 0
         width: 120
         height: 432
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 9
+      pivot: {x: .514334977, y: .14534159}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Bigblast_2
       rect:
@@ -91,8 +91,8 @@ TextureImporter:
         y: 0
         width: 120
         height: 432
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 9
+      pivot: {x: .521502674, y: .14534159}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Bigblast_3
       rect:
@@ -101,8 +101,8 @@ TextureImporter:
         y: 0
         width: 120
         height: 432
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 9
+      pivot: {x: .453424573, y: .147340044}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Bigblast_4
       rect:
@@ -111,8 +111,8 @@ TextureImporter:
         y: 0
         width: 120
         height: 432
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 9
+      pivot: {x: .471222937, y: .147882462}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Bigblast_5
       rect:
@@ -121,8 +121,8 @@ TextureImporter:
         y: 0
         width: 120
         height: 432
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 9
+      pivot: {x: .521583021, y: .14488484}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Bigblast_6
       rect:
@@ -131,8 +131,8 @@ TextureImporter:
         y: 0
         width: 120
         height: 432
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 9
+      pivot: {x: .522000015, y: .147882462}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Bigblast_7
       rect:
@@ -141,8 +141,8 @@ TextureImporter:
         y: 0
         width: 120
         height: 432
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 9
+      pivot: {x: .547180176, y: .147882462}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Bigblast_8
       rect:
@@ -151,8 +151,8 @@ TextureImporter:
         y: 0
         width: 120
         height: 432
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 9
+      pivot: {x: .5, y: .147882506}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Bigblast_9
       rect:
@@ -161,8 +161,8 @@ TextureImporter:
         y: 0
         width: 120
         height: 432
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 9
+      pivot: {x: .5, y: .147882506}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Bigblast_10
       rect:
@@ -171,8 +171,8 @@ TextureImporter:
         y: 0
         width: 120
         height: 432
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 9
+      pivot: {x: .540000021, y: .147882506}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Bigblast_11
       rect:
@@ -181,8 +181,8 @@ TextureImporter:
         y: 0
         width: 120
         height: 432
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 9
+      pivot: {x: .524999976, y: .147882506}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Bigblast_12
       rect:
@@ -191,8 +191,8 @@ TextureImporter:
         y: 0
         width: 120
         height: 432
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 9
+      pivot: {x: .5, y: .147882506}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Bigblast_13
       rect:
@@ -201,8 +201,8 @@ TextureImporter:
         y: 0
         width: 134
         height: 432
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 9
+      pivot: {x: .5, y: .147882506}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Bigblast_14
       rect:
@@ -211,8 +211,8 @@ TextureImporter:
         y: 0
         width: 378
         height: 432
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 9
+      pivot: {x: .5, y: .147882506}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

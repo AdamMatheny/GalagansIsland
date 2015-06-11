@@ -20,7 +20,12 @@ public class BigBlastEmblem : MonoBehaviour
 	{
 		if(other.GetComponent<PlayerShipController>() != null)
 		{
-			other.GetComponent<PlayerShipController>().mBigBlast.SetActive(true);
+			other.GetComponent<PlayerShipController>().mHaveBigBlast = true;
+			Destroy(this.gameObject);
+		}
+		if(other.GetComponent<PlayerShipCloneController>() != null)
+		{
+			FindObjectOfType<PlayerShipController>().mHaveBigBlast = true;
 			Destroy(this.gameObject);
 		}
 	}
