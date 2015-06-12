@@ -1,15 +1,14 @@
 fileFormatVersion: 2
-guid: b56792305ba654248b8e4b1d2b7de5c6
-timeCreated: 1434049288
+guid: ffadcd270fe9c2541a15526ba0637699
+timeCreated: 1434070477
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: JoshMainPlayerShip_0
-    21300002: JoshMainPlayerShip_1
-    21300004: JoshMainPlayerShip_2
-    21300006: JoshMainPlayerShip_3
-    21300008: JoshMainPlayerShip_4
-    21300010: JoshMainPlayerShip_5
+    21300000: bubble_0
+    21300002: bubble_1
+    21300004: bubble_2
+    21300006: bubble_3
+    21300008: bubble_4
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -32,8 +31,8 @@ TextureImporter:
   cubemapConvolutionSteps: 8
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
-  textureFormat: -3
-  maxTextureSize: 8192
+  textureFormat: -1
+  maxTextureSize: 2048
   textureSettings:
     filterMode: 0
     aniso: 16
@@ -55,65 +54,55 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: JoshMainPlayerShip_0
-      rect:
-        serializedVersion: 2
-        x: 86
-        y: 0
-        width: 43
-        height: 43
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: JoshMainPlayerShip_1
-      rect:
-        serializedVersion: 2
-        x: 129
-        y: 0
-        width: 43
-        height: 43
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: JoshMainPlayerShip_2
+    - name: bubble_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 43
-        height: 43
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: JoshMainPlayerShip_3
+    - name: bubble_1
       rect:
         serializedVersion: 2
-        x: 43
+        x: 64
         y: 0
-        width: 43
-        height: 43
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: JoshMainPlayerShip_4
+    - name: bubble_2
       rect:
         serializedVersion: 2
-        x: 172
+        x: 128
         y: 0
-        width: 43
-        height: 43
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: JoshMainPlayerShip_5
+    - name: bubble_3
       rect:
         serializedVersion: 2
-        x: 215
+        x: 192
         y: 0
-        width: 43
-        height: 43
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: bubble_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

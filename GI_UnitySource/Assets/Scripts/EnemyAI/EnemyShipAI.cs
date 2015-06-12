@@ -26,8 +26,10 @@ public class EnemyShipAI : MonoBehaviour
 
 	//The player's avatar ~Adam
 	Transform mPlayer;
-	//The player Clone shipe ~Adam
-	Transform mPlayerClone;
+
+//	//The player Clone shipe ~Adam (No longer being used but being kept for reference for when/if we do multiplayer ~Adam)
+//	Transform mPlayerClone;
+
 	//Whether or not the ship has flown in a circle ~Adam
 	public bool mHasLooped = false;
 	//The point thta the ship will fly in a circle around on its way to the swarm if it isn't null ~Adam
@@ -121,10 +123,12 @@ public class EnemyShipAI : MonoBehaviour
 	{
 		//Find the other objects in the scene that we're going to be referencing
 		mPlayer = GameObject.FindGameObjectWithTag("Player").transform;
-		if(FindObjectOfType<PlayerShipCloneController>() != null)
-		{
-			mPlayerClone = FindObjectOfType<PlayerShipCloneController>().gameObject.transform;
-		}
+		#region from when we were doing the twin-stick ship clone.  Keeping in as comments for when/if we do multiplayer ~Adam
+//		if(FindObjectOfType<PlayerShipCloneController>() != null)
+//		{
+//			mPlayerClone = FindObjectOfType<PlayerShipCloneController>().gameObject.transform;
+//		}
+		#endregion
 		mScoreManager = FindObjectOfType<ScoreManager>();
 		mKillCounter = FindObjectOfType<LevelKillCounter>();
 
@@ -236,8 +240,15 @@ public class EnemyShipAI : MonoBehaviour
 			//Fire automatically if set to do so ~Adam
 			if(mShooter && mAutoShoot && mPlayer.GetComponent<PlayerShipController>().enabled == true)
 			{
-				GameObject enemyBullet;
-				enemyBullet = Instantiate(mEnemyBullet, transform.position, Quaternion.identity) as GameObject;
+				//Play animation for firing (or skip straight to firing if no animation) ~Adam
+				if(mAnimator != null)
+				{
+					mAnimator.Play("Shoot");
+				}
+				else
+				{
+					ShootEnemyBullet();
+				}
 				//Whether the timer is randomized or not ~Adam
 				if(mRandomShootTimer)
 				{
@@ -251,8 +262,15 @@ public class EnemyShipAI : MonoBehaviour
 			//Otherwise, instantiate an enemy bullet if the player is below this enemy `Adam
 			else if (mShooter && Mathf.Abs(mPlayer.position.x - transform.position.x) <= 2f)
 			{
-				GameObject enemyBullet;
-				enemyBullet = Instantiate(mEnemyBullet, transform.position, Quaternion.identity) as GameObject;
+				//Play animation for firing (or skip straight to firing if no animation) ~Adam
+				if(mAnimator != null)
+				{
+					mAnimator.Play("Shoot");
+				}
+				else
+				{
+					ShootEnemyBullet();
+				}
 				//Whether the timer is randomized or not `Adam
 				if(mRandomShootTimer)
 				{
@@ -405,6 +423,11 @@ public class EnemyShipAI : MonoBehaviour
 			mAnimator.SetBool("IsIdle", true);
 			mAnimator.SetBool("IsChasing", false);
 			mAnimator.SetBool("IsReturning", false);
+			if(mGrabber &&mShipInTow != null)
+			{
+				mAnimator.SetBool("IsIdle", false);
+				mAnimator.SetBool("IsReturning", true);
+			}
 		}
 		//Stop using the speed for the alternate speed for making the formation
 		if(mSpeed == mFormSpeed && mFormSpeed != mDefaultSpeed)
@@ -412,25 +435,32 @@ public class EnemyShipAI : MonoBehaviour
 			mSpeed = mDefaultSpeed;
 		}
 
-		#region Basic enemy movement was already written when I joined the project.  
+		#region Basic enemy movement was already written by Jonathan when I joined the project.  
 		//Count down to get ready to attack
 		mAttackFrequencyTimer -= Time.deltaTime;
 		
 		transform.position = mSwarmGridPosition.transform.position;
 		transform.up = mSwarmGridPosition.transform.up;
+
+		Vector3 toPlayer;
+		toPlayer = mPlayer.position - transform.position;
+		toPlayer.Normalize();
+
 		#endregion
 
-		//Find the direction to the player (or the clone if it's closer) ~Adam
-		Vector3 toPlayer;
-		if(mPlayerClone != null && Vector3.Distance(transform.position,mPlayerClone.position) <= Vector3.Distance(transform.position,mPlayer.position) )
-		{
-			toPlayer = mPlayerClone.position - transform.position;
-		}
-		else
-		{
-			toPlayer = mPlayer.position - transform.position;
-		}
-		toPlayer.Normalize();
+		#region from when we were doing clone/twin ship
+//		//Find the direction to the player (or the clone if it's closer) ~Adam
+//		Vector3 toPlayer;
+//		if(mPlayerClone != null && Vector3.Distance(transform.position,mPlayerClone.position) <= Vector3.Distance(transform.position,mPlayer.position) )
+//		{
+//			toPlayer = mPlayerClone.position - transform.position;
+//		}
+//		else
+//		{
+//			toPlayer = mPlayer.position - transform.position;
+//		}
+//		toPlayer.Normalize();
+		#endregion
 
 		//Make a grabber enemy release its captured ship once it returns to its position in the swarm
 //		if(mShipInTow != null)
@@ -458,24 +488,30 @@ public class EnemyShipAI : MonoBehaviour
 			mAnimator.SetBool("IsIdle", false);
 			mAnimator.SetBool("IsChasing", true);
 			mAnimator.SetBool("IsReturning", false);
-		}
+			if(mGrabber &&mShipInTow != null)
+			{
+				mAnimator.SetBool("IsChasing", false);
+				mAnimator.SetBool("IsReturning", true);
+			}}
 
-		//Find the direction to the player (or the clone if it's closer) ~Adam
-		Vector3 toPlayer;
-		if(mPlayerClone != null && Vector3.Distance(transform.position,mPlayerClone.position) <= Vector3.Distance(transform.position,mPlayer.position) )
-		{
-			toPlayer = mPlayerClone.position - transform.position;
-		}
-		else
-		{
-			toPlayer = mPlayer.position - transform.position;
-		}
-		toPlayer.Normalize();
-
-		#region Basic enemy movement was already written when I joined the project.  Before I joined, enemies would move toward the player for a few seconds, then move back to the swarm without actually affecting the player.
-
-//		Vector3 toPlayer = mPlayer.position - transform.position;
+		#region From when we were doing the clone/twin-stick ship
+//		//Find the direction to the player (or the clone if it's closer) ~Adam
+//		Vector3 toPlayer;
+//		if(mPlayerClone != null && Vector3.Distance(transform.position,mPlayerClone.position) <= Vector3.Distance(transform.position,mPlayer.position) )
+//		{
+//			toPlayer = mPlayerClone.position - transform.position;
+//		}
+//		else
+//		{
+//			toPlayer = mPlayer.position - transform.position;
+//		}
 //		toPlayer.Normalize();
+		#endregion
+
+		#region Basic enemy movement was already written by Jonathan when I joined the project.  Before I joined, enemies would move toward the player for a few seconds, then move back to the swarm without actually affecting the player.
+
+		Vector3 toPlayer = mPlayer.position - transform.position;
+		toPlayer.Normalize();
 		Vector3 vel = transform.gameObject.GetComponent<Rigidbody>().velocity;
 		
 		vel += toPlayer;
@@ -537,6 +573,12 @@ public class EnemyShipAI : MonoBehaviour
 
 	}//END of AttackPlayer()
 
+
+	public void ShootEnemyBullet()
+	{
+		GameObject enemyBullet;
+		enemyBullet = Instantiate(mEnemyBullet, transform.position, Quaternion.identity) as GameObject;
+	}//End of ShootEnemyBullet()
 
 	void OnCollisionEnter(Collision other)
 	{
@@ -644,12 +686,14 @@ public class EnemyShipAI : MonoBehaviour
 
 		}
 
-		//Kill a player clone ship on contact
-		if (other.gameObject.GetComponent<PlayerShipCloneController>() != null)
-		{
-			Debug.Log("Hit a clone ship");
-			other.gameObject.GetComponent<PlayerShipCloneController>().CloneShipDie();
-		}
+		#region from when we were doing the clone/twin-stick ship
+//		//Kill a player clone ship on contact
+//		if (other.gameObject.GetComponent<PlayerShipCloneController>() != null)
+//		{
+//			Debug.Log("Hit a clone ship");
+//			other.gameObject.GetComponent<PlayerShipCloneController>().CloneShipDie();
+//		}
+		#endregion
 
 	}//END of OnCollisionEnter()
 
@@ -668,8 +712,7 @@ public class EnemyShipAI : MonoBehaviour
 			//For firing a shot upon death (i.e. red enemies) ~Adam
 			if(mDeathShooter && Application.loadedLevel != 0)
 			{
-				GameObject enemyBullet;
-				enemyBullet = Instantiate(mEnemyBullet, transform.position, Quaternion.identity) as GameObject;
+				ShootEnemyBullet();
 			}
 
 		}
@@ -703,5 +746,5 @@ public class EnemyShipAI : MonoBehaviour
 			FindObjectOfType<SlowTimeController>().SlowDownTime(0.8f,1f);
 		}
 		Destroy(gameObject);
-	}
+	}//END of EnemyShipDie()
 }

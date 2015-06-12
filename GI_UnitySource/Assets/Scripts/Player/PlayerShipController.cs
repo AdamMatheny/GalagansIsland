@@ -196,10 +196,14 @@ public class PlayerShipController : MonoBehaviour
 			
 			mMainShipShieldSprite.enabled = true;
 			mMainShipShieldSprite.GetComponent<Light>().enabled = true;
-			if(mShipRecovered && Application.isMobilePlatform)
+			if(mShipRecovered)// && Application.isMobilePlatform) (mobile part is from when we were doing twin-stick)
 			{
 				mSecondShipShieldSprite.enabled = true;
 				mSecondShipShieldSprite.GetComponent<Light>().enabled = true;
+			}
+			else
+			{
+				mSecondShipShieldSprite.enabled = false;
 			}
 			//Decrease Shield time ~Adam
 			mShieldTimer -= Time.deltaTime;
@@ -215,10 +219,6 @@ public class PlayerShipController : MonoBehaviour
 			}
 			if(mShieldTimer < 5f)
 			{
-				//				mMainShipShieldSprite.GetComponent<Animator>().speed = 0.5f;
-				//				mMainShipShieldSprite.GetComponent<Animator>().Play("ShieldSprite_Flicker");
-				//				mSecondShipShieldSprite.GetComponent<Animator>().speed = 0.5f;
-				//				mSecondShipShieldSprite.GetComponent<Animator>().Play("ShieldSprite_Flicker");
 				mMainShipShieldSprite.GetComponent<Renderer>().material.color = Color.Lerp (mMainShipShieldSprite.GetComponent<Renderer>().material.color, Color.red,0.1f);
 				mSecondShipShieldSprite.GetComponent<Renderer>().material.color = Color.Lerp (mSecondShipShieldSprite.GetComponent<Renderer>().material.color, Color.red,0.1f);
 			}
@@ -226,12 +226,6 @@ public class PlayerShipController : MonoBehaviour
 			{
 				mMainShipShieldSprite.GetComponent<Renderer>().material.color = Color.white;
 				mSecondShipShieldSprite.GetComponent<Renderer>().material.color = Color.white;
-				//				mMainShipShieldSprite.GetComponent<Animator>().speed = 0f;
-				//				mMainShipShieldSprite.GetComponent<Animator>().Play("ShieldSprite_Solid");
-				//				mMainShipShieldSprite.GetComponent<Animator>().StopPlayback();
-				//				mSecondShipShieldSprite.GetComponent<Animator>().speed = 0f;
-				//				mSecondShipShieldSprite.GetComponent<Animator>().Play("ShieldSprite_Solid");
-				//				mSecondShipShieldSprite.GetComponent<Animator>().StopPlayback();
 			}
 			
 		}
@@ -316,7 +310,10 @@ public class PlayerShipController : MonoBehaviour
 		{
 			horizontal = 1f;
 		}
-		
+
+		mMainShipAnimator.SetInteger("Direction", Mathf.RoundToInt(horizontal));
+		mSecondShipAnimator.SetInteger("Direction", Mathf.RoundToInt(horizontal));
+
 		
 		//Delete the ship if we've returned to the title screen
 		if(Application.loadedLevel == 0)
@@ -505,12 +502,12 @@ public class PlayerShipController : MonoBehaviour
 					if (mThreeBullet) 
 					{
 						
-						if(!mShipRecovered || !Application.isMobilePlatform)
+						if(!mShipRecovered)// || !Application.isMobilePlatform) (mobile part is from when we were doing twin-stick)
 						{
 							Instantiate (mSideBullet, mBulletSpawns[2].position, mMainShip.transform.rotation * Quaternion.Euler (0f, 0f, 10f) * Quaternion.Euler (0f,0f,Random.Range(-5.0f,5.0f)));
 						}
-						//Do side ship instead of twin-stick ship on mobile
-						else if(mShipRecovered && Application.isMobilePlatform)
+						//Adjust triple-bullet firing when you have the double/side ship ~Adam
+						else if(mShipRecovered)// && Application.isMobilePlatform)
 						{
 							Instantiate (mSideBullet, mBulletSpawns[2].position, mMainShip.transform.rotation * Quaternion.Euler (0f, 0f, 5f) * Quaternion.Euler (0f,0f,Random.Range(-10.0f,3.0f)));
 						}
@@ -519,8 +516,8 @@ public class PlayerShipController : MonoBehaviour
 					}
 					GetComponent<AudioSource> ().Play ();
 					//Camera.main.GetComponent<CameraShaker> ().ShakeCamera ();
-					//Do side ship instead of twin-stick ship on mobile
-					if (mShipRecovered && Application.isMobilePlatform) 
+					//Do side ship bullets
+					if (mShipRecovered)// && Application.isMobilePlatform)  (mobile part is from when we were doing twin-stick)
 					{
 
 
@@ -675,55 +672,54 @@ public class PlayerShipController : MonoBehaviour
 		if(mToggleFireOn)
 		{
 			mMainShipAnimator.SetBool("IsFiring", true);
-			//mSecondShipAnimator.SetBool("IsFiring", true);
+			mSecondShipAnimator.SetBool("IsFiring", true);
 		}
 		else
 		{
 			mMainShipAnimator.SetBool("IsFiring", false);
-			//mSecondShipAnimator.SetBool("IsFiring", false);
+			mSecondShipAnimator.SetBool("IsFiring", false);
 		}
 		
 
 
 
-		//Control whether or not to render the second ship on the side on mobile
-		if(Application.isMobilePlatform)
+		//Control whether or not to render the second ship on the side ~Adam
+		if (mShipRecovered)
 		{
-			if (mShipRecovered)
+			mSecondShip.GetComponent<SpriteRenderer>().enabled = true;
+			foreach (ParticleSystem shipTrail in mSecondShip.GetComponentsInChildren<ParticleSystem>())
 			{
-				mSecondShip.GetComponent<SpriteRenderer>().enabled = true;
-				foreach (ParticleSystem shipTrail in mSecondShip.GetComponentsInChildren<ParticleSystem>())
+				if(!(mMoveDir.y < 0f && mDriftDown))
 				{
-					if(!(mMoveDir.y < 0f && mDriftDown))
-					{
-						shipTrail.enableEmission = true;
-					}
-				}
-			}
-		
-			else
-			{
-				mSecondShip.GetComponent<SpriteRenderer>().enabled = false;
-				foreach (ParticleSystem shipTrail in mSecondShip.GetComponentsInChildren<ParticleSystem>())
-				{
-					shipTrail.enableEmission = false;
+					shipTrail.enableEmission = true;
 				}
 			}
 		}
-		//If not mobile, base ship recoved on whether or not the clone ship is alive/active
+	
 		else
 		{
-			mShipRecovered = (mPlayerClone != null);
+			mSecondShip.GetComponent<SpriteRenderer>().enabled = false;
+			foreach (ParticleSystem shipTrail in mSecondShip.GetComponentsInChildren<ParticleSystem>())
+			{
+				shipTrail.enableEmission = false;
+			}
 		}
 
+		#region For using the twin-stick clone
+//		//If not mobile, base ship recoved on whether or not the clone ship is alive/active ~Adam
+//		else
+//		{
+//			mShipRecovered = (mPlayerClone != null);
+//		}
+		#endregion
 	}//END of Update()
 	
 	void LateUpdate () 
 	{
 		//Keep ship within screen bounds
-		if (transform.position.x < -17.5 && mShipRecovered && Application.isMobilePlatform)
+		if (transform.position.x < -16.5 && mShipRecovered)// && Application.isMobilePlatform) (from when we were doing twin-stick
 		{
-			transform.position = new Vector3(-17.5f, transform.position.y, transform.position.z);
+			transform.position = new Vector3(-16.5f, transform.position.y, transform.position.z);
 		}
 		else if(transform.position.x < -20f)
 		{

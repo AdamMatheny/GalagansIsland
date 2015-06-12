@@ -134,19 +134,19 @@ public class CapturedShip : MonoBehaviour
 			//Give the player a second ship, which can in turn be stolen back by grabber enemies -Adam
 			mPlayer.mShipStolen = false;
 			mPlayer.mShipRecovered = true;
-			//Give a ship attached to the side of the main ship if mobile and make an effect as it spawns -Adam
-			if(Application.isMobilePlatform)
-			{
-				Instantiate(mSecondShipSpawnEffect, mPlayer.mSecondShip.transform.position, Quaternion.identity);
-			}
-			//If not mobile, spawn a clone ship next to the player and make an effect as it spawns -Adam
-			else
-			{
-				GameObject newClone = Instantiate(mCloneShip,mPlayer.transform.position + Vector3.right*2f, Quaternion.identity) as GameObject;
-				newClone.GetComponent<PlayerShipCloneController>().mOriginalShip = mPlayer.GetComponent<PlayerShipController>();
-				Instantiate(mSecondShipSpawnEffect, newClone.transform.position, Quaternion.identity);
-				mPlayer.mPlayerClone = newClone;
-			}
+			//Give a ship attached to the side of the main ship and make an effect as it spawns -Adam
+			Instantiate(mSecondShipSpawnEffect, mPlayer.mSecondShip.transform.position, Quaternion.identity);
+
+			#region for twin-stick clone spawning
+//			//If not mobile, spawn a clone ship next to the player and make an effect as it spawns -Adam
+//			else
+//			{
+//				GameObject newClone = Instantiate(mCloneShip,mPlayer.transform.position + Vector3.right*2f, Quaternion.identity) as GameObject;
+//				newClone.GetComponent<PlayerShipCloneController>().mOriginalShip = mPlayer.GetComponent<PlayerShipController>();
+//				Instantiate(mSecondShipSpawnEffect, newClone.transform.position, Quaternion.identity);
+//				mPlayer.mPlayerClone = newClone;
+//			}
+			#endregion
 			Destroy(this.gameObject);
 
 		}

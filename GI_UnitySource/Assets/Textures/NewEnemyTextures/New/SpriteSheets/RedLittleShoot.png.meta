@@ -1,15 +1,14 @@
 fileFormatVersion: 2
-guid: b56792305ba654248b8e4b1d2b7de5c6
-timeCreated: 1434049288
+guid: a1925005aa6be144b950c4ed9cbd317c
+timeCreated: 1434058643
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: JoshMainPlayerShip_0
-    21300002: JoshMainPlayerShip_1
-    21300004: JoshMainPlayerShip_2
-    21300006: JoshMainPlayerShip_3
-    21300008: JoshMainPlayerShip_4
-    21300010: JoshMainPlayerShip_5
+    21300000: RedLittleShoot_0
+    21300002: RedLittleShoot_1
+    21300004: RedLittleShoot_2
+    21300006: RedLittleShoot_3
+    21300008: RedLittleShoot_4
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -32,8 +31,8 @@ TextureImporter:
   cubemapConvolutionSteps: 8
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
-  textureFormat: -3
-  maxTextureSize: 8192
+  textureFormat: -1
+  maxTextureSize: 2048
   textureSettings:
     filterMode: 0
     aniso: 16
@@ -55,65 +54,55 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: JoshMainPlayerShip_0
-      rect:
-        serializedVersion: 2
-        x: 86
-        y: 0
-        width: 43
-        height: 43
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: JoshMainPlayerShip_1
-      rect:
-        serializedVersion: 2
-        x: 129
-        y: 0
-        width: 43
-        height: 43
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: JoshMainPlayerShip_2
+    - name: RedLittleShoot_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 43
-        height: 43
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: JoshMainPlayerShip_3
+    - name: RedLittleShoot_1
       rect:
         serializedVersion: 2
-        x: 43
+        x: 32
         y: 0
-        width: 43
-        height: 43
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: JoshMainPlayerShip_4
+    - name: RedLittleShoot_2
       rect:
         serializedVersion: 2
-        x: 172
+        x: 64
         y: 0
-        width: 43
-        height: 43
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: JoshMainPlayerShip_5
+    - name: RedLittleShoot_3
       rect:
         serializedVersion: 2
-        x: 215
+        x: 96
         y: 0
-        width: 43
-        height: 43
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: RedLittleShoot_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
