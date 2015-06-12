@@ -425,7 +425,7 @@ public class PlayerShipController : MonoBehaviour
 		
 		//Toggle bullet firing ~Adam
 		//Keyboard and mouse input and InControl Gamepad input ~Adam
-		if(InputManager.ActiveDevice.Action1.WasPressed || Input.GetButtonDown("FireGun"))
+		if(InputManager.ActiveDevice.Action1.WasPressed || InputManager.ActiveDevice.Action4.WasPressed || Input.GetButtonDown("FireGun"))
 		{
 			Debug.Log("InControl button pressed");
 			ToggleFire();
@@ -578,12 +578,9 @@ public class PlayerShipController : MonoBehaviour
 		}
 
 		//Keyboard and mouse input and InControl Gamepad input ~Adam
-		if(InputManager.ActiveDevice.Action2.IsPressed || Input.GetButton("Thrusters"))
+		if(InputManager.ActiveDevice.Action2.IsPressed || InputManager.ActiveDevice.Action3.IsPressed || Input.GetButton("Thrusters"))
 		{
-			if(InputManager.ActiveDevice.Action2.IsPressed)
-			{
-				Debug.Log("InControl recognized Action2");
-			}
+
 			mDropSpeed -= mDropDeccelRate*3f;
 			if(mDropSpeed <= 0.01f)
 			{

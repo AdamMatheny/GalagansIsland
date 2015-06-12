@@ -111,6 +111,7 @@ public class EnemyShipAI : MonoBehaviour
 
 	//For making the Grabbers invincible while attacking `Adam
 	public bool mInvincible = false;
+	[SerializeField] private GameObject mShieldBubble;
 
 
 	//For controlling animation ~Adam
@@ -178,16 +179,27 @@ public class EnemyShipAI : MonoBehaviour
 		if(mGrabber && !mShipInTow && mCurrentAIState != AIState.Attacking)
 		{
 			mInvincible = false;
-			GetComponentInChildren<Renderer>().material.color = Color.white;
+			//GetComponentInChildren<Renderer>().material.color = Color.white;
+			if(mShieldBubble != null)
+			{
+				mShieldBubble.SetActive(false);
+			}
 		}
-
+		//Toggle the visibilty of the shield bubble based on invincibility
 		if(mInvincible)
 		{
-			GetComponentInChildren<Renderer>().material.color = Color.magenta;
-		}
+			//GetComponentInChildren<Renderer>().material.color = Color.magenta;
+			if(mShieldBubble != null)
+			{
+				mShieldBubble.SetActive(true);
+			}}
 		else
 		{
-			GetComponentInChildren<Renderer>().material.color = Color.white;
+			//GetComponentInChildren<Renderer>().material.color = Color.white;
+			if(mShieldBubble != null)
+			{
+				mShieldBubble.SetActive(false);
+			}
 		}
 
 		#region This segment was already written when I joined.  Although I did update the variable and enum names for legibility and consistency.
