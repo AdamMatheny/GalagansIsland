@@ -1,7 +1,5 @@
 fileFormatVersion: 2
-guid: cdb62771fceeb8a44bb86ba45c58dd2d
-timeCreated: 1433899496
-licenseType: Free
+guid: c4e96c35cd46f534592ecc07b608e110
 PluginImporter:
   serializedVersion: 1
   iconMap: {}
@@ -13,12 +11,12 @@ PluginImporter:
       settings:
         CPU: AnyCPU
     Any:
-      enabled: 0
+      enabled: 1
       settings: {}
     Editor:
       enabled: 0
       settings:
-        CPU: AnyCPU
+        CPU: x86
         DefaultValueInitialized: true
         OS: AnyOS
     Linux:
@@ -28,11 +26,11 @@ PluginImporter:
     Linux64:
       enabled: 0
       settings:
-        CPU: x86_64
+        CPU: None
     LinuxUniversal:
       enabled: 0
       settings:
-        CPU: AnyCPU
+        CPU: x86
     OSXIntel:
       enabled: 0
       settings:
@@ -40,11 +38,11 @@ PluginImporter:
     OSXIntel64:
       enabled: 0
       settings:
-        CPU: AnyCPU
+        CPU: None
     OSXUniversal:
       enabled: 0
       settings:
-        CPU: AnyCPU
+        CPU: x86
     SamsungTV:
       enabled: 0
       settings:
@@ -62,7 +60,7 @@ PluginImporter:
     Win64:
       enabled: 0
       settings:
-        CPU: AnyCPU
+        CPU: None
     WindowsStoreApps:
       enabled: 0
       settings:

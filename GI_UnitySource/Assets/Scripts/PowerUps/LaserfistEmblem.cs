@@ -20,12 +20,14 @@ public class LaserfistEmblem : MonoBehaviour
 	{
 		if(other.GetComponent<PlayerShipController>() != null)
 		{
-			other.GetComponent<PlayerShipController>().mHaveLaserFist = true;
+			//other.GetComponent<PlayerShipController>().mHaveLaserFist = true;
+			other.GetComponent<PlayerShipController>().mLaserFist.SetActive(true);
 			Destroy(this.gameObject);
 		}
 		if(other.GetComponent<PlayerShipCloneController>() != null)
 		{
-			FindObjectOfType<PlayerShipController>().mHaveLaserFist = true;
+			//FindObjectOfType<PlayerShipController>().mHaveLaserFist = true;
+			other.GetComponent<PlayerShipController>().mLaserFist.SetActive(true);
 			Destroy(this.gameObject);
 		}
 	}

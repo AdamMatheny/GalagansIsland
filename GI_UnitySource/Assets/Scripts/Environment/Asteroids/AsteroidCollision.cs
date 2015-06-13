@@ -76,12 +76,12 @@ public class AsteroidCollision : MonoBehaviour
 		{
 			if(PlayerPrefs.GetInt("SpawnLaserFist") == 0)
 			{
-				Instantiate(mLaserFistEmblem, new Vector3(transform.position.x, transform.position.y, -2f), Quaternion.identity);
+				Instantiate(mBigBlastEmblem, new Vector3(transform.position.x, transform.position.y, -2f), Quaternion.identity);
 				PlayerPrefs.SetInt("SpawnLaserFist",1);
 			}
 			else if(PlayerPrefs.GetInt("SpawnLaserFist") == 1)
 			{
-				Instantiate(mBigBlastEmblem, new Vector3(transform.position.x, transform.position.y, -2f), Quaternion.identity);
+				Instantiate(mLaserFistEmblem, new Vector3(transform.position.x, transform.position.y, -2f), Quaternion.identity);
 				PlayerPrefs.SetInt("SpawnLaserFist",0);
 			}
 
