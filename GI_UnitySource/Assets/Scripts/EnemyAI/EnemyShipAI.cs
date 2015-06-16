@@ -147,7 +147,7 @@ public class EnemyShipAI : MonoBehaviour
 		//Scale up for mobile screen ~Adam
 		if(Application.isMobilePlatform)
 		{
-			transform.localScale = new Vector3(1.75f,1.75f,1.75f);
+			//transform.localScale = new Vector3(1.75f,1.75f,1.75f);
 		}
 	}//END of Start()
 	

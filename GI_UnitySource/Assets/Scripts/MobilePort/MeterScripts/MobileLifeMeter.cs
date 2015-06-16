@@ -25,7 +25,7 @@ public class MobileLifeMeter : MonoBehaviour
 		else if(mLifeBar.canvas.isActiveAndEnabled) //Only do stuff when the canvas is actually turned on
 		{
 
-			mLifeBar.GetComponent<RectTransform>().localScale = new Vector3(mScoreManager.mLivesRemaining/99f, 1, 1f);
+			mLifeBar.GetComponent<RectTransform>().localScale = new Vector3((float)mScoreManager.mLivesRemaining/mScoreManager.mMaxLives, 1, 1f);
 
 		}
 	}

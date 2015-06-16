@@ -16,12 +16,19 @@ public class PauseManager : MonoBehaviour
 	[SerializeField] private Texture2D mQuitTex;
 	[SerializeField] private Texture2D mQuitTexHighlight;
 
+    [SerializeField] private UnityEngine.UI.Image PrePauseVigniette;
+    [SerializeField] private UnityEngine.UI.Button PauseButton;
 
 	List<string> mPauseMenuButtonNames = new List<string>();
 	
 	public int mPauseButtonFocus = 1;
 	
 	public float mUIFocusTimer = 0f;
+
+    private bool isPaused = false;
+    private bool isPrePaused = false;
+
+    
 
 
 	// Use this for initialization
@@ -150,7 +157,21 @@ public class PauseManager : MonoBehaviour
 			}
 		}
 
+#if UNITY_ANDROID
+        if (Application.loadedLevel > 0 && Application.loadedLevel < 27 )
+        {
+            if (Input.touchCount == 0 && !isPrePaused)
+            {
+                PrePause();
+            }
+            if (Input.touchCount == 1 && (isPaused || isPrePaused))
+            {
+                UnPause();
+            }
+        }
 
+
+#endif
 
 
 	}
@@ -260,15 +281,91 @@ public class PauseManager : MonoBehaviour
 
 
 
-	void Pause()
+	public void Pause()
 	{
+        StopAllCoroutines();
 		Time.timeScale = 0;
 		mPauseButtonFocus = 1;
+        isPaused = true;
+        isPrePaused = false;
 	}//END of Pause()
+
+    void PrePause()
+    {
+        isPrePaused = true;
+        
+        StopCoroutine("SpeedUpTime");
+        StopCoroutine("HideVigniette");
+        StartCoroutine("SlowTime");
+        StartCoroutine("ShowVigniette");
+    }
 	
 	void UnPause()
 	{
-		Time.timeScale = 1;
+        isPaused = false;
+        isPrePaused = false;
+        StopCoroutine("SlowTime");
+        StopCoroutine("ShowVigniette");
+        StartCoroutine("SpeedUpTime");
+        StartCoroutine("HideVigniette");
 	}//END of UnPause
+
+    private IEnumerator SlowTime()
+    {
+        while (Time.timeScale > 0.3f)
+        {
+            Time.timeScale -= 0.1f;
+
+            if (Time.time < 0.3f)
+                Time.timeScale = 0.3f;
+
+            yield return new WaitForSeconds(0.02f);
+        }
+        yield return null;
+    }
+
+    private IEnumerator SpeedUpTime()
+    {
+        while (Time.timeScale < 1)
+        {
+            Time.timeScale += 0.1f;
+
+            if (Time.time > 1)
+                Time.timeScale = 1;
+
+            yield return new WaitForSeconds(0.02f);
+        }
+        yield return null;
+    }
+
+    private IEnumerator ShowVigniette()
+    {
+        PauseButton.interactable = true;
+        while(PrePauseVigniette.color.a < 1)
+        {
+            if (PrePauseVigniette.color.a + 0.15f < 1)
+                PrePauseVigniette.color = new Color(1, 1, 1, PrePauseVigniette.color.a + 0.15f);
+            else
+                PrePauseVigniette.color = new Color(1, 1, 1, 1);
+            yield return new WaitForSeconds(0.02f);
+        }
+        yield return null;
+    }
+
+    private IEnumerator HideVigniette()
+    {
+        while (PrePauseVigniette.color.a > 0)
+        {
+            if (PrePauseVigniette.color.a - 0.15f < 0)
+                PrePauseVigniette.color = new Color(1, 1, 1, PrePauseVigniette.color.a - 0.15f);
+            else
+            {
+                PrePauseVigniette.color = new Color(1, 1, 1, 0);
+                PauseButton.interactable = false;
+            }
+            yield return new WaitForSeconds(0.02f);
+        }
+        yield return null;
+    }
 
 }

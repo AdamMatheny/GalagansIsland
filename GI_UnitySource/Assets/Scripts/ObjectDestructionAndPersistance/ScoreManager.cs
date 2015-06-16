@@ -11,6 +11,7 @@ public class ScoreManager : MonoBehaviour
 
 	public int mScore = 0;
 	public int mLivesRemaining = 100;
+    public int mMaxLives = 100;
 	public int mCurrentLevel; //Changed this variable name to be consistent with the rest of the naming schem ~Adam
 	public int mOriginalLevel = 0;
 	//For giving the player an extra life every certain number of points ~Adam
@@ -64,7 +65,11 @@ public class ScoreManager : MonoBehaviour
 
 	void Start () 
 	{
-
+        if (Application.isMobilePlatform)
+        {
+            mLivesRemaining = 20;
+            mMaxLives = 20;
+        }
 //		//Get rid of self if we're back on the title screen
 //		if (Application.loadedLevel == 0)
 //		{

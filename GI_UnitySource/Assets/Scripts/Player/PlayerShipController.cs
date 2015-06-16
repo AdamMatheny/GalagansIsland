@@ -119,8 +119,8 @@ public class PlayerShipController : MonoBehaviour
 		//Adjust speed and scale for mobile ~Adam
 		if (Application.isMobilePlatform)
 		{
-			mBaseMovementSpeed = 20.0f;
-			transform.localScale = new Vector3(1.75f,1.75f,1.75f);
+			mBaseMovementSpeed = 15.0f;
+			transform.localScale = new Vector3(1.5f,1.5f,1.5f);
 		}
 		
 		mShipCreationLevel = Application.loadedLevel;
