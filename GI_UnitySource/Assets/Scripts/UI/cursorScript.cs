@@ -11,7 +11,7 @@ public class cursorScript : MonoBehaviour
 	{
         if (!Application.isMobilePlatform) //Use Cursor only on non Mobile Platforms
         {
-            Cursor.SetCursor(sprite, center, CursorMode.Auto);
+			Cursor.visible = false;
         }
 	}
 }
