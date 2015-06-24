@@ -16,7 +16,7 @@ function Update()
 	{
 	
 		addEnemy();
-		spawnTime = Random.value * 200;
+		spawnTime = Random.value * 500; //Change this back to 200 for main build
 	}
 }
 

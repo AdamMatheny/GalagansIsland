@@ -71,6 +71,7 @@ public class FSCBossController : MonoBehaviour
 				GetComponent<Collider>().isTrigger = !mFiring;
 
 				mEyeGraphic.color = Color.Lerp(mEyeGraphic.color, Color.clear, 0.01f);
+				GetComponent<SpriteRenderer>().color = Color.Lerp(GetComponent<SpriteRenderer>().color, Color.white, 0.01f);
 				//Go back to start of behavior loop ~Adam
 				if(mBehaviorTimer > 20f)
 				{
@@ -203,6 +204,7 @@ public class FSCBossController : MonoBehaviour
 				Destroy (other.gameObject);
 				mBossHP--;
 				mEyeGraphic.color = Color.Lerp(mEyeGraphic.color, Color.white, 0.9f);
+				GetComponent<SpriteRenderer>().color = Color.Lerp(GetComponent<SpriteRenderer>().color, Color.red, 0.9f);
 
 			}
 			

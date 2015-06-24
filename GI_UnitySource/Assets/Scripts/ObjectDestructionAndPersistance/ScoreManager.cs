@@ -20,12 +20,12 @@ public class ScoreManager : MonoBehaviour
 	int mExtraLifeInteraval = 1000;
 
 	//For spawning an triple-bullet power-up every certain number of points ~Adam
-	int mPowerUpScore = 500;
-	int mPowerUpInterval = 500;
+	int mPowerUpScore = 250;
+	int mPowerUpInterval = 250; //CHANGE THIS BACK TO 500 FOR MAIN BUILD!
 	[SerializeField] private GameObject mTripleBulletEmblem;
 	//For spawning a shield power-up every certain number of points ~Adam
-	int mShieldScore = 300;
-	int mShieldInterval = 300;
+	int mShieldScore = 150;
+	int mShieldInterval = 150; //CHANGE THIS BACK TO 300 FOR THE MAIN BUILD
 	[SerializeField] private GameObject mShieldEmblem;
 
 	//For the UI of showing a meter depicting tim until next powerup
@@ -206,6 +206,7 @@ public class ScoreManager : MonoBehaviour
 			if(mPlayerSafeTime > 0)
 			{
 				mPlayerAvatar.GetComponent<PlayerShipController>().mMainShipHitSprite.SetActive(true);
+				mPlayerAvatar.GetComponent<PlayerShipController>().mDamageParticles.SetActive(true);
 				if(mPlayerAvatar.GetComponent<PlayerShipController>().mShipRecovered)
 				{
 					mPlayerAvatar.GetComponent<PlayerShipController>().mSecondShipHitSprite.SetActive(true);
@@ -213,6 +214,7 @@ public class ScoreManager : MonoBehaviour
 			}
 			else
 			{
+				mPlayerAvatar.GetComponent<PlayerShipController>().mDamageParticles.SetActive(false);
 				mPlayerAvatar.GetComponent<PlayerShipController>().mMainShipHitSprite.SetActive(false);
 				mPlayerAvatar.GetComponent<PlayerShipController>().mSecondShipHitSprite.SetActive(false);
 			}

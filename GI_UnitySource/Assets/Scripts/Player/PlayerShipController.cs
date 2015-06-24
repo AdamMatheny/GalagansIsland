@@ -7,7 +7,7 @@ using XInputDotNetPure; // Required in C#
 public class PlayerShipController : MonoBehaviour 
 {
 	public GameObject mPlayerClone;
-
+	public GameObject mDamageParticles;
 	bool playerIndexSet = false;
 	public PlayerIndex playerIndex;
 //	GamePadState state;
