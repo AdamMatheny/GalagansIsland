@@ -22,7 +22,7 @@ public class EnemyShipAI : MonoBehaviour
 	public float middleBulletChance = .95f;
 
 	//Used for telling the ship which way to go
-	Vector2 mVel= new Vector2(0, 1);
+	[HideInInspector] public Vector2 mVel= new Vector2(0, 1);
 
 	//The player's avatar ~Adam
 	Transform mPlayer;
@@ -82,8 +82,8 @@ public class EnemyShipAI : MonoBehaviour
 	[SerializeField] private GameObject mEnemyBullet;
 
 	//Enums for the current AI behavior state
-	enum AIState { FlightLooping, ApproachingSwarm, Swarming, Attacking };
-	[SerializeField] private AIState mCurrentAIState = AIState.ApproachingSwarm;
+	public enum AIState { FlightLooping, ApproachingSwarm, Swarming, Attacking };
+	public AIState mCurrentAIState = AIState.ApproachingSwarm;
 
 	//How much this unit is worth when destroyed
 	[SerializeField] private int mPointValue = 1;

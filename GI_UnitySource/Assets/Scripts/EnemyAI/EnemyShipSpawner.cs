@@ -72,7 +72,7 @@ public class EnemyShipSpawner : MonoBehaviour
 	//How many enemies to spawn per wave
 	[SerializeField] private int mMaxEnemySpawn = 5;
 	//How many enemies we've spawned so far
-	private int mSpawnCounter = 0;
+	[HideInInspector] public int mSpawnCounter = 0;
 	
 	// Use this for initialization
 	void Start () 

@@ -165,6 +165,7 @@ public class SwarmGrid : MonoBehaviour
 		{
 			if (mGridSlots[i] != null && mAlternateFormations[formationNumber].mGridSlots[i] != null)
 			{
+				//Debug.Log(mGridSlots[i].transform.localPosition + " "+ mAlternateFormations[formationNumber].mGridSlots[i].transform.localPosition);
 				mGridSlots[i].mFormationPosition = mAlternateFormations[formationNumber].mGridSlots[i].transform;
 			}
 		}

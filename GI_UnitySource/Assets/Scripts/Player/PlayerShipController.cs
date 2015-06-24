@@ -155,8 +155,8 @@ public class PlayerShipController : MonoBehaviour
 //		prevState = state;
 //		state = GamePad.GetState(playerIndex);
 
-		maxHeatLevel = mBaseHeatMax +  mBaseHeatMax * Application.loadedLevel/26f;
-		GetComponent<AudioSource>().volume = 0.18f*(30f-Application.loadedLevel)/30f;
+		maxHeatLevel = mBaseHeatMax +  mBaseHeatMax * Application.loadedLevel+10/26f;
+		GetComponent<AudioSource>().volume = 0.18f*(30f-Application.loadedLevel+10)/30f;
 		
 		if (cheats) {
 			
@@ -241,11 +241,11 @@ public class PlayerShipController : MonoBehaviour
 		//Increase movement speed as we progress through levels
 		if(Time.timeScale > 0f)
 		{
-			mMovementSpeed = ( mBaseMovementSpeed + (6f/25f*Application.loadedLevel) ) /Time.timeScale;
+			mMovementSpeed = ( mBaseMovementSpeed + (6f/25f*(Application.loadedLevel+10)) ) /Time.timeScale;
 		}
 		else
 		{
-			mMovementSpeed = ( mBaseMovementSpeed + (6f/25f*Application.loadedLevel) );
+			mMovementSpeed = ( mBaseMovementSpeed + (6f/25f*(Application.loadedLevel+10)) );
 		}
 		//Make the player drift toward the bottom of the screen
 		// transform.position += new Vector3(0f,mDropSpeed*-1f, 0f);
@@ -536,7 +536,7 @@ public class PlayerShipController : MonoBehaviour
 					{
 						if(Application.loadedLevelName != "Credits")
 						{
-							mBulletFireTime = Time.time + bulletShootSpeed - (0.25f / 25f * Application.loadedLevel);
+							mBulletFireTime = Time.time + bulletShootSpeed - (0.25f / 25f * (Application.loadedLevel+10));
 						}
 						else
 						{
@@ -545,7 +545,7 @@ public class PlayerShipController : MonoBehaviour
 					}
 					else
 					{
-						mBulletFireTime = Time.time + (bulletShootSpeed - (0.25f / 25f * Application.loadedLevel))/3f;
+						mBulletFireTime = Time.time + (bulletShootSpeed - (0.25f / 25f * (Application.loadedLevel+10)))/3f;
 					}
 				}
 			}
