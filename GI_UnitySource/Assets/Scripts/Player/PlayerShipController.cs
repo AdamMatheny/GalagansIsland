@@ -359,9 +359,13 @@ public class PlayerShipController : MonoBehaviour
 			}
 			//transform.Translate(new Vector3(translationDirection.x, translationDirection.y, 0f)*mMovementSpeed*Time.deltaTime);
 			//mMoveDir +=new Vector3(translationDirection.x, translationDirection.y, 0f)*0.5f*mMovementSpeed*Time.deltaTime;
-			mMoveDir = Vector3.Lerp(mMoveDir, new Vector3(translationDirection.x, translationDirection.y, 0f)*2f*mMovementSpeed*Time.deltaTime, 0.08f);
-			
-		}
+#if UNITY_ANDROID
+            mMoveDir = Vector3.Lerp(mMoveDir, new Vector3(translationDirection.x, translationDirection.y, 0f) * 2f * mMovementSpeed * Time.deltaTime, 0.5f);
+#else
+            mMoveDir = Vector3.Lerp(mMoveDir, new Vector3(translationDirection.x, translationDirection.y, 0f)*2f*mMovementSpeed*Time.deltaTime, 0.08f);
+#endif
+
+        }
 		
 		// if (Input.GetKey (KeyCode.Mouse0)) {
 		// transform.Translate(new Vector3(0.0f, (mMovementSpeed * Time.deltaTime) + .6f, 0.0f));

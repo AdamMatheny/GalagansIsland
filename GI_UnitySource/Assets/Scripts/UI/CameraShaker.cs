@@ -24,7 +24,7 @@ public class CameraShaker : MonoBehaviour
 	public float mDeathShakeStrength = 2.5f;
 	public float mDeathShakeDuration = .5f;
 
-	public float mEnemyShakeStrength = .5f;
+	public float mEnemyShakeStrength = 2.5f; //was 5.0f Changed to 2.5f for Florida Con
 	public float mEnemyShakeDuration = .1f;
 
 	public float mShootShakeStrength = .2f;
@@ -46,12 +46,16 @@ public class CameraShaker : MonoBehaviour
 		{
 			transform.position = mStartingPosition+(Random.insideUnitSphere * strength);
 			mShakeTime -= Time.deltaTime;
+#if !UNITY_ANDROID
 			GamePad.SetVibration(0, strength, strength);
+#endif
 			//InputManager.ActiveDevice.Vibrate(strength);
 		}
 		else
 		{
+#if !UNITY_ANDROID
 			GamePad.SetVibration(0, 0, 0);
+#endif
 			//InputManager.ActiveDevice.Vibrate(0f);
 			mShakeTime = 0f;
 			transform.position = mStartingPosition;

@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
+
 public class ScoreManager : MonoBehaviour 
 {
 	[SerializeField] private Texture2D mSideDisplayTex;
@@ -67,8 +68,8 @@ public class ScoreManager : MonoBehaviour
 	{
         if (Application.isMobilePlatform)
         {
-            mLivesRemaining = 20;
-            mMaxLives = 20;
+            mLivesRemaining = 35;
+            mMaxLives = 35;
         }
 //		//Get rid of self if we're back on the title screen
 //		if (Application.loadedLevel == 0)
