@@ -155,6 +155,13 @@ public class PlayerShipController : MonoBehaviour
 //		prevState = state;
 //		state = GamePad.GetState(playerIndex);
 
+#if UNITY_ANDROID // Make hitbox smaller for Android
+        if (gameObject.GetComponent<BoxCollider>().size != new Vector3 (1.5f, 1.5f, 1.5f))
+        {
+            gameObject.GetComponent<BoxCollider>().size = new Vector3(1.5f, 1.5f, 1.5f);
+        }
+#endif
+
 		maxHeatLevel = mBaseHeatMax +  mBaseHeatMax * Application.loadedLevel+10/26f;
 		GetComponent<AudioSource>().volume = 0.18f*(30f-Application.loadedLevel+10)/30f;
 		

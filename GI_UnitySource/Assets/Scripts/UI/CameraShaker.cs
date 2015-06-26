@@ -64,14 +64,16 @@ public class CameraShaker : MonoBehaviour
 
 	public void ShakeCamera()
 	{
-
 		strength = mShootShakeStrength;
 		mShakeTime = mShootShakeDuration;
 	}
 	public void ShakeCameraEnemy(){
 
-		mShakeTime = mEnemyShakeDuration;
-		strength = mEnemyShakeStrength;
+        if (Random.Range(0, 8) < 1) //12.5% chance to shake camera
+        {
+            mShakeTime = mEnemyShakeDuration;
+            strength = mEnemyShakeStrength;
+        }
 	}
 	public void ShakeCameraDeath(){
 

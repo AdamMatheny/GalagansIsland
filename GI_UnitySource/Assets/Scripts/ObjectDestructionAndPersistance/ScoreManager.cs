@@ -54,6 +54,8 @@ public class ScoreManager : MonoBehaviour
 	public Text mLevelInfoText;
 	public Text mHighScoreText;
 
+    public Canvas mHighscoreCanvas;
+
 
 	void StoreHighscore(int newHighscore)
 	{
@@ -68,8 +70,8 @@ public class ScoreManager : MonoBehaviour
 	{
         if (Application.isMobilePlatform)
         {
-            mLivesRemaining = 35;
-            mMaxLives = 35;
+            mLivesRemaining = 25;
+            mMaxLives = 25;
         }
 //		//Get rid of self if we're back on the title screen
 //		if (Application.loadedLevel == 0)
@@ -78,6 +80,13 @@ public class ScoreManager : MonoBehaviour
 //		}
 
 		//Delete self if there's already a score manager to prevent duplicates (this only seems to delete the new ones, which is what we want)
+        foreach (var canv in gameObject.GetComponentsInChildren<Canvas>())
+        {
+            if (canv.transform.name == "ScoreCanvas")
+            {
+                mHighscoreCanvas = canv;
+            }
+        }
 
 	}
 
@@ -109,6 +118,11 @@ public class ScoreManager : MonoBehaviour
 	{
 
 		mCurrentLevel = Application.loadedLevel; //Wasn't affected in either Awake() or Start()
+
+        if (mCurrentLevel != 0)
+        {
+            mHighscoreCanvas.enabled = false;
+        }
 
 		//We already had a method of switching between levels that gave us a lag time in which to actually play a player death animation ~Adam
 //		if (mLivesRemaining <= 0) {

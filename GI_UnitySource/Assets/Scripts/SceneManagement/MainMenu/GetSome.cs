@@ -106,7 +106,7 @@ public class GetSome : MonoBehaviour
 			//Start game button
 			GUI.SetNextControlName("InsertCoin");
 
-			if(GUI.Button(new Rect(Screen.width *0.3f, Screen.height*0.8f, Screen.width*0.4f, Screen.width*0.054f), "",mGetSomeStyle))
+			if(GUI.Button(new Rect(Screen.width *0.15f, Screen.height*0.75f, Screen.width*0.7f, Screen.width*0.1f), "",mGetSomeStyle))
 			{
 				mSuperLaser.SetActive(true);
 				//StartGame();
@@ -118,7 +118,7 @@ public class GetSome : MonoBehaviour
 			if(!Application.isMobilePlatform)
 			{
 				GUI.SetNextControlName("QuitGame");
-				if (GUI.Button (new Rect (Screen.width * .89f, Screen.height * 0.890f, Screen.width * .1f, Screen.height * .1f), "", mButtonStyle)) 
+				if (GUI.Button (new Rect (Screen.width * .85f, Screen.height * 0.890f, Screen.width * .1f, Screen.height * .1f), "", mButtonStyle)) 
 				{
 					Application.Quit();
 				}
@@ -129,7 +129,8 @@ public class GetSome : MonoBehaviour
 				if (GUI.Button (new Rect (Screen.width * .59f, Screen.height * 0.870f, Screen.width * .41f, Screen.height * .115f), "", mButtonStyle)) 
 				{
 					Application.Quit();
-				}			}
+				}			
+}
 		}
 
 		GUI.FocusControl(mGUIFocusControl.mMainMenuButtonNames[mGUIFocusControl.mMainMenuButtonFocus]);
