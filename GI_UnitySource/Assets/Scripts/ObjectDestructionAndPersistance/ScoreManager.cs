@@ -20,12 +20,12 @@ public class ScoreManager : MonoBehaviour
 	int mExtraLifeInteraval = 1000;
 
 	//For spawning an triple-bullet power-up every certain number of points ~Adam
-	int mPowerUpScore = 250;
-	int mPowerUpInterval = 250; //CHANGE THIS BACK TO 500 FOR MAIN BUILD!
+	int mPowerUpScore = 500;
+	int mPowerUpInterval = 500;
 	[SerializeField] private GameObject mTripleBulletEmblem;
 	//For spawning a shield power-up every certain number of points ~Adam
-	int mShieldScore = 150;
-	int mShieldInterval = 150; //CHANGE THIS BACK TO 300 FOR THE MAIN BUILD
+	int mShieldScore = 300;
+	int mShieldInterval = 300;
 	[SerializeField] private GameObject mShieldEmblem;
 
 	//For the UI of showing a meter depicting tim until next powerup
@@ -119,10 +119,12 @@ public class ScoreManager : MonoBehaviour
 
 		mCurrentLevel = Application.loadedLevel; //Wasn't affected in either Awake() or Start()
 
-        if (mCurrentLevel != 0)
-        {
-            mHighscoreCanvas.enabled = false;
-        }
+		#region Mateusz, why did you add this? It make the high score box and level info box go away. ~Adam
+//        if (mCurrentLevel == 0)
+//        {
+//            mHighscoreCanvas.enabled = false;
+//        }
+		#endregion
 
 		//We already had a method of switching between levels that gave us a lag time in which to actually play a player death animation ~Adam
 //		if (mLivesRemaining <= 0) {
@@ -191,7 +193,7 @@ public class ScoreManager : MonoBehaviour
 		//Spawn a triple bullet power up every 500 kills (assuming 1 point per kill) ~Adam
 		if(mScore >= mPowerUpScore)
 		{
-			float spawnXPos = Random.Range(-18f,18f);
+			float spawnXPos = Random.Range(-16f,16f);
 			float spawnyPos = Random.Range(-17f,23f);
 			Instantiate(mTripleBulletEmblem, new Vector3(spawnXPos, spawnyPos, -2f), Quaternion.identity);
 			mPowerUpMeterBack.GetComponent<Animator>().Play("PowerPointMeterFlash_Anim");
@@ -200,7 +202,7 @@ public class ScoreManager : MonoBehaviour
 		//Spawn a shield power up every 300 kills (assuming 1 point per kill) ~Adam
 		if(mScore >= mShieldScore)
 		{
-			float spawnXPos = Random.Range(-18f,18f);
+			float spawnXPos = Random.Range(-16f,16f);
 			float spawnyPos = Random.Range(-17f,23f);
 			Instantiate(mShieldEmblem, new Vector3(spawnXPos, spawnyPos, -2f), Quaternion.identity);
 			mPowerUpMeterBack.GetComponent<Animator>().Play("PowerPointMeterFlash_Anim");

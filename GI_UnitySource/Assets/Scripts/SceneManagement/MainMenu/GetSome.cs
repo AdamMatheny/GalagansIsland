@@ -104,12 +104,24 @@ public class GetSome : MonoBehaviour
 		{
 
 			//Start game button
-			GUI.SetNextControlName("InsertCoin");
 
-			if(GUI.Button(new Rect(Screen.width *0.15f, Screen.height*0.75f, Screen.width*0.7f, Screen.width*0.1f), "",mGetSomeStyle))
+			if(Application.isMobilePlatform)
 			{
-				mSuperLaser.SetActive(true);
-				//StartGame();
+				GUI.SetNextControlName("InsertCoin");
+				if(GUI.Button(new Rect(Screen.width *0.15f, Screen.height*0.75f, Screen.width*0.7f, Screen.width*0.1f), "",mGetSomeStyle))
+				{
+					mSuperLaser.SetActive(true);
+					//StartGame();
+				}
+			}
+			else
+			{
+				GUI.SetNextControlName("InsertCoin");
+				if(GUI.Button(new Rect(Screen.width *0.3f, Screen.height*0.8f, Screen.width*0.4f, Screen.width*0.054f), "",mGetSomeStyle)) 
+				{
+					mSuperLaser.SetActive(true);
+					//StartGame();
+				}
 			}
 
 

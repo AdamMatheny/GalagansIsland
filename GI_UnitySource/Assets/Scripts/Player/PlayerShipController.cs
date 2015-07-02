@@ -162,8 +162,8 @@ public class PlayerShipController : MonoBehaviour
         }
 #endif
 
-		maxHeatLevel = mBaseHeatMax +  mBaseHeatMax * Application.loadedLevel+10/26f;
-		GetComponent<AudioSource>().volume = 0.18f*(30f-Application.loadedLevel+10)/30f;
+		maxHeatLevel = mBaseHeatMax +  mBaseHeatMax * Application.loadedLevel/26f;
+		GetComponent<AudioSource>().volume = 0.18f*(30f-Application.loadedLevel)/30f;
 		
 		if (cheats) {
 			
@@ -248,11 +248,11 @@ public class PlayerShipController : MonoBehaviour
 		//Increase movement speed as we progress through levels
 		if(Time.timeScale > 0f)
 		{
-			mMovementSpeed = ( mBaseMovementSpeed + (6f/25f*(Application.loadedLevel+10)) ) /Time.timeScale;
+			mMovementSpeed = ( mBaseMovementSpeed + (6f/25f*(Application.loadedLevel)) ) /Time.timeScale;
 		}
 		else
 		{
-			mMovementSpeed = ( mBaseMovementSpeed + (6f/25f*(Application.loadedLevel+10)) );
+			mMovementSpeed = ( mBaseMovementSpeed + (6f/25f*(Application.loadedLevel)) );
 		}
 		//Make the player drift toward the bottom of the screen
 		// transform.position += new Vector3(0f,mDropSpeed*-1f, 0f);
@@ -278,7 +278,10 @@ public class PlayerShipController : MonoBehaviour
 		{
 			foreach (ParticleSystem shipTrail in this.GetComponentsInChildren<ParticleSystem>())
 			{
-				shipTrail.enableEmission = true;
+				if(shipTrail.gameObject != mDamageParticles)
+				{
+					shipTrail.enableEmission = true;
+				}
 			}
 			
 			mDropSpeed -= mDropDeccelRate;
@@ -547,7 +550,7 @@ public class PlayerShipController : MonoBehaviour
 					{
 						if(Application.loadedLevelName != "Credits")
 						{
-							mBulletFireTime = Time.time + bulletShootSpeed - (0.25f / 25f * (Application.loadedLevel+10));
+							mBulletFireTime = Time.time + bulletShootSpeed - (0.25f / 25f * (Application.loadedLevel));
 						}
 						else
 						{
@@ -556,7 +559,7 @@ public class PlayerShipController : MonoBehaviour
 					}
 					else
 					{
-						mBulletFireTime = Time.time + (bulletShootSpeed - (0.25f / 25f * (Application.loadedLevel+10)))/3f;
+						mBulletFireTime = Time.time + (bulletShootSpeed - (0.25f / 25f * (Application.loadedLevel)))/3f;
 					}
 				}
 			}
@@ -609,7 +612,10 @@ public class PlayerShipController : MonoBehaviour
 			{
 				foreach (ParticleSystem shipTrail in this.GetComponentsInChildren<ParticleSystem>())
 				{
-					shipTrail.enableEmission = true;
+					if(shipTrail.gameObject != mDamageParticles)
+					{
+						shipTrail.enableEmission = true;
+					}
 				}
 			}
 		}
@@ -699,7 +705,10 @@ public class PlayerShipController : MonoBehaviour
 			{
 				if(!(mMoveDir.y < 0f && mDriftDown))
 				{
-					shipTrail.enableEmission = true;
+					if(shipTrail.gameObject != mDamageParticles)
+					{
+						shipTrail.enableEmission = true;
+					}
 				}
 			}
 		}
