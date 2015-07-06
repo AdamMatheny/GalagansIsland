@@ -103,8 +103,12 @@ public class LevelKillCounter : MonoBehaviour
 
 		if(mLevelComplete)
 		{
-			GUI.Box(new Rect(Screen.width*0.425f, Screen.height*0.4f, Screen.width*0.15f, Screen.height*0.05f), "", mLevelCompleteStyle);
-			//GUI.DrawTexture(new Rect(Screen.width*0.4f, Screen.height*0.4f, Screen.width*0.2f, Screen.height*0.2f), mLevelCompleteTex);
+#if UNITY_ANDROID
+			GUI.Box(new Rect(Screen.width*0.2f, Screen.height*0.35f, Screen.width*0.60f, Screen.height*0.25f), "", mLevelCompleteStyle);
+#else
+            GUI.Box(new Rect(Screen.width*0.425f, Screen.height*0.4f, Screen.width*0.15f, Screen.height*0.05f), "", mLevelCompleteStyle);
+#endif
+            //GUI.DrawTexture(new Rect(Screen.width*0.4f, Screen.height*0.4f, Screen.width*0.2f, Screen.height*0.2f), mLevelCompleteTex);
 		}
 	}
 
