@@ -23,7 +23,7 @@ public class LaserFistPowerup : MonoBehaviour
 	void Start () 
 	{
 		mDeathBox = GetComponent<BoxCollider>();
-	}
+	}//END Start()
 	
 	// Update is called once per frame
 	void Update () 
@@ -32,18 +32,17 @@ public class LaserFistPowerup : MonoBehaviour
 		if (bigBoom != null) 
 		{
 
-			if (time > 0) 
-			{
-				
-				time -= Time.deltaTime;
-			} 
-			else 
-			{
-				
-				time = maxTime;
-				bigBoom.SetActive(true);
-				mDeathBox.size *= 10f;
-			}
+//			if (time > 0) 
+//			{
+//				time -= Time.deltaTime;
+//			} 
+//			else 
+//			{
+//				
+//				time = maxTime;
+//				bigBoom.SetActive(true);
+//				mDeathBox.size *= 10f;
+//			}
 		}
 
 		mLaserFistTimer += Time.deltaTime;
@@ -65,7 +64,7 @@ public class LaserFistPowerup : MonoBehaviour
 		{
 			StartDeathBoxShrinkage();
 		}
-	}
+	}//END Update()
 
 	public void StartDeathBoxExpansion()
 	{
@@ -89,13 +88,14 @@ public class LaserFistPowerup : MonoBehaviour
 		mDeathBox.size = mLaserSizeStart;
 		GetComponent<Animator>().SetBool("Expanding", false);
 		this.gameObject.SetActive(false);
-	}
+	}//END StopLaserFist()
 
 	void OnTriggerEnter(Collider other)
 	{
 		if(other.GetComponent<EnemyShipAI>() != null)
 		{
 			other.GetComponent<EnemyShipAI>().EnemyShipDie();
+			Debug.Log("EnterTrigger Destroying " + other.GetComponent<EnemyShipAI>().name);
 		}
 		if(other.GetComponent<EnemyBulletController>() != null)
 		{
@@ -104,13 +104,22 @@ public class LaserFistPowerup : MonoBehaviour
 				Destroy(other.gameObject);
 			}
 		}
-	}
+	}//END OnTriggerEnter()
 
-	void OnTriggerStay(Collider other)
+	public void ShowBigBoom()
 	{
-		if(other.GetComponent<EnemyShipAI>() != null)
+		if(bigBoom != null)
 		{
-			other.GetComponent<EnemyShipAI>().EnemyShipDie();
+			bigBoom.SetActive (true);
 		}
 	}
+
+//	void OnTriggerStay(Collider other)
+//	{
+//		if(other.GetComponent<EnemyShipAI>() != null)
+//		{
+//			other.GetComponent<EnemyShipAI>().EnemyShipDie();
+//			Debug.Log("StayTrigger Destroying " + other.GetComponent<EnemyShipAI>().name);
+//		}
+//	}
 }

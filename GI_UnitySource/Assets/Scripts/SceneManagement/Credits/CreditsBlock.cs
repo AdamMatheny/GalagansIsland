@@ -28,6 +28,10 @@ public class CreditsBlock : MonoBehaviour
 		if(mHorzSize > 0.2f)
 		{
 			Instantiate(mExplosion,transform.position,Quaternion.identity);
+			if(FindObjectOfType<CreditsScoreUpdater>() != null)
+			{
+				FindObjectOfType<CreditsScoreUpdater>().mScore+=10;
+			}
 			Destroy(this.gameObject);
 		}
 
@@ -47,12 +51,12 @@ public class CreditsBlock : MonoBehaviour
 		//Get bigger and redder when shot `Adam
 		if(other.GetComponent<PlayerBulletController>() != null && ! other.GetComponent<PlayerBulletController>().mSideBullet)
 		{
-			mHorzSize+=0.001f;
-			mVertSize+=0.0005f;
-			mFontSizeMod+=0.01f;
-			mCanvasText.color = Color.Lerp(mCanvasText.color, Color.red, 0.01f);
-			transform.localScale += new Vector3(0.001f,0.001f,0.001f);
-			mCanvasText.GetComponent<RectTransform>().localScale += new Vector3(0.00001f,0.0001f,0.0001f);
+			mHorzSize+=0.002f;
+			mVertSize+=0.001f;
+			mFontSizeMod+=0.02f;
+			mCanvasText.color = Color.Lerp(mCanvasText.color, Color.red, 0.02f);
+			transform.localScale += new Vector3(0.002f,0.002f,0.002f);
+			mCanvasText.GetComponent<RectTransform>().localScale += new Vector3(0.00002f,0.0002f,0.0002f);
 		}
 	}//END of OnTriggerEnter()
 }

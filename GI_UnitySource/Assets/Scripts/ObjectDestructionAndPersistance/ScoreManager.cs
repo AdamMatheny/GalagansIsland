@@ -31,13 +31,15 @@ public class ScoreManager : MonoBehaviour
 	//For the UI of showing a meter depicting tim until next powerup
 	[SerializeField] private Image mPowerUpMeter;
 	[SerializeField] private GameObject mPowerUpMeterBack;
-	[SerializeField] private Text mPowerUpMeterScoreDisplay;
+	public Text mPowerUpMeterScoreDisplay;
 
 	public float mPlayerSafeTime = 0f;
 	// Use this for initialization
 	[SerializeField] private GameObject mPlayerAvatar;
 	public GameObject mPlayerDeathEffect;
 
+	//For when we have two players ~Adam
+	[SerializeField] private GameObject mPlayer2Avatar;
 
 	//For better GUI elements ~Adam
 	[SerializeField] private GUIStyle mScoreManStyle;
@@ -87,7 +89,10 @@ public class ScoreManager : MonoBehaviour
                 mHighscoreCanvas = canv;
             }
         }
-
+		if(mPlayer2Avatar == null && mPlayerAvatar.GetComponent<PlayerShipController>().mPlayerTwo.gameObject != null && mPlayerAvatar.GetComponent<PlayerShipController>().mPlayerTwo.gameObject.activeInHierarchy)
+		{
+			mPlayer2Avatar = mPlayerAvatar.GetComponent<PlayerShipController>().mPlayerTwo.gameObject;
+		}
 	}
 
 	//Pesist between level loads/reloads ~adam
@@ -110,7 +115,10 @@ public class ScoreManager : MonoBehaviour
 			}
 		}
 		mPlayerAvatar = GameObject.FindGameObjectWithTag("Player").gameObject;
-
+		if(mPlayerAvatar.GetComponent<PlayerShipController>().mPlayerTwo.gameObject != null && mPlayerAvatar.GetComponent<PlayerShipController>().mPlayerTwo.gameObject.activeInHierarchy)
+		{
+			mPlayer2Avatar = mPlayerAvatar.GetComponent<PlayerShipController>().mPlayerTwo.gameObject;
+		}
 	}
 
 	// Update is called once per frame
@@ -135,15 +143,12 @@ public class ScoreManager : MonoBehaviour
 
 		//If we're out of lives, wait a short bit for the player explosion to play, then clean up the objects that normally persist between levels
 		//Then go to the EndGame scene and delete this game object ~Adam
-		if(mLivesRemaining <= 0 && mPlayerSafeTime <= 0)
+		if(mLivesRemaining <= 0 && mPlayerSafeTime <= 0 && (mPlayer2Avatar == null || !mPlayer2Avatar.activeInHierarchy) && mPlayerAvatar == null)
 		{
 
-			//Destroy(FindObjectOfType<PlayerShipController>().gameObject); //Looks like for some reason I had this line in there that would have prevented the EndGame scene from loading... Oops...~Adam
 			Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
 			Application.LoadLevel("EndGame");
 			mLevelInfoText.text = "\nGame Over";
-
-
 
 			this.enabled = false;
 			//Destroy(this.gameObject);
@@ -168,11 +173,14 @@ public class ScoreManager : MonoBehaviour
 		if(mPowerUpMeterScoreDisplay != null && mPowerUpMeter != null && mPowerUpMeterBack != null)
 		{
 
-			if(mScore < 0){
+			if(mScore < 0)
+			{
 
 				mPowerUpMeter.rectTransform.localScale = new Vector3(0f, 1f, 1f);
 				mPowerUpMeterScoreDisplay.text = "Loser. Try Shooting.";
-			}else{
+			}
+			else
+			{
 
 				mPowerUpMeterScoreDisplay.text = "Score: " + mScore;
 
@@ -210,7 +218,7 @@ public class ScoreManager : MonoBehaviour
 		}
 
 		//Make sure we have a reference to the player's ship ~Adam
-		if (mPlayerAvatar == null)
+		if (mPlayerAvatar == null && GameObject.FindGameObjectWithTag("Player") != null)
 		{
 			mPlayerAvatar = GameObject.FindGameObjectWithTag("Player").gameObject;
 			
@@ -235,6 +243,22 @@ public class ScoreManager : MonoBehaviour
 				mPlayerAvatar.GetComponent<PlayerShipController>().mSecondShipHitSprite.SetActive(false);
 			}
 		}
+		if(mPlayer2Avatar != null)
+		{
+			if(mPlayerSafeTime > 0)
+			{
+				mPlayer2Avatar.GetComponent<PlayerTwoShipController>().mMainShipHitSprite.SetActive(true);
+				if(mPlayer2Avatar.GetComponent<PlayerTwoShipController>().mShipRecovered)
+				{
+					mPlayer2Avatar.GetComponent<PlayerTwoShipController>().mSecondShipHitSprite.SetActive(true);
+				}
+			}
+			else
+			{
+				mPlayer2Avatar.GetComponent<PlayerTwoShipController>().mMainShipHitSprite.SetActive(false);
+				mPlayer2Avatar.GetComponent<PlayerTwoShipController>().mSecondShipHitSprite.SetActive(false);
+			}
+		}
 
 		switch(Application.loadedLevelName)
 		{
@@ -257,16 +281,7 @@ public class ScoreManager : MonoBehaviour
 
 	}//END of Update()
 
-//	void OnGUI()
-//	{
-//		mScoreManStyle.fontSize = Mathf.RoundToInt(Screen.width*0.0095f);
-//		mHighScoreStyle.fontSize = Mathf.RoundToInt(Screen.width*0.008f);
-//		GUI.DrawTexture(new Rect(0f, Screen.height*0.01f, Screen.width*0.21f, Screen.height*0.1f), mSideDisplayTex);
-//		GUI.Label(new Rect(Screen.width * 0.042f, Screen.height*0.03f, Screen.width*0.1f, Screen.height*0.1f), "Lives: " + mLivesRemaining + "\nScore: " + mScore + "\n" + mLevelNames[Application.loadedLevel], mScoreManStyle);
-//		GUI.Box(new Rect(Screen.width * 0.0625f, Screen.height*0.11f, Screen.width*0.1f, Screen.height*0.05f), "High Score: " + PlayerPrefs.GetInt("highscore", 0), mHighScoreStyle);
-//
-//
-//	}
+
 
 	//Used for adding/subtracting points
 	public void AdjustScore(int points)
@@ -293,10 +308,11 @@ public class ScoreManager : MonoBehaviour
 			//Lose a life if the player isn't shielded ~Adam
 			if(!mPlayerAvatar.GetComponent<PlayerShipController>().mShielded)
 			{
-
-				GameObject playerDeathParticles;
-				playerDeathParticles = Instantiate(mPlayerDeathEffect, mPlayerAvatar.transform.position, Quaternion.identity) as GameObject;
-
+				if(mLivesRemaining == 1)
+				{
+					GameObject playerDeathParticles;
+					playerDeathParticles = Instantiate(mPlayerDeathEffect, mPlayerAvatar.transform.position, Quaternion.identity) as GameObject;
+				}
 				if(mPlayerAvatar.GetComponent<PlayerShipController>().mShipRecovered)
 				{
 					mPlayerAvatar.GetComponent<PlayerShipController>().mShipRecovered = false;
@@ -338,5 +354,60 @@ public class ScoreManager : MonoBehaviour
 		}
 	}//END of LoseALife()
 
+	public void LosePlayerTwoLife()
+	{
+		if(mPlayerSafeTime<=0f)
+		{
+			
+			
+			
+			//Lose a life if the player isn't shielded ~Adam
+			if(!mPlayer2Avatar.GetComponent<PlayerTwoShipController>().mShielded)
+			{
+				if(mLivesRemaining == 1)
+				{
+					GameObject playerDeathParticles;
+					playerDeathParticles = Instantiate(mPlayerDeathEffect, mPlayer2Avatar.transform.position, Quaternion.identity) as GameObject;
+				}
+				if(mPlayer2Avatar.GetComponent<PlayerTwoShipController>().mShipRecovered)
+				{
+					mPlayer2Avatar.GetComponent<PlayerTwoShipController>().mShipRecovered = false;
+					mPlayer2Avatar.GetComponent<PlayerTwoShipController>().StartSpin();
+					Camera.main.GetComponent<CameraShaker>().ShakeCameraDeath();
+				}
+				else
+				{
+					mScore -= 10;
+					if(mScore <-1)
+					{
+						mScore = -1;
+					}
+					mLivesRemaining--;
+					mPlayer2Avatar.GetComponent<PlayerTwoShipController>().StartSpin();
+					Camera.main.GetComponent<CameraShaker>().ShakeCameraDeath();
+				}
+			}
+			else
+			{
+				//mScore -= 10;
+				mPlayer2Avatar.GetComponent<PlayerTwoShipController>().StartSpin();
+				Camera.main.GetComponent<CameraShaker>().ShakeCameraDeath();
+			}
+			
+			//If that wasn't the last life, go invulnerable, otherwise go back to the title screen
+			if(mLivesRemaining <= 0)
+			{
+				Destroy(mPlayer2Avatar.gameObject);
+				mPlayerSafeTime = 3f;
+				
+			}
+			else
+			{
+				mPlayerSafeTime = 2f;
+				//Application.LoadLevel(Application.loadedLevel);
+			}
+			
+		}
+	}//END of LosePlayerTwoLife()
 
 }

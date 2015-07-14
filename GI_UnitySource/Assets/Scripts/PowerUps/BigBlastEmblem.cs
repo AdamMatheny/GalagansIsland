@@ -18,17 +18,35 @@ public class BigBlastEmblem : MonoBehaviour
 	
 	void OnTriggerEnter(Collider other)
 	{
-		if(other.GetComponent<PlayerShipController>() != null)
+		//Auto-fire on mobile ~Adam
+		if(Application.isMobilePlatform)
 		{
-			//other.GetComponent<PlayerShipController>().mHaveBigBlast = true;
-			other.GetComponent<PlayerShipController>().mBigBlast.SetActive(true);
-			Destroy(this.gameObject);
+			if(other.GetComponent<PlayerShipController>() != null)
+			{
+				//other.GetComponent<PlayerShipController>().mHaveBigBlast = true;
+				other.GetComponent<PlayerShipController>().mBigBlast.SetActive(true);
+				Destroy(this.gameObject);
+			}
+			if(other.GetComponent<PlayerTwoShipController>() != null)
+			{
+				//FindObjectOfType<PlayerTwoShipController>().mHaveBigBlast = true;
+				other.GetComponent<PlayerTwoShipController>().mBigBlast.SetActive(true);
+				Destroy(this.gameObject);
+			}
 		}
-		if(other.GetComponent<PlayerShipCloneController>() != null)
+		//Store super weapon on non-mobile ~Aadm
+		else
 		{
-			//FindObjectOfType<PlayerShipController>().mHaveBigBlast = true;
-			other.GetComponent<PlayerShipController>().mBigBlast.SetActive(true);
-			Destroy(this.gameObject);
+			if(other.GetComponent<PlayerShipController>() != null)
+			{
+				other.GetComponent<PlayerShipController>().mHaveBigBlast = true;
+				Destroy(this.gameObject);
+			}
+			if(other.GetComponent<PlayerTwoShipController>() != null)
+			{
+				FindObjectOfType<PlayerTwoShipController>().mHaveBigBlast = true;
+				Destroy(this.gameObject);
+			}
 		}
 	}
 }

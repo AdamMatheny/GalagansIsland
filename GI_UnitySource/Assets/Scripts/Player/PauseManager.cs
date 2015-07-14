@@ -127,9 +127,22 @@ public class PauseManager : MonoBehaviour
 					break;
 				case 2:
 					Time.timeScale = 1;
-					Destroy(FindObjectOfType<PlayerShipController>().gameObject);
-					Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
-					Destroy(FindObjectOfType<ScoreManager>().gameObject);
+					if(FindObjectOfType<PlayerShipController>()!= null)
+					{
+						Destroy(FindObjectOfType<PlayerShipController>().gameObject);
+					}
+					if(FindObjectOfType<PlayerTwoShipController>()!= null)
+					{
+						Destroy(FindObjectOfType<PlayerTwoShipController>().gameObject);
+					}
+					if(FindObjectOfType<LevelKillCounter>()!= null)
+					{
+						Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
+					}
+					if(FindObjectOfType<ScoreManager>()!= null)
+					{
+						Destroy(FindObjectOfType<ScoreManager>().gameObject);
+					}
 					Application.LoadLevel(0);
 					break;
 				case 3:
@@ -201,9 +214,13 @@ public class PauseManager : MonoBehaviour
 				if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.41f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
 				{
 					Time.timeScale = 1;
-					Destroy(FindObjectOfType<PlayerShipController>().gameObject);
+					if(FindObjectOfType<PlayerTwoShipController>().gameObject != null)
+					{
+						Destroy(FindObjectOfType<PlayerTwoShipController>().gameObject);
+					}
 					Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
 					Destroy(FindObjectOfType<ScoreManager>().gameObject);
+					Destroy(FindObjectOfType<PlayerShipController>().gameObject);
 					Application.LoadLevel(0);
 				}
 				mPauseMenuStyle.normal.background = mQuitTex;

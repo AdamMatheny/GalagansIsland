@@ -11,7 +11,10 @@ public class PowerTimerMeterUI : MonoBehaviour
 	public float swirlStartY;
 
 	PlayerShipController mPlayer;
-	
+	PlayerTwoShipController mPlayerTwo;
+
+	public bool mPlayerTwoUI = false;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -19,6 +22,11 @@ public class PowerTimerMeterUI : MonoBehaviour
 
 		//Find the player ship -Adam
 		mPlayer = FindObjectOfType<PlayerShipController>();
+		//Find the second player's ship ~Adam
+		if(mPlayerTwoUI && mPlayer.mPlayerTwo != null)
+		{
+			mPlayerTwo = mPlayer.mPlayerTwo;
+		}
 	}//END of Start()
 	
 	// Update is called once per frame
@@ -34,11 +42,18 @@ public class PowerTimerMeterUI : MonoBehaviour
 		{
 
 
-			if(mPlayer.mThreeBullet)
+			if( (!mPlayerTwoUI && mPlayer != null && mPlayer.mThreeBullet) || (mPlayerTwoUI && mPlayerTwo != null && mPlayerTwo.mThreeBullet) )
 			{
 				//Make the bar move up and down
 				mPowerTimerBar.enabled = true;
-				mPowerTimerBar.GetComponent<RectTransform>().localScale = new Vector3(1f, mPlayer.mThreeBulletTimer/30f, 1f);
+				if(!mPlayerTwoUI && mPlayer != null)
+				{
+					mPowerTimerBar.GetComponent<RectTransform>().localScale = new Vector3(1f, mPlayer.mThreeBulletTimer/30f, 1f);
+				}
+				else if(mPlayerTwoUI && mPlayerTwo != null)
+				{
+					mPowerTimerBar.GetComponent<RectTransform>().localScale = new Vector3(1f, mPlayerTwo.mThreeBulletTimer/30f, 1f);
+				}
 				mPowerTimerSwirl.transform.position = new Vector3(mPowerTimerSwirl.transform.position.x, swirlStartY + (mPowerTimerBar.GetComponent<RectTransform>().localScale.y * 24), mPowerTimerSwirl.transform.position.z);
 				mPowerTimerBulb.enabled = true;
 			}

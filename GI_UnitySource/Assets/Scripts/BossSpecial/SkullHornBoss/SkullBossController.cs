@@ -89,7 +89,7 @@ public class SkullBossController : MonoBehaviour
 
 			FindObjectOfType<ScoreManager>().enabled = false;
 			FindObjectOfType<LevelKillCounter>().enabled = false;
-			FindObjectOfType<PauseManager>().enabled = false;
+		//	FindObjectOfType<PauseManager>().enabled = false;
 			mGameHUD.SetActive(false);
 			mEndGameTimer += Time.deltaTime;
 			mEyeball.GetComponent<SpriteRenderer>().enabled = false;

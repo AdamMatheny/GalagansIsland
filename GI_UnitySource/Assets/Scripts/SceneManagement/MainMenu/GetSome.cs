@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using InControl;
+using XInputDotNetPure; // Required in C#
 
 public class GetSome : MonoBehaviour 
 {
@@ -9,6 +11,7 @@ public class GetSome : MonoBehaviour
 //	public Sprite mGetSomeSprite2;
 
 	public GameObject mSuperLaser;
+	public GameObject mCoOpLaser;
 
 	public Texture2D mBlueCoinText;
 	public Texture2D mBlueCoinTextBig;
@@ -19,6 +22,7 @@ public class GetSome : MonoBehaviour
 
 	[SerializeField] private GUIStyle mGetSomeStyle;
 	[SerializeField] private GUIStyle mButtonStyle;
+	[SerializeField] private GUIStyle mCoOpStyle;
 	//For having a delay to destroy enemies when we start the game ~Adam
 	float mGameStartTimer = 6f;
 	bool mStartingGame = false;
@@ -75,8 +79,17 @@ public class GetSome : MonoBehaviour
 
 		if(Input.GetButtonDown("PauseButton"))
 		{
-			mSuperLaser.SetActive(true);
+			if(mGUIFocusControl.mMainMenuButtonFocus == 6 || InputManager.ActiveDevice.Meta == "XInput Controller #1")
+			{
+				Destroy (mSuperLaser);
+				FindObjectOfType<CoOpSelector>().mCoOpEnabled = true;
+				mCoOpLaser.SetActive(true);
+			}
 
+			else
+			{
+				mSuperLaser.SetActive(true);
+			}
 		}
 
 	}//END of Update()
@@ -142,7 +155,19 @@ public class GetSome : MonoBehaviour
 				{
 					Application.Quit();
 				}			
-}
+			}
+			//Button to Start CoOp Mode ~Adam
+			if(!Application.isMobilePlatform)
+			{
+				GUI.SetNextControlName("StartCoOp");
+				if(GUI.Button(new Rect(Screen.width *0.3f, Screen.height*0.86f, Screen.width*0.4f, Screen.width*0.054f), "P2 Start",mCoOpStyle))
+				{
+					Destroy (mSuperLaser);
+					FindObjectOfType<CoOpSelector>().mCoOpEnabled = true;
+					mCoOpLaser.SetActive(true);
+					//StartGame();
+				}			
+			}
 		}
 
 		GUI.FocusControl(mGUIFocusControl.mMainMenuButtonNames[mGUIFocusControl.mMainMenuButtonFocus]);
@@ -153,7 +178,10 @@ public class GetSome : MonoBehaviour
 	public void StartGame()
 	{
 		GetComponent<Renderer>().enabled = true;
-		mSuperLaser.SetActive(true);
+//		if(mSuperLaser != null)
+//		{
+//			mSuperLaser.SetActive(true);
+//		}
 		//Time.timeScale = 0.25f;
 		EnemyShipAI[] startScreenShips = FindObjectsOfType<EnemyShipAI>();
 

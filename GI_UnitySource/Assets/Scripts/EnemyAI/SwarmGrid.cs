@@ -137,7 +137,7 @@ public class SwarmGrid : MonoBehaviour
 		for (int i = 0; i < mGridSlots.Length; i++)
 		{
 			//if we find an open GridSlot, set is occupied status to true and make that the gridPosition that we return
-			if (!mGridSlots[i].mOccupied)
+			if (mGridSlots[i] != null && !mGridSlots[i].mOccupied)
 			{
 				gridPosition = i;
 				mGridSlots[i].mOccupied = true;

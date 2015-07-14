@@ -18,17 +18,35 @@ public class LaserfistEmblem : MonoBehaviour
 	
 	void OnTriggerEnter(Collider other)
 	{
-		if(other.GetComponent<PlayerShipController>() != null)
+		//Auto-fire on mobile ~Adam
+		if(Application.isMobilePlatform)
 		{
-			//other.GetComponent<PlayerShipController>().mHaveLaserFist = true;
-			other.GetComponent<PlayerShipController>().mLaserFist.SetActive(true);
-			Destroy(this.gameObject);
+			if(other.GetComponent<PlayerShipController>() != null)
+			{
+				//other.GetComponent<PlayerShipController>().mHaveLaserFist = true;
+				other.GetComponent<PlayerShipController>().mLaserFist.SetActive(true);
+				Destroy(this.gameObject);
+			}
+			if(other.GetComponent<PlayerTwoShipController>() != null)
+			{
+				//FindObjectOfType<PlayerShipController>().mHaveLaserFist = true;
+				other.GetComponent<PlayerTwoShipController>().mLaserFist.SetActive(true);
+				Destroy(this.gameObject);
+			}
 		}
-		if(other.GetComponent<PlayerShipCloneController>() != null)
+		//Store super weapon on non-mobile ~Aadm
+		else
 		{
-			//FindObjectOfType<PlayerShipController>().mHaveLaserFist = true;
-			other.GetComponent<PlayerShipController>().mLaserFist.SetActive(true);
-			Destroy(this.gameObject);
+			if(other.GetComponent<PlayerShipController>() != null)
+			{
+				other.GetComponent<PlayerShipController>().mHaveLaserFist = true;
+				Destroy(this.gameObject);
+			}
+			if(other.GetComponent<PlayerTwoShipController>() != null)
+			{
+				FindObjectOfType<PlayerShipController>().mHaveLaserFist = true;
+				Destroy(this.gameObject);
+			}
 		}
 	}
 }

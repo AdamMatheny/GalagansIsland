@@ -10,17 +10,30 @@ public class OverheatMeterUI : MonoBehaviour
 	[SerializeField] private Image mRedBulb;
 	[SerializeField] private ParticleSystem mSteamUp;
 	[SerializeField] private ParticleSystem mSteamDown;
+	[SerializeField] private string mSteamUpName = "OverheatSteamUp";
+	[SerializeField] private string mSteamDownName = "OverheatSteamDown";
+
+	public bool mPlayerTwoUI = false;
 
 	bool mCanPlaySteamNoise = true;
 
 	PlayerShipController mPlayer;
+	PlayerTwoShipController mPlayerTwo;
 
+	float mHeatLevel = 0f;
+	float mMaxHeat = 45f;
+	bool mIsOverheated = false;
 	// Use this for initialization
 	void Start () 
 	{
 
 		//Find the player ship -Adam
 		mPlayer = FindObjectOfType<PlayerShipController>();
+		//Find the second player's ship ~Adam
+		if(mPlayerTwoUI && mPlayer.mPlayerTwo != null)
+		{
+			mPlayerTwo = mPlayer.mPlayerTwo;
+		}
 	}//END of Start()
 	
 	// Update is called once per frame
@@ -29,7 +42,7 @@ public class OverheatMeterUI : MonoBehaviour
 
 		if(mSteamUp == null)
 		{
-			mSteamUp = GameObject.Find("OverheatSteamUp").GetComponent<ParticleSystem>();
+			mSteamUp = GameObject.Find(mSteamUpName).GetComponent<ParticleSystem>();
 		}
 		else
 		{
@@ -40,7 +53,21 @@ public class OverheatMeterUI : MonoBehaviour
 		}
 		if(mSteamDown == null)
 		{
-			mSteamDown = GameObject.Find("OverheatSteamDown").GetComponent<ParticleSystem>();
+			mSteamDown = GameObject.Find(mSteamDownName).GetComponent<ParticleSystem>();
+		}
+
+		//Read Heat Level, Maximum Heat Level, and overheat status from either player 1 or player 2 ~Adam
+		if(!mPlayerTwoUI && mPlayer != null)
+		{
+			mHeatLevel = mPlayer.heatLevel;
+			mMaxHeat = mPlayer.maxHeatLevel;
+			mIsOverheated = mPlayer.isOverheated;
+		}
+		else if (mPlayerTwoUI && mPlayerTwo != null)
+		{
+			mHeatLevel = mPlayerTwo.heatLevel;
+			mMaxHeat = mPlayerTwo.maxHeatLevel;
+			mIsOverheated = mPlayerTwo.isOverheated;
 		}
 
 		//Safety in case the player ship connection is lost -Adam
@@ -49,13 +76,18 @@ public class OverheatMeterUI : MonoBehaviour
 			mPlayer = FindObjectOfType<PlayerShipController>();
 		}
 
+		else if (mPlayerTwo == null && mPlayerTwoUI && mPlayer.mPlayerTwo != null)
+		{
+			mPlayerTwo = mPlayer.mPlayerTwo;
+		}
+
 		else if(GetComponent<Image>().canvas.isActiveAndEnabled) //Only do stuff when the canvas is actually turned on
 		{
 			//Make the bar move up and down
-			mOverHeatBar.GetComponent<RectTransform>().localScale = new Vector3(1f, mPlayer.heatLevel/mPlayer.maxHeatLevel, 1f);
+			mOverHeatBar.GetComponent<RectTransform>().localScale = new Vector3(1f, mHeatLevel/mMaxHeat, 1f);
 
 			//Display overlay when overheated
-			if(mPlayer.isOverheated)
+			if(mIsOverheated)
 			{
 				mOverHeatOverlay.enabled = true;
 				GetComponent<Animator>().speed = 0f;
@@ -77,7 +109,7 @@ public class OverheatMeterUI : MonoBehaviour
 					mSteamUp.GetComponentInChildren<ParticleSystem>().Stop();
 				}
 				mOverHeatOverlay.enabled = false;
-				if(mPlayer.heatLevel/mPlayer.maxHeatLevel > 0.9f)
+				if(mHeatLevel/mMaxHeat > 0.9f)
 				{
 					mRedBulb.enabled = true;
 					mBlankBulb.enabled = false;

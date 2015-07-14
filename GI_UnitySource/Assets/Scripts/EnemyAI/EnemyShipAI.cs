@@ -27,8 +27,8 @@ public class EnemyShipAI : MonoBehaviour
 	//The player's avatar ~Adam
 	Transform mPlayer;
 
-//	//The player Clone shipe ~Adam (No longer being used but being kept for reference for when/if we do multiplayer ~Adam)
-//	Transform mPlayerClone;
+	//The player 2 ship ~Adam  
+	public Transform mPlayerClone;
 
 	//Whether or not the ship has flown in a circle ~Adam
 	public bool mHasLooped = false;
@@ -44,7 +44,7 @@ public class EnemyShipAI : MonoBehaviour
 	public float mSpeed = 5.0f;
 	//For having the speed used to make formations be faster than the regular speed `Adam
 	public float mFormSpeed = 5.0f;
-	float mDefaultSpeed;
+	public float mDefaultSpeed;
 	//Timer for changing AI states
 	public float mSwitchCoolDown;
 
@@ -123,12 +123,15 @@ public class EnemyShipAI : MonoBehaviour
 	void Start () 
 	{
 		//Find the other objects in the scene that we're going to be referencing
-		mPlayer = GameObject.FindGameObjectWithTag("Player").transform;
-		#region from when we were doing the twin-stick ship clone.  Keeping in as comments for when/if we do multiplayer ~Adam
-//		if(FindObjectOfType<PlayerShipCloneController>() != null)
-//		{
-//			mPlayerClone = FindObjectOfType<PlayerShipCloneController>().gameObject.transform;
-//		}
+		if(GameObject.FindGameObjectWithTag("Player")!= null)
+		{
+			mPlayer = GameObject.FindGameObjectWithTag("Player").transform;
+		}
+		#region for if there is a second player present ~Adam
+		if(FindObjectOfType<PlayerTwoShipController>() != null)
+		{
+			mPlayerClone = FindObjectOfType<PlayerTwoShipController>().gameObject.transform;
+		}
 		#endregion
 		mScoreManager = FindObjectOfType<ScoreManager>();
 		mKillCounter = FindObjectOfType<LevelKillCounter>();
@@ -454,32 +457,27 @@ public class EnemyShipAI : MonoBehaviour
 		transform.position = mSwarmGridPosition.transform.position;
 		transform.up = mSwarmGridPosition.transform.up;
 
-		Vector3 toPlayer;
-		toPlayer = mPlayer.position - transform.position;
-		toPlayer.Normalize();
-
-		#endregion
-
-		#region from when we were doing clone/twin ship
-//		//Find the direction to the player (or the clone if it's closer) ~Adam
 //		Vector3 toPlayer;
-//		if(mPlayerClone != null && Vector3.Distance(transform.position,mPlayerClone.position) <= Vector3.Distance(transform.position,mPlayer.position) )
-//		{
-//			toPlayer = mPlayerClone.position - transform.position;
-//		}
-//		else
-//		{
-//			toPlayer = mPlayer.position - transform.position;
-//		}
+//		toPlayer = mPlayer.position - transform.position;
 //		toPlayer.Normalize();
+
 		#endregion
 
-		//Make a grabber enemy release its captured ship once it returns to its position in the swarm
-//		if(mShipInTow != null)
-//		{
-//			mShipInTow.GetComponent<CapturedShip>().mInTow = false;
-//			mShipInTow = null;
-//		}
+		#region from when we were doing 2 players ~Adam
+		//Find the direction to the player (or the clone if it's closer) ~Adam
+		Vector3 toPlayer;
+		if(mPlayerClone != null && Vector3.Distance(transform.position,mPlayerClone.position) <= Vector3.Distance(transform.position,mPlayer.position) )
+		{
+			toPlayer = mPlayerClone.position - transform.position;
+		}
+		else
+		{
+			toPlayer = mPlayer.position - transform.position;
+		}
+		toPlayer.Normalize();
+		#endregion
+
+
 
 		//Switch to attack mode if the attack timer has run out
 		if (mAttackFrequencyTimer <= 0.0f && (mMinimumFirstAttackTime < Time.time))
@@ -506,24 +504,24 @@ public class EnemyShipAI : MonoBehaviour
 				mAnimator.SetBool("IsReturning", true);
 			}}
 
-		#region From when we were doing the clone/twin-stick ship
-//		//Find the direction to the player (or the clone if it's closer) ~Adam
-//		Vector3 toPlayer;
-//		if(mPlayerClone != null && Vector3.Distance(transform.position,mPlayerClone.position) <= Vector3.Distance(transform.position,mPlayer.position) )
-//		{
-//			toPlayer = mPlayerClone.position - transform.position;
-//		}
-//		else
-//		{
-//			toPlayer = mPlayer.position - transform.position;
-//		}
-//		toPlayer.Normalize();
+		#region From when we were doing 2 player mode ~Adam
+		//Find the direction to the player (or the clone if it's closer) ~Adam
+		Vector3 toPlayer;
+		if(mPlayerClone != null && Vector3.Distance(transform.position,mPlayerClone.position) <= Vector3.Distance(transform.position,mPlayer.position) )
+		{
+			toPlayer = mPlayerClone.position - transform.position;
+		}
+		else
+		{
+			toPlayer = mPlayer.position - transform.position;
+		}
+		toPlayer.Normalize();
 		#endregion
 
 		#region Basic enemy movement was already written by Jonathan when I joined the project.  Before I joined, enemies would move toward the player for a few seconds, then move back to the swarm without actually affecting the player.
 
-		Vector3 toPlayer = mPlayer.position - transform.position;
-		toPlayer.Normalize();
+//		Vector3 toPlayer = mPlayer.position - transform.position;
+//		toPlayer.Normalize();
 		Vector3 vel = transform.gameObject.GetComponent<Rigidbody>().velocity;
 		
 		vel += toPlayer;
@@ -665,15 +663,15 @@ public class EnemyShipAI : MonoBehaviour
 		if (other.gameObject.GetComponent<PlayerShipController>() != null)
 		{
 			//mScoreManager.HalfScore();
-			if(!(mGrabber && !mPlayer.GetComponent<PlayerShipController>().mShipStolen))
+			if(!(mGrabber && !mPlayer.GetComponent<PlayerShipController>().mShipStolen) || (mGrabber && mPlayerClone != null) )
 			{
 				mScoreManager.LoseALife();
 			}
 			//A debug log for tracking which enemy hit the player
 			//Debug.Log("Player was hit by the enemy at grid slot " + mSwarmGridPosition.name +" in grid " + mSwarmGrid.name + "!!!");
 
-			//If the enemy that hit the player is a Grabber and there is not currently a stolen ship in play, steal a ship from the player
-			if(mGrabber && !mPlayer.GetComponent<PlayerShipController>().mShipStolen  &&!mPlayer.GetComponent<PlayerShipController>().mShipRecovered && mTowPoint != null)
+			//If the enemy that hit the player is a Grabber, and it's not 2-player mode, and there is not currently a stolen ship in play, steal a ship from the player
+			else if(mGrabber && mPlayer != null && !mPlayer.GetComponent<PlayerShipController>().mShipStolen  &&!mPlayer.GetComponent<PlayerShipController>().mShipRecovered && mTowPoint != null)
 			{
 				mPlayer.GetComponent<PlayerShipController>().mShipStolen = true;
 				GameObject capturedShipToSpawn;
@@ -698,6 +696,11 @@ public class EnemyShipAI : MonoBehaviour
 
 		}
 
+		//Make Player-2 lose a life on contact with an enemy
+		if (other.gameObject.GetComponent<PlayerTwoShipController>() != null)
+		{
+			mScoreManager.LosePlayerTwoLife();
+		}
 		#region from when we were doing the clone/twin-stick ship
 //		//Kill a player clone ship on contact
 //		if (other.gameObject.GetComponent<PlayerShipCloneController>() != null)

@@ -48,6 +48,10 @@ public class CameraShaker : MonoBehaviour
 			mShakeTime -= Time.deltaTime;
 #if !UNITY_ANDROID
 			GamePad.SetVibration(0, strength, strength);
+			GamePad.SetVibration(PlayerIndex.Two, strength, strength);
+
+			
+
 #endif
 			//InputManager.ActiveDevice.Vibrate(strength);
 		}
@@ -55,6 +59,8 @@ public class CameraShaker : MonoBehaviour
 		{
 #if !UNITY_ANDROID
 			GamePad.SetVibration(0, 0, 0);
+			GamePad.SetVibration(PlayerIndex.Two, 0, 0);
+
 #endif
 			//InputManager.ActiveDevice.Vibrate(0f);
 			mShakeTime = 0f;

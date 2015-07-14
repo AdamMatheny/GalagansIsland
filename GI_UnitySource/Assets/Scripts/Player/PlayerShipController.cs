@@ -7,14 +7,20 @@ using XInputDotNetPure; // Required in C#
 public class PlayerShipController : MonoBehaviour 
 {
 	public GameObject mPlayerClone;
-	public GameObject mDamageParticles;
+
+	//For multiplaye co-op ~Adam
+	public PlayerTwoShipController mPlayerTwo;
+	public InputDevice mPlayerOneInputDevice;
+	public string mPlayerOneInputMeta = "";
+
+	public GameObject mDamageParticles;//Particles that play when the player gets hit ~Adam
 	bool playerIndexSet = false;
 	public PlayerIndex playerIndex;
 //	GamePadState state;
 //	GamePadState prevState;
 	
 	public bool cheats = false;
-	//For if we ever animate the ship ~Adam
+	//For if animating the ship ~Adam
 	[SerializeField] private Animator mMainShipAnimator;
 	[SerializeField] private Animator mSecondShipAnimator;
 	
@@ -62,26 +68,18 @@ public class PlayerShipController : MonoBehaviour
 	public float heatLevel = 0f;
 	public float mBaseHeatMax = 60f;
 	public float maxHeatLevel;
-	[SerializeField] private Texture2D mOverheatTimerTex;
-	[SerializeField] private Texture2D mOverheatWarningTex;
-	
+
 	//For when the player has 3 bullets  ~Adam
 	public bool mThreeBullet = true;
 	public float mThreeBulletTimer = 0f;
 	public GameObject mSideBullet;
-	[SerializeField] private Texture2D mBulletTimerTex;
-	[SerializeField] private Texture2D mBulletTimerTexVert;
-	[SerializeField] private Texture2D mBulletTimerTubeTex;
-	
+
 	//For when the ship has a shieldPowerUp ~Adam
 	public bool mShielded = false;
 	[SerializeField] private SpriteRenderer mMainShipShieldSprite;
 	[SerializeField] private SpriteRenderer mSecondShipShieldSprite;
-	[SerializeField] private Texture2D mShieldTimerTex;
 	public float mShieldTimer = 0f;
-	
-	[SerializeField] private Texture2D mSideMetersTex;
-	
+
 	
 	//For deleting duplicate ships when we change levels ~Adam
 	public int mShipCreationLevel;
@@ -141,11 +139,13 @@ public class PlayerShipController : MonoBehaviour
 	}//END of Start()
 	
 	
-	//Pesist between level loads/reloads ~Adam
+	//Persist between level loads/reloads ~Adam
 	void Awake()
 	{
 		DontDestroyOnLoad (transform.gameObject);
 		InputManager.Setup();
+
+
 	}//END of Awake()
 	
 	
@@ -162,10 +162,34 @@ public class PlayerShipController : MonoBehaviour
         }
 #endif
 
-		maxHeatLevel = mBaseHeatMax +  mBaseHeatMax * Application.loadedLevel/26f;
+		#region for managing input devices on co-op mode ~Adam
+		if (mPlayerOneInputDevice == null) 
+		{
+		//	Debug.Log("Setting player one controller");
+			if(mPlayerOneInputMeta == "")
+			{
+				mPlayerOneInputDevice = InputManager.ActiveDevice;
+				mPlayerOneInputMeta = mPlayerOneInputDevice.Meta;
+			}
+			else if (mPlayerOneInputMeta == InputManager.ActiveDevice.Meta)
+			{
+				mPlayerOneInputDevice = InputManager.ActiveDevice;
+				mPlayerOneInputMeta = mPlayerOneInputDevice.Meta;
+			}
+		}
+		else
+		{
+		//	Debug.Log("Player 1: "+mPlayerOneInputDevice.Name);
+		}
+		#endregion
+
+
+		//maxHeatLevel = mBaseHeatMax +  mBaseHeatMax * Application.loadedLevel/26f;
+		maxHeatLevel = mBaseHeatMax +  mBaseHeatMax * Application.loadedLevel/(Application.levelCount-3);//26f;
 		GetComponent<AudioSource>().volume = 0.18f*(30f-Application.loadedLevel)/30f;
 		
-		if (cheats) {
+		if (cheats) 
+		{
 			
 			if(Input.GetKeyDown(KeyCode.Q))
 			{
@@ -248,11 +272,13 @@ public class PlayerShipController : MonoBehaviour
 		//Increase movement speed as we progress through levels
 		if(Time.timeScale > 0f)
 		{
-			mMovementSpeed = ( mBaseMovementSpeed + (6f/25f*(Application.loadedLevel)) ) /Time.timeScale;
+		//	mMovementSpeed = ( mBaseMovementSpeed + (6f/25f*(Application.loadedLevel)) ) /Time.timeScale;
+			mMovementSpeed = ( mBaseMovementSpeed + (0.24f +5.76f*(Application.loadedLevel-1)/(Application.levelCount-4) )) /Time.timeScale;
 		}
 		else
 		{
-			mMovementSpeed = ( mBaseMovementSpeed + (6f/25f*(Application.loadedLevel)) );
+		//	mMovementSpeed = ( mBaseMovementSpeed + (6f/25f*(Application.loadedLevel)) );
+			mMovementSpeed = ( mBaseMovementSpeed + (0.24f +5.76f*(Application.loadedLevel-1)/(Application.levelCount-4) )) /Time.timeScale;
 		}
 		//Make the player drift toward the bottom of the screen
 		// transform.position += new Vector3(0f,mDropSpeed*-1f, 0f);
@@ -260,7 +286,10 @@ public class PlayerShipController : MonoBehaviour
 		{
 			foreach (ParticleSystem shipTrail in this.GetComponentsInChildren<ParticleSystem>())
 			{
-				shipTrail.enableEmission = false;
+				if(shipTrail.gameObject != mDamageParticles)
+				{
+					shipTrail.enableEmission = false;
+				}
 			}
 			
 			
@@ -295,28 +324,44 @@ public class PlayerShipController : MonoBehaviour
 		//Make the player drift faster towards the bottom while firing ~Adam
 		if(mToggleFireOn)
 		{
-			transform.position += new Vector3(0f,-0.00255f*Application.loadedLevel, 0f);
+			//transform.position += new Vector3(0f,-0.00255f*Application.loadedLevel, 0f);
+			transform.position += new Vector3(0f,-0.06375f*Application.loadedLevel/(Application.levelCount-3), 0f);
 			//Decrease the timer on triple bullets while firing ~Adam
 			mThreeBulletTimer -= Time.deltaTime;
 		}
 		
-		
+
+		//Default keyboard/gamepad stick input ~Adam
 		float horizontal = Input.GetAxis("Horizontal");
 		float vertical = Input.GetAxis("Vertical");
-		
-		if(InputManager.ActiveDevice.DPadDown.IsPressed)
+
+		//Use P2 controls for P1 if in single-player mode ~Adam
+		if(mPlayerTwo == null || (mPlayerTwo != null && !mPlayerTwo.isActiveAndEnabled) )
+		{
+			if(Input.GetAxis("HorizontalP2") != 0)
+			{
+				horizontal = Input.GetAxis("HorizontalP2");
+			}
+			if(Input.GetAxis("VerticalP2") != 0)
+			{
+				vertical = Input.GetAxis("VerticalP2");
+			}
+		}
+
+		//Gamepad D-Pad input ~Adam
+		if(mPlayerOneInputDevice.DPadDown.IsPressed)
 		{
 			vertical = -1f;
 		}
-		if(InputManager.ActiveDevice.DPadUp.IsPressed)
+		if(mPlayerOneInputDevice.DPadUp.IsPressed)
 		{
 			vertical = 1f;
 		}
-		if(InputManager.ActiveDevice.DPadLeft.IsPressed)
+		if(mPlayerOneInputDevice.DPadLeft.IsPressed)
 		{
 			horizontal = -1f;
 		}
-		if(InputManager.ActiveDevice.DPadRight.IsPressed)
+		if(mPlayerOneInputDevice.DPadRight.IsPressed)
 		{
 			horizontal = 1f;
 		}
@@ -381,7 +426,7 @@ public class PlayerShipController : MonoBehaviour
 		// transform.Translate(new Vector3(0.0f, (mMovementSpeed * Time.deltaTime) + .6f, 0.0f));
 		// }
 		
-		//Taking in diretional Input from the keyboard
+		//Taking in directional Input from the keyboard
 		else if (horizontal != 0.0f || vertical != 0.0f && Time.timeScale != 0f)
 		{
 			
@@ -439,7 +484,7 @@ public class PlayerShipController : MonoBehaviour
 		
 		//Toggle bullet firing ~Adam
 		//Keyboard and mouse input and InControl Gamepad input ~Adam
-		if(InputManager.ActiveDevice.Action1.WasPressed || InputManager.ActiveDevice.Action4.WasPressed || Input.GetButtonDown("FireGun"))
+		if(mPlayerOneInputDevice.Action1.WasPressed || mPlayerOneInputDevice.Action4.WasPressed || Input.GetButtonDown("FireGun"))
 		{
 			Debug.Log("InControl button pressed");
 			ToggleFire();
@@ -448,17 +493,17 @@ public class PlayerShipController : MonoBehaviour
 		//Fire held super weapon ~Adam
 		//Can hold multiple super weapons.  They fire in a priority order: Big Blast, then Laser Fist ~Adam
 		//Have to wait for one to finish firing before firing another ~Adam
-		if( (InputManager.ActiveDevice.RightBumper.WasPressed || Input.GetButtonDown("FireSuperGun")) && !mBigBlast.activeSelf && !mLaserFist.activeSelf)
+		if( (mPlayerOneInputDevice.RightBumper.WasPressed || Input.GetButtonDown("FireSuperGun")) && !mBigBlast.activeSelf && !mLaserFist.activeSelf)
 		{
-			if(mHaveBigBlast)
-			{
-				mBigBlast.SetActive(true);
-				mHaveBigBlast = false;
-			}
-			else if(mHaveLaserFist)
+			if(mHaveLaserFist)
 			{
 				mLaserFist.SetActive(true);
 				mHaveLaserFist = false;
+			}
+			else if(mHaveBigBlast)
+			{
+				mBigBlast.SetActive(true);
+				mHaveBigBlast = false;
 			}
 		}
 
@@ -528,8 +573,9 @@ public class PlayerShipController : MonoBehaviour
 						Instantiate (mSideBullet, mBulletSpawns[3].position, mMainShip.transform.rotation * Quaternion.Euler (0f, 0f, -10f) * Quaternion.Euler (0f,0f,Random.Range(-5.0f,5.0f)));
 						
 					}
+					//Play bullet-firing sound effect ~Adam
 					GetComponent<AudioSource> ().Play ();
-					//Camera.main.GetComponent<CameraShaker> ().ShakeCamera ();
+			
 					//Do side ship bullets
 					if (mShipRecovered)// && Application.isMobilePlatform)  (mobile part is from when we were doing twin-stick)
 					{
@@ -550,7 +596,8 @@ public class PlayerShipController : MonoBehaviour
 					{
 						if(Application.loadedLevelName != "Credits")
 						{
-							mBulletFireTime = Time.time + bulletShootSpeed - (0.25f / 25f * (Application.loadedLevel));
+						//	mBulletFireTime = Time.time + bulletShootSpeed - (0.25f / 25f * (Application.loadedLevel));
+							mBulletFireTime = Time.time + bulletShootSpeed - ((0.01f +.24f*(Application.loadedLevel-1)/(Application.levelCount-4) ));
 						}
 						else
 						{
@@ -559,7 +606,7 @@ public class PlayerShipController : MonoBehaviour
 					}
 					else
 					{
-						mBulletFireTime = Time.time + (bulletShootSpeed - (0.25f / 25f * (Application.loadedLevel)))/3f;
+						mBulletFireTime = Time.time + (bulletShootSpeed - 0.25f)/3f;
 					}
 				}
 			}
@@ -592,8 +639,10 @@ public class PlayerShipController : MonoBehaviour
 		}
 
 		//Keyboard and mouse input and InControl Gamepad input ~Adam
-		if(InputManager.ActiveDevice.Action2.IsPressed || InputManager.ActiveDevice.Action3.IsPressed || Input.GetButton("Thrusters"))
+		if(mPlayerOneInputDevice.Action2.IsPressed || mPlayerOneInputDevice.Action3.IsPressed || Input.GetButton("Thrusters"))
 		{
+			//Slow down movement while hovering~Adam
+			mMoveDir *= 0.95f;
 
 			mDropSpeed -= mDropDeccelRate*3f;
 			if(mDropSpeed <= 0.01f)
@@ -605,7 +654,10 @@ public class PlayerShipController : MonoBehaviour
 			{
 				foreach (ParticleSystem shipTrail in this.GetComponentsInChildren<ParticleSystem>())
 				{
-					shipTrail.enableEmission = false;
+					if(shipTrail.gameObject != mDamageParticles)
+					{
+						shipTrail.enableEmission = false;
+					}
 				}
 			}
 			else
@@ -681,8 +733,10 @@ public class PlayerShipController : MonoBehaviour
 				}
 			}
 		}
-		mMainShipAnimator.speed = Application.loadedLevel/5f+1f;
-		mSecondShipAnimator.speed = Application.loadedLevel/5f+1f;
+//		mMainShipAnimator.speed = Application.loadedLevel/5f+1f;
+//		mSecondShipAnimator.speed = Application.loadedLevel/5f+1f;
+		mMainShipAnimator.speed = Application.loadedLevel/(Application.levelCount-3)*5f +1f;//Application.loadedLevel/5f+1f;
+		mSecondShipAnimator.speed = Application.loadedLevel/(Application.levelCount-3)*5f +1f;//Application.loadedLevel/5f+1f;
 		if(mToggleFireOn)
 		{
 			mMainShipAnimator.SetBool("IsFiring", true);
@@ -718,7 +772,10 @@ public class PlayerShipController : MonoBehaviour
 			mSecondShip.GetComponent<SpriteRenderer>().enabled = false;
 			foreach (ParticleSystem shipTrail in mSecondShip.GetComponentsInChildren<ParticleSystem>())
 			{
-				shipTrail.enableEmission = false;
+				if(shipTrail.gameObject != mDamageParticles)
+				{
+					shipTrail.enableEmission = false;
+				}
 			}
 		}
 
@@ -768,7 +825,10 @@ public class PlayerShipController : MonoBehaviour
 	
 	void OnLevelWasLoaded(){
 		Input.ResetInputAxes();
-		
+
+		mPlayerOneInputDevice = null;
+//		mPlayerOneInputMeta = "";
+//		Debug.Log("reseting input1 meta to" + mPlayerOneInputMeta);
 		//mToggleFireOn = false;
 	}
 	

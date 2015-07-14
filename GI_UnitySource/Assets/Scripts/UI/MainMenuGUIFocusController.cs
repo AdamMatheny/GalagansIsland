@@ -18,12 +18,13 @@ public class MainMenuGUIFocusController : MonoBehaviour
 
 	void Start()
 	{
-		mMainMenuButtonNames.Add("InsertCoin");
-		mMainMenuButtonNames.Add("QuitGame");
-		mMainMenuButtonNames.Add("ResetStart");
-		mMainMenuButtonNames.Add("ResetAsk");
-		mMainMenuButtonNames.Add("ResetCancel");
-		mMainMenuButtonNames.Add("ResetConfirm");
+		mMainMenuButtonNames.Add("InsertCoin");//0
+		mMainMenuButtonNames.Add("QuitGame");//1
+		mMainMenuButtonNames.Add("ResetStart");//2
+		mMainMenuButtonNames.Add("ResetAsk");//3
+		mMainMenuButtonNames.Add("ResetCancel");//4
+		mMainMenuButtonNames.Add("ResetConfirm");//5
+		mMainMenuButtonNames.Add("StartCoOp");//6
 	}
 
 
@@ -67,6 +68,14 @@ public class MainMenuGUIFocusController : MonoBehaviour
 			case 5:
 				mScoreResetter.ConfirmScoreReset();
 				break;
+			case 6:
+				if(mGameStarter.isActiveAndEnabled == true)
+				{
+					FindObjectOfType<CoOpSelector>().mCoOpEnabled = true;
+					Destroy (mGameStarter.mSuperLaser);
+					mGameStarter.mCoOpLaser.SetActive(true);
+				}
+				break;
 			default:
 				break;
 
@@ -103,7 +112,20 @@ public class MainMenuGUIFocusController : MonoBehaviour
 			mMainMenuButtonFocus = 2;
 			mUIFocusTimer = 0.2f;
 		}
-		
+
+		//Move from focusing on "Insert Coin" to focusing on the CoOp Start ~Adam
+		else if( ( (Input.GetAxis ("Vertical") < 0f || InputManager.ActiveDevice.DPadDown.IsPressed) && mUIFocusTimer<= 0f && mMainMenuButtonFocus == 0) && !Application.isMobilePlatform )
+		{
+			mMainMenuButtonFocus = 6;
+			mUIFocusTimer = 0.2f;
+		}
+		//Move from focusing on "Insert Coin" to focusing on the CoOp Start ~Adam
+		else if((Input.GetAxis ("Vertical") > 0f || InputManager.ActiveDevice.DPadUp.IsPressed) && mUIFocusTimer<= 0f && mMainMenuButtonFocus == 6)
+		{
+			mMainMenuButtonFocus = 0;
+			mUIFocusTimer = 0.2f;
+		}
+
 		//Move from score reset to insert coin ~Adam
 		else if((Input.GetAxis ("Horizontal") > 0f && mUIFocusTimer <= 0f || InputManager.ActiveDevice.DPadRight.IsPressed) && mMainMenuButtonFocus == 2 && mGameStarter.isActiveAndEnabled == true)
 		{

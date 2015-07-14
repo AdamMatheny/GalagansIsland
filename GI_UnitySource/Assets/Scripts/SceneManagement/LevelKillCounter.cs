@@ -22,6 +22,10 @@ public class LevelKillCounter : MonoBehaviour
 	[SerializeField] private GUIStyle mLevelCompleteStyle;
 
 	[SerializeField] private bool mRemainingEnemy;
+
+	//Keep levels from ending too early~Adam
+	[SerializeField] private float mMinimumLeaveTime = 20f;
+	float mLeaveTimer = 0f;
 	// Use this for initialization
 	void Start () 
 	{
@@ -31,8 +35,9 @@ public class LevelKillCounter : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		mLeaveTimer += Time.deltaTime;
 //		Debug.Log(Time.time);
-		if(mLevelComplete)
+		if(mLevelComplete && mLeaveTimer > mMinimumLeaveTime)
 		{
 			EnemyShipAI[] leftoverEnemies;
 			leftoverEnemies = FindObjectsOfType<EnemyShipAI>();
