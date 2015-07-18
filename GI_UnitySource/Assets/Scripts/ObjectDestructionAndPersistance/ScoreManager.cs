@@ -59,6 +59,10 @@ public class ScoreManager : MonoBehaviour
     public Canvas mHighscoreCanvas;
 
 
+	//For differentiating player 1 and player 2's scores ~Adam
+	public int mP1Score = 0;
+	public int mP2Score = 0;
+
 	void StoreHighscore(int newHighscore)
 	{
 		int oldHighscore = PlayerPrefs.GetInt("highscore", 0);    
@@ -182,7 +186,7 @@ public class ScoreManager : MonoBehaviour
 			else
 			{
 
-				mPowerUpMeterScoreDisplay.text = "Score: " + mScore;
+				mPowerUpMeterScoreDisplay.text = "Total Score: " + mScore;
 
 				if(mPowerUpScore < mShieldScore)
 				{
@@ -284,9 +288,23 @@ public class ScoreManager : MonoBehaviour
 
 
 	//Used for adding/subtracting points
-	public void AdjustScore(int points)
+	public void AdjustScore(int points, bool mPlayer1Kill)
 	{
+		if(mScore < 0)
+		{
+			mP1Score = 0;
+			mP2Score = 0;
+			mScore = 0;
+		}
 		mScore += points;
+		if(mPlayer1Kill)
+		{
+			mP1Score += points;
+		}
+		else
+		{
+			mP2Score += points;
+		}
 	}
 
 	public void HalfScore()
@@ -322,9 +340,12 @@ public class ScoreManager : MonoBehaviour
 				else
 				{
 					mScore -= 10;
+					mP1Score -= 10;
 					if(mScore <-1)
 					{
 						mScore = -1;
+						mP1Score = mScore;
+						mP2Score = mScore;
 					}
 					mLivesRemaining--;
 					mPlayerAvatar.GetComponent<PlayerShipController>().StartSpin();
@@ -378,9 +399,12 @@ public class ScoreManager : MonoBehaviour
 				else
 				{
 					mScore -= 10;
+					mP2Score -= 10;
 					if(mScore <-1)
 					{
 						mScore = -1;
+						mP1Score = 0;
+						mP2Score = 0;
 					}
 					mLivesRemaining--;
 					mPlayer2Avatar.GetComponent<PlayerTwoShipController>().StartSpin();

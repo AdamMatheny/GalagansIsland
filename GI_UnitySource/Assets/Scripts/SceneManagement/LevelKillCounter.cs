@@ -37,7 +37,7 @@ public class LevelKillCounter : MonoBehaviour
 	{
 		mLeaveTimer += Time.deltaTime;
 //		Debug.Log(Time.time);
-		if(mLevelComplete && mLeaveTimer > mMinimumLeaveTime)
+		if(mLevelComplete)
 		{
 			EnemyShipAI[] leftoverEnemies;
 			leftoverEnemies = FindObjectsOfType<EnemyShipAI>();
@@ -49,7 +49,7 @@ public class LevelKillCounter : MonoBehaviour
 
 		mRemainingEnemy = (FindObjectOfType<EnemyShipAI>() != null);
 
-		if(mKillCount >= mRequiredKills && !mRemainingEnemy)
+		if(mKillCount >= mRequiredKills && !mRemainingEnemy && (mLeaveTimer > mMinimumLeaveTime) )
 		{
 			if(mRemainingEnemy == false)
 			{

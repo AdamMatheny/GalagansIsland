@@ -7,6 +7,7 @@ public class PlayerBulletController : MonoBehaviour
 	public float bulletSpeed = 30.0f;
 	private float selfDestructTimer = 0.0f;
 	public bool mSideBullet = false;
+	public int mPlayerBulletNumber = 1;
 
 	public void Start()
 	{

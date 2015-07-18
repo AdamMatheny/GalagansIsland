@@ -182,6 +182,7 @@ public class FSCBossController : MonoBehaviour
 				if(mEndGameTimer >= 6f)
 				{
 					Destroy(FindObjectOfType<PlayerShipController>().gameObject);
+					Destroy(FindObjectOfType<PlayerTwoShipController>().gameObject);
 					Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
 					//Destroy(FindObjectOfType<ScoreManager>().gameObject);
 					mScoreManager.mLevelInfoText.text = "Thank you for playing!";

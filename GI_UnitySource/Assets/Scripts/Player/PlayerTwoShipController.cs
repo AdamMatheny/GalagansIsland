@@ -555,21 +555,24 @@ public class PlayerTwoShipController : MonoBehaviour
 					
 					// Make the bullet object
 					GameObject newBullet = Instantiate (mBulletPrefab, mBulletSpawns[0].position, mMainShip.transform.rotation * Quaternion.Euler (0f,0f,Random.Range(-3.0f,3.0f))) as GameObject;
-					
+					//Mark this bullet as coming from the second ship ~Adam
+					newBullet.GetComponent<PlayerBulletController>().mPlayerBulletNumber = 2;
 					if (mThreeBullet) 
 					{
 						
 						if(!mShipRecovered)// || !Application.isMobilePlatform) (mobile part is from when we were doing twin-stick)
 						{
-							Instantiate (mSideBullet, mBulletSpawns[2].position, mMainShip.transform.rotation * Quaternion.Euler (0f, 0f, 10f) * Quaternion.Euler (0f,0f,Random.Range(-5.0f,5.0f)));
+							GameObject tripBullet1 = Instantiate (mSideBullet, mBulletSpawns[2].position, mMainShip.transform.rotation * Quaternion.Euler (0f, 0f, 10f) * Quaternion.Euler (0f,0f,Random.Range(-5.0f,5.0f))) as GameObject;
+							tripBullet1.GetComponent<PlayerBulletController>().mPlayerBulletNumber = 2;
 						}
 						//Adjust triple-bullet firing when you have the double/side ship ~Adam
 						else if(mShipRecovered)// && Application.isMobilePlatform)
 						{
-							Instantiate (mSideBullet, mBulletSpawns[2].position, mMainShip.transform.rotation * Quaternion.Euler (0f, 0f, 5f) * Quaternion.Euler (0f,0f,Random.Range(-10.0f,3.0f)));
+							GameObject tripBullet1Alt = Instantiate (mSideBullet, mBulletSpawns[2].position, mMainShip.transform.rotation * Quaternion.Euler (0f, 0f, 5f) * Quaternion.Euler (0f,0f,Random.Range(-10.0f,3.0f))) as GameObject;
+							tripBullet1Alt.GetComponent<PlayerBulletController>().mPlayerBulletNumber = 2;
 						}
-						Instantiate (mSideBullet, mBulletSpawns[3].position, mMainShip.transform.rotation * Quaternion.Euler (0f, 0f, -10f) * Quaternion.Euler (0f,0f,Random.Range(-5.0f,5.0f)));
-						
+						GameObject tripBullet2 = Instantiate (mSideBullet, mBulletSpawns[3].position, mMainShip.transform.rotation * Quaternion.Euler (0f, 0f, -10f) * Quaternion.Euler (0f,0f,Random.Range(-5.0f,5.0f))) as GameObject;
+						tripBullet2.GetComponent<PlayerBulletController>().mPlayerBulletNumber = 2;
 					}
 					//Only play bullet-firing sound when player-1 isn't firing
 					if(mPlayerOne == null || (mPlayerOne != null && !mPlayerOne.mToggleFireOn))
@@ -583,6 +586,7 @@ public class PlayerTwoShipController : MonoBehaviour
 						
 						GameObject secondBullet;
 						secondBullet = Instantiate (mBulletPrefab, mBulletSpawns[1].position, mSecondShip.transform.rotation * Quaternion.Euler (0f,0f,Random.Range(-3.0f,3.0f))) as GameObject;
+						//Add in setting the bullets to belong to player 2 if we ever let the second player get a double ship ~Adam
 						secondBullet.name = "SECONDBULLET";
 						if (mThreeBullet) 
 						{

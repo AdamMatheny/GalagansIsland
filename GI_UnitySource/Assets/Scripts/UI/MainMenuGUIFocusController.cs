@@ -50,7 +50,10 @@ public class MainMenuGUIFocusController : MonoBehaviour
 			case 0:
 				if(mGameStarter.isActiveAndEnabled == true)
 				{
-					mGameStarter.mSuperLaser.SetActive(true);
+//					mGameStarter.mSuperLaser.SetActive(true);
+//					FindObjectOfType<CoOpSelector>().mCoOpEnabled = true;
+					Destroy (mGameStarter.mSuperLaser);
+					mGameStarter.mCoOpLaser.SetActive(true);
 				}
 				break;
 			case 1:
@@ -71,7 +74,7 @@ public class MainMenuGUIFocusController : MonoBehaviour
 			case 6:
 				if(mGameStarter.isActiveAndEnabled == true)
 				{
-					FindObjectOfType<CoOpSelector>().mCoOpEnabled = true;
+//					FindObjectOfType<CoOpSelector>().mCoOpEnabled = true;
 					Destroy (mGameStarter.mSuperLaser);
 					mGameStarter.mCoOpLaser.SetActive(true);
 				}
@@ -113,18 +116,18 @@ public class MainMenuGUIFocusController : MonoBehaviour
 			mUIFocusTimer = 0.2f;
 		}
 
-		//Move from focusing on "Insert Coin" to focusing on the CoOp Start ~Adam
-		else if( ( (Input.GetAxis ("Vertical") < 0f || InputManager.ActiveDevice.DPadDown.IsPressed) && mUIFocusTimer<= 0f && mMainMenuButtonFocus == 0) && !Application.isMobilePlatform )
-		{
-			mMainMenuButtonFocus = 6;
-			mUIFocusTimer = 0.2f;
-		}
-		//Move from focusing on "Insert Coin" to focusing on the CoOp Start ~Adam
-		else if((Input.GetAxis ("Vertical") > 0f || InputManager.ActiveDevice.DPadUp.IsPressed) && mUIFocusTimer<= 0f && mMainMenuButtonFocus == 6)
-		{
-			mMainMenuButtonFocus = 0;
-			mUIFocusTimer = 0.2f;
-		}
+//		//Move from focusing on "Insert Coin" to focusing on the CoOp Start ~Adam
+//		else if( ( (Input.GetAxis ("Vertical") < 0f || InputManager.ActiveDevice.DPadDown.IsPressed) && mUIFocusTimer<= 0f && mMainMenuButtonFocus == 0) && !Application.isMobilePlatform )
+//		{
+//			mMainMenuButtonFocus = 6;
+//			mUIFocusTimer = 0.2f;
+//		}
+//		//Move from focusing on "Insert Coin" to focusing on the CoOp Start ~Adam
+//		else if((Input.GetAxis ("Vertical") > 0f || InputManager.ActiveDevice.DPadUp.IsPressed) && mUIFocusTimer<= 0f && mMainMenuButtonFocus == 6)
+//		{
+//			mMainMenuButtonFocus = 0;
+//			mUIFocusTimer = 0.2f;
+//		}
 
 		//Move from score reset to insert coin ~Adam
 		else if((Input.GetAxis ("Horizontal") > 0f && mUIFocusTimer <= 0f || InputManager.ActiveDevice.DPadRight.IsPressed) && mMainMenuButtonFocus == 2 && mGameStarter.isActiveAndEnabled == true)

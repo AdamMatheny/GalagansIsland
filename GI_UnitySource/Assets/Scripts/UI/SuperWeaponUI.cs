@@ -101,5 +101,17 @@ public class SuperWeaponUI : MonoBehaviour
 				#endregion
 			}//END of Update()
 		}
+		else
+		{
+			//Find either the player 1 or the player 2 ship ~Adam
+			if(!mCoOpUI)
+			{
+				mShip = FindObjectOfType<PlayerShipController>().gameObject;
+			}
+			else
+			{
+				mShip = FindObjectOfType<PlayerTwoShipController>().gameObject;
+			}
+		}
 	}
 }

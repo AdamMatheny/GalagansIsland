@@ -119,6 +119,12 @@ public class EnemyShipAI : MonoBehaviour
 
 	//For deleting enemies that get stuck off-screen ~Adam
 	[SerializeField] private float mAutoDeleteTimer = 60f;
+
+
+
+	//For determining which player killed this enemy ~Adam
+	private int mKillerNumber = 0;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -622,6 +628,7 @@ public class EnemyShipAI : MonoBehaviour
 				{
 					if(Random.value <= LRBulletChance)
 					{
+						mKillerNumber = other.gameObject.GetComponent<PlayerBulletController>().mPlayerBulletNumber;
 						EnemyShipDie();
 					}
 					else
@@ -634,6 +641,7 @@ public class EnemyShipAI : MonoBehaviour
 				{
 					if(Random.value <= middleBulletChance)
 					{
+						mKillerNumber = other.gameObject.GetComponent<PlayerBulletController>().mPlayerBulletNumber;
 						EnemyShipDie();
 					}
 					else
@@ -750,7 +758,7 @@ public class EnemyShipAI : MonoBehaviour
 //			}
 //		}
 		mSwarmGridPosition.GetComponent<SwarmGridSlot>().mOccupied = false;
-		mScoreManager.AdjustScore(mPointValue);
+		mScoreManager.AdjustScore(mPointValue, mKillerNumber <= 1);
 		
 		if(mDeathRequired)
 		{
