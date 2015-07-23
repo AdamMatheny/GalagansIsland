@@ -82,15 +82,14 @@ public class GetSome : MonoBehaviour
 			if(mGUIFocusControl.mMainMenuButtonFocus == 6 || InputManager.ActiveDevice.Meta == "XInput Controller #1")
 			{
 				Destroy (mSuperLaser);
-//				FindObjectOfType<CoOpSelector>().mCoOpEnabled = true;
+				FindObjectOfType<CoOpSelector>().mCoOpEnabled = true;
 				mCoOpLaser.SetActive(true);
 			}
 
 			else
 			{
-//				mSuperLaser.SetActive(true);
-				Destroy (mSuperLaser);
-				mCoOpLaser.SetActive(true);	}
+				mSuperLaser.SetActive(true);
+			}
 		}
 
 	}//END of Update()
@@ -157,18 +156,18 @@ public class GetSome : MonoBehaviour
 					Application.Quit();
 				}			
 			}
-//			//Button to Start CoOp Mode ~Adam
-//			if(!Application.isMobilePlatform)
-//			{
-//				GUI.SetNextControlName("StartCoOp");
-//				if(GUI.Button(new Rect(Screen.width *0.3f, Screen.height*0.86f, Screen.width*0.4f, Screen.width*0.054f), "P2 Start",mCoOpStyle))
-//				{
-//					Destroy (mSuperLaser);
-//					FindObjectOfType<CoOpSelector>().mCoOpEnabled = true;
-//					mCoOpLaser.SetActive(true);
-//					//StartGame();
-//				}			
-//			}
+			//Button to Start CoOp Mode ~Adam
+			if(!Application.isMobilePlatform)
+			{
+				GUI.SetNextControlName("StartCoOp");
+				if(GUI.Button(new Rect(Screen.width *0.3f, Screen.height*0.86f, Screen.width*0.4f, Screen.width*0.054f), "P2 Start",mCoOpStyle))
+				{
+					Destroy (mSuperLaser);
+					FindObjectOfType<CoOpSelector>().mCoOpEnabled = true;
+					mCoOpLaser.SetActive(true);
+					//StartGame();
+				}			
+			}
 		}
 
 		GUI.FocusControl(mGUIFocusControl.mMainMenuButtonNames[mGUIFocusControl.mMainMenuButtonFocus]);

@@ -16,6 +16,7 @@ public class LaserFistPowerup : MonoBehaviour
 
 	public GameObject bigBoom;
 
+	public bool mPlayer2Weapon = false;
 
 	float mLaserFistTimer = 0f;
 
@@ -94,6 +95,10 @@ public class LaserFistPowerup : MonoBehaviour
 	{
 		if(other.GetComponent<EnemyShipAI>() != null)
 		{
+			if(mPlayer2Weapon)
+			{
+				other.GetComponent<EnemyShipAI>().mKillerNumber = 2;
+			}
 			other.GetComponent<EnemyShipAI>().EnemyShipDie();
 			Debug.Log("EnterTrigger Destroying " + other.GetComponent<EnemyShipAI>().name);
 		}
@@ -111,6 +116,14 @@ public class LaserFistPowerup : MonoBehaviour
 		if(bigBoom != null)
 		{
 			bigBoom.SetActive (true);
+			foreach(EnemyShipAI enemy in FindObjectsOfType<EnemyShipAI>())
+			{
+				if(mPlayer2Weapon)
+				{
+					enemy.mKillerNumber = 2;
+				}
+				enemy.EnemyShipDie();
+			}
 		}
 	}
 

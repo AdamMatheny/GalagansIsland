@@ -229,7 +229,7 @@ public class ScoreManager : MonoBehaviour
 		}
 
 		//Color the player while invincible
-		if(mPlayerAvatar != null)
+		if(mPlayerAvatar != null && mPlayerAvatar.GetComponent<PlayerShipController>() != null)
 		{
 			if(mPlayerSafeTime > 0)
 			{
@@ -341,11 +341,16 @@ public class ScoreManager : MonoBehaviour
 				{
 					mScore -= 10;
 					mP1Score -= 10;
+					if(mP1Score < 0)
+					{
+						mP2Score += mP1Score;
+						mP1Score = 0;
+					}
 					if(mScore <-1)
 					{
 						mScore = -1;
-						mP1Score = mScore;
-						mP2Score = mScore;
+						mP1Score = 0;
+						mP2Score = 0;
 					}
 					mLivesRemaining--;
 					mPlayerAvatar.GetComponent<PlayerShipController>().StartSpin();
@@ -400,6 +405,11 @@ public class ScoreManager : MonoBehaviour
 				{
 					mScore -= 10;
 					mP2Score -= 10;
+					if(mP2Score < 0)
+					{
+						mP1Score += mP2Score;
+						mP2Score = 0;
+					}
 					if(mScore <-1)
 					{
 						mScore = -1;

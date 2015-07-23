@@ -107,7 +107,14 @@ public class SkullBossController : MonoBehaviour
 			}
 			if(mEndGameTimer >= 6f)
 			{
-				Destroy(FindObjectOfType<PlayerShipController>().gameObject);
+				if(FindObjectOfType<PlayerShipController>() != null)
+				{
+					Destroy(FindObjectOfType<PlayerShipController>().gameObject);
+				}
+				if (FindObjectOfType<PlayerTwoShipController>() != null)
+				{
+					Destroy(FindObjectOfType<PlayerTwoShipController>().gameObject);
+				}
 				Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
 				//Destroy(FindObjectOfType<ScoreManager>().gameObject);
 				Application.LoadLevel("Credits");

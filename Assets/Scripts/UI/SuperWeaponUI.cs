@@ -7,7 +7,7 @@ public class SuperWeaponUI : MonoBehaviour
 	[SerializeField] private GameObject mWeaponReadyText;
 	[SerializeField] private GameObject mLaserFistIcon;
 	[SerializeField] private GameObject mBigBlastIcon;
-	private GameObject mShip;
+	[SerializeField] private GameObject mShip;
 
 
 
@@ -99,19 +99,19 @@ public class SuperWeaponUI : MonoBehaviour
 					mLaserFistIcon.SetActive(false);
 				}
 				#endregion
-			}//END of Update()
+			}
 		}
 		else
 		{
 			//Find either the player 1 or the player 2 ship ~Adam
-			if(!mCoOpUI)
+			if(!mCoOpUI && FindObjectOfType<PlayerShipController>() != null)
 			{
 				mShip = FindObjectOfType<PlayerShipController>().gameObject;
 			}
-			else
+			else if (mCoOpUI && FindObjectOfType<PlayerTwoShipController>() != null)
 			{
 				mShip = FindObjectOfType<PlayerTwoShipController>().gameObject;
 			}
 		}
-	}
+	}//END of Update()
 }

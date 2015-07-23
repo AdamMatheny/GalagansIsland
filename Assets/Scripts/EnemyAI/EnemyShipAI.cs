@@ -123,7 +123,7 @@ public class EnemyShipAI : MonoBehaviour
 
 
 	//For determining which player killed this enemy ~Adam
-	private int mKillerNumber = 0;
+	[HideInInspector] public int mKillerNumber = 0;
 
 	// Use this for initialization
 	void Start () 
@@ -471,14 +471,21 @@ public class EnemyShipAI : MonoBehaviour
 
 		#region from when we were doing 2 players ~Adam
 		//Find the direction to the player (or the clone if it's closer) ~Adam
-		Vector3 toPlayer;
-		if(mPlayerClone != null && Vector3.Distance(transform.position,mPlayerClone.position) <= Vector3.Distance(transform.position,mPlayer.position) )
+		Vector3 toPlayer = Vector3.down;
+		if(mPlayer != null)
+		{
+			if(mPlayerClone != null && Vector3.Distance(transform.position,mPlayerClone.position) <= Vector3.Distance(transform.position,mPlayer.position) )
+			{
+				toPlayer = mPlayerClone.position - transform.position;
+			}
+			else
+			{
+				toPlayer = mPlayer.position - transform.position;
+			}
+		}
+		else if (mPlayerClone != null)
 		{
 			toPlayer = mPlayerClone.position - transform.position;
-		}
-		else
-		{
-			toPlayer = mPlayer.position - transform.position;
 		}
 		toPlayer.Normalize();
 		#endregion

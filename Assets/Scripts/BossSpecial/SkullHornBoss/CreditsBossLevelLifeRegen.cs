@@ -100,24 +100,47 @@ public class CreditsBossLevelLifeRegen : MonoBehaviour
 			FindObjectOfType<PauseManager>().enabled = false;
 
 			//Hiding the player ~Adam
-			GameObject playerShip = FindObjectOfType<PlayerShipController>().gameObject;
-
-			playerShip.GetComponent<PlayerShipController>().enabled = false;
-			playerShip.GetComponent<Collider>().enabled = false;
-
-			foreach(ParticleSystem shipParticles in playerShip.GetComponentsInChildren<ParticleSystem>() )
+			if(FindObjectOfType<PlayerShipController>() != null)
 			{
-				shipParticles.enableEmission = false;
+				GameObject playerShip = FindObjectOfType<PlayerShipController>().gameObject;
+
+				playerShip.GetComponent<PlayerShipController>().enabled = false;
+				playerShip.GetComponent<Collider>().enabled = false;
+
+				foreach(ParticleSystem shipParticles in playerShip.GetComponentsInChildren<ParticleSystem>() )
+				{
+					shipParticles.enableEmission = false;
+				}
+				foreach(SpriteRenderer shipSprite in playerShip.GetComponentsInChildren<SpriteRenderer>() )
+				{
+					shipSprite.enabled = false;
+				}
 			}
-			foreach(SpriteRenderer shipSprite in playerShip.GetComponentsInChildren<SpriteRenderer>() )
+
+			//Hiding player 2 ~Adam
+			if(FindObjectOfType<PlayerTwoShipController>() != null)
 			{
-				shipSprite.enabled = false;
+				GameObject player2Ship = FindObjectOfType<PlayerTwoShipController>().gameObject;
+				
+				player2Ship.GetComponent<PlayerTwoShipController>().enabled = false;
+				player2Ship.GetComponent<Collider>().enabled = false;
+				
+				foreach(ParticleSystem shipParticles in player2Ship.GetComponentsInChildren<ParticleSystem>() )
+				{
+					shipParticles.enableEmission = false;
+				}
+				foreach(SpriteRenderer shipSprite in player2Ship.GetComponentsInChildren<SpriteRenderer>() )
+				{
+					shipSprite.enabled = false;
+				}
 			}
 
 			if(mLevelTimer > mPlayerEntranceDelay)
 			{
 				RevealPlayer();
 			}
+
+
 		}
 
 	}//END of Update()
@@ -166,21 +189,41 @@ public class CreditsBossLevelLifeRegen : MonoBehaviour
 		FindObjectOfType<PauseManager>().enabled = true;
 		GameObject.Find("Game_HUD").GetComponent<Canvas>().enabled = true;
 
-		//Revealing the Player ~Adam
-		GameObject playerShip = FindObjectOfType<PlayerShipController>().gameObject;
-		playerShip.GetComponent<PlayerShipController>().enabled = true;
-		playerShip.GetComponent<Collider>().enabled = true;
-
-		foreach(ParticleSystem shipParticles in playerShip.GetComponentsInChildren<ParticleSystem>() )
+		//Revealing the Player 1 ~Adam
+		if(FindObjectOfType<PlayerShipController>() != null)
 		{
-			shipParticles.enableEmission = true;
-		}
-		foreach(SpriteRenderer shipSprite in playerShip.GetComponentsInChildren<SpriteRenderer>() )
-		{
-			shipSprite.enabled = true;
-		}
-		//Put a particle effect on the player ship as it appears ~Adam
-		Instantiate(mPlayerRevealParticle, playerShip.transform.position, Quaternion.identity);
+			GameObject playerShip = FindObjectOfType<PlayerShipController>().gameObject;
+			playerShip.GetComponent<PlayerShipController>().enabled = true;
+			playerShip.GetComponent<Collider>().enabled = true;
 
+			foreach(ParticleSystem shipParticles in playerShip.GetComponentsInChildren<ParticleSystem>() )
+			{
+				shipParticles.enableEmission = true;
+			}
+			foreach(SpriteRenderer shipSprite in playerShip.GetComponentsInChildren<SpriteRenderer>() )
+			{
+				shipSprite.enabled = true;
+			}
+			//Put a particle effect on the player ship as it appears ~Adam
+			Instantiate(mPlayerRevealParticle, playerShip.transform.position, Quaternion.identity);
+		}
+		//Revealing the Player 2 ~Adam
+		if(FindObjectOfType<PlayerTwoShipController>() != null)
+		{
+			GameObject playerTwoShip = FindObjectOfType<PlayerTwoShipController>().gameObject;
+			playerTwoShip.GetComponent<PlayerTwoShipController>().enabled = true;
+			playerTwoShip.GetComponent<Collider>().enabled = true;
+			
+			foreach(ParticleSystem shipParticles in playerTwoShip.GetComponentsInChildren<ParticleSystem>() )
+			{
+				shipParticles.enableEmission = true;
+			}
+			foreach(SpriteRenderer shipSprite in playerTwoShip.GetComponentsInChildren<SpriteRenderer>() )
+			{
+				shipSprite.enabled = true;
+			}
+			//Put a particle effect on the player ship as it appears ~Adam
+			Instantiate(mPlayerRevealParticle, playerTwoShip.transform.position, Quaternion.identity);
+		}
 	}//END of RevealPlayer()
 }

@@ -9,8 +9,8 @@ public class CoOpShipPanelUI : MonoBehaviour
 
 	ScoreManager mScoreMan;
 	
-	PlayerShipController mP1Ship;
-	PlayerTwoShipController mP2Ship;
+	[SerializeField] private PlayerShipController mP1Ship;
+	[SerializeField] private PlayerTwoShipController mP2Ship;
 
 	[SerializeField] private float mHealthValue = 0f;
 	[SerializeField] private float mOverheatValue = 0f;
@@ -30,6 +30,9 @@ public class CoOpShipPanelUI : MonoBehaviour
 	public GameObject mShipRightClaw;
 	public GameObject mShipLeftGun;
 	public GameObject mShipRightGun;
+
+	//For playing the overheat whistle noise
+	public bool mCanPlaySteamNoise = true;
 
 	// Use this for initialization
 	void Start () 
@@ -177,6 +180,34 @@ public class CoOpShipPanelUI : MonoBehaviour
 
 			//Show this player's individual score ~Adam
 			mScoreText.text = "P2 Score: " + mScoreMan.mP2Score;
+		}
+
+		//Control the overheat whistle noise
+		if(mOverheatValue  < 0.9f && GetComponent<AudioSource>().isPlaying)
+		{
+			mCanPlaySteamNoise = true;
+		}
+		else if (mOverheatValue > 0.9f && mCanPlaySteamNoise)
+		{
+			GetComponent<AudioSource>().Play();
+			mCanPlaySteamNoise = false;
+		}
+
+
+		//Find ships if they're null
+		else if (!mP2UI && mP1Ship == null)
+		{
+			if(FindObjectOfType<PlayerShipController>() != null)
+			{
+				mP1Ship = FindObjectOfType<PlayerShipController>();
+			}
+		}
+		else if (mP2UI && mP2Ship == null)
+		{
+			if(FindObjectOfType<PlayerTwoShipController>() != null)
+			{
+				mP2Ship = FindObjectOfType<PlayerTwoShipController>();
+			}
 		}
 
 		//Set the bar sizes ~Adam
