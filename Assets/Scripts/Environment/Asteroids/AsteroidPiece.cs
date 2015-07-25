@@ -10,8 +10,8 @@ public class AsteroidPiece : MonoBehaviour {
 
 	void Start(){
 
-		scaleSize = Random.Range (7, 23);
-		transform.localScale = new Vector3 (scaleSize, scaleSize, 1f);
+//		scaleSize = Random.Range (6f, 8f);
+//		transform.localScale = new Vector3 (scaleSize, scaleSize, 1f);
 
 		timer -= Time.timeScale;
 

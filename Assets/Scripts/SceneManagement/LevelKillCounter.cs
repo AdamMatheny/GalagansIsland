@@ -10,7 +10,7 @@ public class LevelKillCounter : MonoBehaviour
 
 	bool mLevelComplete = false;
 
-	[SerializeField] private Texture2D mLevelCompleteTex;
+	[SerializeField] private GameObject mLevelCompleteMessage;
 
 	//For spawning new waves after a certain number of enemies have been killed.
 	//Make sure that these two arrays are the same length!
@@ -108,12 +108,12 @@ public class LevelKillCounter : MonoBehaviour
 
 		if(mLevelComplete)
 		{
-#if UNITY_ANDROID
-			GUI.Box(new Rect(Screen.width*0.2f, Screen.height*0.35f, Screen.width*0.60f, Screen.height*0.25f), "", mLevelCompleteStyle);
-#else
-            GUI.Box(new Rect(Screen.width*0.425f, Screen.height*0.4f, Screen.width*0.15f, Screen.height*0.05f), "", mLevelCompleteStyle);
-#endif
-            //GUI.DrawTexture(new Rect(Screen.width*0.4f, Screen.height*0.4f, Screen.width*0.2f, Screen.height*0.2f), mLevelCompleteTex);
+//#if UNITY_ANDROID
+//			GUI.Box(new Rect(Screen.width*0.2f, Screen.height*0.35f, Screen.width*0.60f, Screen.height*0.25f), "", mLevelCompleteStyle);
+//#else
+//            GUI.Box(new Rect(Screen.width*0.425f, Screen.height*0.4f, Screen.width*0.15f, Screen.height*0.05f), "", mLevelCompleteStyle);
+//#endif
+			mLevelCompleteMessage.SetActive(true);
 		}
 	}
 

@@ -160,7 +160,7 @@ public class GetSome : MonoBehaviour
 			if(!Application.isMobilePlatform)
 			{
 				GUI.SetNextControlName("StartCoOp");
-				if(GUI.Button(new Rect(Screen.width *0.3f, Screen.height*0.86f, Screen.width*0.4f, Screen.width*0.054f), "P2 Start",mCoOpStyle))
+				if(GUI.Button(new Rect(Screen.width *0.3f, Screen.height*0.89f, Screen.width*0.4f, Screen.width*0.054f), "",mCoOpStyle))
 				{
 					Destroy (mSuperLaser);
 					FindObjectOfType<CoOpSelector>().mCoOpEnabled = true;
