@@ -31,7 +31,7 @@ public class AsteroidScript : MonoBehaviour {
 //		}
 
 
-		scaleSize = Random.Range (6f, 8f);
+		scaleSize = Random.Range (4f, 8f);
 		transform.localScale = new Vector3 (scaleSize, scaleSize, 1f);
 	
 		rb = GetComponent<Rigidbody2D>();

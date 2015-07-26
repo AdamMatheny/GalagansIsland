@@ -331,36 +331,42 @@ public class PlayerTwoShipController : MonoBehaviour
 			mThreeBulletTimer -= Time.deltaTime;
 		}
 		
+		float horizontal = 0f;
+		float vertical = 0f;
 		
-		float horizontal = Input.GetAxis("HorizontalP2");
-		float vertical = Input.GetAxis("VerticalP2");
-
-
-//		if(mPlayerTwoInputDevice.LeftStick.X != 0)
-//		{
-//			horizontal = mPlayerTwoInputDevice.LeftStick.X;
-//		}
-//		if(mPlayerTwoInputDevice.LeftStick.Y != 0)
-//		{
-//			vertical = mPlayerTwoInputDevice.LeftStick.Y;
-//		}
-		if(InputManager.Devices.Count > 1)
+		//If statement for avoiding getting NaN returns when paused
+		if(!GetComponent<PauseManager>().isPaused && !GetComponent<PauseManager>().isPrePaused)
 		{
-			if(mPlayerTwoInputDevice.DPadDown.IsPressed)
+			horizontal = Input.GetAxis("HorizontalP2");
+			vertical = Input.GetAxis("VerticalP2");
+
+
+	//		if(mPlayerTwoInputDevice.LeftStick.X != 0)
+	//		{
+	//			horizontal = mPlayerTwoInputDevice.LeftStick.X;
+	//		}
+	//		if(mPlayerTwoInputDevice.LeftStick.Y != 0)
+	//		{
+	//			vertical = mPlayerTwoInputDevice.LeftStick.Y;
+	//		}
+			if(InputManager.Devices.Count > 1)
 			{
-				vertical = -1f;
-			}
-			if(mPlayerTwoInputDevice.DPadUp.IsPressed)
-			{
-				vertical = 1f;
-			}
-			if(mPlayerTwoInputDevice.DPadLeft.IsPressed)
-			{
-				horizontal = -1f;
-			}
-			if(mPlayerTwoInputDevice.DPadRight.IsPressed)
-			{
-				horizontal = 1f;
+				if(mPlayerTwoInputDevice.DPadDown.IsPressed)
+				{
+					vertical = -1f;
+				}
+				if(mPlayerTwoInputDevice.DPadUp.IsPressed)
+				{
+					vertical = 1f;
+				}
+				if(mPlayerTwoInputDevice.DPadLeft.IsPressed)
+				{
+					horizontal = -1f;
+				}
+				if(mPlayerTwoInputDevice.DPadRight.IsPressed)
+				{
+					horizontal = 1f;
+				}
 			}
 		}
 		mMainShipAnimator.SetInteger("Direction", Mathf.RoundToInt(horizontal));

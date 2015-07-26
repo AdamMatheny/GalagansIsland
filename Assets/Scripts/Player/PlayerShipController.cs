@@ -332,40 +332,47 @@ public class PlayerShipController : MonoBehaviour
 		
 
 		//Default keyboard/gamepad stick input ~Adam
-		float horizontal = Input.GetAxis("Horizontal");
-		float vertical = Input.GetAxis("Vertical");
+		float horizontal = 0f;
+		float vertical = 0f;
 
-		//Use P2 controls for P1 if in single-player mode ~Adam
-		if(mPlayerTwo == null || (mPlayerTwo != null && !mPlayerTwo.isActiveAndEnabled) )
+		//If statement for avoiding getting NaN returns when paused
+		if(!GetComponent<PauseManager>().isPaused && !GetComponent<PauseManager>().isPrePaused)
 		{
-			if(Input.GetAxis("HorizontalP2") != 0)
+			horizontal = Input.GetAxis("Horizontal");
+			vertical = Input.GetAxis("Vertical");
+		
+
+			//Use P2 controls for P1 if in single-player mode ~Adam
+			if(mPlayerTwo == null || (mPlayerTwo != null && !mPlayerTwo.isActiveAndEnabled) )
 			{
-				horizontal = Input.GetAxis("HorizontalP2");
+				if(Input.GetAxis("HorizontalP2") != 0)
+				{
+					horizontal = Input.GetAxis("HorizontalP2");
+				}
+				if(Input.GetAxis("VerticalP2") != 0)
+				{
+					vertical = Input.GetAxis("VerticalP2");
+				}
 			}
-			if(Input.GetAxis("VerticalP2") != 0)
+
+			//Gamepad D-Pad input ~Adam
+			if(mPlayerOneInputDevice.DPadDown.IsPressed)
 			{
-				vertical = Input.GetAxis("VerticalP2");
+				vertical = -1f;
+			}
+			if(mPlayerOneInputDevice.DPadUp.IsPressed)
+			{
+				vertical = 1f;
+			}
+			if(mPlayerOneInputDevice.DPadLeft.IsPressed)
+			{
+				horizontal = -1f;
+			}
+			if(mPlayerOneInputDevice.DPadRight.IsPressed)
+			{
+				horizontal = 1f;
 			}
 		}
-
-		//Gamepad D-Pad input ~Adam
-		if(mPlayerOneInputDevice.DPadDown.IsPressed)
-		{
-			vertical = -1f;
-		}
-		if(mPlayerOneInputDevice.DPadUp.IsPressed)
-		{
-			vertical = 1f;
-		}
-		if(mPlayerOneInputDevice.DPadLeft.IsPressed)
-		{
-			horizontal = -1f;
-		}
-		if(mPlayerOneInputDevice.DPadRight.IsPressed)
-		{
-			horizontal = 1f;
-		}
-
 		mMainShipAnimator.SetInteger("Direction", Mathf.RoundToInt(horizontal));
 		mSecondShipAnimator.SetInteger("Direction", Mathf.RoundToInt(horizontal));
 

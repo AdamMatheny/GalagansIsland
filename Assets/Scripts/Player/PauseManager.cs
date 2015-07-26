@@ -25,8 +25,8 @@ public class PauseManager : MonoBehaviour
 	
 	public float mUIFocusTimer = 0f;
 
-    private bool isPaused = false;
-    private bool isPrePaused = false;
+    [HideInInspector] public bool isPaused = false;
+	[HideInInspector] public bool isPrePaused = false;
 
     
 
