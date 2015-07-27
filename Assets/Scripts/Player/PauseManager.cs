@@ -13,8 +13,8 @@ public class PauseManager : MonoBehaviour
 	[SerializeField] private Texture2D mContinueTexHighlight;
 	[SerializeField] private Texture2D mReturnTex;
 	[SerializeField] private Texture2D mReturnTexHighlight;
-	[SerializeField] private Texture2D mQuitTex;
-	[SerializeField] private Texture2D mQuitTexHighlight;
+	[SerializeField] private Texture2D mOptionsTex;
+	[SerializeField] private Texture2D mOptionsTexHighlight;
 
     [SerializeField] private UnityEngine.UI.Image PrePauseVigniette;
     [SerializeField] private UnityEngine.UI.Button PauseButton;
@@ -29,7 +29,8 @@ public class PauseManager : MonoBehaviour
 	[HideInInspector] public bool isPrePaused = false;
 
     
-
+	//For opening/closing the volume control menu ~Adam
+	VolumeControlSliders mVolumeMenu;
 
 	// Use this for initialization
 	void Start () 
@@ -37,7 +38,8 @@ public class PauseManager : MonoBehaviour
 		mPauseMenuButtonNames.Add("Pause");
 		mPauseMenuButtonNames.Add("Continue");
 		mPauseMenuButtonNames.Add("ReturnToMenu");
-		mPauseMenuButtonNames.Add("QuitGame");
+		mPauseMenuButtonNames.Add("Options");
+		mVolumeMenu = FindObjectOfType<VolumeControlSliders>();
 
 	}
 	
@@ -53,6 +55,10 @@ public class PauseManager : MonoBehaviour
 //			Debug.Log("Up button pressed");
 //		}
 
+		if(mVolumeMenu == null)
+		{
+			mVolumeMenu = FindObjectOfType<VolumeControlSliders>();
+		}
 
 		if(mUIFocusTimer > 0f)
 		{
@@ -64,7 +70,7 @@ public class PauseManager : MonoBehaviour
 
 			//Cursor.visible = false;
 		} 
-		else if(Time.timeScale == 0)
+		else if(Time.timeScale == 0 && (mVolumeMenu == null || !mVolumeMenu.mMenuOpen) )
 		{
 
 			//if(Input.GetButtonDown("Vertical"))
@@ -146,7 +152,10 @@ public class PauseManager : MonoBehaviour
 					Application.LoadLevel(0);
 					break;
 				case 3:
-					Application.Quit();
+					if(mVolumeMenu!=null && mUIFocusTimer <=0f)
+					{
+						mVolumeMenu.mMenuOpen = true;
+					}
 					break;
 				default:
 					break;
@@ -156,7 +165,7 @@ public class PauseManager : MonoBehaviour
 		}
 
 		//Press P to Pause/Unpause the game
-		if (Input.GetButtonDown ("PauseButton"))// || InputManager.ActiveDevice.MenuWasPressed) 
+		if (Input.GetButtonDown ("PauseButton") && (mVolumeMenu == null || !mVolumeMenu.mMenuOpen))// || InputManager.ActiveDevice.MenuWasPressed) 
 		{
 			
 			if(Time.timeScale != 1)
@@ -198,45 +207,46 @@ public class PauseManager : MonoBehaviour
 			if (Time.timeScale == 0)
 			{
 				GUI.Box(new Rect(0,0, Screen.width,Screen.height),"");
-
-				mPauseMenuStyle.normal.background = mContinueTex;
-				mPauseMenuStyle.hover.background = mContinueTexHighlight;
-				mPauseMenuStyle.active.background = mContinueTexHighlight;
-				GUI.SetNextControlName("Continue");
-				if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.21f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
+				if(mVolumeMenu == null || !mVolumeMenu.mMenuOpen)
 				{
-					UnPause();
-				}
-				mPauseMenuStyle.normal.background = mReturnTex;
-				mPauseMenuStyle.hover.background = mReturnTexHighlight;
-				mPauseMenuStyle.active.background = mReturnTexHighlight;
-				GUI.SetNextControlName("ReturnToMenu");
-				if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.41f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
-				{
-					Time.timeScale = 1;
-					if(FindObjectOfType<PlayerTwoShipController>().gameObject != null)
+					mPauseMenuStyle.normal.background = mContinueTex;
+					mPauseMenuStyle.hover.background = mContinueTexHighlight;
+					mPauseMenuStyle.active.background = mContinueTexHighlight;
+					GUI.SetNextControlName("Continue");
+					if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.21f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
 					{
-						Destroy(FindObjectOfType<PlayerTwoShipController>().gameObject);
+						UnPause();
 					}
-					Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
-					Destroy(FindObjectOfType<ScoreManager>().gameObject);
-					Destroy(FindObjectOfType<PlayerShipController>().gameObject);
-					Application.LoadLevel(0);
+					mPauseMenuStyle.normal.background = mReturnTex;
+					mPauseMenuStyle.hover.background = mReturnTexHighlight;
+					mPauseMenuStyle.active.background = mReturnTexHighlight;
+					GUI.SetNextControlName("ReturnToMenu");
+					if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.41f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
+					{
+						Time.timeScale = 1;
+						if(FindObjectOfType<PlayerTwoShipController>().gameObject != null)
+						{
+							Destroy(FindObjectOfType<PlayerTwoShipController>().gameObject);
+						}
+						Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
+						Destroy(FindObjectOfType<ScoreManager>().gameObject);
+						Destroy(FindObjectOfType<PlayerShipController>().gameObject);
+						Application.LoadLevel(0);
+					}
+					mPauseMenuStyle.normal.background = mOptionsTex;
+					mPauseMenuStyle.hover.background = mOptionsTexHighlight;
+					mPauseMenuStyle.active.background = mOptionsTexHighlight;
+					GUI.SetNextControlName("Options");
+					if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.61f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
+					{
+						Application.Quit();
+					}
+	//				GUI.SetNextControlName("Pause");
+	//				if (GUI.Button (new Rect (Screen.width * .81f, Screen.height * 0.890f, Screen.width * .09f, Screen.height * .1f), "", mPauseButtonStyle)) 
+	//				{
+	//					UnPause();
+	//				}
 				}
-				mPauseMenuStyle.normal.background = mQuitTex;
-				mPauseMenuStyle.hover.background = mQuitTexHighlight;
-				mPauseMenuStyle.active.background = mQuitTexHighlight;
-				GUI.SetNextControlName("QuitGame");
-				if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.61f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
-				{
-					Application.Quit();
-				}
-//				GUI.SetNextControlName("Pause");
-//				if (GUI.Button (new Rect (Screen.width * .81f, Screen.height * 0.890f, Screen.width * .09f, Screen.height * .1f), "", mPauseButtonStyle)) 
-//				{
-//					UnPause();
-//				}
-
 			}
 	//		else
 	//		{
@@ -261,37 +271,38 @@ public class PauseManager : MonoBehaviour
 		//Change layout slightly for mobile portrait view ~Adam
 		else
 		{
-            if (Time.timeScale == 0)
+			if (Time.timeScale == 0)
             {
 
                 GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
-
-                mPauseMenuStyle.normal.background = mContinueTex;
-                mPauseMenuStyle.hover.background = mContinueTexHighlight;
-                mPauseMenuStyle.active.background = mContinueTexHighlight;
-                if (GUI.Button(new Rect(Screen.width * 0.2f, Screen.height * 0.21f, Screen.width * 0.6f, Screen.height * 0.14f), "", mPauseMenuStyle))
-                {
-                    UnPause();
-                }
-                mPauseMenuStyle.normal.background = mReturnTex;
-                mPauseMenuStyle.hover.background = mReturnTexHighlight;
-                mPauseMenuStyle.active.background = mReturnTexHighlight;
-                if (GUI.Button(new Rect(Screen.width * 0.2f, Screen.height * 0.41f, Screen.width * 0.6f, Screen.height * 0.14f), "", mPauseMenuStyle))
-                {
-                    Time.timeScale = 1;
-                    Destroy(FindObjectOfType<PlayerShipController>().gameObject);
-                    Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
-                    Destroy(FindObjectOfType<ScoreManager>().gameObject);
-                    Application.LoadLevel(0);
-                }
-                mPauseMenuStyle.normal.background = mQuitTex;
-                mPauseMenuStyle.hover.background = mQuitTexHighlight;
-                mPauseMenuStyle.active.background = mQuitTexHighlight;
-                if (GUI.Button(new Rect(Screen.width * 0.2f, Screen.height * 0.61f, Screen.width * 0.6f, Screen.height * 0.14f), "", mPauseMenuStyle))
-                {
-                    Application.Quit();
-                }
-
+				if(mVolumeMenu == null || !mVolumeMenu.mMenuOpen)
+				{
+	                mPauseMenuStyle.normal.background = mContinueTex;
+	                mPauseMenuStyle.hover.background = mContinueTexHighlight;
+	                mPauseMenuStyle.active.background = mContinueTexHighlight;
+	                if (GUI.Button(new Rect(Screen.width * 0.2f, Screen.height * 0.21f, Screen.width * 0.6f, Screen.height * 0.14f), "", mPauseMenuStyle))
+	                {
+	                    UnPause();
+	                }
+	                mPauseMenuStyle.normal.background = mReturnTex;
+	                mPauseMenuStyle.hover.background = mReturnTexHighlight;
+	                mPauseMenuStyle.active.background = mReturnTexHighlight;
+	                if (GUI.Button(new Rect(Screen.width * 0.2f, Screen.height * 0.41f, Screen.width * 0.6f, Screen.height * 0.14f), "", mPauseMenuStyle))
+	                {
+	                    Time.timeScale = 1;
+	                    Destroy(FindObjectOfType<PlayerShipController>().gameObject);
+	                    Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
+	                    Destroy(FindObjectOfType<ScoreManager>().gameObject);
+	                    Application.LoadLevel(0);
+	                }
+	                mPauseMenuStyle.normal.background = mOptionsTex;
+	                mPauseMenuStyle.hover.background = mOptionsTexHighlight;
+	                mPauseMenuStyle.active.background = mOptionsTexHighlight;
+	                if (GUI.Button(new Rect(Screen.width * 0.2f, Screen.height * 0.61f, Screen.width * 0.6f, Screen.height * 0.14f), "", mPauseMenuStyle))
+	                {
+	                    Application.Quit();
+	                }
+				}
             }
 		}
 	}//END of OnGUI
@@ -321,6 +332,10 @@ public class PauseManager : MonoBehaviour
 	{
         isPaused = false;
         isPrePaused = false;
+		if(mVolumeMenu!=null)
+		{
+			mVolumeMenu.CloseVolumeMenu();
+		}
         StopCoroutine("SlowTime");
         StopCoroutine("ShowVigniette");
         StartCoroutine("SpeedUpTime");

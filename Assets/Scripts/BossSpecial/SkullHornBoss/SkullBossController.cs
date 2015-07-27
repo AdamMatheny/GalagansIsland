@@ -82,7 +82,7 @@ public class SkullBossController : MonoBehaviour
 			mScoreManager = FindObjectOfType<ScoreManager>() as ScoreManager;
 		}
 		
-		//Do behavior to end the game `Adam
+		//Do behavior to end the game ~Adam
 		if(mGameOver)
 		{
 			mEyeBeamPartFinal.GetComponent<ParticleSystem>().Stop();
@@ -95,9 +95,17 @@ public class SkullBossController : MonoBehaviour
 			mEyeball.GetComponent<SpriteRenderer>().enabled = false;
 			
 			Instantiate(mDeathExplosion, transform.position+(new Vector3(Random.Range(-5f,5f),Random.Range(-5f,5f),-0.5f)), Quaternion.identity);
-			
+
+			//Fade out the screen ~Adam
 			mScreenFader.GetComponent<Renderer>().enabled = true;
 			mScreenFader.GetComponent<Renderer>().material.color = Color.Lerp(mScreenFader.GetComponent<Renderer>().material.color, new Color(0,0,0,1f),0.01f);
+
+			//Fade out the audio ~Adam
+			if(FindObjectOfType<BGMVolumeController>() != null)
+			{
+				FindObjectOfType<BGMVolumeController>().GetComponent<AudioSource>().ignoreListenerVolume = false;
+				FindObjectOfType<BGMVolumeController>().enabled = false;
+			}
 			AudioListener.volume -=  0.001f;
 			if(mEndGameTimer >= 2.8f)
 			{

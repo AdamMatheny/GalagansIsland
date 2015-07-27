@@ -23,6 +23,7 @@ public class GetSome : MonoBehaviour
 	[SerializeField] private GUIStyle mGetSomeStyle;
 	[SerializeField] private GUIStyle mButtonStyle;
 	[SerializeField] private GUIStyle mCoOpStyle;
+	[SerializeField] private GUIStyle mShowVolumeMenuStyle;
 	//For having a delay to destroy enemies when we start the game ~Adam
 	float mGameStartTimer = 6f;
 	bool mStartingGame = false;
@@ -35,6 +36,8 @@ public class GetSome : MonoBehaviour
 
 	public MainMenuGUIFocusController mGUIFocusControl;
 
+	//For opening/closing the volume control menu ~Adam
+	VolumeControlSliders mVolumeMenu;
 	//public float timer = .3f;
 
 	void Start()
@@ -43,7 +46,7 @@ public class GetSome : MonoBehaviour
 //		gameObject.GetComponent<SpriteRenderer> ().sprite = mGetSomeSprite1;
 //		transform.position = new Vector3(-0.3f, -34f, -16.5f);
 		AudioListener.volume =  1f;
-
+		mVolumeMenu = FindObjectOfType<VolumeControlSliders>();
 	}
 
 	void Update()
@@ -77,7 +80,7 @@ public class GetSome : MonoBehaviour
 //			//StartGame();
 //		}
 
-		if(Input.GetButtonDown("PauseButton"))
+		if(Input.GetButtonDown("PauseButton")&& !mVolumeMenu.mMenuOpen)
 		{
 			if(mGUIFocusControl.mMainMenuButtonFocus == 6 || InputManager.ActiveDevice.Meta == "XInput Controller #1")
 			{
@@ -166,6 +169,25 @@ public class GetSome : MonoBehaviour
 					FindObjectOfType<CoOpSelector>().mCoOpEnabled = true;
 					mCoOpLaser.SetActive(true);
 					//StartGame();
+				}			
+			}
+
+			//Volume Menu button ~Adam
+			//mButtonStyle.fontSize = Mathf.RoundToInt(Screen.width*0.01f);
+			if(!Application.isMobilePlatform)
+			{
+				GUI.SetNextControlName("Options");
+				if (GUI.Button (new Rect (Screen.width * .85f, Screen.height * 0.760f, Screen.width * .1f, Screen.height * .1f), "Options", mShowVolumeMenuStyle)) 
+				{
+					mVolumeMenu.mMenuOpen = true;
+				}
+			}
+			else
+			{
+				GUI.SetNextControlName("Options");
+				if (GUI.Button (new Rect (Screen.width * .59f, Screen.height * 0.750f, Screen.width * .41f, Screen.height * .115f), "Options", mShowVolumeMenuStyle)) 
+				{
+					mVolumeMenu.mMenuOpen = true;
 				}			
 			}
 		}
