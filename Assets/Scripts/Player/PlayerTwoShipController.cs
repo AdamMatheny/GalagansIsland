@@ -335,7 +335,7 @@ public class PlayerTwoShipController : MonoBehaviour
 		float vertical = 0f;
 		
 		//If statement for avoiding getting NaN returns when paused
-		if(!GetComponent<PauseManager>().isPaused && !GetComponent<PauseManager>().isPrePaused)
+		if( FindObjectOfType<PauseManager>() == null || (FindObjectOfType<PauseManager>() != null && !FindObjectOfType<PauseManager>().isPaused && !FindObjectOfType<PauseManager>().isPrePaused) )
 		{
 			horizontal = Input.GetAxis("HorizontalP2");
 			vertical = Input.GetAxis("VerticalP2");
