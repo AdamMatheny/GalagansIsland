@@ -337,9 +337,17 @@ public class PlayerTwoShipController : MonoBehaviour
 		//If statement for avoiding getting NaN returns when paused
 		if( FindObjectOfType<PauseManager>() == null || (FindObjectOfType<PauseManager>() != null && !FindObjectOfType<PauseManager>().isPaused && !FindObjectOfType<PauseManager>().isPrePaused) )
 		{
-			horizontal = Input.GetAxis("HorizontalP2");
-			vertical = Input.GetAxis("VerticalP2");
+			//horizontal = Input.GetAxis("HorizontalP2");
+			//vertical = Input.GetAxis("VerticalP2");
 
+			if(Input.GetKey(KeyCode.UpArrow))
+				vertical = 1;
+			if(Input.GetKey(KeyCode.LeftArrow))
+				horizontal = -1;
+			if(Input.GetKey(KeyCode.DownArrow))
+				vertical = -1;
+			if(Input.GetKey(KeyCode.RightArrow))
+				horizontal = 1;
 
 			if(mPlayerTwoInputDevice.LeftStick.X != 0)
 			{

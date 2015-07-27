@@ -349,7 +349,25 @@ public class PlayerShipController : MonoBehaviour
 				
 				vertical = mPlayerOneInputDevice.LeftStick.Y;
 			}
-		
+
+			if(Input.GetKey(KeyCode.W))
+				vertical = 1;
+			if(Input.GetKey(KeyCode.A))
+				horizontal = -1;
+			if(Input.GetKey(KeyCode.S))
+				vertical = -1;
+			if(Input.GetKey(KeyCode.D))
+				horizontal = 1;
+
+			/*if(Input.GetKey(KeyCode.UpArrow))
+				vertical = 1;
+			if(Input.GetKey(KeyCode.LeftArrow))
+				horizontal = -1;
+			if(Input.GetKey(KeyCode.DownArrow))
+				vertical = -1;
+			if(Input.GetKey(KeyCode.RightArrow))
+				horizontal = 1;*/
+
 			//Use P2 controls for P1 if in single-player mode ~Adam
 			/*if(mPlayerTwo == null || (mPlayerTwo != null && !mPlayerTwo.isActiveAndEnabled) )
 			{
