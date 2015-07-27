@@ -102,6 +102,8 @@ public class ScoreManager : MonoBehaviour
 	//Pesist between level loads/reloads ~adam
 	void Awake()
 	{
+
+
 		DontDestroyOnLoad (transform.gameObject);
 		//Figure out how old this ScoreManager is ~Adam
 		if(mOriginalLevel == 0)
@@ -119,9 +121,12 @@ public class ScoreManager : MonoBehaviour
 			}
 		}
 		mPlayerAvatar = GameObject.FindGameObjectWithTag("Player").gameObject;
-		if(mPlayerAvatar.GetComponent<PlayerShipController>().mPlayerTwo.gameObject != null && mPlayerAvatar.GetComponent<PlayerShipController>().mPlayerTwo.gameObject.activeInHierarchy)
-		{
-			mPlayer2Avatar = mPlayerAvatar.GetComponent<PlayerShipController>().mPlayerTwo.gameObject;
+
+		if (mPlayerAvatar != null) {
+
+			if (mPlayerAvatar.GetComponent<PlayerShipController> ().mPlayerTwo.gameObject != null && mPlayerAvatar.GetComponent<PlayerShipController> ().mPlayerTwo.gameObject.activeInHierarchy) {
+				mPlayer2Avatar = mPlayerAvatar.GetComponent<PlayerShipController> ().mPlayerTwo.gameObject;
+			}
 		}
 	}
 
@@ -368,6 +373,7 @@ public class ScoreManager : MonoBehaviour
 			if(mLivesRemaining <= 0)
 			{
 				Destroy(mPlayerAvatar.gameObject);
+				//mPlayerAvatar.gameObject.SetActive(false);
 				mPlayerSafeTime = 3f;
 
 			}
@@ -432,6 +438,7 @@ public class ScoreManager : MonoBehaviour
 			if(mLivesRemaining <= 0)
 			{
 				Destroy(mPlayer2Avatar.gameObject);
+				//mPlayer2Avatar.gameObject.SetActive(false);
 				mPlayerSafeTime = 3f;
 				
 			}

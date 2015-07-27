@@ -520,15 +520,24 @@ public class EnemyShipAI : MonoBehaviour
 		#region From when we were doing 2 player mode ~Adam
 		//Find the direction to the player (or the clone if it's closer) ~Adam
 		Vector3 toPlayer;
-		if(mPlayerClone != null && Vector3.Distance(transform.position,mPlayerClone.position) <= Vector3.Distance(transform.position,mPlayer.position) )
-		{
+
+		if(mPlayer != null){
+
+			if(mPlayerClone != null && Vector3.Distance(transform.position,mPlayerClone.position) <= Vector3.Distance(transform.position,mPlayer.position) )
+			{
+				toPlayer = mPlayerClone.position - transform.position;
+			}
+			else
+			{
+				toPlayer = mPlayer.position - transform.position;
+			}
+		}else{
+
 			toPlayer = mPlayerClone.position - transform.position;
 		}
-		else
-		{
-			toPlayer = mPlayer.position - transform.position;
-		}
-		toPlayer.Normalize();
+
+			toPlayer.Normalize();
+		
 		#endregion
 
 		#region Basic enemy movement was already written by Jonathan when I joined the project.  Before I joined, enemies would move toward the player for a few seconds, then move back to the swarm without actually affecting the player.
@@ -540,6 +549,7 @@ public class EnemyShipAI : MonoBehaviour
 		vel += toPlayer;
 		vel.Normalize();
 		vel *= mSpeed;
+
 		
 		transform.gameObject.GetComponent<Rigidbody>().velocity = vel;
 		#endregion

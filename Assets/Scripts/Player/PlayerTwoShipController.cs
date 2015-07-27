@@ -341,16 +341,17 @@ public class PlayerTwoShipController : MonoBehaviour
 			vertical = Input.GetAxis("VerticalP2");
 
 
-	//		if(mPlayerTwoInputDevice.LeftStick.X != 0)
-	//		{
-	//			horizontal = mPlayerTwoInputDevice.LeftStick.X;
-	//		}
-	//		if(mPlayerTwoInputDevice.LeftStick.Y != 0)
-	//		{
-	//			vertical = mPlayerTwoInputDevice.LeftStick.Y;
-	//		}
+			if(mPlayerTwoInputDevice.LeftStick.X != 0)
+			{
+				horizontal = mPlayerTwoInputDevice.LeftStick.X;
+			}
+			if(mPlayerTwoInputDevice.LeftStick.Y != 0)
+			{
+				vertical = mPlayerTwoInputDevice.LeftStick.Y;
+			}
 			if(InputManager.Devices.Count > 1)
 			{
+
 				if(mPlayerTwoInputDevice.DPadDown.IsPressed)
 				{
 					vertical = -1f;

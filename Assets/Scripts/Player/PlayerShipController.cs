@@ -338,12 +338,20 @@ public class PlayerShipController : MonoBehaviour
 		//If statement for avoiding getting NaN returns when paused
 		if(!GetComponent<PauseManager>().isPaused && !GetComponent<PauseManager>().isPrePaused)
 		{
-			horizontal = Input.GetAxis("Horizontal");
-			vertical = Input.GetAxis("Vertical");
-		
+			//horizontal = Input.GetAxis("Horizontal");
+			//vertical = Input.GetAxis("Vertical");
 
+			if(mPlayerOneInputDevice.LeftStick.X != 0){
+
+				horizontal = mPlayerOneInputDevice.LeftStick.X;
+			}
+			if(mPlayerOneInputDevice.LeftStick.Y != 0){
+				
+				vertical = mPlayerOneInputDevice.LeftStick.Y;
+			}
+		
 			//Use P2 controls for P1 if in single-player mode ~Adam
-			if(mPlayerTwo == null || (mPlayerTwo != null && !mPlayerTwo.isActiveAndEnabled) )
+			/*if(mPlayerTwo == null || (mPlayerTwo != null && !mPlayerTwo.isActiveAndEnabled) )
 			{
 				if(Input.GetAxis("HorizontalP2") != 0)
 				{
@@ -353,7 +361,7 @@ public class PlayerShipController : MonoBehaviour
 				{
 					vertical = Input.GetAxis("VerticalP2");
 				}
-			}
+			}*/			//Decivating this because player one moved when player two moved. ~ Jonathan
 
 			//Gamepad D-Pad input ~Adam
 			if(mPlayerOneInputDevice.DPadDown.IsPressed)

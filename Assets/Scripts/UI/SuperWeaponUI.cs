@@ -14,14 +14,14 @@ public class SuperWeaponUI : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		//Find either the player 1 or the player 2 ship ~Adam
-		if(!mCoOpUI)
-		{
-			mShip = FindObjectOfType<PlayerShipController>().gameObject;
-		}
-		else
-		{
-			mShip = FindObjectOfType<PlayerTwoShipController>().gameObject;
+		if (mShip != null) {
+
+			//Find either the player 1 or the player 2 ship ~Adam
+			if (!mCoOpUI) {
+				mShip = FindObjectOfType<PlayerShipController> ().gameObject;
+			} else {
+				mShip = FindObjectOfType<PlayerTwoShipController> ().gameObject;
+			}
 		}
 	}//END of Start()
 	
