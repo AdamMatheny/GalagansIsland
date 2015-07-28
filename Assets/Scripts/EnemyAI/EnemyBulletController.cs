@@ -12,7 +12,10 @@ public class EnemyBulletController : MonoBehaviour
 	public bool mShootable;
 	public bool mAimAtPlayer = false;
 	public bool mFixedFireDir = false;
+	public bool mMoveTowardsPlayer = false;
 	public Vector3 mFireDir;
+
+	public Vector2 bulletForce;
 
 	public GameObject bulletExplosion;
 
@@ -26,36 +29,53 @@ public class EnemyBulletController : MonoBehaviour
 			mPlayerClone = FindObjectOfType<PlayerTwoShipController>().gameObject;
 		}
 		#endregion
-		Vector2 bulletForce;
+		//Vector2 bulletForce;
 
 		//Used for firing in a particular pattern (i.e. rotational pattern on boss horns)~Adam
-		if(mFixedFireDir)
-		{
-			bulletForce = mFireDir*mBulletSpeed;
+		if (mFixedFireDir) {
+
+
+			bulletForce = mFireDir * mBulletSpeed;
 
 			//transform.rotation = Quaternion.Euler(new Vector3(90f,0f,0f) + transform.rotation.eulerAngles);
 		}
 		//Used for aiming at the player ~Adam
-		else if (mAimAtPlayer)
-		{
+		else if (mAimAtPlayer) {
 			Vector3 directionToPlayer = Vector3.down;
 			#region twin-stick clone stuff
 			//Fire at the clone ship if it is both present and closer -Adam
-			if(mPlayerClone != null && Vector3.Distance(transform.position,mPlayerClone.transform.position) <= Vector3.Distance(transform.position,mPlayer.transform.position) )
-			{
-				directionToPlayer = mPlayerClone.transform.position-transform.position;
-				bulletForce = Vector3.Normalize(directionToPlayer)*mBulletSpeed;
-				transform.LookAt(mPlayerClone.transform.position);
-				transform.rotation = Quaternion.Euler(new Vector3(90f,0f,0f) + transform.rotation.eulerAngles);
+			if (mPlayerClone != null && Vector3.Distance (transform.position, mPlayerClone.transform.position) <= Vector3.Distance (transform.position, mPlayer.transform.position)) {
+				directionToPlayer = mPlayerClone.transform.position - transform.position;
+				bulletForce = Vector3.Normalize (directionToPlayer) * mBulletSpeed;
+				transform.LookAt (mPlayerClone.transform.position);
+				transform.rotation = Quaternion.Euler (new Vector3 (90f, 0f, 0f) + transform.rotation.eulerAngles);
 			}
 			#endregion
-			else
-			{
+			else {
 				//fire at the player
-				directionToPlayer = mPlayer.transform.position-transform.position;
-				bulletForce = Vector3.Normalize(directionToPlayer)*mBulletSpeed;
-				transform.LookAt(mPlayer.transform.position);
-				transform.rotation = Quaternion.Euler(new Vector3(90f,0f,0f) + transform.rotation.eulerAngles);
+				directionToPlayer = mPlayer.transform.position - transform.position;
+				bulletForce = Vector3.Normalize (directionToPlayer) * mBulletSpeed;
+				transform.LookAt (mPlayer.transform.position);
+				transform.rotation = Quaternion.Euler (new Vector3 (90f, 0f, 0f) + transform.rotation.eulerAngles);
+			}
+		} else if (mMoveTowardsPlayer) {
+
+			Vector3 directionToPlayer = Vector3.down;
+			#region twin-stick clone stuff
+			//Fire at the clone ship if it is both present and closer -Adam
+			if (mPlayerClone != null && Vector3.Distance (transform.position, mPlayerClone.transform.position) <= Vector3.Distance (transform.position, mPlayer.transform.position)) {
+				directionToPlayer = mPlayerClone.transform.position - transform.position;
+				bulletForce = Vector3.Normalize (directionToPlayer) * mBulletSpeed;
+				transform.LookAt (mPlayerClone.transform.position);
+				transform.rotation = Quaternion.Euler (new Vector3 (90f, 0f, 0f) + transform.rotation.eulerAngles);
+			}
+			#endregion
+			else {
+				//fire at the player
+				directionToPlayer = mPlayer.transform.position - transform.position;
+				bulletForce = Vector3.Normalize (directionToPlayer) * mBulletSpeed;
+				transform.LookAt (mPlayerClone.transform.position);
+				transform.rotation = Quaternion.Euler (new Vector3 (90f, 0f, 0f) + transform.rotation.eulerAngles);
 			}
 		}
 		//Just fire up and down ~Adam
@@ -89,14 +109,32 @@ public class EnemyBulletController : MonoBehaviour
 			}
 		}
 
-
-		GetComponent<Rigidbody>().velocity = bulletForce;
+	
+		GetComponent<Rigidbody> ().velocity = bulletForce;
 		mSelfDestructTimer = Time.time + 5.0f;
+
+
 		
 	}
 	
 	void Update()
 	{
+
+		if (mMoveTowardsPlayer) {
+
+			Vector3 directionToPlayer = Vector3.down;
+
+			directionToPlayer = mPlayer.transform.position - transform.position;
+			bulletForce = Vector3.Normalize (directionToPlayer) * mBulletSpeed;
+			transform.rotation = Quaternion.Euler (new Vector3 (90f, 0f, 0f) + transform.rotation.eulerAngles);
+			GetComponent<Rigidbody> ().velocity = bulletForce;
+
+			transform.LookAt (mPlayer.transform.position);
+
+			transform.rotation = new Quaternion (0, 0, transform.rotation.z, 0);
+
+		}
+
 		//Self-destruct after a certain amount of time
 		if(mSelfDestructTimer>0.0f)
 		{
@@ -136,6 +174,10 @@ public class EnemyBulletController : MonoBehaviour
 
 	void OnTriggerEnter (Collider other)
 	{
+
+		/*if (other.tag == "Enemy" && mMoveTowardsPlayer) 
+			other.GetComponent<EnemyShipAI> ().EnemyShipDie ();*/ //Enemy ship doesn't have OnTrigger
+
 		if(other.tag == "Player Bullet")
 		{
 			//Debug.Log("Hit a player bullet!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
@@ -154,6 +196,12 @@ public class EnemyBulletController : MonoBehaviour
 		}
 
 	}//END of OnTriggerEnter()
+
+	void OnCollisionEnter (Collision other){
+
+		if (other.gameObject.tag == "Enemy" && mMoveTowardsPlayer && (other.gameObject.GetComponent<EnemyShipAI> ().mGrabber == false)) 
+			other.gameObject.GetComponent<EnemyShipAI> ().EnemyShipDie ();
+	}
 
 
 

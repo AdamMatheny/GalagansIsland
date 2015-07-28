@@ -65,10 +65,10 @@ public class EnemyShipAI : MonoBehaviour
 	[SerializeField] private bool mRetreatClockwise = true;
 
 	//Whether or not this is a unit that tries to grab the player ~Adam
-	[SerializeField] private bool mGrabber = false;
+	public bool mGrabber = false; //Made public to be used by CoOpShooter
 	//Whether or not this is a unit that tries to shoot the player ~Adam
-	[SerializeField] private bool mShooter = false;
-	[SerializeField] private bool mAutoShoot = false;
+	public bool mShooter = false; //Made public so this could be checked by CoOpShooter ~ Jonathan
+	public bool mAutoShoot = false;
 	[SerializeField] private bool mRandomShootTimer = false;
 	[SerializeField] private bool mLoopShooter = false; //For only shooting while doing a loop ~Adam
 	[SerializeField] private bool mRetreating = false; //For only shooting while doing a loop ~Adam
@@ -265,6 +265,7 @@ public class EnemyShipAI : MonoBehaviour
 				if(mAnimator != null)
 				{
 					mAnimator.Play("Shoot");
+					if(mGrabber){ShootEnemyBullet();}
 				}
 				else
 				{
@@ -287,6 +288,7 @@ public class EnemyShipAI : MonoBehaviour
 				if(mAnimator != null)
 				{
 					mAnimator.Play("Shoot");
+					if(mGrabber){ShootEnemyBullet();}
 				}
 				else
 				{
