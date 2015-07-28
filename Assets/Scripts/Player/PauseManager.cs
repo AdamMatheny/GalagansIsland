@@ -38,7 +38,7 @@ public class PauseManager : MonoBehaviour
 		mPauseMenuButtonNames.Add("Pause");
 		mPauseMenuButtonNames.Add("Continue");
 		mPauseMenuButtonNames.Add("ReturnToMenu");
-		mPauseMenuButtonNames.Add("Options");
+		mPauseMenuButtonNames.Add("Quit"); //Changed to quit because, well, that's what it does. ~ Jonathan
 		mVolumeMenu = FindObjectOfType<VolumeControlSliders>();
 
 	}
@@ -224,10 +224,10 @@ public class PauseManager : MonoBehaviour
 					if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.41f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
 					{
 						Time.timeScale = 1;
-						if(FindObjectOfType<PlayerTwoShipController>().gameObject != null)
+						/*if(FindObjectOfType<PlayerTwoShipController>().gameObject != null)
 						{
 							Destroy(FindObjectOfType<PlayerTwoShipController>().gameObject);
-						}
+						}*/ //Causing an error ~ Jonathan
 						Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
 						Destroy(FindObjectOfType<ScoreManager>().gameObject);
 						Destroy(FindObjectOfType<PlayerShipController>().gameObject);

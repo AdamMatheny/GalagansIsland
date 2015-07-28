@@ -285,6 +285,7 @@ public class ScoreManager : MonoBehaviour
 			break;
 		}
 		mHighScoreText.text = "High Score:\n" + PlayerPrefs.GetInt("highscore", 0);
+		//mHighScoreText.text = "Return to Wayward Pines!";
 
 		StoreHighscore (mScore);
 

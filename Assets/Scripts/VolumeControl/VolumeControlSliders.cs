@@ -68,10 +68,11 @@ public class VolumeControlSliders : MonoBehaviour
 				{
 					Debug.Log("volume menu is ready");
 
-					if (Input.GetButtonDown("Thrusters") || Input.GetButtonDown("FireGun") || (InputManager.ActiveDevice.Action1.IsPressed))
+					if (Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Thrusters") || Input.GetButtonDown("FireGun") || (InputManager.ActiveDevice.Action1.IsPressed))
 					{
 						if(mMenuFocus == 2)
 						{
+							Debug.Log("Call close function");
 							CloseVolumeMenu();
 						}
 					}
@@ -221,6 +222,7 @@ public class VolumeControlSliders : MonoBehaviour
 
 	public void CloseVolumeMenu()
 	{
+		Debug.Log ("Actually called function");
 		mUIFocusTimer+=0.2f;
 		mMenuFocus = 0;
 

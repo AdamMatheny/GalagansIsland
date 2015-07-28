@@ -146,7 +146,7 @@ public class GetSome : MonoBehaviour
 			if(!Application.isMobilePlatform)
 			{
 				GUI.SetNextControlName("QuitGame");
-				if (GUI.Button (new Rect (Screen.width * .85f, Screen.height * 0.890f, Screen.width * .1f, Screen.height * .1f), "", mButtonStyle)) 
+				if (GUI.Button (new Rect (Screen.width * .87f, Screen.height * 0.890f, Screen.width * .1f, Screen.height * .1f), "", mButtonStyle)) 
 				{
 					Application.Quit();
 				}
@@ -154,7 +154,7 @@ public class GetSome : MonoBehaviour
 			else
 			{
 				GUI.SetNextControlName("QuitGame");
-				if (GUI.Button (new Rect (Screen.width * .59f, Screen.height * 0.870f, Screen.width * .41f, Screen.height * .115f), "", mButtonStyle)) 
+				if (GUI.Button (new Rect (Screen.width * .95f, Screen.height * 0.870f, Screen.width * .41f, Screen.height * .115f), "", mButtonStyle)) 
 				{
 					Application.Quit();
 				}			
@@ -176,8 +176,13 @@ public class GetSome : MonoBehaviour
 			//mButtonStyle.fontSize = Mathf.RoundToInt(Screen.width*0.01f);
 			if(!Application.isMobilePlatform)
 			{
-				GUI.SetNextControlName("Options");
+				/*GUI.SetNextControlName("Options");
 				if (GUI.Button (new Rect (Screen.width * .85f, Screen.height * 0.760f, Screen.width * .1f, Screen.height * .1f), "Options", mShowVolumeMenuStyle)) 
+				{
+					mVolumeMenu.mMenuOpen = true;
+				}*/ //Old Position
+				GUI.SetNextControlName("Options");
+				if (GUI.Button (new Rect (Screen.width * 0f, Screen.height * 0.890f, Screen.width * .1f, Screen.height * .1f), "Options", mShowVolumeMenuStyle)) 
 				{
 					mVolumeMenu.mMenuOpen = true;
 				}

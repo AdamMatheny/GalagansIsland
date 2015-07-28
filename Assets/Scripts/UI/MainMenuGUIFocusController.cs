@@ -22,10 +22,10 @@ public class MainMenuGUIFocusController : MonoBehaviour
 	{
 		mMainMenuButtonNames.Add("InsertCoin");//0
 		mMainMenuButtonNames.Add("QuitGame");//1
-		mMainMenuButtonNames.Add("ResetStart");//2
-		mMainMenuButtonNames.Add("ResetAsk");//3
-		mMainMenuButtonNames.Add("ResetCancel");//4
-		mMainMenuButtonNames.Add("ResetConfirm");//5
+		//mMainMenuButtonNames.Add("ResetStart");//2
+		//mMainMenuButtonNames.Add("ResetAsk");//3
+		//mMainMenuButtonNames.Add("ResetCancel");//4
+		//mMainMenuButtonNames.Add("ResetConfirm");//5
 		mMainMenuButtonNames.Add("StartCoOp");//6
 		mMainMenuButtonNames.Add("Options");//7
 		mVolumeMenu = FindObjectOfType<VolumeControlSliders>();
@@ -40,7 +40,7 @@ public class MainMenuGUIFocusController : MonoBehaviour
 			mUIFocusTimer -= Time.deltaTime;
 		}
 
-		if ( (Input.GetButtonDown("Thrusters") || Input.GetButtonDown("FireGun") || (InputManager.ActiveDevice.Action1.IsPressed && mUIFocusTimer<=0f)) && !mVolumeMenu.mMenuOpen)
+		if ( (Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Thrusters") || Input.GetButtonDown("FireGun") || (InputManager.ActiveDevice.Action1.IsPressed && mUIFocusTimer<=0f)) && !mVolumeMenu.mMenuOpen)
 		{
 
 			switch(mMainMenuButtonFocus)
@@ -57,7 +57,7 @@ public class MainMenuGUIFocusController : MonoBehaviour
 					Application.Quit();
 				}
 				break;
-			case 2:
+			/*case 2:
 				mScoreResetter.StartScoreReset();
 				break;
 			case 4:
@@ -65,7 +65,7 @@ public class MainMenuGUIFocusController : MonoBehaviour
 				break;
 			case 5:
 				mScoreResetter.ConfirmScoreReset();
-				break;
+				break;*/
 			case 6:
 				if(mGameStarter.isActiveAndEnabled == true)
 				{
@@ -90,7 +90,6 @@ public class MainMenuGUIFocusController : MonoBehaviour
 			}
 		}
 
-
 	}
 
 
@@ -103,6 +102,18 @@ public class MainMenuGUIFocusController : MonoBehaviour
 			//Move from insert coin to options ~Adam
 			if((Input.GetAxis ("Horizontal") > 0f || InputManager.ActiveDevice.DPadRight.IsPressed) && mUIFocusTimer <= 0f && mMainMenuButtonFocus == 0 && mGameStarter.isActiveAndEnabled == true)
 			{
+				mMainMenuButtonFocus = 1;
+				mUIFocusTimer = 0.2f;
+			}
+
+			if((Input.GetAxis ("Horizontal") > 0f || InputManager.ActiveDevice.DPadRight.IsPressed) && mUIFocusTimer <= 0f && mMainMenuButtonFocus == 7 && mGameStarter.isActiveAndEnabled == true)
+			{
+				mMainMenuButtonFocus = 0;
+				mUIFocusTimer = 0.2f;
+			}
+
+			if((Input.GetAxis ("Horizontal") < 0f || InputManager.ActiveDevice.DPadRight.IsPressed) && mUIFocusTimer <= 0f && mMainMenuButtonFocus == 0 && mGameStarter.isActiveAndEnabled == true)
+			{
 				mMainMenuButtonFocus = 7;
 				mUIFocusTimer = 0.2f;
 			}
@@ -110,7 +121,7 @@ public class MainMenuGUIFocusController : MonoBehaviour
 			//Move from options to insert coin ~Adam
 			else if((Input.GetAxis ("Horizontal") < 0f || InputManager.ActiveDevice.DPadLeft.IsPressed) && mUIFocusTimer <= 0f && mMainMenuButtonFocus == 7)
 			{
-				mMainMenuButtonFocus = 0;
+				mMainMenuButtonFocus = 1;
 				mUIFocusTimer = 0.2f;
 			}
 
@@ -125,13 +136,13 @@ public class MainMenuGUIFocusController : MonoBehaviour
 			//Move from focusing on Options to focusing on Quit Game ~Adam
 			else if( ( (Input.GetAxis ("Vertical") < 0f || InputManager.ActiveDevice.DPadDown.IsPressed) && mUIFocusTimer<= 0f && mMainMenuButtonFocus == 7))
 			{
-				mMainMenuButtonFocus = 1;
+				mMainMenuButtonFocus = 6;
 				mUIFocusTimer = 0.2f;
 			}
 			//Move from focusing on Quit Game to focusing on Options ~Adam
 			else if((Input.GetAxis ("Vertical") > 0f || InputManager.ActiveDevice.DPadUp.IsPressed) && mUIFocusTimer<= 0f && mMainMenuButtonFocus == 1)
 			{
-				mMainMenuButtonFocus = 7;
+				mMainMenuButtonFocus = 1;
 				mUIFocusTimer = 0.2f;
 			}
 
@@ -150,21 +161,21 @@ public class MainMenuGUIFocusController : MonoBehaviour
 
 
 			//Move from focusing on "Insert Coin" to focusing on score reset ~Adam
-			else if((Input.GetAxis ("Horizontal") < 0f || InputManager.ActiveDevice.DPadLeft.IsPressed) && mUIFocusTimer<= 0f && mMainMenuButtonFocus == 0)
+			/*else if((Input.GetAxis ("Horizontal") < 0f || InputManager.ActiveDevice.DPadLeft.IsPressed) && mUIFocusTimer<= 0f && mMainMenuButtonFocus == 0)
 			{
 				mMainMenuButtonFocus = 2;
 				mUIFocusTimer = 0.2f;
-			}
+			}*/
 
 			//Move from score reset to insert coin ~Adam
-			else if((Input.GetAxis ("Horizontal") > 0f && mUIFocusTimer <= 0f || InputManager.ActiveDevice.DPadRight.IsPressed) && mMainMenuButtonFocus == 2 && mGameStarter.isActiveAndEnabled == true)
+			/*else if((Input.GetAxis ("Horizontal") > 0f && mUIFocusTimer <= 0f || InputManager.ActiveDevice.DPadRight.IsPressed) && mMainMenuButtonFocus == 2 && mGameStarter.isActiveAndEnabled == true)
 			{
 				mMainMenuButtonFocus = 0;
 				mUIFocusTimer = 0.2f;
-			}
+			}*/
 
 			//Toggle between canceling/confirming the high score reset ~Adam
-			else if((Input.GetAxis ("Horizontal") != 0f || InputManager.ActiveDevice.DPadRight.IsPressed || InputManager.ActiveDevice.DPadLeft.IsPressed) && mUIFocusTimer<= 0f && (mMainMenuButtonFocus == 5 || mMainMenuButtonFocus == 4))
+			/*else if((Input.GetAxis ("Horizontal") != 0f || InputManager.ActiveDevice.DPadRight.IsPressed || InputManager.ActiveDevice.DPadLeft.IsPressed) && mUIFocusTimer<= 0f && (mMainMenuButtonFocus == 5 || mMainMenuButtonFocus == 4))
 			{
 				if(mMainMenuButtonFocus == 4)
 				{
@@ -177,7 +188,7 @@ public class MainMenuGUIFocusController : MonoBehaviour
 					mUIFocusTimer = 0.2f;
 				}
 				
-			}
+			}*/
 		}
 	}
 

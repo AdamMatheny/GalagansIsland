@@ -42,7 +42,7 @@ public class ResetScore : MonoBehaviour
 				mHighScoreStyle.focused.background = mResetTexHighlightStart;
 				GUI.SetNextControlName("ResetStart");
 
-				if (GUI.Button (new Rect (Screen.width * .01f, Screen.height * 0.890f, Screen.width * .1f, Screen.height * .1f), "", mHighScoreStyle)) 
+				if (GUI.Button (new Rect (Screen.width * 100f, Screen.height * 0.890f, Screen.width * .1f, Screen.height * .1f), "", mHighScoreStyle)) 
 				{
 					StartScoreReset();
 				}
@@ -78,7 +78,7 @@ public class ResetScore : MonoBehaviour
 			}
 
 
-			GUI.FocusControl(mGUIFocusControl.mMainMenuButtonNames[mGUIFocusControl.mMainMenuButtonFocus]);
+			//GUI.FocusControl(mGUIFocusControl.mMainMenuButtonNames[mGUIFocusControl.mMainMenuButtonFocus]);
 		}
 	}//END of OnGUI()
 
