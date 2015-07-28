@@ -82,7 +82,7 @@ public class GetSome : MonoBehaviour
 
 		if(Input.GetButtonDown("PauseButton")&& !mVolumeMenu.mMenuOpen)
 		{
-			if(mGUIFocusControl.mMainMenuButtonFocus == 6 || InputManager.ActiveDevice.Meta == "XInput Controller #1")
+			if(mGUIFocusControl.mMainMenuButtonFocus == 2 || InputManager.ActiveDevice.Meta == "XInput Controller #1")
 			{
 				Destroy (mSuperLaser);
 				FindObjectOfType<CoOpSelector>().mCoOpEnabled = true;

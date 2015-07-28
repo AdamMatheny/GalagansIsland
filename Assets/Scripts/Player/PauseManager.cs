@@ -38,7 +38,7 @@ public class PauseManager : MonoBehaviour
 		mPauseMenuButtonNames.Add("Pause");
 		mPauseMenuButtonNames.Add("Continue");
 		mPauseMenuButtonNames.Add("ReturnToMenu");
-		mPauseMenuButtonNames.Add("Quit"); //Changed to quit because, well, that's what it does. ~ Jonathan
+		mPauseMenuButtonNames.Add("Options"); //Changed to quit because, well, that's what it does. ~ Jonathan //Actually, it doesn't quit any more ~Adam
 		mVolumeMenu = FindObjectOfType<VolumeControlSliders>();
 
 	}
