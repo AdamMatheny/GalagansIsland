@@ -9,23 +9,23 @@ public class CameraShaker : MonoBehaviour
 	float strength = 2.5f;
 	float duration = .25f;
 
-	public float mRedShakeStrength = 2.8f;
-	public float mRedShakeDuration = 1f;
+	public float mRedShakeStrength = 1.3f;
+	public float mRedShakeDuration = .25f;
 
-	public float mTealShakeStrength = 2.5f;
-	public float mTealShakeDuration = .75f;
+	public float mTealShakeStrength = 1.3f;
+	public float mTealShakeDuration = .3f;
 	
-	public float mGreenShakeStrength = 2.75f;
-	public float mGreenShakeDuration = .8f;
+	public float mGreenShakeStrength = 1.3f;
+	public float mGreenShakeDuration = .2f;
 
-	public float mPurpleShakeStrength = 2.6f;
-	public float mPurpleShakeDuration = 1.25f;
+	public float mPurpleShakeStrength = 1.3f;
+	public float mPurpleShakeDuration = .25f;
 
-	public float mDeathShakeStrength = 2.5f;
-	public float mDeathShakeDuration = .5f;
+	public float mDeathShakeStrength = 2f;
+	public float mDeathShakeDuration = .4f;
 
-	public float mEnemyShakeStrength = 2.5f; //was 5.0f Changed to 2.5f for Florida Con
-	public float mEnemyShakeDuration = .1f;
+	public float mEnemyShakeStrength = 1f; //was 5.0f Changed to 2.5f for Florida Con
+	public float mEnemyShakeDuration = .3f;
 
 	public float mShootShakeStrength = .2f;
 	public float mShootShakeDuration = .1f;
@@ -75,11 +75,8 @@ public class CameraShaker : MonoBehaviour
 	}
 	public void ShakeCameraEnemy(){
 
-        if (Random.Range(0, 8) < 1) //12.5% chance to shake camera
-        {
-            mShakeTime = mEnemyShakeDuration;
-            strength = mEnemyShakeStrength;
-        }
+		mShakeTime = mEnemyShakeDuration;
+		strength = mEnemyShakeStrength;
 	}
 	public void ShakeCameraDeath(){
 
