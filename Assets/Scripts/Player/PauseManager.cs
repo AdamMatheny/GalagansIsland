@@ -239,7 +239,10 @@ public class PauseManager : MonoBehaviour
 					GUI.SetNextControlName("Options");
 					if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.61f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
 					{
-						Application.Quit();
+						if(mVolumeMenu!=null && mUIFocusTimer <=0f)
+						{
+							mVolumeMenu.mMenuOpen = true;
+						}
 					}
 	//				GUI.SetNextControlName("Pause");
 	//				if (GUI.Button (new Rect (Screen.width * .81f, Screen.height * 0.890f, Screen.width * .09f, Screen.height * .1f), "", mPauseButtonStyle)) 
@@ -300,7 +303,10 @@ public class PauseManager : MonoBehaviour
 	                mPauseMenuStyle.active.background = mOptionsTexHighlight;
 	                if (GUI.Button(new Rect(Screen.width * 0.2f, Screen.height * 0.61f, Screen.width * 0.6f, Screen.height * 0.14f), "", mPauseMenuStyle))
 	                {
-	                    Application.Quit();
+						if(mVolumeMenu!=null && mUIFocusTimer <=0f)
+						{
+							mVolumeMenu.mMenuOpen = true;
+						}
 	                }
 				}
             }

@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 public class ResetScore : MonoBehaviour 
 {
+
+	public bool canResetScore = false;
+
 	//A GUI Style to make the font not look gross ~Adam
 	[SerializeField] private GUIStyle mHighScoreStyle;
 	[SerializeField] private GUIStyle mHighScoreDisplayStyle;
@@ -26,6 +29,11 @@ public class ResetScore : MonoBehaviour
 	//For using the new UI canvas for the image-based font ~Adam
 	public Text mHighScoreUIText;
 
+	void Update(){
+
+		if (Input.GetKeyDown (KeyCode.Delete) && canResetScore) 
+			ConfirmScoreReset ();
+	}
 
 	void OnGUI()
 	{
