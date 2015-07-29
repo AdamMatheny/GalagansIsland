@@ -133,7 +133,7 @@ public class GetSome : MonoBehaviour
 			else
 			{
 				GUI.SetNextControlName("InsertCoin");
-				if(GUI.Button(new Rect(Screen.width *0.3f, Screen.height*0.8f, Screen.width*0.4f, Screen.width*0.054f), "",mGetSomeStyle)) 
+				if(GUI.Button(new Rect(Screen.width *0.3f, Screen.height*0.5f, Screen.width*0.4f, Screen.width*0.3f), "",mGetSomeStyle)) 
 				{
 					mSuperLaser.SetActive(true);
 					//StartGame();
