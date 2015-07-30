@@ -11,7 +11,7 @@ public class cursorScript : MonoBehaviour
 	{
         if (!Application.isMobilePlatform) //Use Cursor only on non Mobile Platforms
         {
-			//Cursor.visible = false; Temporarily turning this off for testing purposes ~ Jonathan
+			Cursor.visible = false;// Temporarily turning this off for testing purposes ~ Jonathan
         }
 	}
 }

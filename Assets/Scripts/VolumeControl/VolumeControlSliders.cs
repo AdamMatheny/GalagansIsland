@@ -32,6 +32,13 @@ public class VolumeControlSliders : MonoBehaviour
 	{
 		mSFXSliderBar.value = PlayerPrefs.GetFloat("SFXVolume");
 		mBGMSliderBar.value = PlayerPrefs.GetFloat("BGMVolume");
+
+		if(PlayerPrefs.GetInt("FirstTimeVolumeSetup")==0)
+		{
+			PlayerPrefs.SetFloat("BGMVolume", 0.4f);
+			PlayerPrefs.SetFloat("SFXVolume", 0.4f);
+			PlayerPrefs.SetInt("FirstTimeVolumeSetup", 1);
+		}
 	}
 	
 	// Update is called once per frame
