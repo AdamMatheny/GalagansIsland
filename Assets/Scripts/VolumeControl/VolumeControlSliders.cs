@@ -41,7 +41,6 @@ public class VolumeControlSliders : MonoBehaviour
 
 		if(mMenuOpen)
 		{
-			Debug.Log("volume menu is open");
 
 			if(mUIFocusTimer > 0f)
 			{
@@ -60,19 +59,16 @@ public class VolumeControlSliders : MonoBehaviour
 				mSFXSliderBar.value = PlayerPrefs.GetFloat("SFXVolume");
 				mBGMSliderBar.value = PlayerPrefs.GetFloat("BGMVolume");
 
-				Debug.Log("volume menu is not on mobile platform");
 
 				
 				//Control the "Back" button
 				if(mUIFocusTimer <= 0f)
 				{
-					Debug.Log("volume menu is ready");
 
 					if (Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Thrusters") || Input.GetButtonDown("FireGun") || (InputManager.ActiveDevice.Action1.IsPressed))
 					{
 						if(mMenuFocus == 2)
 						{
-							Debug.Log("Call close function");
 							CloseVolumeMenu();
 						}
 					}
@@ -81,7 +77,6 @@ public class VolumeControlSliders : MonoBehaviour
 					//Adjust volume up and down ~Adam
 					else if(Input.GetAxisRaw ("Horizontal") > 0 || InputManager.ActiveDevice.DPadRight.WasPressed)
 					{
-						Debug.Log("pressing right");
 						switch(mMenuFocus)
 						{
 						case 0:
@@ -111,7 +106,6 @@ public class VolumeControlSliders : MonoBehaviour
 					//Move from score quit game to insert coin ~Adam
 					else if(Input.GetAxisRaw ("Horizontal") < 0 || InputManager.ActiveDevice.DPadLeft.WasPressed)
 					{
-						Debug.Log("pressing left");
 						switch(mMenuFocus)
 						{
 						case 0:
@@ -142,7 +136,6 @@ public class VolumeControlSliders : MonoBehaviour
 					//Move from focusing on "Insert Coin" to focusing on the CoOp Start ~Adam
 					if(Input.GetAxisRaw ("Vertical") < 0 || InputManager.ActiveDevice.DPadDown.WasPressed)
 					{
-						Debug.Log("pressing down");
 						switch(mMenuFocus)
 						{
 						case 0:
@@ -163,7 +156,6 @@ public class VolumeControlSliders : MonoBehaviour
 					//Move from focusing on CoOpStart to focusing on the "Insert Coin" ~Adam
 					else if(Input.GetAxisRaw ("Vertical") > 0 || InputManager.ActiveDevice.DPadUp.WasPressed)
 					{
-						Debug.Log("pressing up");
 						switch(mMenuFocus)
 						{
 						case 0:
@@ -222,7 +214,6 @@ public class VolumeControlSliders : MonoBehaviour
 
 	public void CloseVolumeMenu()
 	{
-		Debug.Log ("Actually called function");
 		mUIFocusTimer+=0.2f;
 		mMenuFocus = 0;
 

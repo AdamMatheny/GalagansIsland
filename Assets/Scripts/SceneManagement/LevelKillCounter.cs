@@ -10,6 +10,8 @@ public class LevelKillCounter : MonoBehaviour
 
 	bool mLevelComplete = false;
 
+	bool mCoOpMode = false;
+
 	[SerializeField] private GameObject mLevelCompleteMessage;
 
 	//For spawning new waves after a certain number of enemies have been killed.
@@ -35,6 +37,10 @@ public class LevelKillCounter : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		if(FindObjectOfType<PlayerTwoShipController>() != null)
+		{
+			mCoOpMode = true;
+		}
 		mLeaveTimer += Time.deltaTime;
 //		Debug.Log(Time.time);
 		if(mLevelComplete)
@@ -74,9 +80,37 @@ public class LevelKillCounter : MonoBehaviour
 			}
 			else
 			{
-				FindObjectOfType<PlayerShipController>().mShipStolen = false;
-				Application.LoadLevel(Application.loadedLevel+1);
-				FindObjectOfType<PlayerShipController>().mShipStolen = false;
+				//If a level is successfully completed with all players alive go to th enext level~Adam
+				if( (FindObjectOfType<PlayerShipController>()!= null && !mCoOpMode) 
+					|| (mCoOpMode && (FindObjectOfType<PlayerShipController>() != null && FindObjectOfType<PlayerTwoShipController>() != null) ) )
+				{
+					FindObjectOfType<PlayerShipController>().mShipStolen = false;
+					Application.LoadLevel(Application.loadedLevel+1);
+					FindObjectOfType<PlayerShipController>().mShipStolen = false;
+				}
+
+				//If it's co-op mode and one player finishes the level after the other one dies, go to game over screen ~Adam
+				else if(mCoOpMode && (FindObjectOfType<PlayerShipController>() == null || FindObjectOfType<PlayerTwoShipController>() == null) )
+				{
+					if(FindObjectOfType<PlayerShipController>() != null)
+					{
+						Destroy(FindObjectOfType<PlayerShipController>().gameObject);
+					}
+					if(FindObjectOfType<PlayerTwoShipController>() != null)
+					{
+						Destroy(FindObjectOfType<PlayerTwoShipController>().gameObject);
+					}
+					if(FindObjectOfType<ScoreManager>()!= null)
+					{
+						FindObjectOfType<ScoreManager>().mLevelInfoText.text = "\nGame Over";
+						FindObjectOfType<ScoreManager>().enabled = false;
+					}
+
+					Application.LoadLevel("EndGame");
+					Destroy(this.gameObject);
+
+				}
+
 			}
 		}
 

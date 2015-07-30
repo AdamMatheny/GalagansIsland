@@ -116,7 +116,7 @@ public class MainMenuGUIFocusController : MonoBehaviour
 
 
 			//Move from Insert Coin to Quit Game (right) ~Adam
-			else if((Input.GetAxis ("Horizontal") > 0f || InputManager.ActiveDevice.DPadLeft.IsPressed) && mUIFocusTimer <= 0f && mMainMenuButtonFocus == 0)
+			else if((Input.GetAxis ("Horizontal") > 0f || InputManager.ActiveDevice.DPadRight.IsPressed) && mUIFocusTimer <= 0f && mMainMenuButtonFocus == 0)
 			{
 				mMainMenuButtonFocus = 1;
 				mUIFocusTimer = 0.2f;

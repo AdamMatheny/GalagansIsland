@@ -99,22 +99,24 @@ public class GetSome : MonoBehaviour
 
 	void OnGUI()
 	{
-		mTextColorTimer+= Time.deltaTime;
-		if(mTextColorTimer >= 1.5f)
-		{
-			mTextColorTimer = 0f;
-			mGetSomeStyle.normal.background = mBlueCoinText;
-			mGetSomeStyle.hover.background = mBlueCoinTextBig;
-			mGetSomeStyle.active.background = mBlueCoinTextBig;
-			mGetSomeStyle.focused.background = mBlueCoinTextBig;
-		}
-		else if(mTextColorTimer >= 0.75f)
-		{
-			mGetSomeStyle.normal.background = mPinkCoinText;
-			mGetSomeStyle.hover.background = mPinkCoinTextBig;
-			mGetSomeStyle.active.background = mPinkCoinTextBig;
-			mGetSomeStyle.focused.background = mPinkCoinTextBig;
-		}
+
+		//This is from when we used to flash the color for "Insert Coin"
+//		mTextColorTimer+= Time.deltaTime;
+//		if(mTextColorTimer >= 1.5f)
+//		{
+//			mTextColorTimer = 0f;
+//			mGetSomeStyle.normal.background = mBlueCoinText;
+//			mGetSomeStyle.hover.background = mBlueCoinTextBig;
+//			mGetSomeStyle.active.background = mBlueCoinTextBig;
+//			mGetSomeStyle.focused.background = mBlueCoinTextBig;
+//		}
+//		else if(mTextColorTimer >= 0.75f)
+//		{
+//			mGetSomeStyle.normal.background = mPinkCoinText;
+//			mGetSomeStyle.hover.background = mPinkCoinTextBig;
+//			mGetSomeStyle.active.background = mPinkCoinTextBig;
+//			mGetSomeStyle.focused.background = mPinkCoinTextBig;
+//		}
 
 		if(!mStartingGame)
 		{
@@ -124,7 +126,7 @@ public class GetSome : MonoBehaviour
 			if(Application.isMobilePlatform)
 			{
 				GUI.SetNextControlName("InsertCoin");
-				if(GUI.Button(new Rect(Screen.width *0.15f, Screen.height*0.75f, Screen.width*0.7f, Screen.width*0.1f), "",mGetSomeStyle))
+				if(GUI.Button(new Rect(Screen.width *0.3f, Screen.height*0.75f, Screen.width*0.4f, Screen.width*0.054f), "",mGetSomeStyle))
 				{
 					mSuperLaser.SetActive(true);
 					//StartGame();
@@ -133,7 +135,7 @@ public class GetSome : MonoBehaviour
 			else
 			{
 				GUI.SetNextControlName("InsertCoin");
-				if(GUI.Button(new Rect(Screen.width *0.3f, Screen.height*0.5f, Screen.width*0.4f, Screen.width*0.3f), "",mGetSomeStyle)) 
+				if(GUI.Button(new Rect(Screen.width *0.3f, Screen.height*0.75f, Screen.width*0.4f, Screen.width*0.054f), "",mGetSomeStyle))
 				{
 					mSuperLaser.SetActive(true);
 					//StartGame();
@@ -146,7 +148,7 @@ public class GetSome : MonoBehaviour
 			if(!Application.isMobilePlatform)
 			{
 				GUI.SetNextControlName("QuitGame");
-				if (GUI.Button (new Rect (Screen.width * .87f, Screen.height * 0.890f, Screen.width * .1f, Screen.height * .1f), "", mButtonStyle)) 
+				if (GUI.Button (new Rect (Screen.width * .85f, Screen.height * 0.890f, Screen.width * .1f, Screen.height * .1f), "", mButtonStyle)) 
 				{
 					Application.Quit();
 				}
@@ -154,7 +156,7 @@ public class GetSome : MonoBehaviour
 			else
 			{
 				GUI.SetNextControlName("QuitGame");
-				if (GUI.Button (new Rect (Screen.width * .95f, Screen.height * 0.870f, Screen.width * .41f, Screen.height * .115f), "", mButtonStyle)) 
+				if (GUI.Button (new Rect (Screen.width * .95f, Screen.height * 0.870f, Screen.width * .4f, Screen.height * .115f), "", mButtonStyle)) 
 				{
 					Application.Quit();
 				}			
@@ -182,7 +184,7 @@ public class GetSome : MonoBehaviour
 					mVolumeMenu.mMenuOpen = true;
 				}*/ //Old Position
 				GUI.SetNextControlName("Options");
-				if (GUI.Button (new Rect (Screen.width * 0f, Screen.height * 0.890f, Screen.width * .1f, Screen.height * .1f), "Options", mShowVolumeMenuStyle)) 
+				if (GUI.Button (new Rect (Screen.width * 0.05f, Screen.height * 0.890f, Screen.width * .1f, Screen.height * .1f), "", mShowVolumeMenuStyle)) 
 				{
 					mVolumeMenu.mMenuOpen = true;
 				}
@@ -190,7 +192,7 @@ public class GetSome : MonoBehaviour
 			else
 			{
 				GUI.SetNextControlName("Options");
-				if (GUI.Button (new Rect (Screen.width * .59f, Screen.height * 0.750f, Screen.width * .41f, Screen.height * .115f), "Options", mShowVolumeMenuStyle)) 
+				if (GUI.Button (new Rect (Screen.width * .59f, Screen.height * 0.750f, Screen.width * .41f, Screen.height * .115f), "", mShowVolumeMenuStyle)) 
 				{
 					mVolumeMenu.mMenuOpen = true;
 				}			

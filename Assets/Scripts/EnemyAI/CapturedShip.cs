@@ -40,7 +40,8 @@ public class CapturedShip : MonoBehaviour
 		mMovementSpeed = mPlayer.mMovementSpeed;
 
 		//Like the player, the later the level, the faster the captured ship shoots.
-		mShootTimerDefault = 0.25f-(0.15f/25f*Application.loadedLevel);
+		//mShootTimerDefault = 0.25f-(0.15f/25f*Application.loadedLevel);
+		mShootTimerDefault = 5f;
 		mShootTimer = mShootTimerDefault;
 
 		if(FindObjectOfType<PlayerTwoShipController>()!= null)
