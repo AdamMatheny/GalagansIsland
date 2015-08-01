@@ -163,6 +163,17 @@ public class EnemyShipAI : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		//Also kill the ship FINALLY!!! ~ Jonathan
+		if (mPlayer.GetComponent<PlayerShipController> ().mShipRecovered) {
+			
+			if(Vector3.Distance(this.transform.position, mPlayer.GetComponent<PlayerShipController> ().mSecondShipObject.transform.position) <= 1.5f){
+				
+				Debug.Log("The second ship was shot");
+				mScoreManager.LoseALife();
+				Destroy(gameObject);
+			}
+		}
+
 		if(mScoreManager == null)
 		{
 			mScoreManager = FindObjectOfType<ScoreManager>();

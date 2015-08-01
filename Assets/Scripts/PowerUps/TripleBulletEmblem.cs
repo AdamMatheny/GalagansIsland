@@ -18,6 +18,14 @@ public class TripleBulletEmblem : MonoBehaviour
 
 	void OnTriggerEnter(Collider other)
 	{
+
+		if (other.tag == "SecondShip") {
+			
+			other.GetComponentInParent<PlayerShipController> ().mThreeBullet = true;
+			other.GetComponentInParent<PlayerShipController> ().mThreeBulletTimer = 30f;
+			Destroy(this.gameObject);
+		}
+
 		if(other.GetComponent<PlayerShipController>() != null)
 		{
 			other.GetComponent<PlayerShipController>().mThreeBullet = true;

@@ -19,6 +19,14 @@ public class ShieldEmblem : MonoBehaviour
 	
 	void OnTriggerEnter(Collider other)
 	{
+
+		if (other.tag == "SecondShip") {
+
+			other.GetComponentInParent<PlayerShipController> ().mShielded = true;
+			other.GetComponentInParent<PlayerShipController> ().mShieldTimer = 30f;
+			Destroy(this.gameObject);
+		}
+
 		if(other.GetComponent<PlayerShipController>() != null)
 		{
 			other.GetComponent<PlayerShipController>().mShielded = true;

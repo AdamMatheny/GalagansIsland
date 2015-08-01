@@ -143,6 +143,8 @@ public class CapturedShip : MonoBehaviour
 			//Give a ship attached to the side of the main ship and make an effect as it spawns -Adam
 			Instantiate(mSecondShipSpawnEffect, mPlayer.mSecondShip.transform.position, Quaternion.identity);
 
+			//other.gameObject.transform.rotation = new Quaternion(0, 0, 180, 0);
+
 			#region for twin-stick clone spawning
 //			//If not mobile, spawn a clone ship next to the player and make an effect as it spawns -Adam
 //			else

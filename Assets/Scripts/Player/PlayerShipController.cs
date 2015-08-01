@@ -6,6 +6,8 @@ using XInputDotNetPure; // Required in C#
 
 public class PlayerShipController : MonoBehaviour 
 {
+	public GameObject mSecondShipObject; //Using this to modify the bullet time in the EnemyBulletControlle, if there is a better way to do this please apply ~ Jonathan
+
 	public GameObject mPlayerClone;
 
 	//For multiplaye co-op ~Adam
@@ -215,6 +217,7 @@ public class PlayerShipController : MonoBehaviour
 				mSpinning = 0f;
 				mMainShip.transform.rotation = Quaternion.identity;
 				mSecondShip.transform.rotation = Quaternion.identity;
+				mSecondShip.transform.rotation = new Quaternion(0, 0, 180, 0);
 			}
 		}
 		
@@ -309,7 +312,8 @@ public class PlayerShipController : MonoBehaviour
 			{
 				if(shipTrail.gameObject != mDamageParticles)
 				{
-					shipTrail.enableEmission = true;
+					if(!mShipRecovered)
+						shipTrail.enableEmission = true;
 				}
 			}
 			
@@ -699,7 +703,8 @@ public class PlayerShipController : MonoBehaviour
 				{
 					if(shipTrail.gameObject != mDamageParticles)
 					{
-						shipTrail.enableEmission = true;
+						if(!mShipRecovered)
+							shipTrail.enableEmission = true;
 					}
 				}
 			}
@@ -794,7 +799,8 @@ public class PlayerShipController : MonoBehaviour
 				{
 					if(shipTrail.gameObject != mDamageParticles)
 					{
-						shipTrail.enableEmission = true;
+						if(!mShipRecovered)
+							shipTrail.enableEmission = true;
 					}
 				}
 			}

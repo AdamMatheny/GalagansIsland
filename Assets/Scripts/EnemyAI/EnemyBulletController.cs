@@ -184,12 +184,33 @@ public class EnemyBulletController : MonoBehaviour
 				FindObjectOfType<SlowTimeController>().SlowDownTime(0.4f,1f);
 			}
 		}
+
 		//Detect distance to player and kill the player and destroy self if close enough to "touch" ~Adam
 		if (Vector3.Distance(this.transform.position, mPlayer.transform.position) <= 1.5f)
 		{
 			Debug.Log("The player was shot");
 			mScoreController.LoseALife();
 			Destroy(gameObject);
+		}
+
+		//If second ship is activated, extend the slow time down ~ Jonathan
+		//Also kill the ship FINALLY!!! ~ Jonathan
+		if (mPlayer.GetComponent<PlayerShipController> ().mShipRecovered) {
+
+			if(Vector3.Distance(this.transform.position, mPlayer.GetComponent<PlayerShipController> ().mSecondShipObject.transform.position) <= 2.5f){
+
+				if(FindObjectOfType<SlowTimeController>()!= null)
+				{
+					FindObjectOfType<SlowTimeController>().SlowDownTime(0.4f,1f);
+				}
+			}
+
+			if(Vector3.Distance(this.transform.position, mPlayer.GetComponent<PlayerShipController> ().mSecondShipObject.transform.position) <= 1.5f){
+
+				Debug.Log("The second ship was shot");
+				mScoreController.LoseALife();
+				Destroy(gameObject);
+			}
 		}
 
 		#region twin-stick clone stuff
