@@ -20,5 +20,13 @@ public class BGMVolumeController : MonoBehaviour
 	{
 		GetComponent<AudioSource>().volume = mStartingVolume * PlayerPrefs.GetFloat("BGMVolume");
 		AudioListener.volume = PlayerPrefs.GetFloat("SFXVolume");
+
+		//Mostly temporary, some people were complaining that the SFX were too loud and they were too lazy to turn them down ~ Jonathan
+		if (Application.loadedLevel == 0) { //If on main menu ~ Jonathan
+
+			//Debug.Log(PlayerPrefs.GetFloat("SFXVolume"));
+			if(PlayerPrefs.GetFloat("SFXVolume") > .8f)
+				AudioListener.volume = PlayerPrefs.GetFloat("SFXVolume") - .9f;
+		}
 	}
 }
