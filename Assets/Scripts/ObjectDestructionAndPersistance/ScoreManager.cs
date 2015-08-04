@@ -332,6 +332,8 @@ public class ScoreManager : MonoBehaviour
 			//Lose a life if the player isn't shielded ~Adam
 			if(!mPlayerAvatar.GetComponent<PlayerShipController>().mShielded)
 			{
+				Camera.main.GetComponent<CameraShaker> ().RumbleController(.1f, .2f);
+
 				if(mLivesRemaining == 1)
 				{
 					GameObject playerDeathParticles;
@@ -342,6 +344,8 @@ public class ScoreManager : MonoBehaviour
 					mPlayerAvatar.GetComponent<PlayerShipController>().mShipRecovered = false;
 					mPlayerAvatar.GetComponent<PlayerShipController>().StartSpin();
 					Camera.main.GetComponent<CameraShaker>().ShakeCameraDeath();
+
+
 				}
 				else
 				{
@@ -361,6 +365,8 @@ public class ScoreManager : MonoBehaviour
 					mLivesRemaining--;
 					mPlayerAvatar.GetComponent<PlayerShipController>().StartSpin();
 					Camera.main.GetComponent<CameraShaker>().ShakeCameraDeath();
+
+
 				}
 			}
 			else
@@ -368,11 +374,15 @@ public class ScoreManager : MonoBehaviour
 				//mScore -= 10;
 				mPlayerAvatar.GetComponent<PlayerShipController>().StartSpin();
 				Camera.main.GetComponent<CameraShaker>().ShakeCameraDeath();
+
+
 			}
 
 			//If that wasn't the last life, go invulnerable, otherwise go back to the title screen
 			if(mLivesRemaining <= 0)
 			{
+
+				Camera.main.GetComponent<CameraShaker> ().RumbleController(.6f, 3.15f);
 				Destroy(mPlayerAvatar.gameObject);
 				//mPlayerAvatar.gameObject.SetActive(false);
 				mPlayerSafeTime = 3f;
@@ -397,6 +407,8 @@ public class ScoreManager : MonoBehaviour
 			//Lose a life if the player isn't shielded ~Adam
 			if(!mPlayer2Avatar.GetComponent<PlayerTwoShipController>().mShielded)
 			{
+				Camera.main.GetComponent<CameraShaker> ().RumbleController(.1f, .2f);
+
 				if(mLivesRemaining == 1)
 				{
 					GameObject playerDeathParticles;
@@ -407,6 +419,8 @@ public class ScoreManager : MonoBehaviour
 					mPlayer2Avatar.GetComponent<PlayerTwoShipController>().mShipRecovered = false;
 					mPlayer2Avatar.GetComponent<PlayerTwoShipController>().StartSpin();
 					Camera.main.GetComponent<CameraShaker>().ShakeCameraDeath();
+
+
 				}
 				else
 				{
@@ -426,6 +440,8 @@ public class ScoreManager : MonoBehaviour
 					mLivesRemaining--;
 					mPlayer2Avatar.GetComponent<PlayerTwoShipController>().StartSpin();
 					Camera.main.GetComponent<CameraShaker>().ShakeCameraDeath();
+
+
 				}
 			}
 			else
@@ -433,11 +449,15 @@ public class ScoreManager : MonoBehaviour
 				//mScore -= 10;
 				mPlayer2Avatar.GetComponent<PlayerTwoShipController>().StartSpin();
 				Camera.main.GetComponent<CameraShaker>().ShakeCameraDeath();
+
+			
 			}
 			
 			//If that wasn't the last life, go invulnerable, otherwise go back to the title screen
 			if(mLivesRemaining <= 0)
 			{
+
+				Camera.main.GetComponent<CameraShaker> ().RumbleController(3f, 2f);
 				Destroy(mPlayer2Avatar.gameObject);
 				//mPlayer2Avatar.gameObject.SetActive(false);
 				mPlayerSafeTime = 3f;

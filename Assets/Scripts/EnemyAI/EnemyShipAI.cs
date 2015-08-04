@@ -777,7 +777,12 @@ public class EnemyShipAI : MonoBehaviour
 		//Shake the camera on death
 		if (Camera.main.GetComponent<CameraShaker>() != null)
 		{
-			Camera.main.GetComponent<CameraShaker>().ShakeCameraEnemy();
+		//	Camera.main.GetComponent<CameraShaker>().ShakeCameraEnemy();
+		//
+			if(mGrabber){
+		//
+				Camera.main.GetComponent<CameraShaker> ().RumbleController(.5f, .5f);
+			}
 		}
 //		if(Random.value < 0.05f)
 //		{

@@ -7,7 +7,8 @@ public class BigBlastEmblem : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		
+
+		Camera.main.GetComponent<CameraShaker> ().RumbleController(.5f, .5f);
 	}
 	
 	// Update is called once per frame

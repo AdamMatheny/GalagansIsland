@@ -536,11 +536,15 @@ public class PlayerShipController : MonoBehaviour
 			{
 				mLaserFist.SetActive(true);
 				mHaveLaserFist = false;
+
+				Camera.main.GetComponent<CameraShaker> ().RumbleController(.3f, 5.5f);
 			}
 			else if(mHaveBigBlast)
 			{
 				mBigBlast.SetActive(true);
 				mHaveBigBlast = false;
+
+				Camera.main.GetComponent<CameraShaker> ().RumbleController(.6f, 2f);
 			}
 		}
 

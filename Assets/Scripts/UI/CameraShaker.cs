@@ -6,13 +6,15 @@ using InControl;
 public class CameraShaker : MonoBehaviour 
 {
 
+	public float rumbleTime;
+
 	float strength = 2.5f;
 	float duration = .25f;
 
-	public float mRedShakeStrength = 1.3f;
+	public float mRedShakeStrength = .8f;
 	public float mRedShakeDuration = .25f;
 
-	public float mTealShakeStrength = 1.3f;
+	public float mTealShakeStrength = .75f;
 	public float mTealShakeDuration = .3f;
 	
 	public float mGreenShakeStrength = 1.3f;
@@ -42,13 +44,25 @@ public class CameraShaker : MonoBehaviour
 	void Update () 
 	{
 
+		if (rumbleTime <= 0) {
+
+			GamePad.SetVibration (0, 0, 0);
+			GamePad.SetVibration (PlayerIndex.Two, 0, 0);
+
+			rumbleTime = 0;
+		} else {
+
+			rumbleTime -= Time.deltaTime;
+		}
+
 		if (mShakeTime > 0 && Time.timeScale != 0f)
 		{
 			transform.position = mStartingPosition+(Random.insideUnitSphere * strength);
 			mShakeTime -= Time.deltaTime;
 #if !UNITY_ANDROID
-			GamePad.SetVibration(0, strength, strength);
-			GamePad.SetVibration(PlayerIndex.Two, strength, strength);
+			//Took these out for better customizable Rumble ~ Jonathan
+			//GamePad.SetVibration(0, strength, strength);
+			//GamePad.SetVibration(PlayerIndex.Two, strength, strength);
 
 			
 
@@ -58,14 +72,22 @@ public class CameraShaker : MonoBehaviour
 		else
 		{
 #if !UNITY_ANDROID
-			GamePad.SetVibration(0, 0, 0);
-			GamePad.SetVibration(PlayerIndex.Two, 0, 0);
+			//GamePad.SetVibration(0, 0, 0);
+			//GamePad.SetVibration(PlayerIndex.Two, 0, 0);
 
 #endif
 			//InputManager.ActiveDevice.Vibrate(0f);
 			mShakeTime = 0f;
 			transform.position = mStartingPosition;
 		}
+	}
+
+	public void RumbleController(float rumbleStrength, float rumbleDuration){
+
+		GamePad.SetVibration(0, rumbleStrength, rumbleStrength);
+		GamePad.SetVibration(PlayerIndex.Two, rumbleStrength, rumbleStrength);
+
+		rumbleTime = rumbleDuration;
 	}
 
 	public void ShakeCamera()
