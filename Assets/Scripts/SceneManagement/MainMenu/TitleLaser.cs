@@ -7,6 +7,8 @@ public class TitleLaser : MonoBehaviour
 
 	public void DestroyShips()
 	{
+		Camera.main.GetComponent<CameraShaker> ().RumbleController(.3f, 1f);
+
 		mMenuUI.GetComponent<GetSome>().StartGame();
 	}
 }

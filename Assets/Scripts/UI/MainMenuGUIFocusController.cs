@@ -68,7 +68,6 @@ public class MainMenuGUIFocusController : MonoBehaviour
 			case 3:
 				if(mUIFocusTimer<=0f)
 				{
-					Debug.Log("Opening Volume menu"+mUIFocusTimer);
 					mVolumeMenu.mMenuOpen = true;
 				}
 				break;

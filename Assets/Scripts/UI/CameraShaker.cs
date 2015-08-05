@@ -82,12 +82,19 @@ public class CameraShaker : MonoBehaviour
 		}
 	}
 
-	public void RumbleController(float rumbleStrength, float rumbleDuration){
+	public void RumbleController(float rumbleStrength, float rumbleDuration)
+	{
+		if(PlayerPrefs.GetInt("RumbleOn")==0)
+		{
+			GamePad.SetVibration(0, rumbleStrength, rumbleStrength);
+			GamePad.SetVibration(PlayerIndex.Two, rumbleStrength, rumbleStrength);
 
-		GamePad.SetVibration(0, rumbleStrength, rumbleStrength);
-		GamePad.SetVibration(PlayerIndex.Two, rumbleStrength, rumbleStrength);
-
-		rumbleTime = rumbleDuration;
+			rumbleTime = rumbleDuration;
+		}
+		else
+		{
+			rumbleTime = 0f;
+		}
 	}
 
 	public void ShakeCamera()

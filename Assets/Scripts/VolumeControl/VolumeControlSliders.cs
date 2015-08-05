@@ -14,7 +14,8 @@ public class VolumeControlSliders : MonoBehaviour
 	public int mMenuFocus = 0;
 		/* 0: SFX
 		 * 1: BGM
-		 * 2: Back
+		 * 2: Rumble
+		 * 3: Back
 		 */
 	[SerializeField] private Text mSFXText;
 	[SerializeField] private Slider mSFXSliderBar;
@@ -23,6 +24,11 @@ public class VolumeControlSliders : MonoBehaviour
 	[SerializeField] private Slider mBGMSliderBar;
 	[SerializeField] private Image mBGMSliderFill;
 	[SerializeField] private Text mBackButton;
+
+	[SerializeField] private Text mRumbleSelect;
+	[SerializeField] private Text mRumbleOn;
+	[SerializeField] private Text mRumbleOff;
+
 	[SerializeField] private Color mNormalColor;
 	[SerializeField] private Color mFocusColor;
 	public float mUIFocusTimer = 0.2f;
@@ -38,6 +44,8 @@ public class VolumeControlSliders : MonoBehaviour
 			PlayerPrefs.SetFloat("BGMVolume", 0.4f);
 			PlayerPrefs.SetFloat("SFXVolume", 0.4f);
 			PlayerPrefs.SetInt("FirstTimeVolumeSetup", 1);
+			PlayerPrefs.SetInt("RumbleOn", 0);
+
 		}
 	}
 	
@@ -74,14 +82,14 @@ public class VolumeControlSliders : MonoBehaviour
 
 					if (Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Thrusters") || Input.GetButtonDown("FireGun") || (InputManager.ActiveDevice.Action1.IsPressed))
 					{
-						if(mMenuFocus == 2)
+						if(mMenuFocus == 3)
 						{
 							CloseVolumeMenu();
 						}
 					}
 					
 					
-					//Adjust volume up and down ~Adam
+					//Adjust volume up and down (Right Input)~Adam
 					else if(Input.GetAxisRaw ("Horizontal") > 0 || InputManager.ActiveDevice.DPadRight.WasPressed)
 					{
 						switch(mMenuFocus)
@@ -103,6 +111,9 @@ public class VolumeControlSliders : MonoBehaviour
 							mUIFocusTimer = 0.2f;
 							break;
 						case 2:
+							PlayerPrefs.SetInt("RumbleOn", 1);
+							break;
+						case 3:
 							break;
 						default:
 							break;
@@ -110,7 +121,7 @@ public class VolumeControlSliders : MonoBehaviour
 					}
 					
 					
-					//Move from score quit game to insert coin ~Adam
+					//Adjust volume up and down (Left Input)~Adam
 					else if(Input.GetAxisRaw ("Horizontal") < 0 || InputManager.ActiveDevice.DPadLeft.WasPressed)
 					{
 						switch(mMenuFocus)
@@ -132,6 +143,9 @@ public class VolumeControlSliders : MonoBehaviour
 							mUIFocusTimer = 0.2f;
 							break;
 						case 2:
+							PlayerPrefs.SetInt("RumbleOn", 0);
+							break;
+						case 3:
 							break;
 						default:
 							break;
@@ -139,8 +153,7 @@ public class VolumeControlSliders : MonoBehaviour
 					}
 					
 					
-					//Switch between options
-					//Move from focusing on "Insert Coin" to focusing on the CoOp Start ~Adam
+					//Switch between options (Down input) ~Adam
 					if(Input.GetAxisRaw ("Vertical") < 0 || InputManager.ActiveDevice.DPadDown.WasPressed)
 					{
 						switch(mMenuFocus)
@@ -154,13 +167,17 @@ public class VolumeControlSliders : MonoBehaviour
 							mUIFocusTimer = 0.2f;
 							break;
 						case 2:
+							mMenuFocus = 3;
+							mUIFocusTimer = 0.2f;
+							break;
+						case 3:
 							break;
 						default:
 							break;
 						}				
 						
 					}
-					//Move from focusing on CoOpStart to focusing on the "Insert Coin" ~Adam
+					//Switch between options (Up input) ~Adam
 					else if(Input.GetAxisRaw ("Vertical") > 0 || InputManager.ActiveDevice.DPadUp.WasPressed)
 					{
 						switch(mMenuFocus)
@@ -173,6 +190,10 @@ public class VolumeControlSliders : MonoBehaviour
 							break;
 						case 2:
 							mMenuFocus = 1;
+							mUIFocusTimer = 0.2f;
+							break;
+						case 3:
+							mMenuFocus = 2;
 							mUIFocusTimer = 0.2f;
 							break;
 						default:
@@ -190,6 +211,7 @@ public class VolumeControlSliders : MonoBehaviour
 						mBGMText.color = mNormalColor;
 						mBGMSliderFill.color = mNormalColor;
 						mBackButton.color = mNormalColor;
+						mRumbleSelect.color = mNormalColor;
 						break;
 					case 1:
 						mSFXText.color = mNormalColor;
@@ -197,18 +219,39 @@ public class VolumeControlSliders : MonoBehaviour
 						mBGMText.color = mFocusColor;
 						mBGMSliderFill.color = mFocusColor;
 						mBackButton.color = mNormalColor;
+						mRumbleSelect.color = mNormalColor;
 						break;
 					case 2:
 						mSFXText.color = mNormalColor;
 						mSFXSliderFill.color = mNormalColor;
 						mBGMText.color = mNormalColor;
 						mBGMSliderFill.color = mNormalColor;
+						mBackButton.color = mNormalColor;
+						mRumbleSelect.color = mFocusColor;
+						break;
+					case 3:
+						mSFXText.color = mNormalColor;
+						mSFXSliderFill.color = mNormalColor;
+						mBGMText.color = mNormalColor;
+						mBGMSliderFill.color = mNormalColor;
 						mBackButton.color = mFocusColor;
+						mRumbleSelect.color = mNormalColor;
 						break;
 					default:
 						break;
 					}
 				}
+				if(PlayerPrefs.GetInt("RumbleOn") == 1)
+				{
+					mRumbleOff.color = mFocusColor;
+					mRumbleOn.color = mNormalColor;
+				}
+				else
+				{
+					mRumbleOff.color = mNormalColor;
+					mRumbleOn.color = mFocusColor;
+				}
+
 			}
 			else
 			{

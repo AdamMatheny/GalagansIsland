@@ -50,6 +50,11 @@ public class AspectRatioPositionScaleAdjuster : MonoBehaviour
 			GetComponent<RectTransform>().localPosition = mNineBySixteenPos;
 			GetComponent<RectTransform>().localScale = mNineBySixteenScale;
 		}
+		else
+		{
+			GetComponent<RectTransform>().localPosition = mFourByThreePos;
+			GetComponent<RectTransform>().localScale = mFourByThreeScale;
+		}
 
 	}
 
