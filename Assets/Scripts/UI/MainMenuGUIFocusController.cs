@@ -100,14 +100,14 @@ public class MainMenuGUIFocusController : MonoBehaviour
 
 
 			//Move from Insert Coin to Options (left) ~Adam
-			if((Input.GetAxis ("Horizontal") < 0f || InputManager.ActiveDevice.DPadLeft.IsPressed) && mUIFocusTimer <= 0f && mMainMenuButtonFocus == 0 && mGameStarter.isActiveAndEnabled == true)
+			if((Input.GetAxis ("Horizontal") < 0f ||Input.GetAxis ("HorizontalP2") < 0f || InputManager.ActiveDevice.DPadLeft.IsPressed) && mUIFocusTimer <= 0f && mMainMenuButtonFocus == 0 && mGameStarter.isActiveAndEnabled == true)
 			{
 				mMainMenuButtonFocus = 3;
 				mUIFocusTimer = 0.2f;
 			}
 
 			//Move from insert Options to Insert Coin (right) ~Adam
-			if((Input.GetAxis ("Horizontal") > 0f || InputManager.ActiveDevice.DPadRight.IsPressed) && mUIFocusTimer <= 0f && mMainMenuButtonFocus == 3 && mGameStarter.isActiveAndEnabled == true)
+			if((Input.GetAxis ("Horizontal") > 0f || Input.GetAxis ("HorizontalP2") > 0f || InputManager.ActiveDevice.DPadRight.IsPressed) && mUIFocusTimer <= 0f && mMainMenuButtonFocus == 3 && mGameStarter.isActiveAndEnabled == true)
 			{
 				mMainMenuButtonFocus = 0;
 				mUIFocusTimer = 0.2f;
@@ -115,14 +115,14 @@ public class MainMenuGUIFocusController : MonoBehaviour
 
 
 			//Move from Insert Coin to Quit Game (right) ~Adam
-			else if((Input.GetAxis ("Horizontal") > 0f || InputManager.ActiveDevice.DPadRight.IsPressed) && mUIFocusTimer <= 0f && mMainMenuButtonFocus == 0)
+			else if((Input.GetAxis ("Horizontal") > 0f || Input.GetAxis ("HorizontalP2") > 0f || InputManager.ActiveDevice.DPadRight.IsPressed) && mUIFocusTimer <= 0f && mMainMenuButtonFocus == 0)
 			{
 				mMainMenuButtonFocus = 1;
 				mUIFocusTimer = 0.2f;
 			}
 
 			//Move from Quit Game to Insert Coin (left) ~Adam
-			else if((Input.GetAxis ("Horizontal") < 0f || InputManager.ActiveDevice.DPadLeft.IsPressed) && mUIFocusTimer <= 0f && mMainMenuButtonFocus == 1)
+			else if((Input.GetAxis ("Horizontal") < 0f || Input.GetAxis ("HorizontalP2") < 0f || InputManager.ActiveDevice.DPadLeft.IsPressed) && mUIFocusTimer <= 0f && mMainMenuButtonFocus == 1)
 			{
 				mMainMenuButtonFocus = 0;
 				mUIFocusTimer = 0.2f;
@@ -131,13 +131,13 @@ public class MainMenuGUIFocusController : MonoBehaviour
 
 
 			//Move from focusing on "Insert Coin" to focusing on the CoOp Start (down) ~Adam
-			else if( ( (Input.GetAxis ("Vertical") < 0f || InputManager.ActiveDevice.DPadDown.IsPressed) && mUIFocusTimer<= 0f && mMainMenuButtonFocus == 0) && !Application.isMobilePlatform )
+			else if( ( (Input.GetAxis ("Vertical") < 0f || Input.GetAxis ("VerticalP2") < 0f || InputManager.ActiveDevice.DPadDown.IsPressed) && mUIFocusTimer<= 0f && mMainMenuButtonFocus == 0) && !Application.isMobilePlatform )
 			{
 				mMainMenuButtonFocus = 2;
 				mUIFocusTimer = 0.2f;
 			}
 			//Move from focusing on CoOpStart to focusing on the "Insert Coin" (up) ~Adam
-			else if((Input.GetAxis ("Vertical") > 0f || InputManager.ActiveDevice.DPadUp.IsPressed) && mUIFocusTimer<= 0f && mMainMenuButtonFocus == 2)
+			else if((Input.GetAxis ("Vertical") > 0f || Input.GetAxis ("VerticalP2") > 0f || InputManager.ActiveDevice.DPadUp.IsPressed) && mUIFocusTimer<= 0f && mMainMenuButtonFocus == 2)
 			{
 				mMainMenuButtonFocus = 0;
 				mUIFocusTimer = 0.2f;

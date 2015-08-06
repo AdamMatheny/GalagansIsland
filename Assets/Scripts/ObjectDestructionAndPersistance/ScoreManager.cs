@@ -63,6 +63,12 @@ public class ScoreManager : MonoBehaviour
 	public int mP1Score = 0;
 	public int mP2Score = 0;
 
+
+	//For showing what power up is going to spawn next ~Adam
+	[SerializeField] private Image mNextPowerUpImage;
+	[SerializeField] private Sprite mShieldEmblemSprite;
+	[SerializeField] private Sprite mTripleEmblemSprite;
+
 	void StoreHighscore(int newHighscore)
 	{
 		int oldHighscore = PlayerPrefs.GetInt("highscore", 0);    
@@ -288,6 +294,19 @@ public class ScoreManager : MonoBehaviour
 		//mHighScoreText.text = "Return to Wayward Pines!";
 
 		StoreHighscore (mScore);
+
+		//Show what power up is spawning next ~Adam
+		if(mNextPowerUpImage != null && mShieldEmblemSprite != null && mTripleEmblemSprite != null)
+		{
+			if(mShieldScore < mPowerUpScore)
+			{
+				mNextPowerUpImage.sprite = mShieldEmblemSprite;
+			}
+			else
+			{
+				mNextPowerUpImage.sprite = mTripleEmblemSprite;
+			}
+		}
 
 	}//END of Update()
 

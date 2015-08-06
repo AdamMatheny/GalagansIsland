@@ -47,6 +47,16 @@ public class VolumeControlSliders : MonoBehaviour
 			PlayerPrefs.SetInt("RumbleOn", 0);
 
 		}
+
+		//Disable Rumble on Mac ~Adam
+		if(Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.OSXWebPlayer
+		   || Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.OSXDashboardPlayer)
+		{
+			PlayerPrefs.SetInt("RumbleOn", 1);
+			mRumbleSelect.gameObject.SetActive(false);
+			mRumbleOn.gameObject.SetActive(false);
+			mRumbleOff.gameObject.SetActive(false);
+		}
 	}
 	
 	// Update is called once per frame
@@ -90,7 +100,7 @@ public class VolumeControlSliders : MonoBehaviour
 					
 					
 					//Adjust volume up and down (Right Input)~Adam
-					else if(Input.GetAxisRaw ("Horizontal") > 0 || InputManager.ActiveDevice.DPadRight.WasPressed)
+					else if(Input.GetAxisRaw ("Horizontal") > 0 || Input.GetAxisRaw ("HorizontalP2") > 0 || InputManager.ActiveDevice.DPadRight.WasPressed)
 					{
 						switch(mMenuFocus)
 						{
@@ -122,7 +132,7 @@ public class VolumeControlSliders : MonoBehaviour
 					
 					
 					//Adjust volume up and down (Left Input)~Adam
-					else if(Input.GetAxisRaw ("Horizontal") < 0 || InputManager.ActiveDevice.DPadLeft.WasPressed)
+					else if(Input.GetAxisRaw ("Horizontal") < 0 || Input.GetAxisRaw ("HorizontalP2") < 0 || InputManager.ActiveDevice.DPadLeft.WasPressed)
 					{
 						switch(mMenuFocus)
 						{
@@ -154,7 +164,7 @@ public class VolumeControlSliders : MonoBehaviour
 					
 					
 					//Switch between options (Down input) ~Adam
-					if(Input.GetAxisRaw ("Vertical") < 0 || InputManager.ActiveDevice.DPadDown.WasPressed)
+					if(Input.GetAxisRaw ("Vertical") < 0 || Input.GetAxisRaw ("VerticalP2") < 0 || InputManager.ActiveDevice.DPadDown.WasPressed)
 					{
 						switch(mMenuFocus)
 						{
@@ -163,7 +173,16 @@ public class VolumeControlSliders : MonoBehaviour
 							mUIFocusTimer = 0.2f;
 							break;
 						case 1:
-							mMenuFocus = 2;
+							//Skip the rumble option on Mac~Adam
+							if(Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.OSXWebPlayer
+							   || Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.OSXDashboardPlayer)
+							{
+								mMenuFocus = 3;
+							}
+							else
+							{
+								mMenuFocus = 2;
+							}
 							mUIFocusTimer = 0.2f;
 							break;
 						case 2:
@@ -178,7 +197,7 @@ public class VolumeControlSliders : MonoBehaviour
 						
 					}
 					//Switch between options (Up input) ~Adam
-					else if(Input.GetAxisRaw ("Vertical") > 0 || InputManager.ActiveDevice.DPadUp.WasPressed)
+					else if(Input.GetAxisRaw ("Vertical") > 0 || Input.GetAxisRaw ("VerticalP2") > 0 || InputManager.ActiveDevice.DPadUp.WasPressed)
 					{
 						switch(mMenuFocus)
 						{
@@ -193,7 +212,16 @@ public class VolumeControlSliders : MonoBehaviour
 							mUIFocusTimer = 0.2f;
 							break;
 						case 3:
-							mMenuFocus = 2;
+							//Skip the rumble option on Mac~Adam
+							if(Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.OSXWebPlayer
+							   || Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.OSXDashboardPlayer)
+							{
+								mMenuFocus = 1;
+							}
+							else
+							{
+								mMenuFocus = 2;
+							}
 							mUIFocusTimer = 0.2f;
 							break;
 						default:

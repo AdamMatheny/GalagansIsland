@@ -328,8 +328,12 @@ public class PlayerShipController : MonoBehaviour
 		//Make the player drift faster towards the bottom while firing ~Adam
 		if(mToggleFireOn)
 		{
-			//transform.position += new Vector3(0f,-0.00255f*Application.loadedLevel, 0f);
-			transform.position += new Vector3(0f,-0.06375f*Application.loadedLevel/(Application.levelCount-3), 0f);
+			//Don't drift down from firing if you have a second ship (because it would be pushing you back up) ~Adam
+			if(!mShipRecovered)
+			{
+				//transform.position += new Vector3(0f,-0.00255f*Application.loadedLevel, 0f);
+				transform.position += new Vector3(0f,-0.06375f*Application.loadedLevel/(Application.levelCount-3), 0f);
+			}
 			//Decrease the timer on triple bullets while firing ~Adam
 			mThreeBulletTimer -= Time.deltaTime;
 		}

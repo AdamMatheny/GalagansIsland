@@ -78,7 +78,7 @@ public class PauseManager : MonoBehaviour
 				//For using keyboard/Gamepad to navigate pause menu ~Adam
 				if(mUIFocusTimer <= 0f)
 				{
-					if(Input.GetAxisRaw ("Vertical") < 0 || InputManager.ActiveDevice.DPadDown.WasPressed)
+				if(Input.GetAxisRaw ("Vertical") < 0 || Input.GetAxisRaw ("VerticalP2") < 0 || InputManager.ActiveDevice.DPadDown.WasPressed)
 					{
 					Debug.Log("Down button pressed");
 						switch(mPauseButtonFocus)
@@ -99,7 +99,7 @@ public class PauseManager : MonoBehaviour
 							break;
 						}
 					}
-				else if(Input.GetAxisRaw ("Vertical") > 0 || InputManager.ActiveDevice.DPadUp.WasPressed)
+				else if(Input.GetAxisRaw ("Vertical") > 0 || Input.GetAxisRaw ("VerticalP2") > 0 || InputManager.ActiveDevice.DPadUp.WasPressed)
 					{
 					Debug.Log("Up button pressed");
 					switch(mPauseButtonFocus)
