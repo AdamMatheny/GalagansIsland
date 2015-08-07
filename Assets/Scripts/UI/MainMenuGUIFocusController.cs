@@ -99,35 +99,50 @@ public class MainMenuGUIFocusController : MonoBehaviour
 		{
 
 
-			//Move from Insert Coin to Options (left) ~Adam
-			if((Input.GetAxis ("Horizontal") < 0f ||Input.GetAxis ("HorizontalP2") < 0f || InputManager.ActiveDevice.DPadLeft.IsPressed) && mUIFocusTimer <= 0f && mMainMenuButtonFocus == 0 && mGameStarter.isActiveAndEnabled == true)
+			//Left Input ~Adam
+			if( (Input.GetAxis ("Horizontal") < 0f ||Input.GetAxis ("HorizontalP2") < 0f || InputManager.ActiveDevice.DPadLeft.IsPressed) && mUIFocusTimer <= 0f )
 			{
-				mMainMenuButtonFocus = 3;
-				mUIFocusTimer = 0.2f;
+				//Move from Insert Coin to Options ~Adam
+				if(mMainMenuButtonFocus == 0 && mGameStarter.isActiveAndEnabled == true)
+				{
+					mMainMenuButtonFocus = 3;
+					mUIFocusTimer = 0.2f;
+				}
+				//Move from Start Co-Op to Options
+				else if(mMainMenuButtonFocus == 2 && mGameStarter.isActiveAndEnabled == true)
+				{
+					mMainMenuButtonFocus = 3;
+					mUIFocusTimer = 0.2f;
+				}//Move from Quit Game to Insert Coin ~Adam
+				else if (mMainMenuButtonFocus == 1)
+				{
+					mMainMenuButtonFocus = 0;
+					mUIFocusTimer = 0.2f;
+				}
 			}
 
-			//Move from insert Options to Insert Coin (right) ~Adam
-			if((Input.GetAxis ("Horizontal") > 0f || Input.GetAxis ("HorizontalP2") > 0f || InputManager.ActiveDevice.DPadRight.IsPressed) && mUIFocusTimer <= 0f && mMainMenuButtonFocus == 3 && mGameStarter.isActiveAndEnabled == true)
+			//Right Input ~Adam
+			if( (Input.GetAxis ("Horizontal") > 0f || Input.GetAxis ("HorizontalP2") > 0f || InputManager.ActiveDevice.DPadRight.IsPressed) && mUIFocusTimer <= 0f)
 			{
-				mMainMenuButtonFocus = 0;
-				mUIFocusTimer = 0.2f;
+				//Move from insert Options to Insert Coin ~Adam
+				if(mMainMenuButtonFocus == 3 && mGameStarter.isActiveAndEnabled == true)
+				{
+					mMainMenuButtonFocus = 0;
+					mUIFocusTimer = 0.2f;
+				}
+				//Move from Insert Coin to Quit Game ~Adam
+				else if(mMainMenuButtonFocus == 0)
+				{
+					mMainMenuButtonFocus = 1;
+					mUIFocusTimer = 0.2f;
+				}
+				//Move from Start Co-Op to Quit Game ~Adam
+				else if(mMainMenuButtonFocus == 2)
+				{
+					mMainMenuButtonFocus = 1;
+					mUIFocusTimer = 0.2f;
+				}
 			}
-
-
-			//Move from Insert Coin to Quit Game (right) ~Adam
-			else if((Input.GetAxis ("Horizontal") > 0f || Input.GetAxis ("HorizontalP2") > 0f || InputManager.ActiveDevice.DPadRight.IsPressed) && mUIFocusTimer <= 0f && mMainMenuButtonFocus == 0)
-			{
-				mMainMenuButtonFocus = 1;
-				mUIFocusTimer = 0.2f;
-			}
-
-			//Move from Quit Game to Insert Coin (left) ~Adam
-			else if((Input.GetAxis ("Horizontal") < 0f || Input.GetAxis ("HorizontalP2") < 0f || InputManager.ActiveDevice.DPadLeft.IsPressed) && mUIFocusTimer <= 0f && mMainMenuButtonFocus == 1)
-			{
-				mMainMenuButtonFocus = 0;
-				mUIFocusTimer = 0.2f;
-			}
-
 
 
 			//Move from focusing on "Insert Coin" to focusing on the CoOp Start (down) ~Adam
