@@ -6,6 +6,8 @@ using XInputDotNetPure; // Required in C#
 
 public class PlayerShipController : MonoBehaviour 
 {
+	public bool secondShipOnHip = true;
+
 	public GameObject mSecondShipObject; //Using this to modify the bullet time in the EnemyBulletControlle, if there is a better way to do this please apply ~ Jonathan
 
 	public GameObject mPlayerClone;
@@ -154,6 +156,7 @@ public class PlayerShipController : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+
 //		prevState = state;
 //		state = GamePad.GetState(playerIndex);
 
@@ -216,7 +219,15 @@ public class PlayerShipController : MonoBehaviour
 			{
 				mSpinning = 0f;
 				mMainShip.transform.rotation = Quaternion.identity;
-				mSecondShip.transform.rotation = Quaternion.identity;
+
+				if(secondShipOnHip){
+
+					mSecondShip.transform.rotation = new Quaternion(0, 0, 0, 0);
+				}else{
+
+					mSecondShipObject.transform.rotation = new Quaternion(0, 0, 180, 0);
+				}
+				//mSecondShip.transform.rotation = Quaternion.identity;
 				mSecondShip.transform.rotation = new Quaternion(0, 0, 180, 0);
 			}
 		}
@@ -825,6 +836,27 @@ public class PlayerShipController : MonoBehaviour
 				}
 			}
 		}
+
+		if (Input.GetKeyDown (KeyCode.V) || mPlayerOneInputDevice.LeftBumper.WasPressed) {
+			
+			secondShipOnHip = !secondShipOnHip;
+			
+			if (mShipRecovered) {
+				
+				if(secondShipOnHip){
+					
+					mSecondShipObject.transform.position = new Vector3(mSecondShipObject.transform.position.x - 3.282f, mSecondShipObject.transform.position.y + 3.288f, mSecondShipObject.transform.position.z);
+					mSecondShipObject.transform.localScale = new Vector3(8, 8, 8);
+					mSecondShipObject.transform.rotation = new Quaternion(0, 0, 0, 0);			
+				}else{
+					
+					mSecondShipObject.transform.position = new Vector3(mSecondShipObject.transform.position.x + 3.5803631f, mSecondShipObject.transform.position.y - 3.288f, mSecondShipObject.transform.position.z);
+					mSecondShipObject.transform.localScale = new Vector3(-8, 8, 8);
+					mSecondShipObject.transform.rotation = new Quaternion(0, 0, 180, 0);	
+				}
+			}
+		}
+
 
 		#region For using the twin-stick clone
 //		//If not mobile, base ship recoved on whether or not the clone ship is alive/active ~Adam
