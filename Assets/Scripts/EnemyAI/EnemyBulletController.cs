@@ -197,7 +197,7 @@ public class EnemyBulletController : MonoBehaviour
 		//Also kill the ship FINALLY!!! ~ Jonathan
 		if (mPlayer.GetComponent<PlayerShipController> ().mShipRecovered) {
 
-			if(Vector3.Distance(this.transform.position, mPlayer.GetComponent<PlayerShipController> ().mSecondShipObject.transform.position) <= 2.5f){
+			if(Vector3.Distance(this.transform.position, mPlayer.GetComponent<PlayerShipController> ().mSecondShip.transform.position) <= 2.5f){
 
 				if(FindObjectOfType<SlowTimeController>()!= null)
 				{
@@ -205,7 +205,7 @@ public class EnemyBulletController : MonoBehaviour
 				}
 			}
 
-			if(Vector3.Distance(this.transform.position, mPlayer.GetComponent<PlayerShipController> ().mSecondShipObject.transform.position) <= 1.5f){
+			if(Vector3.Distance(this.transform.position, mPlayer.GetComponent<PlayerShipController> ().mSecondShip.transform.position) <= 1.5f){
 
 				Debug.Log("The second ship was shot");
 				mScoreController.LoseALife();

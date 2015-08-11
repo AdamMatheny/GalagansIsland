@@ -8,8 +8,6 @@ public class PlayerShipController : MonoBehaviour
 {
 	public bool secondShipOnHip = true;
 
-	public GameObject mSecondShipObject; //Using this to modify the bullet time in the EnemyBulletControlle, if there is a better way to do this please apply ~ Jonathan
-
 	public GameObject mPlayerClone;
 
 	//For multiplaye co-op ~Adam
@@ -220,15 +218,17 @@ public class PlayerShipController : MonoBehaviour
 				mSpinning = 0f;
 				mMainShip.transform.rotation = Quaternion.identity;
 
-				if(secondShipOnHip){
+				if(secondShipOnHip)
+				{
+					mSecondShip.transform.rotation = Quaternion.identity;
+				}
+				else
+				{
 
-					mSecondShip.transform.rotation = new Quaternion(0, 0, 0, 0);
-				}else{
-
-					mSecondShipObject.transform.rotation = new Quaternion(0, 0, 180, 0);
+					mSecondShip.transform.rotation = Quaternion.Euler(0,0,180);
 				}
 				//mSecondShip.transform.rotation = Quaternion.identity;
-				mSecondShip.transform.rotation = new Quaternion(0, 0, 180, 0);
+//				mSecondShip.transform.rotation = Quaternion.Euler(0,0,180);
 			}
 		}
 		
@@ -323,8 +323,14 @@ public class PlayerShipController : MonoBehaviour
 			{
 				if(shipTrail.gameObject != mDamageParticles)
 				{
-					if(!mShipRecovered)
+					if(!(mShipRecovered && !secondShipOnHip))
+					{
 						shipTrail.enableEmission = true;
+					}
+					else
+					{
+						shipTrail.enableEmission = false;
+					}
 				}
 			}
 			
@@ -339,8 +345,8 @@ public class PlayerShipController : MonoBehaviour
 		//Make the player drift faster towards the bottom while firing ~Adam
 		if(mToggleFireOn)
 		{
-			//Don't drift down from firing if you have a second ship (because it would be pushing you back up) ~Adam
-			if(!mShipRecovered)
+			//Don't drift down from firing if you have a second ship pointing down (because it would be pushing you back up) ~Adam
+			if(!(mShipRecovered && !secondShipOnHip) )
 			{
 				//transform.position += new Vector3(0f,-0.00255f*Application.loadedLevel, 0f);
 				transform.position += new Vector3(0f,-0.06375f*Application.loadedLevel/(Application.levelCount-3), 0f);
@@ -722,8 +728,14 @@ public class PlayerShipController : MonoBehaviour
 				{
 					if(shipTrail.gameObject != mDamageParticles)
 					{
-						if(!mShipRecovered)
+						if(!(mShipRecovered && !secondShipOnHip))
+						{
 							shipTrail.enableEmission = true;
+						}
+						else
+						{
+							shipTrail.enableEmission = false;
+						}
 					}
 				}
 			}
@@ -818,8 +830,14 @@ public class PlayerShipController : MonoBehaviour
 				{
 					if(shipTrail.gameObject != mDamageParticles)
 					{
-						if(!mShipRecovered)
+						if(secondShipOnHip)
+						{
 							shipTrail.enableEmission = true;
+						}
+						else
+						{
+							shipTrail.enableEmission = false;
+						}
 					}
 				}
 			}
@@ -837,22 +855,27 @@ public class PlayerShipController : MonoBehaviour
 			}
 		}
 
-		if (Input.GetKeyDown (KeyCode.V) || mPlayerOneInputDevice.LeftBumper.WasPressed) {
+		if (Input.GetKeyDown (KeyCode.V) || mPlayerOneInputDevice.LeftBumper.WasPressed) 
+		{
 			
-			secondShipOnHip = !secondShipOnHip;
-			
-			if (mShipRecovered) {
-				
-				if(secondShipOnHip){
+
+			if (mShipRecovered) 
+			{
+				secondShipOnHip = !secondShipOnHip;
+
+				if(secondShipOnHip)
+				{
 					
-					mSecondShipObject.transform.position = new Vector3(mSecondShipObject.transform.position.x - 3.282f, mSecondShipObject.transform.position.y + 3.288f, mSecondShipObject.transform.position.z);
-					mSecondShipObject.transform.localScale = new Vector3(8, 8, 8);
-					mSecondShipObject.transform.rotation = new Quaternion(0, 0, 0, 0);			
-				}else{
+					mSecondShip.transform.localPosition = new Vector3(-3.5f, -0.1f,-0.53f);
+					mSecondShip.transform.localScale = new Vector3(8, 8, 8);
+					mSecondShip.transform.rotation = Quaternion.identity;			
+				}
+				else
+				{
 					
-					mSecondShipObject.transform.position = new Vector3(mSecondShipObject.transform.position.x + 3.5803631f, mSecondShipObject.transform.position.y - 3.288f, mSecondShipObject.transform.position.z);
-					mSecondShipObject.transform.localScale = new Vector3(-8, 8, 8);
-					mSecondShipObject.transform.rotation = new Quaternion(0, 0, 180, 0);	
+					mSecondShip.transform.localPosition = new Vector3(0, -3.3f,-0.53f);
+					mSecondShip.transform.localScale = new Vector3(-8, 8, 8);
+					mSecondShip.transform.rotation = Quaternion.Euler(0,0,180);
 				}
 			}
 		}
@@ -870,11 +893,11 @@ public class PlayerShipController : MonoBehaviour
 	void LateUpdate () 
 	{
 		//Keep ship within screen bounds
-		/*if (transform.position.x < -16.5 && mShipRecovered)// && Application.isMobilePlatform) (from when we were doing twin-stick
+		if (transform.position.x < -16.5 && mShipRecovered && secondShipOnHip)// && Application.isMobilePlatform) (from when we were doing twin-stick
 		{
 			transform.position = new Vector3(-16.5f, transform.position.y, transform.position.z);
 		}																							//Second ship is in new position now ~ Jonathan
-		else*/ if(transform.position.x < -20f)
+		else if(transform.position.x < -20f)
 		{
 			transform.position = new Vector3(-20f, transform.position.y, transform.position.z);
 		}
@@ -882,7 +905,7 @@ public class PlayerShipController : MonoBehaviour
 		{
 			transform.position = new Vector3(20f, transform.position.y, transform.position.z);
 		}
-		if(transform.position.y < -29.5f && mShipRecovered) //Original is -33, but there is a new second ship position now ~ Jonathan
+		if(transform.position.y < -29.5f && mShipRecovered && !secondShipOnHip) //Original is -33, but there is a new second ship position now ~ Jonathan
 		{
 			transform.position = new Vector3(transform.position.x, -29.5f, transform.position.z);
 		}else if(transform.position.y < -33f)

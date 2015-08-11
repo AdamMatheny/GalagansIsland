@@ -25,7 +25,7 @@ public class GetSome : MonoBehaviour
 	[SerializeField] private GUIStyle mCoOpStyle;
 	[SerializeField] private GUIStyle mShowVolumeMenuStyle;
 	//For having a delay to destroy enemies when we start the game ~Adam
-	float mGameStartTimer = 6f;
+	float mGameStartTimer = 3f;
 	bool mStartingGame = false;
 
 
@@ -40,6 +40,8 @@ public class GetSome : MonoBehaviour
 	VolumeControlSliders mVolumeMenu;
 	//public float timer = .3f;
 
+	//For showing the controls screen as a "loading screen" during startup ~Adam
+	[SerializeField] private GameObject mControlsScreen;
 	void Start()
 	{
 		GetComponent<Renderer>().material.color = new Color(0f,0f,0f,0f);
@@ -57,11 +59,18 @@ public class GetSome : MonoBehaviour
 			GetComponent<Renderer>().material.color = Color.Lerp(GetComponent<Renderer>().material.color, new Color(0f,0f,0f,1f), 0.04f);
 
 			mGameStartTimer-=Time.deltaTime;
-			
-			if(mGameStartTimer < Time.time)
+
+
+			if(mGameStartTimer <= 0f)
 			{
-				Time.timeScale = 1f;
-				Application.LoadLevel(1);
+
+				mControlsScreen.SetActive (true);
+
+				if(Input.anyKeyDown || InputManager.ActiveDevice.AnyButton.IsPressed)
+				{
+					Time.timeScale = 1f;
+					Application.LoadLevel(1);
+				}
 			}
 		}
 
@@ -223,7 +232,6 @@ public class GetSome : MonoBehaviour
 		Destroy(FindObjectOfType<PlayerShipController>().gameObject);
 		Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
 		Destroy(FindObjectOfType<ScoreManager>().gameObject);
-		mGameStartTimer+= Time.time;
 		mStartingGame = true;
 	
 
