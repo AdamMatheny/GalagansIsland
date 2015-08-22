@@ -5,10 +5,17 @@ public class HeroShipAI : MonoBehaviour
 {
 	public Transform mTarget;
 	public GameObject mHeroBullet;
+
 	public float mSpeed = 16f;
 	public Vector3 mMoveDir = Vector3.zero;
-	
+
+	public float mShootTimerDefault = 0.1f;
+	public float mShootTimer;
+	public Transform mBulletSpawnPoint;
+
 	public float mDodgeTimer = 0f;
+
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -28,6 +35,13 @@ public class HeroShipAI : MonoBehaviour
 			mDodgeTimer -= Time.deltaTime;
 		}
 
+		mShootTimer -= Time.deltaTime;
+		if(mShootTimer <= 0f)
+		{
+			FireHeroBullet ();
+			mShootTimer = mShootTimerDefault;
+		}
+
 		//Try to get under whatever is shooting at us ~Adam
 		mMoveDir *= mSpeed * 0.01f;
 
@@ -40,7 +54,6 @@ public class HeroShipAI : MonoBehaviour
 
 		if(other.gameObject != this.gameObject)
 		{
-			Debug.Log ("Enter "+ other.gameObject.name);
 			mDodgeTimer = 1f;
 			mMoveDir = Vector3.Normalize (transform.position-other.transform.position);
 		}
@@ -49,9 +62,13 @@ public class HeroShipAI : MonoBehaviour
 	{
 		if(other.gameObject != this.gameObject)
 		{
-			Debug.Log ("Stay "+ other.gameObject.name);
 			mDodgeTimer = 1f;
 			mMoveDir = Vector3.Normalize (transform.position-other.transform.position);
 		}
+	}
+
+	void FireHeroBullet()
+	{
+		Instantiate (mHeroBullet, mBulletSpawnPoint.position, mBulletSpawnPoint.rotation* Quaternion.Euler (0f,0f,Random.Range(-3.0f,3.0f)));
 	}
 }
