@@ -5,6 +5,7 @@ public class HeroShipAI : MonoBehaviour
 {
 	public Transform mTarget;
 	public GameObject mHeroBullet;
+	public GameObject mDodgeObject;
 
 	public float mSpeed = 16f;
 	public Vector3 mMoveDir = Vector3.zero;
@@ -32,6 +33,7 @@ public class HeroShipAI : MonoBehaviour
 		}
 		else
 		{
+			mMoveDir = Vector3.Normalize (transform.position-mDodgeObject.transform.position);
 			mDodgeTimer -= Time.deltaTime;
 		}
 
@@ -44,6 +46,7 @@ public class HeroShipAI : MonoBehaviour
 
 		//Try to get under whatever is shooting at us ~Adam
 		mMoveDir *= mSpeed * 0.01f;
+		mMoveDir = new Vector3(mMoveDir.x, mMoveDir.y, 0f);
 
 		//Move the ship ~Adam
 		transform.Translate(mMoveDir);
@@ -52,18 +55,22 @@ public class HeroShipAI : MonoBehaviour
 	void OnTriggerEnter(Collider other)
 	{
 
-		if(other.gameObject != this.gameObject)
+		if(other.gameObject != this.gameObject && other.tag != "Player Bullet")
 		{
+			Debug.Log ("enter "+other.gameObject.name);
 			mDodgeTimer = 1f;
-			mMoveDir = Vector3.Normalize (transform.position-other.transform.position);
+			mDodgeObject = other.gameObject;
+			mMoveDir = Vector3.Normalize (transform.position-mDodgeObject.transform.position);
 		}
 	}
 	void OnTriggerStay(Collider other)
 	{
-		if(other.gameObject != this.gameObject)
+		if(other.gameObject != this.gameObject && other.tag != "Player Bullet")
 		{
+			Debug.Log ("Stay "+other.gameObject.name);
 			mDodgeTimer = 1f;
-			mMoveDir = Vector3.Normalize (transform.position-other.transform.position);
+			mDodgeObject = other.gameObject;
+			mMoveDir = Vector3.Normalize (transform.position-mDodgeObject.transform.position);
 		}
 	}
 
