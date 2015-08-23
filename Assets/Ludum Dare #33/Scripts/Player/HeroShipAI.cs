@@ -14,7 +14,7 @@ public class HeroShipAI : MonoBehaviour
 	public Vector3 mMoveDir = Vector3.zero;
 
 	public float mShootTimerDefault = 0.1f;
-	public float mShootTimer;
+	public float mShootTimer = 2f;
 	public Transform mBulletSpawnPoint;
 
 	public float mDodgeTimer = 0f;
@@ -29,16 +29,31 @@ public class HeroShipAI : MonoBehaviour
 	public GameObject mNextHeroShip;
 
 	bool mHasEntered = false;
+
 	// Use this for initialization
 	void Start () 
 	{
-	
+		//Find the Boss ~Adam
+		if(mTarget == null)
+		{
+			if(FindObjectOfType<BossGenericScript>() != null)
+			{
+				mTarget = FindObjectOfType<BossGenericScript>().transform;
+			}
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-
+		//Find the Boss ~Adam
+		if(mTarget == null)
+		{
+			if(FindObjectOfType<BossGenericScript>() != null)
+			{
+				mTarget = FindObjectOfType<BossGenericScript>().transform;
+			}
+		}
 
 		//Toggle hit effect sparks ~Adam
 		if(mInvincibleTimer >= 0f)
@@ -69,7 +84,6 @@ public class HeroShipAI : MonoBehaviour
 		}
 
 		//Shoot ~Adam
-		mShootTimer -= Time.deltaTime;
 		if(mShootTimer <= 0f)
 		{
 			FireHeroBullet ();
@@ -93,6 +107,9 @@ public class HeroShipAI : MonoBehaviour
 		}
 		else
 		{
+			//Count down the shoot timer ~Adam
+			mShootTimer -= Time.deltaTime;
+
 			//Keep ship within screen bounds
 			if(transform.position.x < -20f)
 			{
@@ -161,7 +178,13 @@ public class HeroShipAI : MonoBehaviour
 		}
 
 
-	}
+		//For debug testing hero ship damage
+		if(Input.GetKeyDown(KeyCode.K))
+		{
+			HitHeroShip();
+		}
+
+	}//END of Update()
 
 	void OnTriggerEnter(Collider other)
 	{
@@ -173,7 +196,8 @@ public class HeroShipAI : MonoBehaviour
 			mDodgeObject = other.gameObject;
 			mMoveDir = Vector3.Normalize (transform.position-mDodgeObject.transform.position);
 		}
-	}
+	}//END of OnTriggerEnter()
+
 	void OnTriggerStay(Collider other)
 	{
 		if(other.gameObject != this.gameObject && other.tag != "Player Bullet" && mInvincibleTimer <= 0f)
@@ -183,12 +207,12 @@ public class HeroShipAI : MonoBehaviour
 			mDodgeObject = other.gameObject;
 			mMoveDir = Vector3.Normalize (transform.position-mDodgeObject.transform.position);
 		}
-	}
+	}//END of OnTriggerStay()
 
 	void FireHeroBullet()
 	{
 		Instantiate (mHeroBullet, mBulletSpawnPoint.position, mBulletSpawnPoint.rotation* Quaternion.Euler (0f,0f,Random.Range(-3.0f,3.0f)));
-	}
+	}//END of FireHeroBullet()
 
 	public void HitHeroShip()
 	{
@@ -215,5 +239,5 @@ public class HeroShipAI : MonoBehaviour
 				Destroy(this.gameObject);
 			}
 		}
-	}
+	}//END of HitHeroShip()
 }
