@@ -7,7 +7,7 @@ public class EnemyBulletController : MonoBehaviour
 	public GameObject mPlayer = null;
 	public GameObject mPlayerClone = null; //For co-op mode ~Adam
 	public float mBulletSpeed = 20.0f;
-	private float mSelfDestructTimer = 5.0f;
+	protected float mSelfDestructTimer = 5.0f;
 	private ScoreManager mScoreController;
 	public bool mShootable;
 	public bool mAimAtPlayer = false;
@@ -122,7 +122,7 @@ public class EnemyBulletController : MonoBehaviour
 		
 	}
 	
-	void Update()
+	public virtual void Update()
 	{
 		mSelfDestructTimer -= Time.deltaTime;
 		if (mMoveTowardsPlayer) 
