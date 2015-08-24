@@ -70,8 +70,9 @@ public class BossGenericScript : MonoBehaviour
 		}
 	}
 
-	//public void TakeDamage(){
+	public virtual void TakeDamage()
+	{
 
 		//health --;
-	//}
+	}
 }

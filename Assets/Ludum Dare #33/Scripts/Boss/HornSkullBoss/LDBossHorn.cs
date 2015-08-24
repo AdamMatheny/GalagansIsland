@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LDBossHorn : MonoBehaviour {
+public class LDBossHorn : BossWeakPoint {
 
 	public int health;
 
@@ -17,8 +17,9 @@ public class LDBossHorn : MonoBehaviour {
 	public SpriteRenderer mHornSprite;
 
 	public GameObject mDeathEffect;
+	public Transform mExplosionPoint;
 
-	void Update()
+	public override void Update()
 	{
 		//For flashing when hit ~Adam
 		if(mHornSprite != null)
@@ -28,7 +29,7 @@ public class LDBossHorn : MonoBehaviour {
 	}
 
 
-	public void TakeDamage(){
+	public override void TakeDamage(){
 
 		health --;
 
@@ -55,7 +56,14 @@ public class LDBossHorn : MonoBehaviour {
 		}
 		if(mDeathEffect != null)
 		{
-			Instantiate(mDeathEffect, transform.position, Quaternion.identity);
+			if(mExplosionPoint !=null)
+			{
+				Instantiate(mDeathEffect, mExplosionPoint.position, Quaternion.identity);
+			}
+			else
+			{
+				Instantiate(mDeathEffect, transform.position, Quaternion.identity);
+			}
 		}
 		Destroy (gameObject);
 	}

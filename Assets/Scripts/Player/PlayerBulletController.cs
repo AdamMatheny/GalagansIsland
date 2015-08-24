@@ -32,17 +32,23 @@ public class PlayerBulletController : MonoBehaviour
 
 		//Debug.Log (other.gameObject.tag);
 
-		if (other.gameObject.tag == "Horn") {
+//		if (other.gameObject.tag == "Horn") {
+//
+//			//Debug.Log("Hit Horn");
+//
+//			other.GetComponent<LDBossHorn> ().TakeDamage();
+//			Destroy (this.gameObject);
+//		}
+//
+//		if (other.gameObject.tag == "Eye") {
+//
+//			other.GetComponent<BossEye> ().TakeDamage();
+//			Destroy (this.gameObject);
+//		}
 
-			//Debug.Log("Hit Horn");
-
-			other.GetComponent<LDBossHorn> ().TakeDamage();
-			Destroy (this.gameObject);
-		}
-
-		if (other.gameObject.tag == "Eye") {
-
-			other.GetComponent<BossEye> ().TakeDamage();
+		if(other.gameObject.GetComponent<BossWeakPoint>() != null)
+		{
+			other.gameObject.GetComponent<BossWeakPoint>().TakeDamage ();
 			Destroy (this.gameObject);
 		}
 	}

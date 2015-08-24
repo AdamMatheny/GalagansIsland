@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BossEye : MonoBehaviour 
+public class BossEye : BossWeakPoint 
 {
 	public BossGenericScript mBossBody;
 
@@ -18,14 +18,14 @@ public class BossEye : MonoBehaviour
 
 	public SpriteRenderer mMainBodySprite;
 
-	public void Start(){
+	public override void Start(){
 		
 		mTarget = GameObject.FindGameObjectWithTag ("Player");
 		
 		timerTemp = timer;
 	}
 	
-	public void Update()
+	public override void Update()
 	{
 		//For flashing when hit ~Adam
 		if(mMainBodySprite != null)
@@ -62,7 +62,8 @@ public class BossEye : MonoBehaviour
 		transform.localPosition = new Vector2 (horizontal / 15, (vertical / 15) + .04f);
 	}
 
-	public void TakeDamage(){
+	public override void TakeDamage()
+	{
 
 		if (GetComponentInParent<Boss1> ().leftHornAlive == false) {
 
@@ -81,8 +82,6 @@ public class BossEye : MonoBehaviour
 
 			BlowUpEye();
 		}
-
-
 
 	}
 
