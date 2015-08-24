@@ -8,7 +8,7 @@ public class HeroShipAI : MonoBehaviour
 
 	public GameObject mHeroBullet;
 	public GameObject mDodgeObject;
-
+	Vector3 mDodgePoint;
 
 	public float mSpeed = 16f;
 	public Vector3 mMoveDir = Vector3.zero;
@@ -70,16 +70,16 @@ public class HeroShipAI : MonoBehaviour
 		}
 
 
-		//Dodge away ~Adam
+		//Try to get under the target point ~Adam
 		if(mDodgeTimer <= 0f)
 		{
 			mMoveDir = Vector3.Normalize ((mTarget.position+(Vector3.down*20f))-transform.position);
 
 		}
-		//Try to get under the target point ~Adam
+		//Dodge away ~Adam
 		else
 		{
-			mMoveDir = Vector3.Normalize (transform.position-mDodgeObject.transform.position);
+			mMoveDir = Vector3.Normalize (transform.position-mDodgePoint);
 			mDodgeTimer -= Time.deltaTime;
 		}
 
@@ -92,6 +92,10 @@ public class HeroShipAI : MonoBehaviour
 
 		//Adjust for speed and don't move on the Z axis ~Adam
 		mMoveDir *= mSpeed * 0.01f;
+		if(mDodgeTimer > 0f)
+		{
+			mMoveDir*=2f;
+		}
 		mMoveDir = new Vector3(mMoveDir.x, mMoveDir.y, 0f);
 
 
@@ -100,6 +104,7 @@ public class HeroShipAI : MonoBehaviour
 		//Don't let the ship leave the bounds of the screen ~Adam
 		if(!mHasEntered)
 		{
+			mInvincibleTimer = 2f;
 			if(transform.position.y > -33f)
 			{
 				mHasEntered = true;
@@ -181,7 +186,7 @@ public class HeroShipAI : MonoBehaviour
 		//For debug testing hero ship damage
 		if(Input.GetKeyDown(KeyCode.K))
 		{
-			HitHeroShip();
+			HitHeroShip(1);
 		}
 
 	}//END of Update()
@@ -189,41 +194,47 @@ public class HeroShipAI : MonoBehaviour
 	void OnTriggerEnter(Collider other)
 	{
 
-		if(other.gameObject != this.gameObject && other.tag != "Player Bullet" && mInvincibleTimer <= 0f)
+		if(other.gameObject != this.gameObject && other.tag != "Player Bullet" && mInvincibleTimer <= 1f)
 		{
 			//Debug.Log ("enter "+other.gameObject.name);
 			mDodgeTimer = 1f;
 			mDodgeObject = other.gameObject;
-			mMoveDir = Vector3.Normalize (transform.position-mDodgeObject.transform.position);
+			mDodgePoint = transform.position+Vector3.Normalize (mDodgeObject.transform.position-transform.position)*0.1f;
+			mMoveDir = Vector3.Normalize (transform.position-mDodgePoint);
 		}
 	}//END of OnTriggerEnter()
 
 	void OnTriggerStay(Collider other)
 	{
-		if(other.gameObject != this.gameObject && other.tag != "Player Bullet" && mInvincibleTimer <= 0f)
+
+		//else
+		if(other.gameObject != this.gameObject && other.tag != "Player Bullet" && mInvincibleTimer <= 1f)
 		{
 			//Debug.Log ("Stay "+other.gameObject.name);
-			if(other.gameObject.tag == "Enemy Bullet"){
 
-				HitHeroShip();
-			}
 			mDodgeTimer = 1f;
 			mDodgeObject = other.gameObject;
-			mMoveDir = Vector3.Normalize (transform.position-mDodgeObject.transform.position);
+			mDodgePoint = transform.position+Vector3.Normalize (mDodgeObject.transform.position-transform.position)*0.1f;
+			mMoveDir = Vector3.Normalize (transform.position-mDodgePoint);
 		}
 	}//END of OnTriggerStay()
+
+
+
+
+
 
 	void FireHeroBullet()
 	{
 		Instantiate (mHeroBullet, mBulletSpawnPoint.position, mBulletSpawnPoint.rotation* Quaternion.Euler (0f,0f,Random.Range(-3.0f,3.0f)));
 	}//END of FireHeroBullet()
 
-	public void HitHeroShip()
+	public void HitHeroShip(int damage)
 	{
 		if(mInvincibleTimer <= 0f)
 		{
-			mInvincibleTimer = 5f;
-			mHitsRemaining --;
+			mInvincibleTimer = 3f;
+			mHitsRemaining -= damage;
 			if(GetComponent<AudioSource>() != null)
 			{
 				GetComponent<AudioSource>().Play();

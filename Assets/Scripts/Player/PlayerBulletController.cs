@@ -37,11 +37,13 @@ public class PlayerBulletController : MonoBehaviour
 			//Debug.Log("Hit Horn");
 
 			other.GetComponent<LDBossHorn> ().TakeDamage();
+			Destroy (this.gameObject);
 		}
 
 		if (other.gameObject.tag == "Eye") {
 
 			other.GetComponent<BossEye> ().TakeDamage();
+			Destroy (this.gameObject);
 		}
 	}
 

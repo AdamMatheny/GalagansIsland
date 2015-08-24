@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BossEye : MonoBehaviour {
+public class BossEye : MonoBehaviour 
+{
+	public BossGenericScript mBossBody;
 
 	public GameObject BuildUp;
 	
@@ -13,7 +15,9 @@ public class BossEye : MonoBehaviour {
 	
 	public float timer;
 	float timerTemp;
-	
+
+	public SpriteRenderer mMainBodySprite;
+
 	public void Start(){
 		
 		mTarget = GameObject.FindGameObjectWithTag ("Player");
@@ -21,7 +25,18 @@ public class BossEye : MonoBehaviour {
 		timerTemp = timer;
 	}
 	
-	public void Update(){
+	public void Update()
+	{
+		//For flashing when hit ~Adam
+		if(mMainBodySprite != null)
+		{
+			mMainBodySprite.color = Color.Lerp (mMainBodySprite.color, Color.white,0.1f);
+		}
+
+		if(mTarget == null)
+		{
+			mTarget = GameObject.FindGameObjectWithTag ("Player");
+		}
 
 		if (timerTemp < 1) {
 
@@ -54,6 +69,11 @@ public class BossEye : MonoBehaviour {
 			if (GetComponentInParent<Boss1> ().rightHornAlive == false) {
 				
 				health --;
+				//For flashing when hit ~Adam
+				if(mMainBodySprite != null)
+				{
+					mMainBodySprite.color = Color.Lerp (mMainBodySprite.color, Color.red, 1f);
+				}
 			}
 		}
 
@@ -61,10 +81,15 @@ public class BossEye : MonoBehaviour {
 
 			BlowUpEye();
 		}
+
+
+
 	}
 
-	public void BlowUpEye(){
-
+	public void BlowUpEye()
+	{
+		mBossBody.mDying = true;
 		Destroy (gameObject);
+
 	}
 }
