@@ -28,6 +28,23 @@ public class PlayerBulletController : MonoBehaviour
 		}
 	}
 
+	void OnTriggerEnter(Collider other){
+
+		//Debug.Log (other.gameObject.tag);
+
+		if (other.gameObject.tag == "Horn") {
+
+			//Debug.Log("Hit Horn");
+
+			other.GetComponent<LDBossHorn> ().TakeDamage();
+		}
+
+		if (other.gameObject.tag == "Eye") {
+
+			other.GetComponent<BossEye> ().TakeDamage();
+		}
+	}
+
 
 	//For getting hit by boss beams ~Adam
 //	void OnParticleCollision(GameObject other)

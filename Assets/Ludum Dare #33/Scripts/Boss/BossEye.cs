@@ -8,6 +8,8 @@ public class BossEye : MonoBehaviour {
 	public GameObject mTarget;
 	
 	public GameObject bullet;
+
+	public int health;
 	
 	public float timer;
 	float timerTemp;
@@ -21,7 +23,7 @@ public class BossEye : MonoBehaviour {
 	
 	public void Update(){
 
-		if (timerTemp < 3) {
+		if (timerTemp < 1) {
 
 			BuildUp.SetActive (true);
 		} else {
@@ -35,7 +37,7 @@ public class BossEye : MonoBehaviour {
 		} else {
 			
 			timerTemp = timer;
-			Instantiate(bullet, transform.position + new Vector3(0, 6), Quaternion.identity);
+			Instantiate(bullet, transform.position + new Vector3(0, 4), Quaternion.identity);
 			Debug.Log("SHOOT!");
 		}
 		
@@ -43,5 +45,26 @@ public class BossEye : MonoBehaviour {
 		float vertical = Input.GetAxis ("RightAnalogVertical");
 		
 		transform.localPosition = new Vector2 (horizontal / 15, (vertical / 15) + .04f);
+	}
+
+	public void TakeDamage(){
+
+		if (GetComponentInParent<Boss1> ().leftHornAlive == false) {
+
+			if (GetComponentInParent<Boss1> ().rightHornAlive == false) {
+				
+				health --;
+			}
+		}
+
+		if (health <= 0) {
+
+			BlowUpEye();
+		}
+	}
+
+	public void BlowUpEye(){
+
+		Destroy (gameObject);
 	}
 }

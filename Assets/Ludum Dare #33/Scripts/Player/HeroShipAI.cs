@@ -191,7 +191,7 @@ public class HeroShipAI : MonoBehaviour
 
 		if(other.gameObject != this.gameObject && other.tag != "Player Bullet" && mInvincibleTimer <= 0f)
 		{
-			Debug.Log ("enter "+other.gameObject.name);
+			//Debug.Log ("enter "+other.gameObject.name);
 			mDodgeTimer = 1f;
 			mDodgeObject = other.gameObject;
 			mMoveDir = Vector3.Normalize (transform.position-mDodgeObject.transform.position);
@@ -202,7 +202,11 @@ public class HeroShipAI : MonoBehaviour
 	{
 		if(other.gameObject != this.gameObject && other.tag != "Player Bullet" && mInvincibleTimer <= 0f)
 		{
-			Debug.Log ("Stay "+other.gameObject.name);
+			//Debug.Log ("Stay "+other.gameObject.name);
+			if(other.gameObject.tag == "Enemy Bullet"){
+
+				HitHeroShip();
+			}
 			mDodgeTimer = 1f;
 			mDodgeObject = other.gameObject;
 			mMoveDir = Vector3.Normalize (transform.position-mDodgeObject.transform.position);
