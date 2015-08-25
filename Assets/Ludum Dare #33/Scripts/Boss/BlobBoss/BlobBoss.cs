@@ -11,11 +11,7 @@ public class BlobBoss : BossGenericScript
 
 	public RuntimeAnimatorController[] mAnimationStages;
 
-	public GameObject mBlobBossBarrage;
 
-	public Transform[] mBarrageSpawnPoints;
-
-	public float mBarrageTimer = 0f;
 	
 	public override void Start ()
 	{
@@ -25,70 +21,36 @@ public class BlobBoss : BossGenericScript
 	
 	public override void Update ()
 	{
-
+		//For flashing when hit ~Adam
+		if(spriter!= null)
+		{
+			spriter.color = Color.Lerp (spriter.color, Color.white,0.1f);
+			
+		}
 		//Change number of teeth based on health ~Adam
-		//8 teeth
-		if(mhealth >= 100)
+		//6 teeth
+		if(mhealth >= 90)
 		{
 			mAnimator.runtimeAnimatorController = mAnimationStages[0];
 		}
-		//6 teeth ~Adam
-		else if(mhealth >= 70)
+		//4 teeth ~Adam
+		else if(mhealth >= 50)
 		{
 			mAnimator.runtimeAnimatorController = mAnimationStages[1];
-		}
-		//4 teeth ~Adam
-		else if(mhealth >= 40)
-		{
-			mAnimator.runtimeAnimatorController = mAnimationStages[2];
 		}
 		//2 teeth ~Adam
 		else if(mhealth >= 11)
 		{
-			mAnimator.runtimeAnimatorController = mAnimationStages[3];
+			mAnimator.runtimeAnimatorController = mAnimationStages[2];
 		}
 		//No teeth ~Adam
 		else
 		{
-			mAnimator.runtimeAnimatorController = mAnimationStages[4];
-		}
-
-		if(!mDying)
-		{
-			mBarrageTimer -= Time.deltaTime;
-			if(mBarrageTimer <= 0f)
-			{
-				BlobBarrage ();
-			}
-
-			if(spriter!= null)
-			{
-				spriter.color = Color.Lerp (spriter.color, Color.white,0.1f);
-				
-			}
-		}
-		if(mhealth <= 0f)
-		{
-			mDying = true;
-			//For flashing when hit ~Adam
-
+			mAnimator.runtimeAnimatorController = mAnimationStages[3];
 		}
 
 		base.Update ();
 	}
 
-	void BlobBarrage()
-	{
-		mBarrageTimer = 5f;
-
-		if(mBlobBossBarrage != null)
-		{
-			for(int i = 0; i< mBarrageSpawnPoints.Length; i++)
-			{
-				GameObject newBullet = Instantiate (mBlobBossBarrage, mBarrageSpawnPoints[i].position, Quaternion.identity) as GameObject;
-				newBullet.GetComponent<LDBulletScript>().mPlayer = mHero.gameObject;
-			}
-		}
-	}
 
 }
