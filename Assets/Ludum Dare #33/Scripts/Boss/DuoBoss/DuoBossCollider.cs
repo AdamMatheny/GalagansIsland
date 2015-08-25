@@ -7,7 +7,14 @@ public class DuoBossCollider : BossWeakPoint {
 
 	public GameObject mDeathEffect;
 	public Transform mExplosionPoint;
-	
+
+
+	public override void Start ()
+	{
+		mBossCentral.mTotalHealth += health;
+		mBossCentral.mCurrentHealth += health;
+	}
+
 	public override void Update()
 	{
 
@@ -16,7 +23,7 @@ public class DuoBossCollider : BossWeakPoint {
 	public override void TakeDamage(){
 		
 		health --;
-		
+		base.TakeDamage ();
 		if (health <= 0) {
 			
 			BlowUpHorn();

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class HeroShipAI : MonoBehaviour 
 {
+	public BossGenericScript mBoss;
 	public Transform mTarget;
 	public int mHitsRemaining = 10;
 
@@ -34,11 +35,12 @@ public class HeroShipAI : MonoBehaviour
 	void Start () 
 	{
 		//Find the Boss ~Adam
-		if(mTarget == null)
+		if(mTarget == null || mBoss == null)
 		{
 			if(FindObjectOfType<BossGenericScript>() != null)
 			{
-				mTarget = FindObjectOfType<BossGenericScript>().transform;
+				mBoss = FindObjectOfType<BossGenericScript>();
+				mTarget = mBoss.transform;
 			}
 		}
 	}
@@ -47,11 +49,12 @@ public class HeroShipAI : MonoBehaviour
 	void Update () 
 	{
 		//Find the Boss ~Adam
-		if(mTarget == null)
+		if(mTarget == null || mBoss == null)
 		{
 			if(FindObjectOfType<BossGenericScript>() != null)
 			{
-				mTarget = FindObjectOfType<BossGenericScript>().transform;
+				mBoss = FindObjectOfType<BossGenericScript>();
+				mTarget = mBoss.transform;
 			}
 		}
 
@@ -101,16 +104,18 @@ public class HeroShipAI : MonoBehaviour
 
 
 
-		//Don't let the ship leave the bounds of the screen ~Adam
-		if(!mHasEntered)
+		//Don't let the ship shoot or get hit when a new boss or ship is coming in ~Adam
+		if(!mHasEntered || mTarget == null || mBoss == null 
+		   || (mBoss != null && (mBoss.mEntryTime>0f||mBoss.mDying) ) )
 		{
 			mInvincibleTimer = 2f;
+			mShootTimer = 2f;
 			if(transform.position.y > -33f)
 			{
 				mHasEntered = true;
 			}
 		}
-		else
+		//Don't let the ship leave the bounds of the screen ~Adamelse
 		{
 			//Count down the shoot timer ~Adam
 			mShootTimer -= Time.deltaTime;
@@ -194,10 +199,10 @@ public class HeroShipAI : MonoBehaviour
 	void OnTriggerEnter(Collider other)
 	{
 
-		if(other.gameObject != this.gameObject && other.tag != "Player Bullet" && mInvincibleTimer <= 1f)
+		if(other.gameObject != this.gameObject && other.tag != "Player Bullet" && mInvincibleTimer <= 0.5f)
 		{
 			//Debug.Log ("enter "+other.gameObject.name);
-			mDodgeTimer = 1f;
+			mDodgeTimer = 0.5f;
 			mDodgeObject = other.gameObject;
 			mDodgePoint = transform.position+Vector3.Normalize (mDodgeObject.transform.position-transform.position)*0.1f;
 			mMoveDir = Vector3.Normalize (transform.position-mDodgePoint);
@@ -208,11 +213,11 @@ public class HeroShipAI : MonoBehaviour
 	{
 
 		//else
-		if(other.gameObject != this.gameObject && other.tag != "Player Bullet" && mInvincibleTimer <= 1f)
+		if(other.gameObject != this.gameObject && other.tag != "Player Bullet" && mInvincibleTimer <= 0.5f)
 		{
 			//Debug.Log ("Stay "+other.gameObject.name);
 
-			mDodgeTimer = 1f;
+			mDodgeTimer = 0.5f;
 			mDodgeObject = other.gameObject;
 			mDodgePoint = transform.position+Vector3.Normalize (mDodgeObject.transform.position-transform.position)*0.1f;
 			mMoveDir = Vector3.Normalize (transform.position-mDodgePoint);

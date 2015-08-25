@@ -11,7 +11,14 @@ public class BossGenericScript : MonoBehaviour
 
 	public HeroShipAI mHero;
 
-	//public int health;
+	public float mCurrentHealth = 0f;
+	public float mTotalHealth = 0f;
+
+	public float mCurrentOverheat = 0f;
+	public float mMaxOverheat = 30f;
+
+	public float mCurrentCharge = 0f;
+	public float mMaxCharge = 10f;
 
 	public Rigidbody2D rgb2d;
 
@@ -20,6 +27,10 @@ public class BossGenericScript : MonoBehaviour
 	public float mDeathTimer = 5f;
 	public GameObject mDeathEffect;
 	public GameObject mNextBoss;
+	public float mMoveSpeed = 15f;
+
+	public float[] mBounds;
+	public float mEntryTime = 3f;
 
 	public virtual void Start()
 	{
@@ -33,6 +44,11 @@ public class BossGenericScript : MonoBehaviour
 
 	public virtual void Update()
 	{
+		if(mEntryTime >= 0f)
+		{
+			mEntryTime -= Time.deltaTime;
+		}
+
 		if(mHero == null)
 		{
 			mHero = FindObjectOfType<HeroShipAI>();
@@ -49,7 +65,37 @@ public class BossGenericScript : MonoBehaviour
 
 		float horizontal = Input.GetAxis ("Horizontal");
 		float vertical = Input.GetAxis ("Vertical");
-		rgb2d.velocity = new Vector2 (horizontal * 10, vertical * 10);
+		rgb2d.velocity = new Vector2 (horizontal * mMoveSpeed, vertical * mMoveSpeed);
+
+
+		//Keep the boss within the bounds of the screen ~Adam
+		if(mBounds.Length >=4)
+		{
+			//X-Min ~Adam
+			if(transform.position.x < mBounds[0])
+			{
+				transform.position = new Vector3(mBounds[0], transform.position.y, transform.position.z);
+
+			}
+			//X-Max ~Adam
+			if (transform.position.x > mBounds[1])
+			{
+				transform.position = new Vector3(mBounds[1], transform.position.y, transform.position.z);
+
+			}
+			//Y-Min ~Adam
+
+			if(transform.position.y < mBounds[2])
+			{
+				transform.position = new Vector3(transform.position.x, mBounds[2], transform.position.z);
+
+			}
+			//Y-Max ~Adam
+			if (transform.position.y > mBounds[3])
+			{
+				transform.position = new Vector3(transform.position.x, mBounds[3], transform.position.z);
+			}
+		}
 
 		//Die and spawn the next boss ~Adam
 		if(mDying == true)

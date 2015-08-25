@@ -6,15 +6,7 @@ public class BlobWeakPoint : BossWeakPoint
 	public GameObject mBossBody;
 	public SpriteRenderer mMainBodySprite;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 
 
 	public override void TakeDamage()
@@ -22,6 +14,7 @@ public class BlobWeakPoint : BossWeakPoint
 		
 
 		mBossBody.GetComponent<BlobBoss>().mhealth --;
+		base.TakeDamage ();
 		//For flashing when hit ~Adam
 		if(mMainBodySprite != null)
 		{

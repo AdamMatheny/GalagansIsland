@@ -22,7 +22,10 @@ public class BossEye : BossWeakPoint
 		
 		mTarget = GameObject.FindGameObjectWithTag ("Player");
 		
-		timerTemp = timer;
+		timerTemp = timer;	
+
+		mBossCentral.mTotalHealth += health;
+		mBossCentral.mCurrentHealth += health;
 	}
 	
 	public override void Update()
@@ -70,6 +73,7 @@ public class BossEye : BossWeakPoint
 			if (GetComponentInParent<Boss1> ().rightHornAlive == false) {
 				
 				health --;
+				base.TakeDamage ();
 				//For flashing when hit ~Adam
 				if(mMainBodySprite != null)
 				{

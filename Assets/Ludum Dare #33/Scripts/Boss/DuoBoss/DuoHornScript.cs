@@ -18,7 +18,13 @@ public class DuoHornScript : BossWeakPoint {
 	
 	public GameObject mDeathEffect;
 	public Transform mExplosionPoint;
-	
+
+	public override void Start ()
+	{
+		mBossCentral.mTotalHealth += health;
+		mBossCentral.mCurrentHealth += health;
+	}
+
 	public override void Update()
 	{
 		//For flashing when hit ~Adam
@@ -32,7 +38,8 @@ public class DuoHornScript : BossWeakPoint {
 	public override void TakeDamage(){
 		
 		health --;
-		
+		base.TakeDamage ();
+
 		//For flashing when hit ~Adam
 		if(mHornSprite != null)
 		{

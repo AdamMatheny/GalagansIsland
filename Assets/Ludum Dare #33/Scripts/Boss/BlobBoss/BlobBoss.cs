@@ -16,9 +16,13 @@ public class BlobBoss : BossGenericScript
 	public Transform[] mBarrageSpawnPoints;
 
 	public float mBarrageTimer = 0f;
-	
+
+	//Set starting health and find the body to flash when hit ~Adam
 	public override void Start ()
 	{
+		mTotalHealth = mhealth;
+		mCurrentHealth = mhealth;
+
 		spriter = GetComponent<SpriteRenderer> ();
 		base.Start ();
 	}
@@ -28,22 +32,22 @@ public class BlobBoss : BossGenericScript
 
 		//Change number of teeth based on health ~Adam
 		//8 teeth
-		if(mhealth >= 100)
+		if(mhealth >= 108)
 		{
 			mAnimator.runtimeAnimatorController = mAnimationStages[0];
 		}
 		//6 teeth ~Adam
-		else if(mhealth >= 70)
+		else if(mhealth >= 72)
 		{
 			mAnimator.runtimeAnimatorController = mAnimationStages[1];
 		}
 		//4 teeth ~Adam
-		else if(mhealth >= 40)
+		else if(mhealth >= 38)
 		{
 			mAnimator.runtimeAnimatorController = mAnimationStages[2];
 		}
 		//2 teeth ~Adam
-		else if(mhealth >= 11)
+		else if(mhealth >= 12)
 		{
 			mAnimator.runtimeAnimatorController = mAnimationStages[3];
 		}

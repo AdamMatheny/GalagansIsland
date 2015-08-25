@@ -25,7 +25,7 @@ public class EnemyShipAI : MonoBehaviour
 	[HideInInspector] public Vector2 mVel= new Vector2(0, 1);
 
 	//The player's avatar ~Adam
-	Transform mPlayer;
+	public Transform mPlayer;
 
 	//The player 2 ship ~Adam  
 	public Transform mPlayerClone;

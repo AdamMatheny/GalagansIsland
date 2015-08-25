@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LDBossHorn : BossWeakPoint {
+public class LDBossHorn : BossWeakPoint 
+{
 
 	public int health;
 
-	public enum HornList{
+	public enum HornList
+	{
 
 		LeftHorn,
 		RightHorn
@@ -19,6 +21,12 @@ public class LDBossHorn : BossWeakPoint {
 	public GameObject mDeathEffect;
 	public Transform mExplosionPoint;
 
+	public override void Start()
+	{
+		mBossCentral.mTotalHealth += health;
+		mBossCentral.mCurrentHealth += health;
+	}
+
 	public override void Update()
 	{
 		//For flashing when hit ~Adam
@@ -29,7 +37,8 @@ public class LDBossHorn : BossWeakPoint {
 	}
 
 
-	public override void TakeDamage(){
+	public override void TakeDamage()
+	{
 
 		health --;
 
@@ -39,10 +48,14 @@ public class LDBossHorn : BossWeakPoint {
 			mHornSprite.color = Color.Lerp (mHornSprite.color, Color.red,1f);
 		}
 
+		base.TakeDamage ();
+
 		if (health <= 0) {
 
 			BlowUpHorn();
 		}
+
+
 	}
 
 	public void BlowUpHorn(){

@@ -23,6 +23,8 @@ public class DuoEye : BossWeakPoint
 		//mTarget = GameObject.FindGameObjectWithTag ("Player");
 		
 		//timerTemp = timer;
+		mBossCentral.mTotalHealth += health;
+		mBossCentral.mCurrentHealth += health;
 	}
 	
 	public override void Update()
@@ -70,6 +72,7 @@ public class DuoEye : BossWeakPoint
 			if (GetComponentInParent<DuoBossReak> ().rightHornAlive == false) {
 				
 				health --;
+				base.TakeDamage ();
 				//For flashing when hit ~Adam
 				if(mMainBodySprite != null)
 				{
