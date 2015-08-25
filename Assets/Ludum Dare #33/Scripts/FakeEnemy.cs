@@ -12,4 +12,12 @@ public class FakeEnemy : MonoBehaviour {
 	void Update () {
 	
 	}
+
+	void OnTriggerEnter(Collider other)
+	{
+		if (other.tag == "Player Bullet")
+		{
+			Destroy(this.gameObject);
+		}
+	}
 }

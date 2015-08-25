@@ -251,6 +251,7 @@ public class HeroShipAI : MonoBehaviour
 				{
 					Instantiate (mNextHeroShip, new Vector3(0f,-40f, -2f), Quaternion.identity);
 				}
+
 				Destroy(this.gameObject);
 			}
 		}

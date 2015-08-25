@@ -164,16 +164,19 @@ public class EnemyShipAI : MonoBehaviour
 	void Update () 
 	{
 		//Also kill the ship FINALLY!!! ~ Jonathan
-		if (mPlayer.GetComponent<PlayerShipController> ().mShipRecovered) {
-			
-			if(Vector3.Distance(this.transform.position, mPlayer.GetComponent<PlayerShipController> ().mSecondShip.transform.position) <= 1.5f){
+		if(mPlayer.GetComponent<PlayerShipController> ()!= null)
+		{
+			if (mPlayer.GetComponent<PlayerShipController> ().mShipRecovered) 
+			{
 				
-				Debug.Log("The second ship was shot");
-				mScoreManager.LoseALife();
-				Destroy(gameObject);
+				if(Vector3.Distance(this.transform.position, mPlayer.GetComponent<PlayerShipController> ().mSecondShip.transform.position) <= 1.5f){
+					
+					Debug.Log("The second ship was shot");
+					mScoreManager.LoseALife();
+					Destroy(gameObject);
+				}
 			}
 		}
-
 		if(mScoreManager == null)
 		{
 			mScoreManager = FindObjectOfType<ScoreManager>();
