@@ -19,6 +19,6 @@ public class BossWeakPoint : MonoBehaviour
 	public virtual void TakeDamage()
 	{
 		
-		//health --;
+		
 	}
 }
