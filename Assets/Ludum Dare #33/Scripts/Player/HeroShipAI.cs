@@ -6,6 +6,7 @@ public class HeroShipAI : MonoBehaviour
 	public BossGenericScript mBoss;
 	public Transform mTarget;
 	public int mHitsRemaining = 10;
+	public int mMaxHits = 10;
 
 	public GameObject mHeroBullet;
 	public GameObject mDodgeObject;
@@ -29,11 +30,12 @@ public class HeroShipAI : MonoBehaviour
 	public GameObject mDeathEffect;
 	public GameObject mNextHeroShip;
 
-	bool mHasEntered = false;
+	public bool mHasEntered = false;
 
 	// Use this for initialization
 	void Start () 
 	{
+		mMaxHits = mHitsRemaining;
 		//Find the Boss ~Adam
 		if(mTarget == null || mBoss == null)
 		{
