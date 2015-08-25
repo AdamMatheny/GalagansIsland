@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SwarmBoss : BossGenericScript {
+public class SwarmBoss : BossGenericScript 
+{
 
 
 	// Update is called once per frame
@@ -12,5 +13,13 @@ public class SwarmBoss : BossGenericScript {
 //			mDying = true;
 //		}
 		base.Update ();
+	}
+
+	void OnTriggerEnter(Collider other)
+	{
+		if (other.tag == "Player Bullet")
+		{
+			Destroy(this.gameObject);
+		}
 	}
 }
