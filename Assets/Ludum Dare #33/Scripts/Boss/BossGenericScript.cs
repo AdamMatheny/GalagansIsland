@@ -65,6 +65,10 @@ public class BossGenericScript : MonoBehaviour
 				{
 					Instantiate (mNextBoss, new Vector3(0f,0f,-2f), Quaternion.identity);
 				}
+				else
+				{
+					Application.LoadLevel(0);
+				}
 				Destroy (this.gameObject);
 			}
 		}
