@@ -8,6 +8,7 @@ public class LDHeroUI : MonoBehaviour
 	public Sprite[] mShipStages;
 	public float mHealthPercent;
 	public Image mShipIcon;
+	public RectTransform mHealthPanel;
 
 	// Use this for initialization
 	void Start () 
@@ -24,6 +25,7 @@ public class LDHeroUI : MonoBehaviour
 		if(mHero == null)
 		{
 			mShipIcon.sprite = mShipStages[7];
+			mHealthPercent = 0f;
 			if(FindObjectOfType<HeroShipAI>() != null)
 			{
 				mHero = FindObjectOfType<HeroShipAI>();
@@ -35,6 +37,7 @@ public class LDHeroUI : MonoBehaviour
 		{
 			//Find how much health the current hero ship has left ~Adam
 			mHealthPercent = mHero.mHitsRemaining/(mHero.mMaxHits+0.001f);
+
 
 			//Change the display of the ship based on health percentage ~Adam
 			if(mShipIcon != null && mShipStages.Length >= 8)
@@ -87,5 +90,8 @@ public class LDHeroUI : MonoBehaviour
 				mShipIcon.sprite = mShipStages[7];
 			}
 		}
+
+		//Adjust life meter
+		mHealthPanel.localScale = new Vector3(mHealthPercent,1f,1f);
 	}
 }

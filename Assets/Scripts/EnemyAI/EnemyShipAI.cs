@@ -163,6 +163,14 @@ public class EnemyShipAI : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		if(mPlayer == null)
+		{
+			if(GameObject.FindGameObjectWithTag("Player")!= null)
+			{
+				mPlayer = GameObject.FindGameObjectWithTag("Player").transform;
+			}
+		}
+
 		//Also kill the ship FINALLY!!! ~ Jonathan
 		if(mPlayer.GetComponent<PlayerShipController> ()!= null)
 		{

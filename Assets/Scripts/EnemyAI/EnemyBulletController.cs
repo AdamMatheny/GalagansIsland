@@ -152,10 +152,13 @@ public class EnemyBulletController : MonoBehaviour
 			else 
 			{
 				//fire at the player
-				directionToPlayer = mPlayer.transform.position - transform.position;
-				bulletForce = Vector3.Normalize (directionToPlayer) * mBulletSpeed;
-				transform.LookAt (mPlayer.transform.position);
-				transform.rotation = Quaternion.Euler (new Vector3 (90f, 0f, 0f) + transform.rotation.eulerAngles);
+				if(mPlayer != null)
+				{
+					directionToPlayer = mPlayer.transform.position - transform.position;
+					bulletForce = Vector3.Normalize (directionToPlayer) * mBulletSpeed;
+					transform.LookAt (mPlayer.transform.position);
+					transform.rotation = Quaternion.Euler (new Vector3 (90f, 0f, 0f) + transform.rotation.eulerAngles);
+				}
 			}
 			GetComponent<Rigidbody> ().velocity = bulletForce;
 

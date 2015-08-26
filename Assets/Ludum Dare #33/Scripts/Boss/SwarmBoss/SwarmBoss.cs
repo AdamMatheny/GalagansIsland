@@ -48,10 +48,10 @@ public class SwarmBoss : BossGenericScript
 			foreach(EnemyShipAI enemy in FindObjectsOfType<EnemyShipAI>())
 			{
 				mCurrentHealth ++;
-				if(mHero != null)
-				{
-					enemy.mPlayer = mHero.transform;
-				}
+//				if(mHero != null)
+//				{
+//					enemy.mPlayer = mHero.transform;
+//				}
 			}
 		}
 		base.Update ();

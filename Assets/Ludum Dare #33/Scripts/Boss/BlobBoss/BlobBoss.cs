@@ -59,12 +59,14 @@ public class BlobBoss : BossGenericScript
 
 		if(!mDying)
 		{
-			mBarrageTimer -= Time.deltaTime;
-			if(mBarrageTimer <= 0f)
+			if(!mOverheated)
 			{
-				BlobBarrage ();
+				mBarrageTimer -= Time.deltaTime;
+				if(mBarrageTimer <= 0f)
+				{
+					BlobBarrage ();
+				}
 			}
-
 			if(spriter!= null)
 			{
 				spriter.color = Color.Lerp (spriter.color, Color.white,0.1f);

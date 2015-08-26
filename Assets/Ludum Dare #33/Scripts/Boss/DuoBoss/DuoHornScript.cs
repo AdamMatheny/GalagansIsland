@@ -96,7 +96,7 @@ public class DuoHornScript : BossWeakPoint {
 				
 				timerTemp = timer;
 				mShooting = false;
-				Instantiate(bullet, transform.position + new Vector3(0, 4), Quaternion.identity);
+				Instantiate(bullet, transform.position, Quaternion.identity);
 				Debug.Log("SHOOT!");
 			}
 		}
