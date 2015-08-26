@@ -62,10 +62,13 @@ public class BossGenericScript : MonoBehaviour
 				mOverheated = true;
 				mCurrentOverheat = 10f;
 			}
-			mHero.mTarget = mWeakPoints[0];
+			if(mWeakPoints.Count >0 && mWeakPoints[0] != null)
+			{
+				mHero.mTarget = mWeakPoints[0];
+			}
 		}
 
-		if(mWeakPoints[0] == null)
+		if(mWeakPoints.Count >0 && mWeakPoints[0] == null)
 		{
 			mWeakPoints.Remove(null);
 		}
