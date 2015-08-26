@@ -21,6 +21,9 @@ public class LDBossHorn : BossWeakPoint
 	public GameObject mDeathEffect;
 	public Transform mExplosionPoint;
 
+
+	public GameObject mHornBeam;
+
 	public override void Start()
 	{
 		mBossCentral.mTotalHealth += health;
@@ -33,6 +36,18 @@ public class LDBossHorn : BossWeakPoint
 		if(mHornSprite != null)
 		{
 			mHornSprite.color = Color.Lerp (mHornSprite.color, Color.white,0.1f);
+		}
+
+		if(mHornBeam != null)
+		{
+			if(mBossCentral.mOverheated)
+			{
+				mHornBeam.SetActive (false);
+			}
+			else
+			{
+				mHornBeam.SetActive (true);
+			}
 		}
 	}
 

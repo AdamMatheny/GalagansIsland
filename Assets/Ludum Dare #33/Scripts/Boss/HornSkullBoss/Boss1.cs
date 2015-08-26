@@ -20,22 +20,15 @@ public class Boss1 : BossGenericScript {
 
 	public override void Update ()
 	{
-		if (!leftHornAlive && rightHornAlive) {
-			
-			spriter.sprite = rightHorn;
-		}else{
-			
-			if(leftHornAlive && !rightHornAlive){
-				
-				spriter.sprite = leftHorn;
-			}else{
-				
-				if(!leftHornAlive && !rightHornAlive){
-					
-					spriter.sprite = noHorns;
-				}
-			}
+		if (!leftHornAlive) 
+		{
+			mBounds[0] = -13f;
 		}
+		if (!rightHornAlive) 
+		{
+			mBounds[1] = 13f;
+		}
+
 
 		base.Update ();
 	}

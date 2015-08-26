@@ -12,6 +12,8 @@ public class LDBossUI : MonoBehaviour
 	public Image mChargePanel;
 	public Image mOverheatPanel;
 
+	public GameObject mChargeWeaponButton;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -37,11 +39,23 @@ public class LDBossUI : MonoBehaviour
 			mBoss = FindObjectOfType<BossGenericScript>();
 		}
 
+
 		if(mBoss != null)
 		{
+			//Adjust meters ~Adam
 			mHealthPanel.rectTransform.localScale = new Vector3((mBoss.mCurrentHealth/mBoss.mTotalHealth),1f,1f);
 			mChargePanel.rectTransform.localScale = new Vector3((mBoss.mCurrentCharge/mBoss.mMaxCharge),1f,1f);
 			mOverheatPanel.rectTransform.localScale = new Vector3((mBoss.mCurrentOverheat/mBoss.mMaxOverheat),1f,1f);
+			//Toggle weapon button visibility ~Adam
+			if(mBoss.mChargeReady)
+			{
+				mChargeWeaponButton.SetActive (true);
+			}
+			else
+			{
+				mChargeWeaponButton.SetActive (false);
+			}
+
 		}
 	}
 }

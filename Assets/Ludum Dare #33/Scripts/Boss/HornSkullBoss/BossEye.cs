@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using InControl;
+using XInputDotNetPure;
 
 public class BossEye : BossWeakPoint 
 {
@@ -18,7 +20,10 @@ public class BossEye : BossWeakPoint
 
 	public SpriteRenderer mMainBodySprite;
 
-	public override void Start(){
+	bool mShooting = false;
+
+	public override void Start()
+	{
 		
 		mTarget = GameObject.FindGameObjectWithTag ("Player");
 		
@@ -40,21 +45,37 @@ public class BossEye : BossWeakPoint
 		{
 			mTarget = GameObject.FindGameObjectWithTag ("Player");
 		}
+		//Fire the eye beam on button press ~Adam
+		if((Input.GetButtonDown ("FireGun") || InputManager.ActiveDevice.Action1.WasPressed)&& mBossCentral.mChargeReady)
+		{
+			mShooting = true;
+			timerTemp = 1.1f;
+			mBossCentral.mChargeReady = false;
+			mBossCentral.mCurrentCharge = 0;
+			mBossBody.mOverheated = true;
+		}
 
-		if (timerTemp < 1) {
+		if (timerTemp < 1) 
+		{
 
 			BuildUp.SetActive (true);
-		} else {
+		} 
+		else 
+		{
 
 			BuildUp.SetActive(false);
 		}
 		
-		if (timerTemp > 0) {
+		if (mShooting && timerTemp > 0) 
+		{
 			
 			timerTemp -= Time.deltaTime;
-		} else {
+		} 
+		else if(mShooting)
+		{
 			
 			timerTemp = timer;
+			mShooting = false;
 			Instantiate(bullet, transform.position + new Vector3(0, 4), Quaternion.identity);
 			Debug.Log("SHOOT!");
 		}

@@ -16,9 +16,11 @@ public class BossGenericScript : MonoBehaviour
 
 	public float mCurrentOverheat = 0f;
 	public float mMaxOverheat = 30f;
+	public bool mOverheated = false;
 
 	public float mCurrentCharge = 0f;
 	public float mMaxCharge = 10f;
+	public bool mChargeReady = false;
 
 	public Rigidbody2D rgb2d;
 
@@ -66,6 +68,7 @@ public class BossGenericScript : MonoBehaviour
 		float horizontal = Input.GetAxis ("Horizontal");
 		float vertical = Input.GetAxis ("Vertical");
 		rgb2d.velocity = new Vector2 (horizontal * mMoveSpeed, vertical * mMoveSpeed);
+
 
 
 		//Keep the boss within the bounds of the screen ~Adam
@@ -118,6 +121,40 @@ public class BossGenericScript : MonoBehaviour
 				Destroy (this.gameObject);
 			}
 		}
+
+
+		//For Overheat Timers ~Adam
+		if(mCurrentOverheat <= mMaxOverheat && !mOverheated)
+		{
+			mCurrentOverheat += Time.deltaTime;
+		}
+		else if(mCurrentOverheat >= mMaxOverheat)
+		{
+			mOverheated = true;
+		}
+		if(mOverheated)
+		{
+			mCurrentOverheat -= Time.deltaTime*5f;
+			if(mCurrentOverheat <= 0f)
+			{
+				mCurrentOverheat = 0f;
+				mOverheated = false;
+			}
+		}
+		//For Charge Timers ~Adam
+		if(mCurrentCharge < mMaxCharge && !mChargeReady)
+		{
+			mCurrentCharge += Time.deltaTime;
+		}
+		else if(mCurrentCharge >= mMaxCharge)
+		{
+			mChargeReady = true;
+			if(mCurrentCharge > mMaxCharge)
+			{
+				mCurrentCharge = mMaxCharge;
+			}
+		}
+
 	}
 
 	public virtual void TakeDamage()

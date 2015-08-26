@@ -188,9 +188,13 @@ public class EnemyBulletController : MonoBehaviour
 		//Detect distance to player and kill the player and destroy self if close enough to "touch" ~Adam
 		if (Vector3.Distance(this.transform.position, mPlayer.transform.position) <= 1.5f)
 		{
+
 			Debug.Log("The player was shot");
-			mScoreController.LoseALife();
-			Destroy(gameObject);
+			if(mScoreController != null && mScoreController.enabled == true)
+			{
+				mScoreController.LoseALife();
+				Destroy(gameObject);
+			}
 		}
 
 		//If second ship is activated, extend the slow time down ~ Jonathan

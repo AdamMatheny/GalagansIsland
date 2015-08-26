@@ -151,6 +151,13 @@ public class HeroShipAI : MonoBehaviour
 		}
 
 
+		//Don't try to go out of bounds due to the boss being too close to the bottom of the screen ~Adam
+		
+		if(mMoveDir.y < 0f && transform.position.y <-32f)
+		{
+			mMoveDir = new Vector3(mMoveDir.x,0f,mMoveDir.z);
+		}
+
 		//Move the ship ~Adam
 		transform.Translate(mMoveDir);
 
