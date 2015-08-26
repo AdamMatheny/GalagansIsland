@@ -67,21 +67,20 @@ public class DuoEye : BossWeakPoint
 	public override void TakeDamage()
 	{
 		
-		if (GetComponentInParent<DuoBossReak> ().leftHornAlive == false) {
+		if (GetComponentInParent<DuoBossReak> ().leftHornAlive == false && GetComponentInParent<DuoBossReak> ().rightHornAlive == false) 
+		{
 			
-			if (GetComponentInParent<DuoBossReak> ().rightHornAlive == false) {
-				
-				health --;
-				base.TakeDamage ();
-				//For flashing when hit ~Adam
-				if(mMainBodySprite != null)
-				{
-					mMainBodySprite.color = Color.Lerp (mMainBodySprite.color, Color.red, 1f);
-				}
+			health --;
+			base.TakeDamage ();
+			//For flashing when hit ~Adam
+			if(mMainBodySprite != null)
+			{
+				mMainBodySprite.color = Color.Lerp (mMainBodySprite.color, Color.red, 1f);
 			}
 		}
 		
-		if (health <= 0) {
+		if (health <= 0) 
+		{
 			
 			BlowUpEye();
 		}

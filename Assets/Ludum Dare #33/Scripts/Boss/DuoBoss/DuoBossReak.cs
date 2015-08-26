@@ -15,7 +15,7 @@ public class DuoBossReak : BossGenericScript
 	public GameObject stomach;
 	public GameObject mBile;
 	public GameObject mFlame;
-
+	
 
 
 	public override void Start ()
@@ -26,27 +26,31 @@ public class DuoBossReak : BossGenericScript
 	
 	public override void Update ()
 	{
-		if (!rightHornAlive) 
-		{
-			
-			tail.SetActive(false);
-		}
 
-		if(!leftHornAlive)
+		//Blow up head first ~Adam
+		if(!leftHornAlive || !leftHornAlive)
 		{
 				
 			head.SetActive(false);
 		}
+		//Then blow up tail and stomach ~Adam
 		if(!leftHornAlive && !rightHornAlive)
 		{
-					
+			tail.SetActive(false);
+
 			stomach.SetActive(false);
 			mBile.SetActive(true);
+			mCurrentCharge = 0f;
+			mChargeReady = false;
 		}
 
-		if(mDying)
+		if(mDying || mOverheated)
 		{
 			mFlame.SetActive (false);
+		}
+		else if(!mDying)
+		{
+			mFlame.SetActive (true);
 		}
 		base.Update ();
 

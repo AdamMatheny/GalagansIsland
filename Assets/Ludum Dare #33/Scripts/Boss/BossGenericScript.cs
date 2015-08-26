@@ -57,6 +57,11 @@ public class BossGenericScript : MonoBehaviour
 		}
 		else
 		{
+			if(!mHero.mHasEntered)
+			{
+				mOverheated = true;
+				mCurrentOverheat = 10f;
+			}
 			mHero.mTarget = mWeakPoints[0];
 		}
 
