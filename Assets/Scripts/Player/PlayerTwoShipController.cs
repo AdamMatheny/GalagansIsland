@@ -349,11 +349,11 @@ public class PlayerTwoShipController : MonoBehaviour
 			if(Input.GetKey(KeyCode.RightArrow))
 				horizontal = 1;
 
-			if(mPlayerTwoInputDevice.LeftStick.X != 0)
+			if(mPlayerTwoInputDevice.LeftStick.X > 0.3f || mPlayerTwoInputDevice.LeftStick.X < -0.3f)
 			{
 				horizontal = mPlayerTwoInputDevice.LeftStick.X;
 			}
-			if(mPlayerTwoInputDevice.LeftStick.Y != 0)
+			if(mPlayerTwoInputDevice.LeftStick.Y > 0.3f || mPlayerTwoInputDevice.LeftStick.Y < -0.3f)
 			{
 				vertical = mPlayerTwoInputDevice.LeftStick.Y;
 			}

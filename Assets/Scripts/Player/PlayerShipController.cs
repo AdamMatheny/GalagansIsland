@@ -343,7 +343,7 @@ public class PlayerShipController : MonoBehaviour
 		}
 		
 		//Make the player drift faster towards the bottom while firing ~Adam
-		if(mToggleFireOn)
+		if(mToggleFireOn && Time.timeScale != 0f)
 		{
 			//Don't drift down from firing if you have a second ship pointing down (because it would be pushing you back up) ~Adam
 			if(!(mShipRecovered && !secondShipOnHip) )
@@ -366,12 +366,12 @@ public class PlayerShipController : MonoBehaviour
 			//horizontal = Input.GetAxis("Horizontal");
 			//vertical = Input.GetAxis("Vertical");
 
-			if(mPlayerOneInputDevice.LeftStick.X != 0){
-
+			if(mPlayerOneInputDevice.LeftStick.X > 0.3f || mPlayerOneInputDevice.LeftStick.X < -0.3f)
+			{
 				horizontal = mPlayerOneInputDevice.LeftStick.X;
 			}
-			if(mPlayerOneInputDevice.LeftStick.Y != 0){
-				
+			if(mPlayerOneInputDevice.LeftStick.Y > 0.3f || mPlayerOneInputDevice.LeftStick.Y < -0.3f)
+			{
 				vertical = mPlayerOneInputDevice.LeftStick.Y;
 			}
 
@@ -767,7 +767,7 @@ public class PlayerShipController : MonoBehaviour
 //		}
 		
 		//Move the ship by the mMoveDir vector if not paused
-		if(Time.timeScale != 0f)
+		if(Time.timeScale != 0)
 		{
 			if (Application.isMobilePlatform)
 			{
