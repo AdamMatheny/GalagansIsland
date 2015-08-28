@@ -9,7 +9,7 @@ public class LDBossDeathWeapon : MonoBehaviour
 	public BossGenericScript mBossCentral;
 	public int mHealthThreshHold = 30;
 	public GameObject mDeathWeapon;
-	public float mOverheatSpeed = 5.0f;
+	public float mOverheatSpeed = 2.0f;
 
 	Image mButtonIcon;
 	// Use this for initialization
