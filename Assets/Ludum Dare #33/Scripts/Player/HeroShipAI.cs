@@ -99,7 +99,7 @@ public class HeroShipAI : MonoBehaviour
 		mMoveDir *= mSpeed * 0.01f;
 		if(mDodgeTimer > 0f)
 		{
-			mMoveDir*=2f;
+			mMoveDir*=1.2f;
 		}
 		mMoveDir = new Vector3(mMoveDir.x, mMoveDir.y, 0f);
 
