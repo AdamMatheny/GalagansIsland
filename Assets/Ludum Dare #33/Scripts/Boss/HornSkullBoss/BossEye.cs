@@ -24,9 +24,8 @@ public class BossEye : BossWeakPoint
 
 	public override void Start()
 	{
-		
 		mTarget = GameObject.FindGameObjectWithTag ("Player");
-		
+
 		timerTemp = timer;	
 
 		mBossCentral.mTotalHealth += health;
@@ -35,6 +34,7 @@ public class BossEye : BossWeakPoint
 	
 	public override void Update()
 	{
+
 		//For flashing when hit ~Adam
 		if(mMainBodySprite != null)
 		{
@@ -80,10 +80,43 @@ public class BossEye : BossWeakPoint
 			Debug.Log("SHOOT!");
 		}
 		
-		float horizontal = Input.GetAxis ("RightAnalogHorizontal");
-		float vertical = Input.GetAxis ("RightAnalogVertical");
+		//float horizontal = Input.GetAxis ("RightAnalogHorizontal");
+		//float vertical = Input.GetAxis ("RightAnalogVertical");
 		
-		transform.localPosition = new Vector2 (horizontal / 15, (vertical / 15) + .04f);
+		//transform.localPosition = new Vector2 (horizontal / 15, (vertical / 15) + .04f);
+
+		if(Mathf.Abs(mTarget.transform.position.x - transform.position.x) > 1f)
+		{
+			if(mTarget.transform.position.x > transform.position.x)
+			{
+				transform.localPosition = (new Vector3(.05f,transform.localPosition.y));
+			}
+			else
+			{
+				transform.localPosition = (new Vector3(-.05f,transform.localPosition.y));
+			}
+			
+		}
+		else
+		{
+			transform.localPosition = (new Vector3(0f,transform.localPosition.y - .02f));
+		}
+		//Eye Y position
+		if(Mathf.Abs(mTarget.transform.position.y - transform.position.y) > .1f)
+		{
+			if(mTarget.transform.position.y > transform.position.y)
+			{
+				transform.localPosition = (new Vector3(transform.localPosition.x, .04f,-0.02f));
+			}
+			else
+			{
+				transform.localPosition = (new Vector3(transform.localPosition.x, -.04f,-0.02f));
+			}
+		}
+		else
+		{
+			transform.localPosition = (new Vector3(transform.localPosition.x, .02f,-0.02f));
+		}
 	}
 
 	public override void TakeDamage()

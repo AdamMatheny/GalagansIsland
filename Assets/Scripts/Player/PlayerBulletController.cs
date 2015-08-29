@@ -49,8 +49,6 @@ public class PlayerBulletController : MonoBehaviour
 		if(other.gameObject.GetComponent<BossWeakPoint>() != null)
 		{
 
-			Debug.Log("Hit shit!");
-
 			other.gameObject.GetComponent<BossWeakPoint>().TakeDamage ();
 			Destroy (this.gameObject);
 		}
