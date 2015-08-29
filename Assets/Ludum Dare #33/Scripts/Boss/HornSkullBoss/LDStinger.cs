@@ -5,6 +5,10 @@ public class LDStinger : MonoBehaviour {
 
 	public GameObject cameraShader;
 
+	public bool hindrance;
+
+	public bool dontDelete;
+
 	public int mHitDamage = 1;
 
 	public void Start(){
@@ -27,8 +31,21 @@ public class LDStinger : MonoBehaviour {
 		//else
 		if (other.gameObject.name == "ShipCore") 
 		{
-			cameraShader.GetComponent<CameraShader> ().shader1.enabled = true;
-			cameraShader.GetComponent<CameraShader> ().shader2.enabled = true;
+			if(hindrance){
+
+				cameraShader.GetComponent<CameraShader> ().shader1.enabled = true;
+				cameraShader.GetComponent<CameraShader> ().shader2.enabled = true;
+
+				if(GetComponentInParent<BlobBoss> () != null){
+
+					GetComponentInParent<BlobBoss> ().StartCoroutine("Hindrance");
+				}
+			}
+
+			if(!dontDelete){
+
+				Destroy(gameObject);
+			}
 
 			Debug.Log (gameObject.name + " hit ship core");
 			if(other.transform.parent.gameObject.GetComponent<HeroShipAI>().mInvincibleTimer <= 0f)
@@ -36,7 +53,6 @@ public class LDStinger : MonoBehaviour {
 				other.transform.parent.gameObject.GetComponent<HeroShipAI>().HitHeroShip(mHitDamage);
 			}
 			transform.GetChild(0).SetParent (null);
-			Destroy(gameObject);
 		}
 	}
 
@@ -48,4 +64,5 @@ public class LDStinger : MonoBehaviour {
 			cameraShader.GetComponent<CameraShader> ().shader2.enabled = false;
 		}
 	}
+
 }
