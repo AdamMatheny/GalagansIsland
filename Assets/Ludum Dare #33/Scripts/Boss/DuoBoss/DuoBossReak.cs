@@ -39,7 +39,7 @@ public class DuoBossReak : BossGenericScript
 			tail.SetActive(false);
 
 			stomach.SetActive(false);
-			mBile.SetActive(true);
+			//mBile.SetActive(true);
 			mCurrentCharge = 0f;
 			mChargeReady = false;
 		}
