@@ -29,6 +29,7 @@ public class LDStinger : MonoBehaviour {
 		
 		
 		//else
+
 		if (other.gameObject.name == "ShipCore") 
 		{
 			if(hindrance){
@@ -64,5 +65,7 @@ public class LDStinger : MonoBehaviour {
 			cameraShader.GetComponent<CameraShader> ().shader2.enabled = false;
 		}
 	}
+
+
 
 }

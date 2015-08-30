@@ -15,6 +15,8 @@ public class LDBossDeathWeapon : MonoBehaviour
 	public GameObject mDeathWeapon;
 	public float mOverheatSpeed = 2.0f;
 
+	public float mRamSpeed = 3.0f;
+	public float mRamDistance = 5.0f;
 	Image mButtonIcon;
 	// Use this for initialization
 	void Start () 
@@ -49,7 +51,7 @@ public class LDBossDeathWeapon : MonoBehaviour
 
 				if (ram) {
 
-					transform.position = Vector3.MoveTowards (transform.position, player.transform.position, 5);
+					transform.position = Vector3.MoveTowards (transform.position, player.transform.position+transform.up*mRamDistance, mRamSpeed);
 				}
 			}
 			//Turn Off Weapon when Right Trigger is released ~Adam
