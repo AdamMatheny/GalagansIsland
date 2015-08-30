@@ -33,30 +33,33 @@ public class LDBossDeathWeapon : MonoBehaviour
 		}
 
 		//Turn weapon off if overheated or dead ~Adam
-		if(mBossCentral.mOverheated || mBossCentral.mDying)
-		{
+		if (mBossCentral.mOverheated || mBossCentral.mDying) {
 			mDeathWeapon.SetActive (false);
 			mButtonIcon.enabled = false;
 		}
 		//Do stuff when below the Health Threshhold ~Adam
-		else if(mBossCentral.mCurrentHealth <= mHealthThreshHold)
-		{
+		else if (mBossCentral.mCurrentHealth <= mHealthThreshHold) {
 			//Turn on the UI Icon for Right Trigger ~Adam
 			mButtonIcon.enabled = true;
 
 			//Fire weapon with Right Trigger button ~Adam
-			if(InputManager.ActiveDevice.RightTrigger.IsPressed)
-			{
+			if (InputManager.ActiveDevice.RightTrigger.IsPressed) {
 				mDeathWeapon.SetActive (true);
-				transform.position = Vector3.MoveTowards(transform.position, player.transform.position, 5);
-				mBossCentral.mCurrentOverheat+= Time.deltaTime*mOverheatSpeed;
+				mBossCentral.mCurrentOverheat += Time.deltaTime * mOverheatSpeed;
+
+				if (ram) {
+
+					transform.position = Vector3.MoveTowards (transform.position, player.transform.position, 5);
+				}
 			}
 			//Turn Off Weapon when Right Trigger is released ~Adam
-			else
-			{
+			else {
 				mDeathWeapon.SetActive (false);
 				mBossCentral.mCurrentOverheat -= Time.deltaTime;
 			}
+		} else {
+
+			mButtonIcon.enabled = false;
 		}
 
 	}//END of Update()

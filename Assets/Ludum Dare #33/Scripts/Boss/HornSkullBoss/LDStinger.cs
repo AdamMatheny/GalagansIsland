@@ -52,7 +52,7 @@ public class LDStinger : MonoBehaviour {
 			{
 				other.transform.parent.gameObject.GetComponent<HeroShipAI>().HitHeroShip(mHitDamage);
 			}
-			transform.GetChild(0).SetParent (null);
+			//transform.GetChild(0).SetParent (null);
 		}
 	}
 
