@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class LDBossDeathWeapon : MonoBehaviour 
 {
+
+	public GameObject player;
+	public bool ram;
+
 	public BossGenericScript mBossCentral;
 	public int mHealthThreshHold = 30;
 	public GameObject mDeathWeapon;
@@ -15,12 +19,19 @@ public class LDBossDeathWeapon : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+		player = GameObject.FindGameObjectWithTag ("Player");
+
 		mButtonIcon = GameObject.Find("Death Weapon Icon").GetComponent<Image>();
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+		if (player == null) {
+
+			player = GameObject.FindGameObjectWithTag ("Player");
+		}
+
 		//Turn weapon off if overheated or dead ~Adam
 		if(mBossCentral.mOverheated || mBossCentral.mDying)
 		{
@@ -37,6 +48,7 @@ public class LDBossDeathWeapon : MonoBehaviour
 			if(InputManager.ActiveDevice.RightTrigger.IsPressed)
 			{
 				mDeathWeapon.SetActive (true);
+				transform.position = Vector3.MoveTowards(transform.position, player.transform.position, 5);
 				mBossCentral.mCurrentOverheat+= Time.deltaTime*mOverheatSpeed;
 			}
 			//Turn Off Weapon when Right Trigger is released ~Adam

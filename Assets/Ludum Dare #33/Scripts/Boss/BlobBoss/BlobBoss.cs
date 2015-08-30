@@ -85,7 +85,7 @@ public class BlobBoss : BossGenericScript
 
 	void BlobBarrage()
 	{
-		mBarrageTimer = 5f;
+		mBarrageTimer = 2.5f;
 
 		if(mBlobBossBarrage != null)
 		{
@@ -95,6 +95,17 @@ public class BlobBoss : BossGenericScript
 				newBullet.GetComponent<LDBulletScript>().mPlayer = mHero.gameObject;
 			}
 		}
+	}
+
+	private IEnumerator Hindrance(){
+		Debug.Log ("Help");
+		
+		yield return new WaitForSeconds (1);
+		
+		Debug.Log ("Help Passed");
+		
+		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraShader> ().shader1.enabled = false;
+		GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraShader> ().shader2.enabled = false;
 	}
 
 }
