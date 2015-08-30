@@ -76,7 +76,10 @@ public class BossEye : BossWeakPoint
 			
 			timerTemp = timer;
 			mShooting = false;
-			Instantiate(bullet, transform.position + new Vector3(0, 4), Quaternion.identity);
+			if(bullet != null)
+			{
+				Instantiate(bullet, transform.position + new Vector3(0, 4), Quaternion.identity);
+			}
 			Debug.Log("SHOOT!");
 		}
 		
