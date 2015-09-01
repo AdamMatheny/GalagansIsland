@@ -66,7 +66,7 @@ public class GetSome : MonoBehaviour
 
 				mControlsScreen.SetActive (true);
 
-				if(Input.anyKeyDown || InputManager.ActiveDevice.AnyButton.IsPressed)
+				if(Input.GetButtonDown("FireGun") || Input.GetButtonDown("FireGunP2") ||InputManager.ActiveDevice.Action1.WasPressed ||InputManager.ActiveDevice.Action4.WasPressed)
 				{
 					Time.timeScale = 1f;
 					Application.LoadLevel(1);
