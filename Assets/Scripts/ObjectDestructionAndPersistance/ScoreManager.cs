@@ -11,8 +11,8 @@ public class ScoreManager : MonoBehaviour
 	public int mShieldHits = 0;
 
 	public int mScore = 0;
-	public int mLivesRemaining = 100;
-    public int mMaxLives = 100;
+	public int mLivesRemaining = 24;
+    public int mMaxLives = 24;
 	public int mCurrentLevel; //Changed this variable name to be consistent with the rest of the naming schem ~Adam
 	public int mOriginalLevel = 0;
 	//For giving the player an extra life every certain number of points ~Adam

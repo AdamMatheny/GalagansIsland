@@ -18,9 +18,7 @@ public class PlayerShipController : MonoBehaviour
 	public GameObject mDamageParticles;//Particles that play when the player gets hit ~Adam
 	bool playerIndexSet = false;
 	public PlayerIndex playerIndex;
-//	GamePadState state;
-//	GamePadState prevState;
-	
+
 	public bool cheats = false;
 	//For if animating the ship ~Adam
 	[SerializeField] private Animator mMainShipAnimator;
@@ -106,15 +104,29 @@ public class PlayerShipController : MonoBehaviour
 	
 	
 	
-	//For making the ship flash when hit
+	//For making the ship flash when hit ~Adam
 	public GameObject mMainShipHitSprite;
 	public GameObject mSecondShipHitSprite;
-	
+
+
+	//For altering movement and firing speed with damage and repair ~Adam
+	public float mFireUpgrade = 0f;
+	public float mMoveUpgrade = 0f;
+	public float mLivesPercent = 1f;
+	ScoreManager mScoreMan;
+
 	// Use this for initialization
 	void Start () 
 	{
-
-		//transform.localScale = new Vector3 (1.75f, 1.75f, 1.75f);
+		//Make sure we always have a reference to the score manager and set the current life percentage ~Adam
+		if(FindObjectOfType<ScoreManager>() != null)
+		{
+			mScoreMan = FindObjectOfType<ScoreManager>();
+		}
+		if(mScoreMan != null)
+		{
+			mLivesPercent = (mScoreMan.mLivesRemaining/(mScoreMan.mMaxLives+0.00001f))*0.5f+0.5f;
+		}
 
 		//Adjust speed and scale for mobile ~Adam
 		if (Application.isMobilePlatform)
@@ -154,9 +166,19 @@ public class PlayerShipController : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		//Make sure we always have a reference to the score manager and keep the current life percentage up-to-date ~Adam
+		if(mScoreMan != null)
+		{
+			mLivesPercent = (mScoreMan.mLivesRemaining/(mScoreMan.mMaxLives+0.00001f))*0.5f+0.5f;
+		}
+		else
+		{
+			if(FindObjectOfType<ScoreManager>() != null)
+			{
+				mScoreMan = FindObjectOfType<ScoreManager>();
+			}
+		}
 
-//		prevState = state;
-//		state = GamePad.GetState(playerIndex);
 
 #if UNITY_ANDROID // Make hitbox smaller for Android
         if (gameObject.GetComponent<BoxCollider>().size != new Vector3 (1.5f, 1.5f, 1.5f))
@@ -283,19 +305,29 @@ public class PlayerShipController : MonoBehaviour
 			
 		}
 		
-		//Increase movement speed as we progress through levels
+		//Increase movement speed as we progress through levels ~Adam
 		if(Time.timeScale > 0f)
 		{
 		//	mMovementSpeed = ( mBaseMovementSpeed + (6f/25f*(Application.loadedLevel)) ) /Time.timeScale;
-			mMovementSpeed = ( mBaseMovementSpeed + (0.24f +5.76f*(Application.loadedLevel-1)/(Application.levelCount-4) )) /Time.timeScale;
+			mMovementSpeed = ( mBaseMovementSpeed + (0.24f +5.76f*(Application.loadedLevel-1)/(Application.levelCount-4) ))*(mLivesPercent+mMoveUpgrade) /Time.timeScale;
+			//Placing a min and max on move speed based on the min/max before adding in damage and repair ~Adam
+			if(mMovementSpeed < mBaseMovementSpeed/2f)
+			{
+				mMovementSpeed = mBaseMovementSpeed/2f;
+			}
+			if(mMovementSpeed > 19.24f)
+			{
+				mMovementSpeed = ( 13f + (0.24f +5.76f*(25f)/(24f) ));
+			}
 		}
+		//Avoid dividing by 0 and don't move if the time scale is less than/equal to zero ~Adam
 		else
 		{
 		//	mMovementSpeed = ( mBaseMovementSpeed + (6f/25f*(Application.loadedLevel)) );
-			mMovementSpeed = ( mBaseMovementSpeed + (0.24f +5.76f*(Application.loadedLevel-1)/(Application.levelCount-4) )) /Time.timeScale;
+			mMovementSpeed = 0f;
 		}
+
 		//Make the player drift toward the bottom of the screen
-		// transform.position += new Vector3(0f,mDropSpeed*-1f, 0f);
 		if(mMoveDir.y < 0f && mDriftDown)
 		{
 			foreach (ParticleSystem shipTrail in this.GetComponentsInChildren<ParticleSystem>())
@@ -664,10 +696,25 @@ public class PlayerShipController : MonoBehaviour
 					//Reset the timer to fire bullets.  The later the level, the smaller the time between shots
 					if(mSpinning == 0)
 					{
+						//Scale firing rate based on what level we're on ~Adam
 						if(Application.loadedLevelName != "Credits")
 						{
+							float bulletFireMod = ( (0.01f +.24f*(Application.loadedLevel-1)/(Application.levelCount-4)) *(mLivesPercent+mFireUpgrade) );
+							//Add in a min/max bullet firing time based on paramaters from before when we added in damage/repair ~Adam
+							//Fastest possible firing ~Adam
+							if(bulletFireMod > 0.26f)
+							{
+								bulletFireMod = 0.26f;
+							}
+							//Slowest Possible firing ~Adam
+							if(bulletFireMod < -0.1f)
+							{
+								bulletFireMod = -0.1f;
+							}
+
 						//	mBulletFireTime = Time.time + bulletShootSpeed - (0.25f / 25f * (Application.loadedLevel));
-							mBulletFireTime = Time.time + bulletShootSpeed - ((0.01f +.24f*(Application.loadedLevel-1)/(Application.levelCount-4) ));
+							mBulletFireTime = Time.time + bulletShootSpeed - bulletFireMod;
+
 						}
 						else
 						{
@@ -978,7 +1025,10 @@ public class PlayerShipController : MonoBehaviour
 	void OnParticleCollision(GameObject other)
 	{
 		Debug.Log("The player was shot by a particle");
-		FindObjectOfType<ScoreManager>().LoseALife();
+		if(mScoreMan != null)
+		{
+			mScoreMan.LoseALife();
+		}
 	}
 	
 }//END of MonoBehavior

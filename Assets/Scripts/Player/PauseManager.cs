@@ -60,7 +60,6 @@ public class PauseManager : MonoBehaviour
 //		{
 //			Debug.Log("Up button pressed");
 //		}
-		Debug.Log ("time scale: " + Time.timeScale);
 		if(mVolumeMenu == null)
 		{
 			mVolumeMenu = FindObjectOfType<VolumeControlSliders>();
