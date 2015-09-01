@@ -551,7 +551,7 @@ public class PlayerShipController : MonoBehaviour
 		//Fire held super weapon ~Adam
 		//Can hold multiple super weapons.  They fire in a priority order: Big Blast, then Laser Fist ~Adam
 		//Have to wait for one to finish firing before firing another ~Adam
-		if( (mPlayerOneInputDevice.RightBumper.WasPressed || Input.GetButtonDown("FireSuperGun")) && !mBigBlast.activeSelf && !mLaserFist.activeSelf)
+		if( (mPlayerOneInputDevice.RightTrigger.WasPressed || Input.GetButtonDown("FireSuperGun")) && !mBigBlast.activeSelf && !mLaserFist.activeSelf)
 		{
 			if(mHaveLaserFist)
 			{
@@ -648,9 +648,17 @@ public class PlayerShipController : MonoBehaviour
 						secondBullet.name = "SECONDBULLET";
 						if (mThreeBullet) 
 						{
-							Instantiate (mSideBullet, mBulletSpawns[4].position, mSecondShip.transform.rotation * Quaternion.Euler (0f, 0f, 10f) * Quaternion.Euler (0f,0f,Random.Range(-5.0f,5.0f)));
+							if(secondShipOnHip){
 
-							Instantiate (mSideBullet, mBulletSpawns[5].position, mSecondShip.transform.rotation * Quaternion.Euler (0f, 0f, -5f) * Quaternion.Euler (0f,0f,Random.Range(-3.0f,10.0f)));
+								Instantiate (mSideBullet, mBulletSpawns[5].position, mSecondShip.transform.rotation * Quaternion.Euler (0f, 0f, 10f) * Quaternion.Euler (0f,0f,Random.Range(-5.0f,5.0f)));
+								
+								Instantiate (mSideBullet, mBulletSpawns[4].position, mSecondShip.transform.rotation * Quaternion.Euler (0f, 0f, -5f) * Quaternion.Euler (0f,0f,Random.Range(-3.0f,10.0f)));
+							}else{
+
+								Instantiate (mSideBullet, mBulletSpawns[4].position, mSecondShip.transform.rotation * Quaternion.Euler (0f, 0f, 10f) * Quaternion.Euler (0f,0f,Random.Range(-5.0f,5.0f)));
+								
+								Instantiate (mSideBullet, mBulletSpawns[5].position, mSecondShip.transform.rotation * Quaternion.Euler (0f, 0f, -5f) * Quaternion.Euler (0f,0f,Random.Range(-3.0f,10.0f)));
+							}
 						}
 					}
 					//Reset the timer to fire bullets.  The later the level, the smaller the time between shots
@@ -855,7 +863,7 @@ public class PlayerShipController : MonoBehaviour
 			}
 		}
 
-		if (Input.GetKeyDown (KeyCode.V) || mPlayerOneInputDevice.LeftBumper.WasPressed) 
+		if (Input.GetKeyDown (KeyCode.V) || mPlayerOneInputDevice.LeftTrigger.WasPressed) 
 		{
 			
 
