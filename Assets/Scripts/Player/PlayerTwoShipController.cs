@@ -505,7 +505,7 @@ public class PlayerTwoShipController : MonoBehaviour
 		//Fire held super weapon ~Adam
 		//Can hold multiple super weapons.  They fire in a priority order: Big Blast, then Laser Fist ~Adam
 		//Have to wait for one to finish firing before firing another ~Adam
-		if( ( (InputManager.Devices.Count >1 && mPlayerTwoInputDevice.RightBumper.WasPressed) || Input.GetButtonDown("FireSuperGunP2")) && !mBigBlast.activeSelf && !mLaserFist.activeSelf)
+		if( ( (InputManager.Devices.Count >1 && mPlayerTwoInputDevice.RightTrigger.WasPressed) || Input.GetButtonDown("FireSuperGunP2")) && !mBigBlast.activeSelf && !mLaserFist.activeSelf)
 		{
 
 			if(mHaveLaserFist)
