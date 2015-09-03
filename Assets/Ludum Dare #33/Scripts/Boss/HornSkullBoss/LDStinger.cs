@@ -21,9 +21,9 @@ public class LDStinger : MonoBehaviour {
 		
 		//		if (other.gameObject.tag == "Player") 
 		//		{
-		//			if(other.gameObject.GetComponent<HeroShipAI>().mInvincibleTimer <= 0f)
+		//			if(other.gameObject.GetComponent<LDHeroShipAI>().mInvincibleTimer <= 0f)
 		//			{
-		//				other.gameObject.GetComponent<HeroShipAI>().HitHeroShip(mHitDamage);
+		//				other.gameObject.GetComponent<LDHeroShipAI>().HitHeroShip(mHitDamage);
 		//			}
 		//		}
 		
@@ -37,9 +37,9 @@ public class LDStinger : MonoBehaviour {
 				cameraShader.GetComponent<CameraShader> ().shader1.enabled = true;
 				cameraShader.GetComponent<CameraShader> ().shader2.enabled = true;
 
-				if(GetComponentInParent<BlobBoss> () != null){
+				if(GetComponentInParent<LDBlobBoss> () != null){
 
-					GetComponentInParent<BlobBoss> ().StartCoroutine("Hindrance");
+					GetComponentInParent<LDBlobBoss> ().StartCoroutine("Hindrance");
 				}
 			}
 
@@ -49,9 +49,9 @@ public class LDStinger : MonoBehaviour {
 			}
 
 			Debug.Log (gameObject.name + " hit ship core");
-			if(other.transform.parent.gameObject.GetComponent<HeroShipAI>().mInvincibleTimer <= 0f)
+			if(other.transform.parent.gameObject.GetComponent<LDHeroShipAI>().mInvincibleTimer <= 0f)
 			{
-				other.transform.parent.gameObject.GetComponent<HeroShipAI>().HitHeroShip(mHitDamage);
+				other.transform.parent.gameObject.GetComponent<LDHeroShipAI>().HitHeroShip(mHitDamage);
 			}
 			//transform.GetChild(0).SetParent (null);
 		}

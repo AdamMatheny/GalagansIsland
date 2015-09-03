@@ -8,8 +8,8 @@ public class GetReady : MonoBehaviour
 {
 	[SerializeField] private float mReadyTimer = 5f;
 
-	PlayerShipController mPlayer1Ship;
-	PlayerTwoShipController mPlayer2Ship;
+	public PlayerOneShipController mPlayer1Ship;
+	public PlayerTwoShipController mPlayer2Ship;
 	[SerializeField] private Text mReadyText;
 	[SerializeField] private string mStartText = "Get Ready!";
 	[SerializeField] private string mFireText = "Fire Away!";
@@ -21,11 +21,11 @@ public class GetReady : MonoBehaviour
 		mReadyText.text = mStartText;
 
 		//Find the player ships ~Adam
-		if(FindObjectOfType<PlayerShipController>() != null)
+		if(FindObjectOfType<PlayerOneShipController>() != null)
 		{
-			mPlayer1Ship = FindObjectOfType<PlayerShipController>();
+			mPlayer1Ship = FindObjectOfType<PlayerOneShipController>();
 		}
-		if(FindObjectOfType<PlayerShipController>() != null)
+		if(FindObjectOfType<PlayerTwoShipController>() != null)
 		{
 			mPlayer2Ship = FindObjectOfType<PlayerTwoShipController>();
 		}
@@ -47,9 +47,9 @@ public class GetReady : MonoBehaviour
 			}
 			else
 			{
-				if(FindObjectOfType<PlayerShipController>() != null)
+				if(FindObjectOfType<PlayerOneShipController>() != null)
 				{
-					mPlayer1Ship = FindObjectOfType<PlayerShipController>();
+					mPlayer1Ship = FindObjectOfType<PlayerOneShipController>();
 				}
 			}
 			//Turn off the player 2 ship's gun if the ship is present, else, find the ship ~Adam
@@ -60,7 +60,7 @@ public class GetReady : MonoBehaviour
 			}
 			else
 			{
-				if(FindObjectOfType<PlayerShipController>() != null)
+				if(FindObjectOfType<PlayerTwoShipController>() != null)
 				{
 					mPlayer2Ship = FindObjectOfType<PlayerTwoShipController>();
 				}

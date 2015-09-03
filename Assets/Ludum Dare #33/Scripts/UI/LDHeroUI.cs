@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class LDHeroUI : MonoBehaviour 
 {
-	public HeroShipAI mHero;
+	public LDHeroShipAI mHero;
 	public Sprite[] mShipStages;
 	public float mHealthPercent;
 	public Image mShipIcon;
@@ -13,9 +13,9 @@ public class LDHeroUI : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		if(FindObjectOfType<HeroShipAI>() != null)
+		if(FindObjectOfType<LDHeroShipAI>() != null)
 		{
-			mHero = FindObjectOfType<HeroShipAI>();
+			mHero = FindObjectOfType<LDHeroShipAI>();
 		}
 	}
 	
@@ -26,9 +26,9 @@ public class LDHeroUI : MonoBehaviour
 		{
 			mShipIcon.sprite = mShipStages[7];
 			mHealthPercent = 0f;
-			if(FindObjectOfType<HeroShipAI>() != null)
+			if(FindObjectOfType<LDHeroShipAI>() != null)
 			{
-				mHero = FindObjectOfType<HeroShipAI>();
+				mHero = FindObjectOfType<LDHeroShipAI>();
 			}
 
 		}

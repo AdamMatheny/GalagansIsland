@@ -10,7 +10,7 @@ public class LDBossDeathWeapon : MonoBehaviour
 	public GameObject player;
 	public bool ram;
 
-	public BossGenericScript mBossCentral;
+	public LDBossGenericScript mBossCentral;
 	public int mHealthThreshHold = 30;
 	public GameObject mDeathWeapon;
 	public float mOverheatSpeed = 2.0f;

@@ -28,28 +28,15 @@ public class PlayerBulletController : MonoBehaviour
 		}
 	}
 
-	void OnTriggerEnter(Collider other){
+	void OnTriggerEnter(Collider other)
+	{
 
-		//Debug.Log (other.gameObject.tag);
 
-//		if (other.gameObject.tag == "Horn") {
-//
-//			//Debug.Log("Hit Horn");
-//
-//			other.GetComponent<LDBossHorn> ().TakeDamage();
-//			Destroy (this.gameObject);
-//		}
-//
-//		if (other.gameObject.tag == "Eye") {
-//
-//			other.GetComponent<BossEye> ().TakeDamage();
-//			Destroy (this.gameObject);
-//		}
-
-		if(other.gameObject.GetComponent<BossWeakPoint>() != null)
+		//For Ludum Dare Metagalactic Monstrosities build
+		if(other.gameObject.GetComponent<LDBossWeakPoint>() != null)
 		{
 
-			other.gameObject.GetComponent<BossWeakPoint>().TakeDamage ();
+			other.gameObject.GetComponent<LDBossWeakPoint>().TakeDamage ();
 			Destroy (this.gameObject);
 		}
 	}

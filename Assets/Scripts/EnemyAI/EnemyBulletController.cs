@@ -21,12 +21,19 @@ public class EnemyBulletController : MonoBehaviour
 
 	public void Start()
 	{
-		mPlayer = FindObjectOfType<PlayerShipController>().gameObject;
 		mScoreController = FindObjectOfType<ScoreManager>();
-		#region co-op mode stuff
-		if(FindObjectOfType<PlayerTwoShipController>() != null)
+		if(mScoreController.mPlayerAvatar != null)
 		{
-			mPlayerClone = FindObjectOfType<PlayerTwoShipController>().gameObject;
+			mPlayer = mScoreController.mPlayerAvatar;
+		}
+		else
+		{
+			mPlayer = FindObjectOfType<PlayerShipController>().gameObject;
+		}
+		#region co-op mode stuff
+		if(mScoreController.mPlayer2Avatar != null)
+		{
+			mPlayerClone = mScoreController.mPlayer2Avatar;
 		}
 		#endregion
 		//Vector2 bulletForce;

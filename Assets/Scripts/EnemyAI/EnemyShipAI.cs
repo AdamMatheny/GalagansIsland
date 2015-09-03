@@ -129,9 +129,9 @@ public class EnemyShipAI : MonoBehaviour
 	void Start () 
 	{
 		//Find the other objects in the scene that we're going to be referencing
-		if(GameObject.FindGameObjectWithTag("Player")!= null)
+		if(FindObjectOfType<PlayerOneShipController>() != null)
 		{
-			mPlayer = GameObject.FindGameObjectWithTag("Player").transform;
+			mPlayer = FindObjectOfType<PlayerOneShipController>().gameObject.transform;
 		}
 		#region for if there is a second player present ~Adam
 		if(FindObjectOfType<PlayerTwoShipController>() != null)
@@ -172,12 +172,13 @@ public class EnemyShipAI : MonoBehaviour
 		}
 
 		//Also kill the ship FINALLY!!! ~ Jonathan
-		if(mPlayer.GetComponent<PlayerShipController> ()!= null)
+		if(mPlayer.GetComponent<PlayerOneShipController> ()!= null)
 		{
 			if (mPlayer.GetComponent<PlayerShipController> ().mShipRecovered) 
 			{
 				
-				if(Vector3.Distance(this.transform.position, mPlayer.GetComponent<PlayerShipController> ().mSecondShip.transform.position) <= 1.5f){
+				if(Vector3.Distance(this.transform.position, mPlayer.GetComponent<PlayerShipController> ().mSecondShip.transform.position) <= 1.5f)
+				{
 					
 					Debug.Log("The second ship was shot");
 					mScoreManager.LoseALife();
@@ -579,11 +580,11 @@ public class EnemyShipAI : MonoBehaviour
 		#endregion
 
 		//Make the Grabber enemies invincible while attacking
-		if(mGrabber && !mPlayer.GetComponent<PlayerShipController>().mShipRecovered && !mPlayer.GetComponent<PlayerShipController>().mShipStolen )
+		if(mGrabber && !mPlayer.GetComponent<PlayerOneShipController>().mShipRecovered && !mPlayer.GetComponent<PlayerOneShipController>().mShipStolen )
 		{
 			mInvincible = true;
 		}
-		else if (mGrabber && (mPlayer.GetComponent<PlayerShipController>().mShipRecovered || mPlayer.GetComponent<PlayerShipController>().mShipStolen) )
+		else if (mGrabber && (mPlayer.GetComponent<PlayerOneShipController>().mShipRecovered || mPlayer.GetComponent<PlayerOneShipController>().mShipStolen) )
 		{
 			mInvincible = false;
 			GetComponentInChildren<Renderer>().material.color = Color.white;
@@ -595,7 +596,7 @@ public class EnemyShipAI : MonoBehaviour
 		if (mSwitchCoolDown <= 0.0f || (mScoreManager.GetComponent<ScoreManager>().mPlayerSafeTime > 0 ) )
 		{
 			if( !mGrabber 
-			   || (mGrabber && (mPlayer.GetComponent<PlayerShipController>().mShipRecovered || mPlayer.GetComponent<PlayerShipController>().mShipStolen)) 
+			   || (mGrabber && (mPlayer.GetComponent<PlayerOneShipController>().mShipRecovered || mPlayer.GetComponent<PlayerOneShipController>().mShipStolen)) 
 			   		|| (mGrabber && mSwitchCoolDown <= 0.0f) )
 			{
 				if (mPostAttackLoop && mAttackLengthTimerDefault > 0.0f)
@@ -709,12 +710,13 @@ public class EnemyShipAI : MonoBehaviour
 		}
 
 		//Make the player lose a life on contact with an enemy
-		if (other.gameObject.GetComponent<PlayerShipController>() != null)
+		if (other.gameObject.GetComponent<PlayerOneShipController>() != null)
 		{
+			Debug.Log ("Made contact with player 1");
 			//mScoreManager.HalfScore();
 			if(!(mGrabber && !mPlayer.GetComponent<PlayerShipController>().mShipStolen) || (mGrabber && mPlayerClone != null) )
 			{
-				mScoreManager.LoseALife();
+				mScoreManager.HitAPlayer(other.gameObject);
 			}
 			//A debug log for tracking which enemy hit the player
 			//Debug.Log("Player was hit by the enemy at grid slot " + mSwarmGridPosition.name +" in grid " + mSwarmGrid.name + "!!!");
@@ -748,7 +750,9 @@ public class EnemyShipAI : MonoBehaviour
 		//Make Player-2 lose a life on contact with an enemy
 		if (other.gameObject.GetComponent<PlayerTwoShipController>() != null)
 		{
-			mScoreManager.LosePlayerTwoLife();
+			Debug.Log ("Made contact with player 2");
+
+			mScoreManager.HitAPlayer(other.gameObject);
 		}
 		#region from when we were doing the clone/twin-stick ship
 //		//Kill a player clone ship on contact

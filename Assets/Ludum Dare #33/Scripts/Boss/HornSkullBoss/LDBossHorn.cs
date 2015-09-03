@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LDBossHorn : BossWeakPoint 
+public class LDBossHorn : LDBossWeakPoint 
 {
 
 	public int health;
@@ -77,10 +77,10 @@ public class LDBossHorn : BossWeakPoint
 
 		if (hornNumber == HornList.LeftHorn) {
 
-			GetComponentInParent<Boss1> ().leftHornAlive = false;
+			GetComponentInParent<LDBoss1> ().leftHornAlive = false;
 		} else {
 
-			GetComponentInParent<Boss1> ().rightHornAlive = false;
+		GetComponentInParent<LDBoss1> ().rightHornAlive = false;
 		}
 		if(mDeathEffect != null)
 		{

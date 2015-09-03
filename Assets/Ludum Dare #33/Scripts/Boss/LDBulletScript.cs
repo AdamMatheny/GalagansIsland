@@ -15,9 +15,9 @@ public class LDBulletScript : EnemyBulletController
 		
 //		if (other.gameObject.tag == "Player") 
 //		{
-//			if(other.gameObject.GetComponent<HeroShipAI>().mInvincibleTimer <= 0f)
+//			if(other.gameObject.GetComponent<LDHeroShipAI>().mInvincibleTimer <= 0f)
 //			{
-//				other.gameObject.GetComponent<HeroShipAI>().HitHeroShip(mHitDamage);
+//				other.gameObject.GetComponent<LDHeroShipAI>().HitHeroShip(mHitDamage);
 //			}
 //		}
 
@@ -25,9 +25,9 @@ public class LDBulletScript : EnemyBulletController
 		if (other.gameObject.name == "ShipCore") 
 		{
 			Debug.Log (gameObject.name + " hit ship core");
-			if(other.transform.parent.gameObject.GetComponent<HeroShipAI>().mInvincibleTimer <= 0f)
+			if(other.transform.parent.gameObject.GetComponent<LDHeroShipAI>().mInvincibleTimer <= 0f)
 			{
-				other.transform.parent.gameObject.GetComponent<HeroShipAI>().HitHeroShip(mHitDamage);
+				other.transform.parent.gameObject.GetComponent<LDHeroShipAI>().HitHeroShip(mHitDamage);
 			}
 			Destroy(gameObject);
 		}
@@ -80,9 +80,9 @@ public class LDBulletScript : EnemyBulletController
 		
 //		if (other.gameObject.tag == "Player") 
 //		{
-//			if(other.gameObject.GetComponent<HeroShipAI>().mInvincibleTimer <= 0f)
+//			if(other.gameObject.GetComponent<LDHeroShipAI>().mInvincibleTimer <= 0f)
 //			{
-//				other.gameObject.GetComponent<HeroShipAI>().HitHeroShip(mHitDamage);
+//				other.gameObject.GetComponent<LDHeroShipAI>().HitHeroShip(mHitDamage);
 //			}
 //		}
 
@@ -91,9 +91,9 @@ public class LDBulletScript : EnemyBulletController
 		if (other.gameObject.name == "ShipCore") 
 		{
 			Debug.Log (gameObject.name + " hit ship core");
-			if(other.transform.parent.gameObject.GetComponent<HeroShipAI>().mInvincibleTimer <= 0f)
+			if(other.transform.parent.gameObject.GetComponent<LDHeroShipAI>().mInvincibleTimer <= 0f)
 			{
-				other.transform.parent.gameObject.GetComponent<HeroShipAI>().HitHeroShip(mHitDamage);
+				other.transform.parent.gameObject.GetComponent<LDHeroShipAI>().HitHeroShip(mHitDamage);
 			}
 			transform.GetChild(0).SetParent (null);
 			Destroy(gameObject);

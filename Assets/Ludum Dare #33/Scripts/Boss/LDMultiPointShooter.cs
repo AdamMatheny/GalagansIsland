@@ -5,7 +5,7 @@ using XInputDotNetPure;
 
 public class LDMultiPointShooter : MonoBehaviour 
 {
-	public BossGenericScript mBossBody;
+	public LDBossGenericScript mBossBody;
 	
 	
 	public GameObject mTarget;

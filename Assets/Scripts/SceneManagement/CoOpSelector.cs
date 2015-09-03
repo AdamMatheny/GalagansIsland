@@ -29,10 +29,10 @@ public class CoOpSelector : MonoBehaviour
 			if(mCoOpEnabled)
 			{
 				//Find the main player ship so we can find the inactive P2 ship ~Adam
-				if(FindObjectOfType<PlayerShipController>() != null)
+				if(FindObjectOfType<PlayerOneShipController>() != null)
 				{
 					Debug.Log ("Found Player 1");
-					PlayerShipController player = FindObjectOfType<PlayerShipController>();
+					PlayerOneShipController player = FindObjectOfType<PlayerOneShipController>();
 					//Make sure there's a player 2 ship present and then enable it ~Adam
 					if(player.mPlayerTwo != null)
 					{

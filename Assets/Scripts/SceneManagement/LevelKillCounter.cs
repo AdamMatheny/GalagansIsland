@@ -4,8 +4,8 @@ using System.Collections;
 public class LevelKillCounter : MonoBehaviour 
 {
 	[SerializeField] private bool mAllowLevelSkip = false;
-	[SerializeField] private int mRequiredKills = 30;
-	[SerializeField] private int mKillCount = 0;
+	public int mRequiredKills = 30;
+	public int mKillCount = 0;
 	float mLevelCompleteTimer = 5f;
 
 	bool mLevelComplete = false;

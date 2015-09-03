@@ -66,7 +66,7 @@ public class RepairStation : MonoBehaviour
 				//Play animation ~Adam
 				mAnimator.Play ("FireDoor");
 				//Upgrade fire rate ~Adam
-				other.GetComponent<PlayerShipController>().mFireUpgrade += 0.25f;
+				other.GetComponent<PlayerShipController>().mFireUpgrade += 0.3f;
 				mServicedP1 = true;
 			}
 		}
@@ -104,7 +104,7 @@ public class RepairStation : MonoBehaviour
 				//Play animation ~Adam
 				mAnimator.Play ("FireDoor");
 				//Upgrade fire rate ~Adam
-				other.GetComponent<PlayerTwoShipController>().mFireUpgrade += 0.25f;
+				other.GetComponent<PlayerTwoShipController>().mFireUpgrade += 0.3f;
 				mServicedP2 = true;
 			}
 		}

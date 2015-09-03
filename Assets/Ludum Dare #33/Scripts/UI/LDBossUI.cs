@@ -6,7 +6,7 @@ public class LDBossUI : MonoBehaviour
 {
 	public Image mBossIcon;
 	public Sprite mCurrentIcon;
-	public BossGenericScript mBoss;
+	public LDBossGenericScript mBoss;
 
 	public Image mHealthPanel;
 	public Image mChargePanel;
@@ -18,9 +18,9 @@ public class LDBossUI : MonoBehaviour
 	void Start () 
 	{
 		//Find the boss ~Adam
-		if(FindObjectOfType<BossGenericScript>() != null)
+		if(FindObjectOfType<LDBossGenericScript>() != null)
 		{
-			mBoss = FindObjectOfType<BossGenericScript>();
+			mBoss = FindObjectOfType<LDBossGenericScript>();
 		}
 	}
 	
@@ -34,9 +34,9 @@ public class LDBossUI : MonoBehaviour
 		}
 
 		//Find the boss ~Adam
-		if(mBoss == null && FindObjectOfType<BossGenericScript>() != null)
+		if(mBoss == null && FindObjectOfType<LDBossGenericScript>() != null)
 		{
-			mBoss = FindObjectOfType<BossGenericScript>();
+			mBoss = FindObjectOfType<LDBossGenericScript>();
 		}
 
 

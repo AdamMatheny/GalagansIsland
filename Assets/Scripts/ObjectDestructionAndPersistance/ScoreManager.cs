@@ -35,11 +35,11 @@ public class ScoreManager : MonoBehaviour
 
 	public float mPlayerSafeTime = 0f;
 	// Use this for initialization
-	[SerializeField] private GameObject mPlayerAvatar;
+	public GameObject mPlayerAvatar;
 	public GameObject mPlayerDeathEffect;
 
 	//For when we have two players ~Adam
-	[SerializeField] private GameObject mPlayer2Avatar;
+	public GameObject mPlayer2Avatar;
 
 	//For better GUI elements ~Adam
 	[SerializeField] private GUIStyle mScoreManStyle;
@@ -99,9 +99,9 @@ public class ScoreManager : MonoBehaviour
                 mHighscoreCanvas = canv;
             }
         }
-		if(mPlayer2Avatar == null && mPlayerAvatar.GetComponent<PlayerShipController>().mPlayerTwo.gameObject != null && mPlayerAvatar.GetComponent<PlayerShipController>().mPlayerTwo.gameObject.activeInHierarchy)
+		if(mPlayer2Avatar == null && mPlayerAvatar.GetComponent<PlayerOneShipController>().mPlayerTwo.gameObject != null && mPlayerAvatar.GetComponent<PlayerOneShipController>().mPlayerTwo.gameObject.activeInHierarchy)
 		{
-			mPlayer2Avatar = mPlayerAvatar.GetComponent<PlayerShipController>().mPlayerTwo.gameObject;
+			mPlayer2Avatar = mPlayerAvatar.GetComponent<PlayerOneShipController>().mPlayerTwo.gameObject;
 		}
 	}
 
@@ -130,8 +130,8 @@ public class ScoreManager : MonoBehaviour
 
 		if (mPlayerAvatar != null) {
 
-			if (mPlayerAvatar.GetComponent<PlayerShipController> ().mPlayerTwo.gameObject != null && mPlayerAvatar.GetComponent<PlayerShipController> ().mPlayerTwo.gameObject.activeInHierarchy) {
-				mPlayer2Avatar = mPlayerAvatar.GetComponent<PlayerShipController> ().mPlayerTwo.gameObject;
+			if (mPlayerAvatar.GetComponent<PlayerOneShipController> ().mPlayerTwo.gameObject != null && mPlayerAvatar.GetComponent<PlayerOneShipController> ().mPlayerTwo.gameObject.activeInHierarchy) {
+				mPlayer2Avatar = mPlayerAvatar.GetComponent<PlayerOneShipController> ().mPlayerTwo.gameObject;
 			}
 		}
 	}
@@ -262,16 +262,18 @@ public class ScoreManager : MonoBehaviour
 		{
 			if(mPlayerSafeTime > 0)
 			{
-				mPlayer2Avatar.GetComponent<PlayerTwoShipController>().mMainShipHitSprite.SetActive(true);
-				if(mPlayer2Avatar.GetComponent<PlayerTwoShipController>().mShipRecovered)
+				mPlayer2Avatar.GetComponent<PlayerShipController>().mMainShipHitSprite.SetActive(true);
+				mPlayer2Avatar.GetComponent<PlayerShipController>().mDamageParticles.SetActive(true);
+				if(mPlayer2Avatar.GetComponent<PlayerShipController>().mShipRecovered)
 				{
-					mPlayer2Avatar.GetComponent<PlayerTwoShipController>().mSecondShipHitSprite.SetActive(true);
+					mPlayer2Avatar.GetComponent<PlayerShipController>().mSecondShipHitSprite.SetActive(true);
 				}
 			}
 			else
 			{
-				mPlayer2Avatar.GetComponent<PlayerTwoShipController>().mMainShipHitSprite.SetActive(false);
-				mPlayer2Avatar.GetComponent<PlayerTwoShipController>().mSecondShipHitSprite.SetActive(false);
+				mPlayer2Avatar.GetComponent<PlayerShipController>().mDamageParticles.SetActive(false);
+				mPlayer2Avatar.GetComponent<PlayerShipController>().mMainShipHitSprite.SetActive(false);
+				mPlayer2Avatar.GetComponent<PlayerShipController>().mSecondShipHitSprite.SetActive(false);
 			}
 		}
 
@@ -287,7 +289,14 @@ public class ScoreManager : MonoBehaviour
 			mLevelInfoText.text = " \nGame Over";
 			break;
 		default:
-			mLevelInfoText.text = "Level "+ Application.loadedLevel + ":\n" + mLevelNames[Application.loadedLevel];
+			if(mLevelNames[Application.loadedLevel].Contains("Boss"))
+			{
+				mLevelInfoText.text =  "\n" + mLevelNames[Application.loadedLevel];
+			}
+			else
+			{
+				mLevelInfoText.text = "Level "+ (Application.loadedLevel-Application.loadedLevel/6) + ":\n" + mLevelNames[Application.loadedLevel];
+			}
 			break;
 		}
 		mHighScoreText.text = "High Score:\n" + PlayerPrefs.GetInt("highscore", 0);
@@ -383,6 +392,7 @@ public class ScoreManager : MonoBehaviour
 					}
 					mLivesRemaining--;
 					mPlayerAvatar.GetComponent<PlayerShipController>().StartSpin();
+					mPlayerAvatar.GetComponent<PlayerShipController>().TakeStatDamage();
 					Camera.main.GetComponent<CameraShaker>().ShakeCameraDeath();
 
 
@@ -424,7 +434,7 @@ public class ScoreManager : MonoBehaviour
 			
 			
 			//Lose a life if the player isn't shielded ~Adam
-			if(!mPlayer2Avatar.GetComponent<PlayerTwoShipController>().mShielded)
+			if(!mPlayer2Avatar.GetComponent<PlayerShipController>().mShielded)
 			{
 				Camera.main.GetComponent<CameraShaker> ().RumbleController(.1f, .2f);
 
@@ -433,10 +443,10 @@ public class ScoreManager : MonoBehaviour
 					GameObject playerDeathParticles;
 					playerDeathParticles = Instantiate(mPlayerDeathEffect, mPlayer2Avatar.transform.position, Quaternion.identity) as GameObject;
 				}
-				if(mPlayer2Avatar.GetComponent<PlayerTwoShipController>().mShipRecovered)
+				if(mPlayer2Avatar.GetComponent<PlayerShipController>().mShipRecovered)
 				{
-					mPlayer2Avatar.GetComponent<PlayerTwoShipController>().mShipRecovered = false;
-					mPlayer2Avatar.GetComponent<PlayerTwoShipController>().StartSpin();
+					mPlayer2Avatar.GetComponent<PlayerShipController>().mShipRecovered = false;
+					mPlayer2Avatar.GetComponent<PlayerShipController>().StartSpin();
 					Camera.main.GetComponent<CameraShaker>().ShakeCameraDeath();
 
 
@@ -457,7 +467,8 @@ public class ScoreManager : MonoBehaviour
 						mP2Score = 0;
 					}
 					mLivesRemaining--;
-					mPlayer2Avatar.GetComponent<PlayerTwoShipController>().StartSpin();
+					mPlayer2Avatar.GetComponent<PlayerShipController>().StartSpin();
+					mPlayer2Avatar.GetComponent<PlayerShipController>().TakeStatDamage();
 					Camera.main.GetComponent<CameraShaker>().ShakeCameraDeath();
 
 
@@ -466,7 +477,7 @@ public class ScoreManager : MonoBehaviour
 			else
 			{
 				//mScore -= 10;
-				mPlayer2Avatar.GetComponent<PlayerTwoShipController>().StartSpin();
+				mPlayer2Avatar.GetComponent<PlayerShipController>().StartSpin();
 				Camera.main.GetComponent<CameraShaker>().ShakeCameraDeath();
 
 			
@@ -490,5 +501,17 @@ public class ScoreManager : MonoBehaviour
 			
 		}
 	}//END of LosePlayerTwoLife()
+
+	public void HitAPlayer(GameObject playerHit)
+	{
+		if(playerHit == mPlayerAvatar)
+		{
+			LoseALife ();
+		}
+		else if(playerHit == mPlayer2Avatar)
+		{
+			LosePlayerTwoLife ();
+		}
+	}
 
 }

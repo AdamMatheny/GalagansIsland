@@ -11,9 +11,9 @@ public class LDBossBeam : MonoBehaviour
 
 		if (other.gameObject.name == "ShipCore") 
 		{
-			if(other.transform.parent.gameObject.GetComponent<HeroShipAI>().mInvincibleTimer <= 0f)
+			if(other.transform.parent.gameObject.GetComponent<LDHeroShipAI>().mInvincibleTimer <= 0f)
 			{
-				other.transform.parent.gameObject.GetComponent<HeroShipAI>().HitHeroShip(mHitDamage);
+				other.transform.parent.gameObject.GetComponent<LDHeroShipAI>().HitHeroShip(mHitDamage);
 			}
 		}
 	}
@@ -22,9 +22,9 @@ public class LDBossBeam : MonoBehaviour
 	{
 		if (other.gameObject.name == "ShipCore") 
 		{
-			if(other.transform.parent.gameObject.GetComponent<HeroShipAI>().mInvincibleTimer <= 0f)
+			if(other.transform.parent.gameObject.GetComponent<LDHeroShipAI>().mInvincibleTimer <= 0f)
 			{
-				other.transform.parent.gameObject.GetComponent<HeroShipAI>().HitHeroShip(mHitDamage);
+				other.transform.parent.gameObject.GetComponent<LDHeroShipAI>().HitHeroShip(mHitDamage);
 			}
 		}
 	}
