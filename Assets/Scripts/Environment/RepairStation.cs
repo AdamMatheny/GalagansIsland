@@ -9,15 +9,31 @@ public class RepairStation : MonoBehaviour
 	[SerializeField] private Animator mAnimator;
 	[SerializeField] private GameObject mReadyGetter;
 
+	//For keeping player shields from running out while they choose what to repair ~Adam
+	ScoreManager mScoreMan;
+	public float mP1ShieldTime = 0f;
+	public float mP2ShieldTime = 0f;
+
 	// Use this for initialization
 	void Start () 
 	{
-	
+		mScoreMan = FindObjectOfType<ScoreManager>();
+		//Find the shields to keep sustained ~Adam
+		if(mScoreMan.mPlayerAvatar!=null)
+		{
+			mP1ShieldTime = mScoreMan.mPlayerAvatar.GetComponent<PlayerShipController>().mShieldTimer;
+		}
+		if(FindObjectOfType<PlayerTwoShipController>()!=null)
+		{
+			mP2ShieldTime = mScoreMan.mPlayer2Avatar.GetComponent<PlayerShipController>().mShieldTimer;
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+
+
 		transform.Translate (Vector3.down* mDriftSpeed*Time.deltaTime);
 		//Activate the GetReady object once the repair station goes off-screen ~Adam
 		if(transform.position.y < -46f)
@@ -28,7 +44,18 @@ public class RepairStation : MonoBehaviour
 			}
 			Destroy (this.gameObject);
 		}
-	}
+
+
+		//Freeze the timer on the player shields ~Adam
+		if(FindObjectOfType<PlayerOneShipController>()!=null)
+		{
+			mScoreMan.mPlayerAvatar.GetComponent<PlayerShipController>().mShieldTimer = mP1ShieldTime;
+		}
+		if(FindObjectOfType<PlayerTwoShipController>()!=null)
+		{
+			mScoreMan.mPlayer2Avatar.GetComponent<PlayerShipController>().mShieldTimer = mP2ShieldTime;
+		}
+	}//END of Update()
 
 	void OnTriggerEnter(Collider other)
 	{

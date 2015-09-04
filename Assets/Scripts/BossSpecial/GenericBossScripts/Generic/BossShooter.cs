@@ -15,7 +15,7 @@ public class BossShooter : MonoBehaviour
 
 	public float mTimer = 10f;
 	public float mFireRate = 0.5f;
-	float mTimerTemp;
+	[SerializeField] protected float mTimerTemp = 10f;
 	
 
 	int mShotsFired = 0;
@@ -26,7 +26,6 @@ public class BossShooter : MonoBehaviour
 	{
 		mTarget = mBossCentral.mTargetedPlayer.gameObject;
 
-		mTimerTemp = mTimer;	
 
 	}//END of Start()
 	

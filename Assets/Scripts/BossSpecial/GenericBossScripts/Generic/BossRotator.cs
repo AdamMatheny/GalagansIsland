@@ -10,6 +10,9 @@ public class BossRotator : MonoBehaviour
 	public Vector3 newDir;
 	public float mRotateSpeed = 10f;
 	Vector3 mTargetPlayerPosition;
+
+	public bool mSecondaryRotator = false;
+	public GameObject mReferenceRotator;
 	// Use this for initialization
 	void Start () 
 	{
@@ -19,22 +22,32 @@ public class BossRotator : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		//mTargetRotation = new Vector3(Input.GetAxis ("RightAnalogHorizontal"), Input.GetAxis ("RightAnalogVertical"), 0);
-
-		if(mBossCentral.mTargetedPlayer != null)
+		//Spin in tune with another rotator ~Adam
+		if(mReferenceRotator != null && mSecondaryRotator)
 		{
-			mTargetPlayerPosition = mBossCentral.mTargetedPlayer.transform.position;
-			mTargetRotation = new Vector3(mTargetPlayerPosition.x-transform.position.x,mTargetPlayerPosition.y-transform.position.y,0f);
+			transform.rotation = mReferenceRotator.transform.rotation;
 		}
-
-		Vector3.Normalize (mTargetRotation);
-		mTargetRotation = new Vector3(0f, 0f, Vector3.Angle(mTargetRotation, Vector3.down));
-		if(mTargetPlayerPosition.x < transform.position.x)
+		//Spin on its own towards the player ~Adam
+		else
 		{
-			mTargetRotation *= -1f;
+			if(mBossCentral.mTargetedPlayer != null)
+			{
+				mTargetPlayerPosition = mBossCentral.mTargetedPlayer.transform.position;
+				mTargetRotation = new Vector3(mTargetPlayerPosition.x-transform.position.x,mTargetPlayerPosition.y-transform.position.y,0f);
+				//mTargetRotation += Vector3.up*3f;
+			}
+
+			Vector3.Normalize (mTargetRotation);
+			mTargetRotation = new Vector3(0f, 0f, Vector3.Angle(mTargetRotation, Vector3.down));
+			if(mTargetPlayerPosition.x < transform.position.x)
+			{
+				mTargetRotation *= -1f;
+			}
+
+			transform.rotation =Quaternion.Lerp (transform.rotation, Quaternion.Euler (mTargetRotation), 0.001f*mRotateSpeed * Time.timeScale);
 		}
-
-		transform.rotation =Quaternion.Lerp (transform.rotation, Quaternion.Euler (mTargetRotation), 0.001f*mRotateSpeed);
-
 	}//END of Update()
+
+
+
 }

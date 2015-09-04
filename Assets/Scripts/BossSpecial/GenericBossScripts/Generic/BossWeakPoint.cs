@@ -11,6 +11,7 @@ public class BossWeakPoint : MonoBehaviour
 	[SerializeField] protected bool mDestroyObjectOnDeath = true;
 	public SpriteRenderer mDamageSprite;
 	public GameObject mDestrucitonEffect;
+	[SerializeField] protected Transform mDestructionPoint;
 
 	// Use this for initialization
 	protected virtual void Start () 
@@ -72,7 +73,11 @@ public class BossWeakPoint : MonoBehaviour
 		//Spawn death effect ~Adam
 		if(mDestrucitonEffect != null)
 		{
-			Instantiate (mDestrucitonEffect,transform.position,Quaternion.identity);
+			GameObject destructionEffect = Instantiate (mDestrucitonEffect,transform.position,Quaternion.identity) as GameObject;
+			if(mDestructionPoint != null)
+			{
+				destructionEffect.transform.position = mDestructionPoint.position;
+			}
 		}
 		//Either destroy this game object or just turn off ~Adam
 		if(mDestroyObjectOnDeath)

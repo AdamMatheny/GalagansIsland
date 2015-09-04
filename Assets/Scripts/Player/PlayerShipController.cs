@@ -321,7 +321,7 @@ public class PlayerShipController : MonoBehaviour
 			{
 				if(heatLevel < maxHeatLevel)
 				{
-					heatLevel += Time.deltaTime;
+					heatLevel += Time.deltaTime/Time.timeScale;
 				}
 				
 				if(heatLevel >= maxHeatLevel)
@@ -433,11 +433,11 @@ public class PlayerShipController : MonoBehaviour
 				
 				if(isOverheated)
 				{
-					heatLevel -= Time.deltaTime * maxHeatLevel/5f;
+					heatLevel -= Time.deltaTime * maxHeatLevel/5f/Time.timeScale;
 				}
 				else
 				{
-					heatLevel -= Time.deltaTime * 3f;
+					heatLevel -= Time.deltaTime * 3f/Time.timeScale;
 				}
 			}
 		}

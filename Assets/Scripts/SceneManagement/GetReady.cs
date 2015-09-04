@@ -8,26 +8,34 @@ public class GetReady : MonoBehaviour
 {
 	[SerializeField] private float mReadyTimer = 5f;
 
-	public PlayerOneShipController mPlayer1Ship;
-	public PlayerTwoShipController mPlayer2Ship;
+	public PlayerShipController mPlayer1Ship;
+	public PlayerShipController mPlayer2Ship;
 	[SerializeField] private Text mReadyText;
 	[SerializeField] private string mStartText = "Get Ready!";
 	[SerializeField] private string mFireText = "Fire Away!";
+	ScoreManager mScoreMan;
+
+	//For keeping overheat levels from resetting
+	float mP1Overheat = 0f;
+	float mP2Overheat = 0f;
 
 	// Use this for initialization
 	void Start () 
 	{
-		//Set the text that displays at the start of the level ~Ada,
+		//Set the text that displays at the start of the level ~Adam
 		mReadyText.text = mStartText;
+		mScoreMan = FindObjectOfType<ScoreManager>();
 
 		//Find the player ships ~Adam
-		if(FindObjectOfType<PlayerOneShipController>() != null)
+		if(mScoreMan.mPlayerAvatar != null)
 		{
-			mPlayer1Ship = FindObjectOfType<PlayerOneShipController>();
+			mPlayer1Ship = mScoreMan.mPlayerAvatar.GetComponent<PlayerShipController>();
+			mP1Overheat = mPlayer1Ship.heatLevel;
 		}
-		if(FindObjectOfType<PlayerTwoShipController>() != null)
+		if(mScoreMan.mPlayer2Avatar != null)
 		{
-			mPlayer2Ship = FindObjectOfType<PlayerTwoShipController>();
+			mPlayer2Ship = mScoreMan.mPlayer2Avatar.GetComponent<PlayerShipController>();
+			mP2Overheat = mPlayer2Ship.heatLevel;
 		}
 	}//END of Start()
 	
@@ -44,12 +52,13 @@ public class GetReady : MonoBehaviour
 			{
 				mPlayer1Ship.mToggleFireOn = false;
 				mPlayer1Ship.isOverheated = true;
+				mPlayer1Ship.heatLevel = mP1Overheat;
 			}
 			else
 			{
-				if(FindObjectOfType<PlayerOneShipController>() != null)
+				if(mScoreMan.mPlayerAvatar != null)
 				{
-					mPlayer1Ship = FindObjectOfType<PlayerOneShipController>();
+					mPlayer1Ship = mScoreMan.mPlayerAvatar.GetComponent<PlayerShipController>();
 				}
 			}
 			//Turn off the player 2 ship's gun if the ship is present, else, find the ship ~Adam
@@ -57,12 +66,13 @@ public class GetReady : MonoBehaviour
 			{
 				mPlayer2Ship.mToggleFireOn = false;
 				mPlayer2Ship.isOverheated = true;
+				mPlayer2Ship.heatLevel = mP2Overheat;
 			}
 			else
 			{
-				if(FindObjectOfType<PlayerTwoShipController>() != null)
+				if(mScoreMan.mPlayer2Avatar != null)
 				{
-					mPlayer2Ship = FindObjectOfType<PlayerTwoShipController>();
+					mPlayer2Ship = mScoreMan.mPlayer2Avatar.GetComponent<PlayerShipController>();
 				}
 			}
 		}
@@ -74,6 +84,16 @@ public class GetReady : MonoBehaviour
 		//Delete self ~Adam
 		else
 		{
+			if(mPlayer1Ship!=null)
+			{
+				mPlayer1Ship.isOverheated = false;
+			//	mPlayer1Ship.heatLevel = mP1Overheat;
+			}
+			if(mPlayer2Ship!=null)
+			{
+				mPlayer2Ship.isOverheated = false;
+			//	mPlayer2Ship.heatLevel = mP2Overheat;
+			}
 			Destroy(this.gameObject);
 		}
 	}//END of Update()
