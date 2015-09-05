@@ -29,7 +29,8 @@ public class SwarmGrid : MonoBehaviour
 
 	[SerializeField] private bool mUseMultipleFormations = false;
 	[SerializeField] private float mFormationSwitchTimeDefault = 10f;
-	private float mFormationSwitchTime;
+	[SerializeField] private float mFormationSwitchTime;
+	[SerializeField] private bool mDelayFirstFormationSwitch = false;
 	[SerializeField] private bool mLimitedFormationSwitches = false;
 	[SerializeField] private int mMaxFormationSwitches = 100;
 	[SerializeField] private int mFormationSwitchCount = 0;
@@ -43,7 +44,10 @@ public class SwarmGrid : MonoBehaviour
 		{
 			mFocusPoint = transform.position;
 		}
-		mFormationSwitchTime = mFormationSwitchTimeDefault;
+		if(!mDelayFirstFormationSwitch)
+		{
+			mFormationSwitchTime = mFormationSwitchTimeDefault;
+		}
 	}//END of Start()
 	
 	// Update is called once per frame

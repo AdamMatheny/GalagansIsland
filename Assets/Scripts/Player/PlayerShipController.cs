@@ -321,7 +321,10 @@ public class PlayerShipController : MonoBehaviour
 			{
 				if(heatLevel < maxHeatLevel)
 				{
-					heatLevel += Time.deltaTime/Time.timeScale;
+					if(Time.timeScale != 0f)
+					{
+						heatLevel += Time.deltaTime/Time.timeScale;
+					}
 				}
 				
 				if(heatLevel >= maxHeatLevel)
@@ -397,7 +400,15 @@ public class PlayerShipController : MonoBehaviour
 						//Scale firing rate based on what level we're on ~Adam
 						if(Application.loadedLevelName != "Credits")
 						{
-							float bulletFireMod = ( (0.01f +.24f*(Application.loadedLevel-1)/(Application.levelCount-4)) *(mFireUpgrade*mFireUpgrade) );
+							float bulletFireMod = 0.04f;
+							if(mFireUpgrade <1f)
+							{
+								bulletFireMod = ( (0.01f +.24f*(Application.loadedLevel-1)/(Application.levelCount-4)) *(mFireUpgrade*mFireUpgrade) );
+							}
+							else
+							{
+								bulletFireMod = ( (0.01f +.24f*(Application.loadedLevel-1)/(Application.levelCount-4)) *(mFireUpgrade) );
+							}
 							//Add in a min/max bullet firing time based on paramaters from before when we added in damage/repair ~Adam
 							//Fastest possible firing ~Adam
 							if(bulletFireMod > 0.26f)
@@ -433,11 +444,17 @@ public class PlayerShipController : MonoBehaviour
 				
 				if(isOverheated)
 				{
-					heatLevel -= Time.deltaTime * maxHeatLevel/5f/Time.timeScale;
+					if(Time.timeScale != 0)
+					{
+						heatLevel -= Time.deltaTime * maxHeatLevel/5f/Time.timeScale;
+					}
 				}
 				else
 				{
-					heatLevel -= Time.deltaTime * 3f/Time.timeScale;
+					if(Time.timeScale != 0)
+					{
+						heatLevel -= Time.deltaTime * 3f/Time.timeScale;
+					}
 				}
 			}
 		}

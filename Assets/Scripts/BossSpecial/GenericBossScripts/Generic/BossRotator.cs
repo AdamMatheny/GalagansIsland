@@ -13,6 +13,8 @@ public class BossRotator : MonoBehaviour
 
 	public bool mSecondaryRotator = false;
 	public GameObject mReferenceRotator;
+	public Vector3 mRefOffset = Vector3.zero;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -25,7 +27,7 @@ public class BossRotator : MonoBehaviour
 		//Spin in tune with another rotator ~Adam
 		if(mReferenceRotator != null && mSecondaryRotator)
 		{
-			transform.rotation = mReferenceRotator.transform.rotation;
+			transform.rotation = Quaternion.Euler(mReferenceRotator.transform.rotation.eulerAngles +  mRefOffset);
 		}
 		//Spin on its own towards the player ~Adam
 		else

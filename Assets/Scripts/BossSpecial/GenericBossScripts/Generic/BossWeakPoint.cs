@@ -37,7 +37,12 @@ public class BossWeakPoint : MonoBehaviour
 	{
 		if(other.GetComponent<PlayerBulletController>()!=null)
 		{
-			TakeDamage ();
+			if(!other.GetComponent<PlayerBulletController>().mSideBullet)
+			{
+				TakeDamage ();
+			}
+			Destroy (other.gameObject);
+
 		}
 	}
 

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BlobBossCentral : BossCentral 
 {
@@ -12,8 +13,10 @@ public class BlobBossCentral : BossCentral
 
 	//For knocking out teeth ~Adam
 	public Animator mAnimator;
-	public RuntimeAnimatorController[] mAnimationStages;
-
+	public List<RuntimeAnimatorController> mAnimationStages = new List<RuntimeAnimatorController>();
+	public List<int> mHealthStages = new List<int>();
+	public GameObject mDamageEffect;
+	public Transform mDamageEffectPoint;
 
 	// Use this for initialization
 	protected override void Start () 
@@ -27,32 +30,19 @@ public class BlobBossCentral : BossCentral
 	{
 		base.Update ();
 
-		//Change number of teeth based on health ~Adam
-		//8 teeth
-		if(mCurrentHealth >= 108)
+		//Change number of sprite based on health ~Adam
+		if(mHealthStages.Count >0 && mAnimationStages.Count > 0 && mCurrentHealth <= mHealthStages[0])
 		{
+			//Make a boom where the damage was ~Adam
+			if(mCurrentHealth == mHealthStages[0] && mDamageEffect != null && mDamageEffectPoint != null)
+			{
+				Instantiate (mDamageEffect, mDamageEffectPoint.position, Quaternion.identity);
+			}
 			mAnimator.runtimeAnimatorController = mAnimationStages[0];
+			mHealthStages.Remove (mHealthStages[0]);
+			mAnimationStages.Remove(mAnimationStages[0]);
 		}
-		//6 teeth ~Adam
-		else if(mCurrentHealth >= 72)
-		{
-			mAnimator.runtimeAnimatorController = mAnimationStages[1];
-		}
-		//4 teeth ~Adam
-		else if(mCurrentHealth >= 38)
-		{
-			mAnimator.runtimeAnimatorController = mAnimationStages[2];
-		}
-		//2 teeth ~Adam
-		else if(mCurrentHealth >= 12)
-		{
-			mAnimator.runtimeAnimatorController = mAnimationStages[3];
-		}
-		//No teeth ~Adam
-		else
-		{
-			mAnimator.runtimeAnimatorController = mAnimationStages[4];
-		}
+
 
 		//Toggle Ramming when under the death weapon threshhold ~Adam
 		if(!mDying && mFightStarted && mCurrentHealth <= mDeathWeaponThreshhold)
@@ -72,6 +62,7 @@ public class BlobBossCentral : BossCentral
 				if(mRamTimer <= mRamInterval *-0.5f)
 				{
 					mRamming = false;
+					mRamTimer = mRamInterval;
 				}
 			}
 			else

@@ -138,7 +138,7 @@ public class BossCentral : MonoBehaviour
 	{
 		transform.position = Vector3.Lerp(transform.position, mMoveTarget, mMoveSpeed*0.001f * Time.timeScale);
 
-		if(Vector3.Distance (transform.position, mMoveTarget) < 5f && mBounds.Length >= 4)
+		if(Vector3.Distance (transform.position, mMoveTarget) < 7f && mBounds.Length >= 4)
 		{
 			mMoveTarget = new Vector3(Random.Range (mBounds[0],mBounds[1]), Random.Range (mBounds[2],mBounds[3]),-2f);
 		}

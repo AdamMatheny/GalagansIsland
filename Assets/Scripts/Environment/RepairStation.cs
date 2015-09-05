@@ -76,6 +76,18 @@ public class RepairStation : MonoBehaviour
 				{
 					scoreMan.mLivesRemaining = scoreMan.mMaxLives;
 				}
+
+				//For if we want restoring lives to fix a little bit of movement/firing
+//				other.GetComponent<PlayerShipController>().mMoveUpgrade += 0.07f;
+//				other.GetComponent<PlayerShipController>().mFireUpgrade += 0.1f;
+//				if(other.GetComponent<PlayerShipController>().mFireUpgrade > 1.2f)
+//				{
+//					other.GetComponent<PlayerShipController>().mFireUpgrade = 1.2f;
+//				}
+//				if(other.GetComponent<PlayerShipController>().mMoveUpgrade > 1.2f)
+//				{
+//					other.GetComponent<PlayerShipController>().mMoveUpgrade = 1.2f;
+//				}
 				mServicedP1 = true;
 			}
 			//If the player went through the center (Move Speed) door ~Adam
@@ -85,6 +97,10 @@ public class RepairStation : MonoBehaviour
 				mAnimator.Play ("MovementDoor");
 				//Upgrade Move speed ~Adam
 				other.GetComponent<PlayerShipController>().mMoveUpgrade += 0.25f;
+				if(other.GetComponent<PlayerShipController>().mMoveUpgrade > 1.2f)
+				{
+					other.GetComponent<PlayerShipController>().mMoveUpgrade = 1.2f;
+				}
 				mServicedP1 = true;
 			}
 			//If the player went through the right (Fire Speed) door ~Adam
@@ -94,6 +110,10 @@ public class RepairStation : MonoBehaviour
 				mAnimator.Play ("FireDoor");
 				//Upgrade fire rate ~Adam
 				other.GetComponent<PlayerShipController>().mFireUpgrade += 0.3f;
+				if(other.GetComponent<PlayerShipController>().mFireUpgrade > 1.2f)
+				{
+					other.GetComponent<PlayerShipController>().mFireUpgrade = 1.2f;
+				}
 				mServicedP1 = true;
 			}
 		}
@@ -114,6 +134,17 @@ public class RepairStation : MonoBehaviour
 				{
 					scoreMan.mLivesRemaining = scoreMan.mMaxLives;
 				}
+				//For if we want restoring lives to fix a little bit of movement/firing
+//				other.GetComponent<PlayerShipController>().mMoveUpgrade += 0.07f;
+//				other.GetComponent<PlayerShipController>().mFireUpgrade += 0.1f;
+//				if(other.GetComponent<PlayerShipController>().mFireUpgrade > 1.2f)
+//				{
+//					other.GetComponent<PlayerShipController>().mFireUpgrade = 1.2f;
+//				}
+//				if(other.GetComponent<PlayerShipController>().mMoveUpgrade > 1.2f)
+//				{
+//					other.GetComponent<PlayerShipController>().mMoveUpgrade = 1.2f;
+//				}
 				mServicedP2 = true;
 			}
 			//If the playe went through the center (Move Speed) door ~Adam
@@ -123,6 +154,10 @@ public class RepairStation : MonoBehaviour
 				mAnimator.Play ("MovementDoor");
 				//Upgrade Move speed ~Adam
 				other.GetComponent<PlayerTwoShipController>().mMoveUpgrade += 0.25f;
+				if(other.GetComponent<PlayerShipController>().mMoveUpgrade > 1.2f)
+				{
+					other.GetComponent<PlayerShipController>().mMoveUpgrade = 1.2f;
+				}
 				mServicedP2 = true;
 			}
 			//If the playe went through the right (Fire Speed) door ~Adam
@@ -132,6 +167,10 @@ public class RepairStation : MonoBehaviour
 				mAnimator.Play ("FireDoor");
 				//Upgrade fire rate ~Adam
 				other.GetComponent<PlayerTwoShipController>().mFireUpgrade += 0.3f;
+				if(other.GetComponent<PlayerShipController>().mFireUpgrade > 1.2f)
+				{
+					other.GetComponent<PlayerShipController>().mFireUpgrade = 1.2f;
+				}
 				mServicedP2 = true;
 			}
 		}
