@@ -35,11 +35,21 @@ public class BossWeakPoint : MonoBehaviour
 
 	protected virtual void OnTriggerEnter(Collider other)
 	{
+
 		if(other.GetComponent<PlayerBulletController>()!=null)
 		{
-			if(!other.GetComponent<PlayerBulletController>().mSideBullet)
+			//Do damage all the time for main bullets an 5% of the time for side bullets ~Adam
+			if(!other.GetComponent<PlayerBulletController>().mSideBullet || Random.value <= 0.05f)
 			{
 				TakeDamage ();
+			}
+			//Always at least flash like it got hit ~Adam
+			else
+			{
+				if(mDamageSprite != null)
+				{
+					mDamageSprite.color = Color.Lerp (mDamageSprite.color, Color.red, 1f);
+				}
 			}
 			Destroy (other.gameObject);
 
