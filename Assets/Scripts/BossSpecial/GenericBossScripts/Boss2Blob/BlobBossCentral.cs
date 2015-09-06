@@ -10,6 +10,7 @@ public class BlobBossCentral : BossCentral
 	public float mRamInterval;
 	public float mRamTimer = 0f;
 	public bool mRamming = false;
+	public Vector3 mRamPoint = Vector3.zero;
 
 	//For knocking out teeth ~Adam
 	public Animator mAnimator;
@@ -68,10 +69,11 @@ public class BlobBossCentral : BossCentral
 			else
 			{
 				mMoveSpeed = mDefaultSpeed;
+				mRamPoint = mTargetedPlayer.transform.position;
 				//Turn the shooting back on ~Adam
 				foreach(GameObject weapon in mWeapons)
 				{
-					weapon.SetActive (false);
+					weapon.SetActive (true);
 				}
 				mDeathWeapon.SetActive (false);
 			}
@@ -88,9 +90,9 @@ public class BlobBossCentral : BossCentral
 		base.BossMovement ();
 		if(mRamming)
 		{
-			mMoveTarget = mTargetedPlayer.transform.position + Vector3.up*8f;
+			mMoveTarget = mRamPoint;
 		}
-		if(Vector3.Distance (transform.position, mTargetedPlayer.transform.position) < 9f)
+		if(Vector3.Distance (transform.position, mRamPoint) < 2f)
 		{
 			mRamming = false;
 			mRamTimer = mRamInterval;
