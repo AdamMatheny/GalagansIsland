@@ -12,6 +12,9 @@ public class BlobBossCentral : BossCentral
 	public bool mRamming = false;
 	public Vector3 mRamPoint = Vector3.zero;
 
+	public GameObject toothBreak;
+	public Transform toothBreakTransform;
+
 	//For knocking out teeth ~Adam
 	public Animator mAnimator;
 	public List<RuntimeAnimatorController> mAnimationStages = new List<RuntimeAnimatorController>();
@@ -39,6 +42,12 @@ public class BlobBossCentral : BossCentral
 			{
 				Instantiate (mDamageEffect, mDamageEffectPoint.position, Quaternion.identity);
 			}
+
+			if(toothBreak != null){
+
+				Instantiate(toothBreak, toothBreakTransform.position, Quaternion.identity);
+			}
+
 			mAnimator.runtimeAnimatorController = mAnimationStages[0];
 			mHealthStages.Remove (mHealthStages[0]);
 			mAnimationStages.Remove(mAnimationStages[0]);
