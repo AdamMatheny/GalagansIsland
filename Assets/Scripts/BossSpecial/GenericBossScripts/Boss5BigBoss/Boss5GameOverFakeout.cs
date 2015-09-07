@@ -77,7 +77,11 @@ public class Boss5GameOverFakeout : MonoBehaviour
 		if(mHidingPlayer)
 		{
 			//Hiding UI ~Adam
-			GameObject.Find("Game_HUD").GetComponent<Canvas>().enabled = false;
+			if(GameObject.Find("Game_HUD").GetComponent<Canvas>() != null){
+
+				GameObject.Find("Game_HUD").GetComponent<Canvas>().enabled = false;
+			}
+		
 			FindObjectOfType<PauseManager>().enabled = false;
 			
 			//Hiding the player ~Adam

@@ -16,6 +16,13 @@ public class Boss5Central : BossCentral
 	public Vector3 mRamPoint = Vector3.zero;
 	public GameObject mRammingSphere;
 
+	public float sectionTimer;
+	float sectionTimerMax;
+
+	public GameObject laserPivot;
+
+	public bool ramSection;
+
 	//For breaking the gem ~Adam
 	public Animator mAnimator;
 	public List<RuntimeAnimatorController> mAnimationStages = new List<RuntimeAnimatorController>();
@@ -39,6 +46,8 @@ public class Boss5Central : BossCentral
 	// Use this for initialization
 	protected override void Start () 
 	{
+		sectionTimerMax = sectionTimer;
+
 		base.Start();
 		mDefaultSpeed = mMoveSpeed;
 		mMoveSpeed = mEntrySpeed;
@@ -48,6 +57,19 @@ public class Boss5Central : BossCentral
 	// Update is called once per frame
 	protected override void Update () 
 	{
+		if (sectionTimer > 0 && sectionTimer < sectionTimerMax) {
+
+			sectionTimer -= Time.deltaTime;
+			ramSection = false;
+		} else if(sectionTimer > sectionTimerMax){
+
+			sectionTimer -= Time.deltaTime;
+		}else {
+
+			ramSection = true;
+			sectionTimer = sectionTimerMax * 2;
+		}
+
 		base.Update ();
 		mAnimatedParts.Remove (null);
 
@@ -84,6 +106,14 @@ public class Boss5Central : BossCentral
 			}
 			if(mCurrentHealth<= mDeathWeaponThreshhold)
 			{
+				if(ramSection){
+
+					mRamInterval = 1;
+				}else{
+
+					mRamInterval = 8;
+				}
+
 				if(GetComponent<BossRotator>() != null)
 				{
 					GetComponent<BossRotator>().enabled = true;
@@ -91,6 +121,12 @@ public class Boss5Central : BossCentral
 				mRamTimer -= Time.deltaTime;
 				if(mRamTimer <= 0f)
 				{
+					if(ramSection){
+
+						//mDeathWeapon.GetComponentInChildren<BossRotator> ().gameObject.SetActive(false);
+						laserPivot.SetActive(false);
+					}
+
 					mRamming = true;
 					mMoveSpeed = mRammingSpeed;
 					//Turn off the shooting while ramming ~Adam
@@ -105,7 +141,14 @@ public class Boss5Central : BossCentral
 						mRamming = false;
 						mRamTimer = mRamInterval;
 					}
-				}
+				}/*else if(mRamTimer < .5f){
+
+					foreach(GameObject weapon in mWeapons)
+					{
+						mDeathWeapon.SetActive (false);
+					}
+				}*/
+
 				else
 				{
 					mMoveSpeed = mDefaultSpeed;
@@ -113,7 +156,17 @@ public class Boss5Central : BossCentral
 					//Turn the shooting back on ~Adam
 					foreach(GameObject weapon in mWeapons)
 					{
-						mDeathWeapon.SetActive (true);
+						if(!ramSection){
+
+							mDeathWeapon.SetActive (true);
+							laserPivot.SetActive(true);
+							//mDeathWeapon.GetComponentInChildren<BossRotator> ().gameObject.SetActive(true);
+						}else{
+
+							//mDeathWeapon.SetActive (false);
+
+							//mDeathWeapon.GetComponentInChildren<BossRotator> ().gameObject.SetActive(false);
+						}
 					}
 					mRammingSphere.SetActive (false);
 				}
