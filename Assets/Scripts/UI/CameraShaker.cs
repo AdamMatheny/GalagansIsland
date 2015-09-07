@@ -11,26 +11,26 @@ public class CameraShaker : MonoBehaviour
 	float strength = 2.5f;
 	float duration = .25f;
 
-	public float mRedShakeStrength = .8f;
-	public float mRedShakeDuration = .25f;
+	private float mRedShakeStrength = .55f;
+	private float mRedShakeDuration = .3f;
 
-	public float mTealShakeStrength = .75f;
-	public float mTealShakeDuration = .3f;
+	private float mTealShakeStrength = .36f;
+	private float mTealShakeDuration = .2f;
 	
-	public float mGreenShakeStrength = 1.3f;
-	public float mGreenShakeDuration = .2f;
+	private float mGreenShakeStrength = .6f;
+	private float mGreenShakeDuration = .2f;
 
-	public float mPurpleShakeStrength = 1.3f;
-	public float mPurpleShakeDuration = .25f;
+	private float mPurpleShakeStrength = .75f;
+	private float mPurpleShakeDuration = .3f;
 
-	public float mDeathShakeStrength = 2f;
-	public float mDeathShakeDuration = .4f;
+	private float mDeathShakeStrength = 1f;
+	private float mDeathShakeDuration = .4f;
 
-	public float mEnemyShakeStrength = 1f; //was 5.0f Changed to 2.5f for Florida Con
-	public float mEnemyShakeDuration = .3f;
+	private float mEnemyShakeStrength = .1f; //was 5.0f Changed to 2.5f for Florida Con
+	private float mEnemyShakeDuration = .1f;
 
-	public float mShootShakeStrength = .2f;
-	public float mShootShakeDuration = .1f;
+	private float mShootShakeStrength = .2f;
+	private float mShootShakeDuration = .1f;
 
 	float mShakeTime = 0f;
 	Vector3 mStartingPosition;
