@@ -5,7 +5,12 @@ public var enemy : GameObject;
 
 // Variable to know how fast we should create new enemies
 public var spawnTime : float = 2;
+var spawnTimeMax : float;
 
+function Start(){
+
+	spawnTimeMax = spawnTime;
+}
 
 function Update()
 {
@@ -16,7 +21,7 @@ function Update()
 	{
 	
 		addEnemy();
-		spawnTime = Random.value * 500; //Change this back to 200 for main build
+		spawnTime = Random.value * spawnTimeMax; //Change this back to 200 for main build
 	}
 }
 
