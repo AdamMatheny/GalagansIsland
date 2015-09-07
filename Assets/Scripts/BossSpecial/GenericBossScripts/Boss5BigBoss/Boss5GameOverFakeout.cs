@@ -18,7 +18,9 @@ public class Boss5GameOverFakeout : MonoBehaviour
 	float mBossEntranceTimer = 0f;
 	
 	bool mHidingPlayer = true;
-	
+
+	[SerializeField] private GameObject mScreenFader;
+
 	
 	//For muting the usual sounds during the boss fight to emphasize the rap music and boss effect ~Ada
 	public GameObject mMutedPlayerBullet;
@@ -28,6 +30,9 @@ public class Boss5GameOverFakeout : MonoBehaviour
 	void Start () 
 	{
 		mScoreManager = FindObjectOfType<ScoreManager>() as ScoreManager;
+
+		mScreenFader.GetComponent<Renderer>().material.color = new Color(0,0,0,0);
+
 	}//END of Start()
 	
 	// Update is called once per frame

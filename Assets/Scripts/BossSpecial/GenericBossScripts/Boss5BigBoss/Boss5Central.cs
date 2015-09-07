@@ -125,7 +125,14 @@ public class Boss5Central : BossCentral
 
 	protected override void BossEntry()
 	{
-		base.BossEntry ();
+		if(mEntryTime<= 5f)
+		{
+			base.BossEntry ();
+		}
+		else
+		{
+			mEntryTime -= Time.deltaTime;
+		}
 	}//END of BossEntry()
 	
 	protected override void BossMovement()
