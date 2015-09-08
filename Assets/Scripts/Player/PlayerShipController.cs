@@ -356,7 +356,7 @@ public class PlayerShipController : MonoBehaviour
 							GameObject tripBullet1 = Instantiate (mSideBullet, mBulletSpawns[2].position, mMainShip.transform.rotation * Quaternion.Euler (0f, 0f, 5f) * Quaternion.Euler (0f,0f,Random.Range(-10.0f,3.0f))) as GameObject;
 							SetBulletNumber (tripBullet1.GetComponent<PlayerBulletController>());
 						}
-						GameObject tripBullet2 = Instantiate (mSideBullet, mBulletSpawns[3].position, mMainShip.transform.rotation * Quaternion.Euler (0f, 0f, -10f) * Quaternion.Euler (0f,0f,Random.Range(-5.0f,5.0f))) as GameObject;
+						GameObject tripBullet2 = Instantiate (mSideBullet, mBulletSpawns[3].position, mMainShip.transform.rotation * Quaternion.Euler (0f, 0f, -10) * Quaternion.Euler (0f,0f,Random.Range(-5.0f,5.0f))) as GameObject;
 						SetBulletNumber (tripBullet2.GetComponent<PlayerBulletController>());
 
 					}

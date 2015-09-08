@@ -15,10 +15,10 @@ public class BossShooter : MonoBehaviour
 
 	public float mTimer = 10f;
 	public float mFireRate = 0.5f;
-	public float mTimerTemp = 10f;
+	[SerializeField] protected float mTimerTemp = 10f;
 	
 
-	protected int mShotsFired = 0;
+	int mShotsFired = 0;
 	public int mShots = 1;
 
 	// Use this for initialization
@@ -35,7 +35,7 @@ public class BossShooter : MonoBehaviour
 		mTarget = mBossCentral.mTargetedPlayer.gameObject;
 
 
-		//Decrement timer and activate buildup and firing when it gets low enough ~Adam
+		//Fire the eye beam on button press ~Adam
 		mTimerTemp -= Time.deltaTime;
 		
 		if (mTimerTemp < 1 && mBuildUp != null) 
