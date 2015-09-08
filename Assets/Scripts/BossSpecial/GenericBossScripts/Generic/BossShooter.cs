@@ -15,10 +15,10 @@ public class BossShooter : MonoBehaviour
 
 	public float mTimer = 10f;
 	public float mFireRate = 0.5f;
-	[SerializeField] protected float mTimerTemp = 10f;
+	public float mTimerTemp = 10f;
 	
 
-	int mShotsFired = 0;
+	protected int mShotsFired = 0;
 	public int mShots = 1;
 
 	// Use this for initialization
