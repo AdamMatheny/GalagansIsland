@@ -25,6 +25,8 @@ public class BossWeaponCollision : MonoBehaviour
 		if(other.GetComponent<PlayerShipController>()!= null)
 		{
 			mScoreMan.HitAPlayer(other.gameObject);
+
+			//Debug.Log("Visual Hindrance!");
 		}
 	}
 }

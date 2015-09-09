@@ -132,6 +132,7 @@ public class Boss5Central : BossCentral
 					//Turn off the shooting while ramming ~Adam
 					foreach(GameObject weapon in mWeapons)
 					{
+
 						mDeathWeapon.SetActive (false);
 					}
 					mRammingSphere.SetActive (true);
@@ -169,6 +170,9 @@ public class Boss5Central : BossCentral
 						}
 					}
 					mRammingSphere.SetActive (false);
+
+					mDeathWeapon.GetComponent<BossHindrance> ().cameraShader.GetComponent<CameraShader> ().shader1.enabled = false;
+					mDeathWeapon.GetComponent<BossHindrance> ().cameraShader.GetComponent<CameraShader> ().shader2.enabled = false;
 				}
 			}
 		}
@@ -206,6 +210,9 @@ public class Boss5Central : BossCentral
 	{
 		if(mDeathTimer <= 0f)
 		{
+			mDeathWeapon.GetComponent<BossHindrance> ().cameraShader.GetComponent<CameraShader> ().shader1.enabled = false;
+						mDeathWeapon.GetComponent<BossHindrance> ().cameraShader.GetComponent<CameraShader> ().shader2.enabled = false;
+
 			//Let the Kill Counter know to go to the next level
 			LevelKillCounter killCounter = FindObjectOfType<LevelKillCounter>();
 			killCounter.mKillCount = killCounter.mRequiredKills+1;
