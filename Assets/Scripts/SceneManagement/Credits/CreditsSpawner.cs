@@ -5,6 +5,8 @@ public class CreditsSpawner : MonoBehaviour
 {
 	public enum CreditsAlign{Rand, Center, Last};
 
+	public GameObject laser;
+
 
 	[SerializeField] private GameObject mCreditsBlockPrefab;
 	[SerializeField] private string[] mCredits; //Each person's name/job is an entry in this array ~Adam
@@ -56,6 +58,14 @@ public class CreditsSpawner : MonoBehaviour
 				mCreditNumber++;
 			}
 
+			if(mTimeToReturnToStart <= 5f){
+
+				if(laser != null){
+
+					laser.SetActive(true);
+				}
+			}
+
 			if(mTimeToReturnToStart <= 4f)
 			{
 				GetComponent<Renderer>().enabled = true;
@@ -65,7 +75,12 @@ public class CreditsSpawner : MonoBehaviour
 			//Return to Main Menu ~Adam
 			if (mTimeToReturnToStart <= 0f)
 			{
-				Destroy(FindObjectOfType<ScoreManager>().gameObject);
+				Destroy(laser);
+
+				if(FindObjectOfType<ScoreManager> () != null){
+
+					Destroy(FindObjectOfType<ScoreManager>().gameObject);
+				}
 
 				Application.LoadLevel(0);
 			}
