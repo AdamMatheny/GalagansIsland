@@ -101,16 +101,17 @@ public class BlobBossCentral : BossCentral
 			if(mCurrentHealth == mHealthStages[0] && mDamageEffect != null && mDamageEffectPoint != null)
 			{
 				Instantiate (mDamageEffect, mDamageEffectPoint.position, Quaternion.identity);
-			}
 
-			if(toothBreak != null){
-
-				Instantiate(toothBreak, toothBreakTransform.position, Quaternion.identity);
 			}
 
 			mAnimator.runtimeAnimatorController = mAnimationStages[0];
 			mHealthStages.Remove (mHealthStages[0]);
 			mAnimationStages.Remove(mAnimationStages[0]);
+
+			if(toothBreak != null){
+				
+				Instantiate(toothBreak, toothBreakTransform.position, Quaternion.identity);
+			}
 		}
 
 
