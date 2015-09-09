@@ -973,23 +973,29 @@ public class PlayerShipController : MonoBehaviour
 		}
 		
 		//Fire held super weapon ~Adam
-		//Can hold multiple super weapons.  They fire in a priority order: Big Blast, then Laser Fist ~Adam
+		//Can hold multiple super weapons.  They fire in a priority order: Laser Fist, then Big Blast ~Adam
 		//Have to wait for one to finish firing before firing another ~Adam
 		if( (mPlayerInputDevice.RightTrigger.WasPressed || Input.GetButtonDown("FireSuperGun")) && !mBigBlast.activeSelf && !mLaserFist.activeSelf)
 		{
-			if(mHaveLaserFist)
+			//Prevent from firing while the "Get Ready" message is up ~Adam
+			if(FindObjectOfType<GetReady>() == null)
 			{
-				mLaserFist.SetActive(true);
-				mHaveLaserFist = false;
-				
-				Camera.main.GetComponent<CameraShaker> ().RumbleController(.3f, 5.5f);
-			}
-			else if(mHaveBigBlast)
-			{
-				mBigBlast.SetActive(true);
-				mHaveBigBlast = false;
-				
-				Camera.main.GetComponent<CameraShaker> ().RumbleController(.6f, 2f);
+				//Fire the Laser Fist with priority ~Adam
+				if(mHaveLaserFist)
+				{
+					mLaserFist.SetActive(true);
+					mHaveLaserFist = false;
+					
+					Camera.main.GetComponent<CameraShaker> ().RumbleController(.3f, 5.5f);
+				}
+				//Fire the Big Blast ~Adam
+				else if(mHaveBigBlast)
+				{
+					mBigBlast.SetActive(true);
+					mHaveBigBlast = false;
+					
+					Camera.main.GetComponent<CameraShaker> ().RumbleController(.6f, 2f);
+				}
 			}
 		}
 	}//END of TakeFiringInput()

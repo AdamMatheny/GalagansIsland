@@ -20,12 +20,16 @@ public class LaserFistPowerup : MonoBehaviour
 
 	float mLaserFistTimer = 0f;
 
+	bool mHasHitBoss = false;
+
 	// Use this for initialization
 	void Start () 
 	{
 		mDeathBox = GetComponent<BoxCollider>();
 	}//END Start()
-	
+
+
+
 	// Update is called once per frame
 	void Update () 
 	{
@@ -70,6 +74,8 @@ public class LaserFistPowerup : MonoBehaviour
 	public void StartDeathBoxExpansion()
 	{
 		GetComponent<Animator>().SetBool("Expanding", true);
+		mHasHitBoss = false;
+
 	}//END StartDeathBoxExpansion()
 
 	public void StartDeathBoxShrinkage()
@@ -108,6 +114,22 @@ public class LaserFistPowerup : MonoBehaviour
 			{
 				Destroy(other.gameObject);
 			}
+		}
+
+		//Destroy a BossWeakPoint ~Adam
+		if(!mHasHitBoss && other.GetComponent<BossWeakPoint>() != null && other.GetComponent<BossWeakPoint>().mBossCentral.mFightStarted)
+		{
+			mHasHitBoss = true;
+			BossWeakPoint weakPoint = other.GetComponent<BossWeakPoint>();
+			int weakPointHealth = weakPoint.mHitPonts;
+			for(int i= 0; i < weakPointHealth-1; i++)
+			{
+				if(other != null)
+				{
+					weakPoint.TakeDamage();
+				}
+			}
+			weakPoint.TakeDamage();
 		}
 	}//END OnTriggerEnter()
 
