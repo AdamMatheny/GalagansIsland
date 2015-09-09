@@ -40,6 +40,7 @@ public class ScoreManager : MonoBehaviour
 
 	//For when we have two players ~Adam
 	public GameObject mPlayer2Avatar;
+	public GameObject mPlayer2DeathEffect;
 
 	//For better GUI elements ~Adam
 	[SerializeField] private GUIStyle mScoreManStyle;
@@ -441,7 +442,7 @@ public class ScoreManager : MonoBehaviour
 				if(mLivesRemaining == 1)
 				{
 					GameObject playerDeathParticles;
-					playerDeathParticles = Instantiate(mPlayerDeathEffect, mPlayer2Avatar.transform.position, Quaternion.identity) as GameObject;
+					playerDeathParticles = Instantiate(mPlayer2DeathEffect, mPlayer2Avatar.transform.position, Quaternion.identity) as GameObject;
 				}
 				if(mPlayer2Avatar.GetComponent<PlayerShipController>().mShipRecovered)
 				{
