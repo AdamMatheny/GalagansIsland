@@ -79,21 +79,22 @@ public class GetReady : MonoBehaviour
 		//Let the player fire and change the text message ~Adam
 		else if(mReadyTimer > 0f)
 		{
+			if(mPlayer1Ship!=null)
+			{
+				mPlayer1Ship.isOverheated = false;
+				//	mPlayer1Ship.heatLevel = mP1Overheat;
+			}
+			if(mPlayer2Ship!=null)
+			{
+				mPlayer2Ship.isOverheated = false;
+				//	mPlayer2Ship.heatLevel = mP2Overheat;
+			}
 			mReadyText.text = mFireText;
 		}
 		//Delete self ~Adam
 		else
 		{
-			if(mPlayer1Ship!=null)
-			{
-				mPlayer1Ship.isOverheated = false;
-			//	mPlayer1Ship.heatLevel = mP1Overheat;
-			}
-			if(mPlayer2Ship!=null)
-			{
-				mPlayer2Ship.isOverheated = false;
-			//	mPlayer2Ship.heatLevel = mP2Overheat;
-			}
+
 			Destroy(this.gameObject);
 		}
 	}//END of Update()

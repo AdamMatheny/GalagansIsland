@@ -71,7 +71,7 @@ public class RepairStation : MonoBehaviour
 				//Play animation ~Adam
 				mAnimator.Play ("HealthDoor");
 				//Restore lives and make sure it doesn't go over the max life count ~Adam
-				scoreMan.mLivesRemaining += scoreMan.mMaxLives/4;
+				scoreMan.mLivesRemaining += scoreMan.mMaxLives/5;
 				if(scoreMan.mLivesRemaining > scoreMan.mMaxLives)
 				{
 					scoreMan.mLivesRemaining = scoreMan.mMaxLives;

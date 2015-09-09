@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BossHindrance : MonoBehaviour {
+public class BossHindrance : MonoBehaviour 
+{
 
-	public GameObject cameraShader;
-
+	public CameraShader cameraShader;
+	public float mHindranceTimer = 2f;
 	//private float HindranceTimer = .5f;
 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
 	
-		cameraShader = GameObject.FindGameObjectWithTag ("MainCamera");
+		cameraShader = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraShader>();
 	}
 	
 	// Update is called once per frame
@@ -27,12 +29,15 @@ public class BossHindrance : MonoBehaviour {
 		//}
 	}
 
-	public void OnTriggerEnter(Collider other){
+	public void OnTriggerEnter(Collider other)
+	{
 
-		if (other.GetComponent<PlayerShipController>()!= null) {
+		if (other.GetComponent<PlayerShipController>()!= null) 
+		{
+			cameraShader.mShaderTimer = mHindranceTimer;
 
-			cameraShader.GetComponent<CameraShader> ().shader1.enabled = true;
-			cameraShader.GetComponent<CameraShader> ().shader2.enabled = true;
+//			cameraShader.GetComponent<CameraShader> ().shader1.enabled = true;
+//			cameraShader.GetComponent<CameraShader> ().shader2.enabled = true;
 
 			//Debug.Log("Hindrance!");
 			
@@ -40,12 +45,30 @@ public class BossHindrance : MonoBehaviour {
 		}
 	}
 
-	public void OnTriggerExit(Collider other){
+	public void OnTriggerStay(Collider other)
+	{
 		
-		if(other.GetComponent<PlayerShipController>()!= null) {
+		if (other.GetComponent<PlayerShipController>()!= null) 
+		{
+			cameraShader.mShaderTimer = mHindranceTimer;
 			
-			cameraShader.GetComponent<CameraShader> ().shader1.enabled = false;
-			cameraShader.GetComponent<CameraShader> ().shader2.enabled = false;
+			//			cameraShader.GetComponent<CameraShader> ().shader1.enabled = true;
+			//			cameraShader.GetComponent<CameraShader> ().shader2.enabled = true;
+			
+			//Debug.Log("Hindrance!");
+			
+			//StartCoroutine(Hindrance());
 		}
 	}
+
+//	public void OnTriggerExit(Collider other)
+//	{
+//		
+//		if(other.GetComponent<PlayerShipController>()!= null) 
+//		{
+//			
+//			cameraShader.GetComponent<CameraShader> ().shader1.enabled = false;
+//			cameraShader.GetComponent<CameraShader> ().shader2.enabled = false;
+//		}
+//	}
 }

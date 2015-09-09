@@ -210,8 +210,10 @@ public class Boss5Central : BossCentral
 	{
 		if(mDeathTimer <= 0f)
 		{
-			mDeathWeapon.GetComponent<BossHindrance> ().cameraShader.GetComponent<CameraShader> ().shader1.enabled = false;
-						mDeathWeapon.GetComponent<BossHindrance> ().cameraShader.GetComponent<CameraShader> ().shader2.enabled = false;
+			//Turn off visual hindrance
+			mRammingSphere.GetComponent<BossHindrance> ().cameraShader.mShaderTimer = -1f;
+//			mRammingSphere.GetComponent<BossHindrance> ().cameraShader.shader1.enabled = false;
+//			mRammingSphere.GetComponent<BossHindrance> ().cameraShader.shader2.enabled = false;
 
 			//Let the Kill Counter know to go to the next level
 			LevelKillCounter killCounter = FindObjectOfType<LevelKillCounter>();
