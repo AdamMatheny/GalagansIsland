@@ -12,6 +12,19 @@ public class BlobBossCentral : BossCentral
 	public bool mRamming = false;
 	public Vector3 mRamPoint = Vector3.zero;
 
+	public bool spewEnemies;
+	public float spewTimer;
+	private float spewTimerMax;
+
+	public GameObject vomit;
+
+	bool mShooting = false;
+	int mShotsFired = 0;
+	public int mShots = 25;
+
+	public GameObject mSpewTarget;
+	public GameObject spewBullet;
+
 	public GameObject toothBreak;
 	public Transform toothBreakTransform;
 
@@ -26,6 +39,13 @@ public class BlobBossCentral : BossCentral
 	protected override void Start () 
 	{
 		base.Start();
+
+		mSpewTarget = GameObject.FindGameObjectWithTag ("Player");
+
+		vomit.SetActive (false);
+
+		spewTimerMax = spewTimer;
+
 		mDefaultSpeed = mMoveSpeed;
 	}//END of Start()
 	
@@ -33,6 +53,46 @@ public class BlobBossCentral : BossCentral
 	protected override void Update () 
 	{
 		base.Update ();
+
+		if(mSpewTarget == null)
+		{
+			mSpewTarget = GameObject.FindGameObjectWithTag ("Player");
+		}
+
+		if (spewEnemies) {
+
+			if(spewTimer < .5f){
+
+				vomit.SetActive(true);
+			}
+
+			if (spewTimer > 0) {
+				
+				spewTimer -= Time.deltaTime;
+			} else {
+
+				vomit.SetActive(true);
+				
+				spewTimer = .5f;
+				//Instantiate(spewBullet, transform.position, Quaternion.identity);
+				mShooting = true;
+
+				if(mShooting){
+					
+					mShotsFired++;
+					Instantiate(spewBullet, transform.position, Quaternion.identity);
+
+					if(mShotsFired >= mShots)
+					{
+						vomit.SetActive(false);
+
+						spewTimer = 10f;
+						mShooting = false;
+						mShotsFired = 0;
+					}
+				}
+			}
+		}
 
 		//Change number of sprite based on health ~Adam
 		if(mHealthStages.Count >0 && mAnimationStages.Count > 0 && mCurrentHealth <= mHealthStages[0])
