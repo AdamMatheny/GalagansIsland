@@ -75,6 +75,22 @@ public class BossCentral : MonoBehaviour
 			}
 			else
 			{
+				//Make sure weak points die in the right order ~Adam
+				mWeakPoints[0].mActiveWeakPoint = true;
+				foreach(BossWeakPoint weakPoint in mWeakPoints)
+				{
+					if(!weakPoint.mActiveWeakPoint)
+					{
+						weakPoint.enabled = false;
+						weakPoint.GetComponent<Collider>().enabled = false;
+					}
+					else
+					{
+						weakPoint.enabled = true;
+						weakPoint.GetComponent<Collider>().enabled = true;
+					}
+				}
+
 				//Move the boss around ~Adam
 				BossMovement();
 

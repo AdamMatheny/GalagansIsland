@@ -25,8 +25,7 @@ public class BlobBossCentral : BossCentral
 	public GameObject mSpewTarget;
 	public GameObject spewBullet;
 
-	public GameObject toothBreak;
-	public Transform toothBreakTransform;
+
 
 	//For knocking out teeth ~Adam
 	public Animator mAnimator;
@@ -54,46 +53,50 @@ public class BlobBossCentral : BossCentral
 	{
 		base.Update ();
 
-		if(mSpewTarget == null)
+		if(!mDying)
 		{
-			mSpewTarget = GameObject.FindGameObjectWithTag ("Player");
-		}
-
-		if (spewEnemies) {
-
-			if(spewTimer < .5f){
-
-				vomit.SetActive(true);
+			if(mSpewTarget == null)
+			{
+				mSpewTarget = GameObject.FindGameObjectWithTag ("Player");
 			}
 
-			if (spewTimer > 0) {
-				
-				spewTimer -= Time.deltaTime;
-			} else {
+			if (spewEnemies) {
 
-				vomit.SetActive(true);
-				
-				spewTimer = .5f;
-				//Instantiate(spewBullet, transform.position, Quaternion.identity);
-				mShooting = true;
+				if(spewTimer < .5f){
 
-				if(mShooting){
+					vomit.SetActive(true);
+				}
+
+				if (spewTimer > 0) {
 					
-					mShotsFired++;
-					Instantiate(spewBullet, transform.position, Quaternion.identity);
+					spewTimer -= Time.deltaTime;
+				} else {
 
-					if(mShotsFired >= mShots)
+					vomit.SetActive(true);
+					
+					spewTimer = .5f;
+					//Instantiate(spewBullet, transform.position, Quaternion.identity);
+					mShooting = true;
+
+					if(mShooting)
 					{
-						vomit.SetActive(false);
+						
+						mShotsFired++;
+						Instantiate(spewBullet, transform.position, Quaternion.identity);
 
-						spewTimer = 10f;
-						mShooting = false;
-						mShotsFired = 0;
+						if(mShotsFired >= mShots)
+						{
+							vomit.SetActive(false);
+
+							spewTimer = 10f;
+							mShooting = false;
+							mShotsFired = 0;
+						}
 					}
 				}
+				
 			}
 		}
-
 		//Change number of sprite based on health ~Adam
 		if(mHealthStages.Count >0 && mAnimationStages.Count > 0 && mCurrentHealth <= mHealthStages[0])
 		{
@@ -108,10 +111,7 @@ public class BlobBossCentral : BossCentral
 			mHealthStages.Remove (mHealthStages[0]);
 			mAnimationStages.Remove(mAnimationStages[0]);
 
-			if(toothBreak != null){
-				
-				Instantiate(toothBreak, toothBreakTransform.position, Quaternion.identity);
-			}
+
 		}
 
 

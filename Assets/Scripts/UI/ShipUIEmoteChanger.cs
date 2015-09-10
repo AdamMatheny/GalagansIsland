@@ -51,13 +51,9 @@ public class ShipUIEmoteChanger : MonoBehaviour
 			{
 				mFace.sprite = mEmotes[8];
 			}
-			//Getting Hit
-			else if(mScoreMan.mPlayerSafeTime > 0f)
-			{
-				mFace.sprite = mEmotes[7];
-			}
-			//OverHeated
-			else if(mPlayer1Ship.isOverheated)
+
+			//OverHeated with shield
+			else if(mPlayer1Ship.isOverheated && mPlayer1Ship.mShielded)
 			{
 				mFace.sprite = mEmotes[6];
 			}
@@ -65,6 +61,16 @@ public class ShipUIEmoteChanger : MonoBehaviour
 			else if(mPlayer1Ship.mShielded)
 			{
 				mFace.sprite = mEmotes[5];
+			}
+			//Getting Hit
+			else if(mScoreMan.mPlayerSafeTime > 0f)
+			{
+				mFace.sprite = mEmotes[7];
+			}
+			//OverHeated no shield
+			else if(mPlayer1Ship.isOverheated)
+			{
+				mFace.sprite = mEmotes[6];
 			}
 			//Dead
 			else if(mScoreMan.mLivesRemaining <= 0)

@@ -179,7 +179,7 @@ public class PlayerShipController : MonoBehaviour
 		ManageInputDevice();
 
 
-		maxHeatLevel = mBaseHeatMax +  mBaseHeatMax * Application.loadedLevel/(Application.levelCount-3);//26f;
+		//maxHeatLevel = mBaseHeatMax +  mBaseHeatMax * Application.loadedLevel/(Application.levelCount-3);//26f;
 		GetComponent<AudioSource>().volume = 0.18f*(30f-Application.loadedLevel)/30f;
 		
 		if (cheats) 
@@ -347,16 +347,16 @@ public class PlayerShipController : MonoBehaviour
 						
 						if(!mShipRecovered)// || !Application.isMobilePlatform) (mobile part is from when we were doing twin-stick)
 						{
-							GameObject tripBullet1 = Instantiate (mSideBullet, mBulletSpawns[2].position, mMainShip.transform.rotation * Quaternion.Euler (0f, 0f, 10f) * Quaternion.Euler (0f,0f,Random.Range(-5.0f,5.0f))) as GameObject;
+							GameObject tripBullet1 = Instantiate (mSideBullet, mBulletSpawns[2].position, mMainShip.transform.rotation * Quaternion.Euler (0f, 0f, 8f) * Quaternion.Euler (0f,0f,Random.Range(-4.0f,4.0f))) as GameObject;
 							SetBulletNumber (tripBullet1.GetComponent<PlayerBulletController>());
 						}
 						//Adjust triple-bullet firing when you have the double/side ship ~Adam
 						else if(mShipRecovered)// && Application.isMobilePlatform)
 						{
-							GameObject tripBullet1 = Instantiate (mSideBullet, mBulletSpawns[2].position, mMainShip.transform.rotation * Quaternion.Euler (0f, 0f, 5f) * Quaternion.Euler (0f,0f,Random.Range(-10.0f,3.0f))) as GameObject;
+							GameObject tripBullet1 = Instantiate (mSideBullet, mBulletSpawns[2].position, mMainShip.transform.rotation * Quaternion.Euler (0f, 0f, 5f) * Quaternion.Euler (0f,0f,Random.Range(-8.0f,3.0f))) as GameObject;
 							SetBulletNumber (tripBullet1.GetComponent<PlayerBulletController>());
 						}
-						GameObject tripBullet2 = Instantiate (mSideBullet, mBulletSpawns[3].position, mMainShip.transform.rotation * Quaternion.Euler (0f, 0f, -10f) * Quaternion.Euler (0f,0f,Random.Range(-5.0f,5.0f))) as GameObject;
+						GameObject tripBullet2 = Instantiate (mSideBullet, mBulletSpawns[3].position, mMainShip.transform.rotation * Quaternion.Euler (0f, 0f, -8f) * Quaternion.Euler (0f,0f,Random.Range(-4.0f,4.0f))) as GameObject;
 						SetBulletNumber (tripBullet2.GetComponent<PlayerBulletController>());
 
 					}
@@ -377,19 +377,19 @@ public class PlayerShipController : MonoBehaviour
 							if(secondShipOnHip)
 							{
 
-								GameObject tripBullet3 = Instantiate (mSideBullet, mBulletSpawns[5].position, mSecondShip.transform.rotation * Quaternion.Euler (0f, 0f, 10f) * Quaternion.Euler (0f,0f,Random.Range(-5.0f,5.0f))) as GameObject;
+								GameObject tripBullet3 = Instantiate (mSideBullet, mBulletSpawns[5].position, mSecondShip.transform.rotation * Quaternion.Euler (0f, 0f, 8f) * Quaternion.Euler (0f,0f,Random.Range(-4.0f,4.0f))) as GameObject;
 								SetBulletNumber (tripBullet3.GetComponent<PlayerBulletController>());
 
-								GameObject tripBullet4 = Instantiate (mSideBullet, mBulletSpawns[4].position, mSecondShip.transform.rotation * Quaternion.Euler (0f, 0f, -5f) * Quaternion.Euler (0f,0f,Random.Range(-3.0f,10.0f))) as GameObject;
+								GameObject tripBullet4 = Instantiate (mSideBullet, mBulletSpawns[4].position, mSecondShip.transform.rotation * Quaternion.Euler (0f, 0f, -5f) * Quaternion.Euler (0f,0f,Random.Range(-3.0f,8.0f))) as GameObject;
 								SetBulletNumber (tripBullet4.GetComponent<PlayerBulletController>());
 							}
 							else
 							{
 
-								GameObject tripBullet3 = Instantiate (mSideBullet, mBulletSpawns[4].position, mSecondShip.transform.rotation * Quaternion.Euler (0f, 0f, 10f) * Quaternion.Euler (0f,0f,Random.Range(-5.0f,5.0f))) as GameObject;
+								GameObject tripBullet3 = Instantiate (mSideBullet, mBulletSpawns[4].position, mSecondShip.transform.rotation * Quaternion.Euler (0f, 0f, 8f) * Quaternion.Euler (0f,0f,Random.Range(-4.0f,4.0f))) as GameObject;
 								SetBulletNumber (tripBullet3.GetComponent<PlayerBulletController>());
 
-								GameObject tripBullet4 = Instantiate (mSideBullet, mBulletSpawns[5].position, mSecondShip.transform.rotation * Quaternion.Euler (0f, 0f, -5f) * Quaternion.Euler (0f,0f,Random.Range(-3.0f,10.0f))) as GameObject;
+								GameObject tripBullet4 = Instantiate (mSideBullet, mBulletSpawns[5].position, mSecondShip.transform.rotation * Quaternion.Euler (0f, 0f, -5f) * Quaternion.Euler (0f,0f,Random.Range(-3.0f,8.0f))) as GameObject;
 								SetBulletNumber (tripBullet4.GetComponent<PlayerBulletController>());
 							}
 						}
@@ -446,14 +446,14 @@ public class PlayerShipController : MonoBehaviour
 				{
 					if(Time.timeScale != 0)
 					{
-						heatLevel -= Time.deltaTime * maxHeatLevel/5f/Time.timeScale;
+						heatLevel -= Time.deltaTime * maxHeatLevel/4f/Time.timeScale;
 					}
 				}
 				else
 				{
 					if(Time.timeScale != 0)
 					{
-						heatLevel -= Time.deltaTime * 3f/Time.timeScale;
+						heatLevel -= Time.deltaTime * 4f/Time.timeScale;
 					}
 				}
 			}
@@ -677,17 +677,17 @@ public class PlayerShipController : MonoBehaviour
 	//For taking weapon/movement damage ~Adam
 	public virtual void TakeStatDamage()
 	{
-		mMoveUpgrade -= 0.01f;
-		mFireUpgrade -= 0.01f;
+		mMoveUpgrade -= 0.005f;
+		mFireUpgrade -= 0.005f;
 
-		if(mMoveUpgrade < 0.5f)
+		if(mMoveUpgrade < 0.75f)
 		{
-			mMoveUpgrade = 0.5f;
+			mMoveUpgrade = 0.75f;
 		}
 
-		if(mFireUpgrade < 0.25f)
+		if(mFireUpgrade < 0.75f)
 		{
-			mFireUpgrade = 0.25f;
+			mFireUpgrade = 0.75f;
 		}
 	}//END of TakeStatDamage()
 

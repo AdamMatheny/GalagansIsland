@@ -12,7 +12,7 @@ public class BossWeakPoint : MonoBehaviour
 	public SpriteRenderer mDamageSprite;
 	public GameObject mDestrucitonEffect;
 	[SerializeField] protected Transform mDestructionPoint;
-
+	public bool mActiveWeakPoint = true;
 	// Use this for initialization
 	protected virtual void Start () 
 	{
