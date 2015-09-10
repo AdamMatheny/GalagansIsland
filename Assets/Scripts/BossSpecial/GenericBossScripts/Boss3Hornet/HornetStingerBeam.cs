@@ -3,11 +3,14 @@ using System.Collections;
 
 public class HornetStingerBeam : MonoBehaviour 
 {
+	[SerializeField] private Animator mBossAnimator;
+	[SerializeField] private GameObject mStingerBullet;
+	bool mHasFired = false;
 	[SerializeField] private GameObject mBuildup;
 	[SerializeField] private GameObject mBeam;
 	[SerializeField] private float mTimer = 10f;
 	[SerializeField] private float mInterval = 10f;
-	[SerializeField] private float mDuration = 2f;
+	[SerializeField] private float mDuration = 1f;
 
 	[SerializeField] private BossRotator mRotator;
 	float mDefaultRotSpeed;
@@ -35,10 +38,16 @@ public class HornetStingerBeam : MonoBehaviour
 		//Fire the laser ~Adam
 		if(mTimer <= mDuration && mBeam != null)
 		{
-			mBeam.SetActive (true);
+			//mBeam.SetActive (true);
 			if(mRotator != null)
 			{
 				mRotator.mRotateSpeed = mAttackRotSpeed;
+			}
+			if(!mHasFired)
+			{
+				Instantiate(mStingerBullet, transform.position, Quaternion.identity);
+				mHasFired = true;
+				mBossAnimator.Play("StingerRecover");
 			}
 		}
 		//Turn off ~Adam
@@ -57,6 +66,7 @@ public class HornetStingerBeam : MonoBehaviour
 				mRotator.mRotateSpeed = mDefaultRotSpeed;
 			}
 			mTimer = mInterval;
+			mHasFired = false;
 		}
 	}
 }
