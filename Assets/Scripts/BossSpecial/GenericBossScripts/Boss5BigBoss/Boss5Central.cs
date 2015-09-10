@@ -171,8 +171,8 @@ public class Boss5Central : BossCentral
 					}
 					mRammingSphere.SetActive (false);
 
-					mDeathWeapon.GetComponent<BossHindrance> ().cameraShader.GetComponent<CameraShader> ().shader1.enabled = false;
-					mDeathWeapon.GetComponent<BossHindrance> ().cameraShader.GetComponent<CameraShader> ().shader2.enabled = false;
+					mRammingSphere.GetComponent<BossHindrance> ().cameraShader.GetComponent<CameraShader> ().shader1.enabled = false;
+					mRammingSphere.GetComponent<BossHindrance> ().cameraShader.GetComponent<CameraShader> ().shader2.enabled = false;
 				}
 			}
 		}
@@ -269,7 +269,11 @@ public class Boss5Central : BossCentral
 			mDeathWeapon.SetActive (false);
 
 			//Special stuff for ending the game and going to credits ~Adam
-			FindObjectOfType<ScoreManager>().enabled = false;
+			mScoreMan.enabled = false;
+			if(GameObject.Find("PowerMeterCanvas") != null)
+			{
+				GameObject.Find("PowerMeterCanvas").SetActive (false);
+			}
 			FindObjectOfType<LevelKillCounter>().enabled = false;
 			//	FindObjectOfType<PauseManager>().enabled = false;
 			mGameHUD.SetActive(false);

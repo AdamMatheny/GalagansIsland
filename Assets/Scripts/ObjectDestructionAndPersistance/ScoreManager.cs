@@ -165,7 +165,7 @@ public class ScoreManager : MonoBehaviour
 			Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
 			Application.LoadLevel("EndGame");
 			mLevelInfoText.text = "\nGame Over";
-
+			GameObject.Find("PowerMeterCanvas").SetActive (false);
 			this.enabled = false;
 			//Destroy(this.gameObject);
 			
