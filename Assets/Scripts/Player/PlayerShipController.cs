@@ -677,8 +677,8 @@ public class PlayerShipController : MonoBehaviour
 	//For taking weapon/movement damage ~Adam
 	public virtual void TakeStatDamage()
 	{
-		mMoveUpgrade -= 0.005f;
-		mFireUpgrade -= 0.005f;
+		mMoveUpgrade -= 0.01f;
+		mFireUpgrade -= 0.01f;
 
 		if(mMoveUpgrade < 0.75f)
 		{

@@ -9,14 +9,16 @@ public class CoOpShipPanelUI : MonoBehaviour
 
 	ScoreManager mScoreMan;
 	
-	[SerializeField] private PlayerShipController mP1Ship;
+	[SerializeField] private PlayerOneShipController mP1Ship;
 	[SerializeField] private PlayerTwoShipController mP2Ship;
 
 	[SerializeField] private float mHealthValue = 0f;
+	[SerializeField] private float mShieldValue = 0f;
 	[SerializeField] private float mOverheatValue = 0f;
 	[SerializeField] private float mTripleTimerValue = 0f;
 
 	public Image mHealthBar;
+	public Image mShieldBar;
 	public Image mOverheatBar;
 	public Image mTripleTimerBar;
 
@@ -42,9 +44,9 @@ public class CoOpShipPanelUI : MonoBehaviour
 		{
 			mScoreMan = FindObjectOfType<ScoreManager>();
 		}
-		if(FindObjectOfType<PlayerShipController>() != null)
+		if(FindObjectOfType<PlayerOneShipController>() != null)
 		{
-			mP1Ship = FindObjectOfType<PlayerShipController>();
+			mP1Ship = FindObjectOfType<PlayerOneShipController>();
 		}
 		if(FindObjectOfType<PlayerTwoShipController>() != null)
 		{
@@ -78,22 +80,22 @@ public class CoOpShipPanelUI : MonoBehaviour
 			}
 		}
 
-		if(mHealthValue<0.8f)
-		{
-			mShipRightClaw.GetComponent<Animator>().SetInteger("UIFlashState", 2);
-		}
-		if(mHealthValue<0.6f)
-		{
-			mShipLeftClaw.GetComponent<Animator>().SetInteger("UIFlashState", 2);
-		}
-		if(mHealthValue<0.4f)
-		{
-			mShipRightWing.GetComponent<Animator>().SetInteger("UIFlashState", 2);
-		}
-		if(mHealthValue<0.2f)
-		{
-			mShipLeftWing.GetComponent<Animator>().SetInteger("UIFlashState", 2);
-		}
+//		if(mHealthValue<0.8f)
+//		{
+//			mShipRightClaw.GetComponent<Animator>().SetInteger("UIFlashState", 2);
+//		}
+//		if(mHealthValue<0.6f)
+//		{
+//			mShipLeftClaw.GetComponent<Animator>().SetInteger("UIFlashState", 2);
+//		}
+//		if(mHealthValue<0.4f)
+//		{
+//			mShipRightWing.GetComponent<Animator>().SetInteger("UIFlashState", 2);
+//		}
+//		if(mHealthValue<0.2f)
+//		{
+//			mShipLeftWing.GetComponent<Animator>().SetInteger("UIFlashState", 2);
+//		}
 		if(mHealthValue < 0f)
 		{
 			mHealthValue = 0f;
@@ -109,10 +111,34 @@ public class CoOpShipPanelUI : MonoBehaviour
 				mOverheatValue = 0f;
 			}
 
+			mShieldValue = mP1Ship.mShieldTimer/30f;
+			if(mShieldValue < 0f)
+			{
+				mShieldValue = 0f;
+			}
+
 			mTripleTimerValue = mP1Ship.mThreeBulletTimer/30f;
 			if(mTripleTimerValue < 0f)
 			{
 				mTripleTimerValue = 0f;
+			}
+
+			//Adjust Claw/Wing graphics based on damage/upgrade status ~Adam
+			if(mP1Ship.mFireUpgrade < 0.9f)
+			{
+				mShipRightClaw.GetComponent<Animator>().SetInteger("UIFlashState", 2);
+			}
+			if(mP1Ship.mFireUpgrade < 0.8f)
+			{
+				mShipLeftClaw.GetComponent<Animator>().SetInteger("UIFlashState", 2);
+			}
+			if(mP1Ship.mMoveUpgrade < 0.9f)
+			{
+				mShipRightWing.GetComponent<Animator>().SetInteger("UIFlashState", 2);
+			}
+			if(mP1Ship.mMoveUpgrade < 0.8f)
+			{
+				mShipLeftWing.GetComponent<Animator>().SetInteger("UIFlashState", 2);
 			}
 
 			//Flash the ship gun parts ~Adam
@@ -148,11 +174,37 @@ public class CoOpShipPanelUI : MonoBehaviour
 			{
 				mOverheatValue = 0f;
 			}
-			
+
+			mShieldValue = mP2Ship.mShieldTimer/30f;
+			if(mShieldValue < 0f)
+			{
+				mShieldValue = 0f;
+			}
+
+
 			mTripleTimerValue = mP2Ship.mThreeBulletTimer/30f;
 			if(mTripleTimerValue < 0f)
 			{
 				mTripleTimerValue = 0f;
+			}
+
+
+			//Adjust Claw/Wing graphics based on damage/upgrade status ~Adam
+			if(mP2Ship.mFireUpgrade < 0.9f)
+			{
+				mShipRightClaw.GetComponent<Animator>().SetInteger("UIFlashState", 2);
+			}
+			if(mP2Ship.mFireUpgrade < 0.8f)
+			{
+				mShipLeftClaw.GetComponent<Animator>().SetInteger("UIFlashState", 2);
+			}
+			if(mP2Ship.mMoveUpgrade < 0.9f)
+			{
+				mShipRightWing.GetComponent<Animator>().SetInteger("UIFlashState", 2);
+			}
+			if(mP2Ship.mMoveUpgrade < 0.8f)
+			{
+				mShipLeftWing.GetComponent<Animator>().SetInteger("UIFlashState", 2);
 			}
 
 			//Flash the ship gun parts ~Adam
@@ -197,9 +249,9 @@ public class CoOpShipPanelUI : MonoBehaviour
 		//Find ships if they're null
 		else if (!mP2UI && mP1Ship == null)
 		{
-			if(FindObjectOfType<PlayerShipController>() != null)
+			if(FindObjectOfType<PlayerOneShipController>() != null)
 			{
-				mP1Ship = FindObjectOfType<PlayerShipController>();
+				mP1Ship = FindObjectOfType<PlayerOneShipController>();
 			}
 		}
 		else if (mP2UI && mP2Ship == null)
@@ -212,6 +264,7 @@ public class CoOpShipPanelUI : MonoBehaviour
 
 		//Set the bar sizes ~Adam
 		mHealthBar.rectTransform.localScale = new Vector3(mHealthValue, 1f,1f);
+		mShieldBar.rectTransform.localScale = new Vector3(mShieldValue, 1f,1f);
 		mOverheatBar.rectTransform.localScale = new Vector3(mOverheatValue, 1f,1f);
 		mTripleTimerBar.rectTransform.localScale = new Vector3(mTripleTimerValue, 1f,1f);
 	}
