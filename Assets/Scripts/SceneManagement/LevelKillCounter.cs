@@ -28,6 +28,11 @@ public class LevelKillCounter : MonoBehaviour
 	//Keep levels from ending too early~Adam
 	[SerializeField] private float mMinimumLeaveTime = 20f;
 	float mLeaveTimer = 0f;
+
+
+	public float mP1ShieldTime = 0f;
+	public float mP2ShieldTime = 0f;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -59,12 +64,35 @@ public class LevelKillCounter : MonoBehaviour
 		{
 			if(mRemainingEnemy == false)
 			{
+				if(!mLevelComplete)
+				{
+					if(FindObjectOfType<PlayerOneShipController>()!=null)
+					{
+						mP1ShieldTime = FindObjectOfType<PlayerOneShipController>().mShieldTimer;
+					}
+					if(FindObjectOfType<PlayerTwoShipController>()!=null)
+					{
+						mP2ShieldTime = FindObjectOfType<PlayerTwoShipController>().mShieldTimer;
+					}
+				}
+
 				mLevelComplete = true;
+
+
 			}
 		}
 		if(mLevelComplete)
 		{
 			mLevelCompleteTimer -= Time.deltaTime;
+
+			if(FindObjectOfType<PlayerOneShipController>()!=null)
+			{
+				FindObjectOfType<PlayerOneShipController>().mShieldTimer = mP1ShieldTime;
+			}
+			if(FindObjectOfType<PlayerTwoShipController>()!=null)
+			{
+				FindObjectOfType<PlayerTwoShipController>().mShieldTimer = mP2ShieldTime;
+			}
 		}
 
 		if (mLevelCompleteTimer <= 0f)

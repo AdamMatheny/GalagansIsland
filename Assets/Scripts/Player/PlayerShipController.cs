@@ -446,14 +446,14 @@ public class PlayerShipController : MonoBehaviour
 				{
 					if(Time.timeScale != 0)
 					{
-						heatLevel -= Time.deltaTime * maxHeatLevel/4f/Time.timeScale;
+						heatLevel -= Time.deltaTime * maxHeatLevel/5f/Time.timeScale;
 					}
 				}
 				else
 				{
 					if(Time.timeScale != 0)
 					{
-						heatLevel -= Time.deltaTime * 4f/Time.timeScale;
+						heatLevel -= Time.deltaTime * maxHeatLevel/5f/Time.timeScale;
 					}
 				}
 			}

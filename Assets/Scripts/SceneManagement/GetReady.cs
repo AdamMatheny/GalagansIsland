@@ -19,6 +19,11 @@ public class GetReady : MonoBehaviour
 	float mP1Overheat = 0f;
 	float mP2Overheat = 0f;
 
+
+	public float mP1ShieldTime = 0f;
+	public float mP2ShieldTime = 0f;
+
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -37,6 +42,16 @@ public class GetReady : MonoBehaviour
 			mPlayer2Ship = mScoreMan.mPlayer2Avatar.GetComponent<PlayerShipController>();
 			mP2Overheat = mPlayer2Ship.heatLevel;
 		}
+
+		if(mPlayer1Ship !=null)
+		{
+			mP1ShieldTime = mPlayer1Ship.mShieldTimer;
+		}
+		if(mPlayer2Ship !=null)
+		{
+			mP2ShieldTime = mPlayer2Ship.mShieldTimer;
+		}
+
 	}//END of Start()
 	
 	// Update is called once per frame
@@ -53,6 +68,7 @@ public class GetReady : MonoBehaviour
 				mPlayer1Ship.mToggleFireOn = false;
 				mPlayer1Ship.isOverheated = true;
 				mPlayer1Ship.heatLevel = mP1Overheat;
+				mPlayer1Ship.mShieldTimer = mP1ShieldTime;
 			}
 			else
 			{
@@ -67,6 +83,7 @@ public class GetReady : MonoBehaviour
 				mPlayer2Ship.mToggleFireOn = false;
 				mPlayer2Ship.isOverheated = true;
 				mPlayer2Ship.heatLevel = mP2Overheat;
+				mPlayer2Ship.mShieldTimer = mP2ShieldTime;
 			}
 			else
 			{
@@ -75,6 +92,8 @@ public class GetReady : MonoBehaviour
 					mPlayer2Ship = mScoreMan.mPlayer2Avatar.GetComponent<PlayerShipController>();
 				}
 			}
+
+
 		}
 		//Let the player fire and change the text message ~Adam
 		else if(mReadyTimer > 0f)
