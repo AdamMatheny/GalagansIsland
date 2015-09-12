@@ -15,7 +15,7 @@ public class HornetStingerBeam : MonoBehaviour
 	[SerializeField] private BossRotator mRotator;
 	float mDefaultRotSpeed;
 	[SerializeField] private float mAttackRotSpeed = 20f;
-
+	[SerializeField] private bool mUseBeam = false;
 	// Use this for initialization
 	void Start () 
 	{
@@ -38,12 +38,15 @@ public class HornetStingerBeam : MonoBehaviour
 		//Fire the laser ~Adam
 		if(mTimer <= mDuration && mBeam != null)
 		{
-			//mBeam.SetActive (true);
+			if(mUseBeam && mBeam != null)
+			{
+				mBeam.SetActive (true);
+			}
 			if(mRotator != null)
 			{
 				mRotator.mRotateSpeed = mAttackRotSpeed;
 			}
-			if(!mHasFired)
+			if(!mHasFired && mStingerBullet != null)
 			{
 				Instantiate(mStingerBullet, transform.position, Quaternion.identity);
 				mHasFired = true;
