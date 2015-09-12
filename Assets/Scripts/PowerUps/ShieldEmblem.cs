@@ -20,7 +20,8 @@ public class ShieldEmblem : MonoBehaviour
 	void OnTriggerEnter(Collider other)
 	{
 
-		if (other.tag == "SecondShip") {
+		if (other.tag == "SecondShip") 
+		{
 
 			other.GetComponentInParent<PlayerShipController> ().mShielded = true;
 			other.GetComponentInParent<PlayerShipController> ().mShieldTimer = 30f;
@@ -31,13 +32,33 @@ public class ShieldEmblem : MonoBehaviour
 		{
 			other.GetComponent<PlayerShipController>().mShielded = true;
 			other.GetComponent<PlayerShipController>().mShieldTimer = 30f; 
+
+			if(FindObjectOfType<LevelKillCounter>() != null)
+			{
+				if(other.GetComponent<PlayerOneShipController>() != null)
+				{
+					FindObjectOfType<LevelKillCounter>().mP1ShieldTime = 30f;
+				}
+				else if (other.GetComponent<PlayerTwoShipController>() != null)
+				{
+					FindObjectOfType<LevelKillCounter>().mP2ShieldTime = 30f;
+				}
+			}
+
+			if(FindObjectOfType<GetReady>() != null)
+			{
+				if(other.GetComponent<PlayerOneShipController>() != null)
+				{
+					FindObjectOfType<GetReady>().mP1ShieldTime = 30f;
+				}
+				else if (other.GetComponent<PlayerTwoShipController>() != null)
+				{
+					FindObjectOfType<GetReady>().mP2ShieldTime = 30f;
+				}
+			}
+
 			Destroy(this.gameObject);
 		}
-		if(other.GetComponent<PlayerTwoShipController>() != null)
-		{
-			FindObjectOfType<PlayerTwoShipController>().mShielded = true;
-			FindObjectOfType<PlayerTwoShipController>().mShieldTimer = 30f;
-			Destroy(this.gameObject);
-		}
+
 	}
 }

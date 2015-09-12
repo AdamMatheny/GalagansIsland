@@ -76,7 +76,10 @@ public class BossCentral : MonoBehaviour
 			else
 			{
 				//Make sure weak points die in the right order ~Adam
-				mWeakPoints[0].mActiveWeakPoint = true;
+				if(mWeakPoints.Count > 0)
+				{
+					mWeakPoints[0].mActiveWeakPoint = true;
+				}
 				foreach(BossWeakPoint weakPoint in mWeakPoints)
 				{
 					if(!weakPoint.mActiveWeakPoint)

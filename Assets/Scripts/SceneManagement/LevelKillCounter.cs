@@ -8,7 +8,7 @@ public class LevelKillCounter : MonoBehaviour
 	public int mKillCount = 0;
 	float mLevelCompleteTimer = 5f;
 
-	bool mLevelComplete = false;
+	public bool mLevelComplete = false;
 
 	bool mCoOpMode = false;
 
