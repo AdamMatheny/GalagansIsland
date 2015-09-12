@@ -680,14 +680,14 @@ public class PlayerShipController : MonoBehaviour
 		mMoveUpgrade -= 0.01f;
 		mFireUpgrade -= 0.01f;
 
-		if(mMoveUpgrade < 0.75f)
+		if(mMoveUpgrade < 0.5f)
 		{
-			mMoveUpgrade = 0.75f;
+			mMoveUpgrade = 0.5f;
 		}
 
-		if(mFireUpgrade < 0.75f)
+		if(mFireUpgrade < 0.25f)
 		{
-			mFireUpgrade = 0.75f;
+			mFireUpgrade = 0.25f;
 		}
 	}//END of TakeStatDamage()
 
