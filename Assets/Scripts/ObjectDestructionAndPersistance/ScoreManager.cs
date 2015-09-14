@@ -157,19 +157,7 @@ public class ScoreManager : MonoBehaviour
 //			Destroy(shipDeath);
 //		}
 
-		//If we're out of lives, wait a short bit for the player explosion to play, then clean up the objects that normally persist between levels
-		//Then go to the EndGame scene and delete this game object ~Adam
-		if(mLivesRemaining <= 0 && mPlayerSafeTime <= 0 && (mPlayer2Avatar == null || !mPlayer2Avatar.activeInHierarchy) && mPlayerAvatar == null)
-		{
 
-			Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
-			Application.LoadLevel("EndGame");
-			mLevelInfoText.text = "\nGame Over";
-			GameObject.Find("PowerMeterCanvas").SetActive (false);
-			this.enabled = false;
-			//Destroy(this.gameObject);
-			
-		}
 
 		mPlayerSafeTime-=Time.deltaTime;
 
@@ -300,6 +288,9 @@ public class ScoreManager : MonoBehaviour
 			}
 			break;
 		}
+
+
+
 		mHighScoreText.text = "High Score:\n" + PlayerPrefs.GetInt("highscore", 0);
 		//mHighScoreText.text = "Return to Wayward Pines!";
 
@@ -318,6 +309,19 @@ public class ScoreManager : MonoBehaviour
 			}
 		}
 
+		//If we're out of lives, wait a short bit for the player explosion to play, then clean up the objects that normally persist between levels
+		//Then go to the EndGame scene and delete this game object ~Adam
+		if(mLivesRemaining <= 0 && mPlayerSafeTime <= 0 && (mPlayer2Avatar == null || !mPlayer2Avatar.activeInHierarchy) && mPlayerAvatar == null)
+		{
+			
+			Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
+			mLevelInfoText.text = "\nGame Over";
+			GameObject.Find("PowerMeterCanvas").SetActive (false);
+			Application.LoadLevel("EndGame");
+			this.enabled = false;
+			//Destroy(this.gameObject);
+			
+		}
 	}//END of Update()
 
 

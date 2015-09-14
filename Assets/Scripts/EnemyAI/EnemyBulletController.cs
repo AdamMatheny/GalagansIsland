@@ -31,7 +31,7 @@ public class EnemyBulletController : MonoBehaviour
 			mPlayer = FindObjectOfType<PlayerShipController>().gameObject;
 		}
 		#region co-op mode stuff
-		if(mScoreController.mPlayer2Avatar != null)
+		if(mScoreController.mPlayer2Avatar != null && mScoreController.mPlayer2Avatar.activeInHierarchy)
 		{
 			mPlayerClone = mScoreController.mPlayer2Avatar;
 		}

@@ -270,6 +270,7 @@ public class Boss5Central : BossCentral
 
 			//Special stuff for ending the game and going to credits ~Adam
 			mScoreMan.enabled = false;
+			mScoreMan.mLevelInfoText.text = "Thank you for playing!";
 			if(GameObject.Find("PowerMeterCanvas") != null)
 			{
 				GameObject.Find("PowerMeterCanvas").SetActive (false);

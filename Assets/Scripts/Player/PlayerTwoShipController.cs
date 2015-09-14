@@ -60,7 +60,13 @@ public class PlayerTwoShipController : PlayerShipController
 	// Update is called once per frame
 	protected override void Update () 
 	{
-
+		if(mPlayerOne == null)
+		{
+			if(FindObjectOfType<PlayerOneShipController>()!=null)
+			{
+				mPlayerOne = FindObjectOfType<PlayerOneShipController>();
+			}
+		}
 		base.Update();
 		
 
@@ -68,6 +74,7 @@ public class PlayerTwoShipController : PlayerShipController
 	
 	void LateUpdate () 
 	{
+
 		base.LateUpdate ();
 	}//END of LateUpdate()
 	

@@ -124,19 +124,19 @@ public class CoOpShipPanelUI : MonoBehaviour
 			}
 
 			//Adjust Claw/Wing graphics based on damage/upgrade status ~Adam
-			if(mP1Ship.mFireUpgrade < 0.9f)
+			if(mP1Ship.mFireUpgrade < 0.8f)
 			{
 				mShipRightClaw.GetComponent<Animator>().SetInteger("UIFlashState", 2);
 			}
-			if(mP1Ship.mFireUpgrade < 0.8f)
+			if(mP1Ship.mFireUpgrade < 0.6f)
 			{
 				mShipLeftClaw.GetComponent<Animator>().SetInteger("UIFlashState", 2);
 			}
-			if(mP1Ship.mMoveUpgrade < 0.9f)
+			if(mP1Ship.mMoveUpgrade < 0.8f)
 			{
 				mShipRightWing.GetComponent<Animator>().SetInteger("UIFlashState", 2);
 			}
-			if(mP1Ship.mMoveUpgrade < 0.8f)
+			if(mP1Ship.mMoveUpgrade < 0.6f)
 			{
 				mShipLeftWing.GetComponent<Animator>().SetInteger("UIFlashState", 2);
 			}
