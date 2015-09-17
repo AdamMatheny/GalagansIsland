@@ -18,7 +18,7 @@ public class Dont_Destroy : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if(Application.loadedLevel == 0 || (Application.loadedLevelName == "Credits" && tag != "Player Bullet"))
+		if(Application.loadedLevel == 0 || Application.loadedLevelName == "EndGame" || (Application.loadedLevelName == "Credits" && tag != "Player Bullet"))
 		{
 			Destroy(this.gameObject);
 		}

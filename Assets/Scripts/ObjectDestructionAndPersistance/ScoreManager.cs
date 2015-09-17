@@ -327,6 +327,7 @@ public class ScoreManager : MonoBehaviour
 			GameObject.Find("PowerMeterCanvas").SetActive (false);
 			Destroy(mPlayerAvatar.gameObject);
 			Destroy(mPlayer2Avatar.gameObject);
+			 
 			Application.LoadLevel("EndGame");
 			this.enabled = false;
 			//Destroy(this.gameObject);
@@ -340,8 +341,8 @@ public class ScoreManager : MonoBehaviour
 			//For player 1 coming back ~Adam
 			if(!mPlayerAvatar.activeInHierarchy && mPlayer2Avatar.activeInHierarchy)
 			{
-				if((InputManager.ActiveDevice.Action1.WasPressed || InputManager.ActiveDevice.Action4.WasPressed 
-				    && InputManager.ActiveDevice.Meta != mPlayer2Avatar.GetComponent<PlayerShipController>().mPlayerInputMeta) 
+				if( ( (InputManager.ActiveDevice.Action1.WasPressed || InputManager.ActiveDevice.Action4.WasPressed) 
+				    && InputManager.ActiveDevice != mPlayer2Avatar.GetComponent<PlayerShipController>().mPlayerInputDevice) 
 				   || Input.GetButtonDown("FireGun") )
 				{
 					if(mP2Lives >= 10)
@@ -368,8 +369,8 @@ public class ScoreManager : MonoBehaviour
 			//For player 2 coming back ~Adam
 			if(mPlayerAvatar.activeInHierarchy && !mPlayer2Avatar.activeInHierarchy)
 			{
-				if((InputManager.ActiveDevice.Action1.WasPressed || InputManager.ActiveDevice.Action4.WasPressed 
-				    && InputManager.ActiveDevice.Meta != mPlayer2Avatar.GetComponent<PlayerShipController>().mPlayerInputMeta) 
+				if(( (InputManager.ActiveDevice.Action1.WasPressed || InputManager.ActiveDevice.Action4.WasPressed) 
+				    && InputManager.ActiveDevice != mPlayerAvatar.GetComponent<PlayerShipController>().mPlayerInputDevice) 
 				   || Input.GetButtonDown("FireGunP2") )
 				{
 					if(mP1Lives >= 10)
