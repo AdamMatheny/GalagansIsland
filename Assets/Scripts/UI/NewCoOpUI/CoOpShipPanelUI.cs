@@ -59,7 +59,16 @@ public class CoOpShipPanelUI : MonoBehaviour
 	{
 		if(mScoreMan != null)
 		{
-			mHealthValue = mScoreMan.mLivesRemaining/(mScoreMan.mMaxLives+.00001f);
+//			mHealthValue = mScoreMan.mLivesRemaining/(mScoreMan.mMaxLives+.00001f);
+
+			if(!mP2UI)
+			{
+				mHealthValue = mScoreMan.mP1Lives/(mScoreMan.mMaxLives+.00001f);
+			}
+			else
+			{
+				mHealthValue = mScoreMan.mP2Lives/(mScoreMan.mMaxLives+.00001f);
+			}
 
 			//Flash the ship parts ~Adam
 			if(mScoreMan.mPlayerSafeTime >0f)

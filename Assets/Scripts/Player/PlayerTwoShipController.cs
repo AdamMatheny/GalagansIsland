@@ -42,7 +42,11 @@ public class PlayerTwoShipController : PlayerShipController
 				Destroy(this.gameObject);
 			}
 		}
-		
+		if(mScoreMan != null && mScoreMan.mPlayer2Avatar != null && mScoreMan.mPlayer2Avatar != this.gameObject)
+		{
+			Destroy(this.gameObject);
+		}
+
 		mLastFramePosition = transform.position;
 		
 	}//END of Start()
@@ -66,6 +70,15 @@ public class PlayerTwoShipController : PlayerShipController
 			{
 				mPlayerOne = FindObjectOfType<PlayerOneShipController>();
 			}
+		}
+		//Enable pausing if player one is dead ~Adam
+		if(mPlayerOne == null || !mPlayerOne.gameObject.activeInHierarchy)
+		{
+			GetComponent<PauseManager>().enabled = true;
+		}
+		else
+		{
+			GetComponent<PauseManager>().enabled = false;
 		}
 		base.Update();
 		

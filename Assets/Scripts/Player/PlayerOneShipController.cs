@@ -39,6 +39,10 @@ public class PlayerOneShipController : PlayerShipController
 				Destroy(this.gameObject);
 			}
 		}
+		if(mScoreMan != null && mScoreMan.mPlayerAvatar != null && mScoreMan.mPlayerAvatar != this.gameObject)
+		{
+			Destroy(this.gameObject);
+		}
 		
 		mLastFramePosition = transform.position;
 		

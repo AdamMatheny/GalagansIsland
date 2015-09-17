@@ -8,7 +8,7 @@ public class CreditsCoOpController : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		if(FindObjectOfType<ScoreManager>()!= null && FindObjectOfType<ScoreManager>().mP2Score >0)
+		if(FindObjectOfType<ScoreManager>()!= null && FindObjectOfType<ScoreManager>().mInCoOpMode)
 		{
 			mPlayer2Ship.SetActive(true);
 		}
@@ -17,7 +17,7 @@ public class CreditsCoOpController : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if(FindObjectOfType<ScoreManager>()!= null && FindObjectOfType<ScoreManager>().mP2Score >0)
+		if(FindObjectOfType<ScoreManager>()!= null && FindObjectOfType<ScoreManager>().mInCoOpMode)
 		{
 			mPlayer2Ship.SetActive(true);
 		}

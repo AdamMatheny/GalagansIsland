@@ -85,9 +85,9 @@ public class Boss5GameOverFakeout : MonoBehaviour
 			FindObjectOfType<PauseManager>().enabled = false;
 			
 			//Hiding the player ~Adam
-			if(FindObjectOfType<PlayerShipController>() != null)
+			if(FindObjectOfType<PlayerOneShipController>() != null)
 			{
-				GameObject playerShip = FindObjectOfType<PlayerShipController>().gameObject;
+				GameObject playerShip = FindObjectOfType<PlayerOneShipController>().gameObject;
 				
 				playerShip.GetComponent<PlayerShipController>().enabled = false;
 				playerShip.GetComponent<Collider>().enabled = false;
@@ -174,9 +174,9 @@ public class Boss5GameOverFakeout : MonoBehaviour
 		GameObject.Find("Game_HUD").GetComponent<Canvas>().enabled = true;
 		
 		//Revealing the Player 1 ~Adam
-		if(FindObjectOfType<PlayerShipController>() != null)
+		if(FindObjectOfType<PlayerOneShipController>() != null)
 		{
-			GameObject playerShip = FindObjectOfType<PlayerShipController>().gameObject;
+			GameObject playerShip = FindObjectOfType<PlayerOneShipController>().gameObject;
 			playerShip.GetComponent<PlayerShipController>().enabled = true;
 			playerShip.GetComponent<Collider>().enabled = true;
 			

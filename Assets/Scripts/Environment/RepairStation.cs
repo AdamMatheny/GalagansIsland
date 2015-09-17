@@ -10,7 +10,7 @@ public class RepairStation : MonoBehaviour
 	[SerializeField] private GameObject mReadyGetter;
 
 	//For keeping player shields from running out while they choose what to repair ~Adam
-	ScoreManager mScoreMan;
+	public ScoreManager mScoreMan;
 	public float mP1ShieldTime = 0f;
 	public float mP2ShieldTime = 0f;
 
@@ -32,7 +32,10 @@ public class RepairStation : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-
+		if(mScoreMan == null)
+		{
+			mScoreMan = FindObjectOfType<ScoreManager>();
+		}
 
 		transform.Translate (Vector3.down* mDriftSpeed*Time.deltaTime);
 		//Activate the GetReady object once the repair station goes off-screen ~Adam
@@ -60,7 +63,7 @@ public class RepairStation : MonoBehaviour
 	void OnTriggerEnter(Collider other)
 	{
 		//If Player 1 goes through ~Adam
-		if(other.GetComponent<PlayerShipController>() != null && ! mServicedP1)
+		if(other.GetComponent<PlayerOneShipController>() != null && ! mServicedP1)
 		{
 			float xDist = other.transform.position.x-transform.position.x;
 			Debug.Log ("Player 1 entered, " + xDist);
@@ -70,11 +73,14 @@ public class RepairStation : MonoBehaviour
 				ScoreManager scoreMan = FindObjectOfType<ScoreManager>();
 				//Play animation ~Adam
 				mAnimator.Play ("HealthDoor");
+
 				//Restore lives and make sure it doesn't go over the max life count ~Adam
 				scoreMan.mLivesRemaining += scoreMan.mMaxLives/5;
-				if(scoreMan.mLivesRemaining > scoreMan.mMaxLives)
+				scoreMan.mP1Lives += scoreMan.mMaxLives/5;
+				if(scoreMan.mP1Lives > scoreMan.mMaxLives)
 				{
-					scoreMan.mLivesRemaining = scoreMan.mMaxLives;
+					scoreMan.mP1Lives = scoreMan.mMaxLives;
+					scoreMan.mLivesRemaining = scoreMan.mP1Lives + scoreMan.mP2Lives;
 				}
 
 				//For if we want restoring lives to fix a little bit of movement/firing
@@ -129,10 +135,12 @@ public class RepairStation : MonoBehaviour
 				//Play animation ~Adam
 				mAnimator.Play ("HealthDoor");
 				//Restore lives and make sure it doesn't go over the max life count ~Adam
-				scoreMan.mLivesRemaining += 6;
-				if(scoreMan.mLivesRemaining > scoreMan.mMaxLives)
+				scoreMan.mLivesRemaining += scoreMan.mMaxLives/5;
+				scoreMan.mP2Lives += scoreMan.mMaxLives/5;
+				if(scoreMan.mP2Lives > scoreMan.mMaxLives)
 				{
-					scoreMan.mLivesRemaining = scoreMan.mMaxLives;
+					scoreMan.mP2Lives = scoreMan.mMaxLives;
+					scoreMan.mLivesRemaining = scoreMan.mP1Lives + scoreMan.mP2Lives;
 				}
 				//For if we want restoring lives to fix a little bit of movement/firing
 //				other.GetComponent<PlayerShipController>().mMoveUpgrade += 0.07f;

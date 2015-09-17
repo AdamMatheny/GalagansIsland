@@ -497,9 +497,9 @@ public class EnemyShipAI : MonoBehaviour
 		#region from when we were doing 2 players ~Adam
 		//Find the direction to the player (or the clone if it's closer) ~Adam
 		Vector3 toPlayer = Vector3.down;
-		if(mPlayer != null)
+		if(mPlayer != null && mPlayer.gameObject.activeInHierarchy)
 		{
-			if(mPlayerClone != null && Vector3.Distance(transform.position,mPlayerClone.position) <= Vector3.Distance(transform.position,mPlayer.position) )
+			if(mPlayerClone != null && mPlayerClone.gameObject.activeInHierarchy && Vector3.Distance(transform.position,mPlayerClone.position) <= Vector3.Distance(transform.position,mPlayer.position) )
 			{
 				toPlayer = mPlayerClone.position - transform.position;
 			}
@@ -508,7 +508,7 @@ public class EnemyShipAI : MonoBehaviour
 				toPlayer = mPlayer.position - transform.position;
 			}
 		}
-		else if (mPlayerClone != null)
+		else if (mPlayerClone != null && mPlayerClone.gameObject.activeInHierarchy)
 		{
 			toPlayer = mPlayerClone.position - transform.position;
 		}
@@ -544,11 +544,12 @@ public class EnemyShipAI : MonoBehaviour
 
 		#region From when we were doing 2 player mode ~Adam
 		//Find the direction to the player (or the clone if it's closer) ~Adam
-		Vector3 toPlayer;
+		Vector3 toPlayer = Vector3.down;
 
-		if(mPlayer != null){
+		if(mPlayer != null && mPlayer.gameObject.activeInHierarchy)
+		{
 
-			if(mPlayerClone != null && Vector3.Distance(transform.position,mPlayerClone.position) <= Vector3.Distance(transform.position,mPlayer.position) )
+			if(mPlayerClone != null && mPlayerClone.gameObject.activeInHierarchy && Vector3.Distance(transform.position,mPlayerClone.position) <= Vector3.Distance(transform.position,mPlayer.position) )
 			{
 				toPlayer = mPlayerClone.position - transform.position;
 			}
@@ -556,7 +557,9 @@ public class EnemyShipAI : MonoBehaviour
 			{
 				toPlayer = mPlayer.position - transform.position;
 			}
-		}else{
+		}
+		else if (mPlayerClone != null && mPlayerClone.gameObject.activeInHierarchy)
+		{
 
 			toPlayer = mPlayerClone.position - transform.position;
 		}

@@ -58,6 +58,15 @@ public class BossCentral : MonoBehaviour
 		if(mScoreMan == null)
 		{
 			mScoreMan = FindObjectOfType<ScoreManager>();
+			if(mScoreMan.mPlayerAvatar != null)
+			{
+				mPlayer1 = mScoreMan.mPlayerAvatar.GetComponent<PlayerShipController>();
+				mTargetedPlayer = mPlayer1;
+			}
+			if(mScoreMan.mPlayer2Avatar != null)
+			{
+				mPlayer2 = mScoreMan.mPlayer2Avatar.GetComponent<PlayerShipController>();
+			}
 		}
 
 		//Check on and remove null WeakPoints and weapons~Adam
@@ -99,11 +108,12 @@ public class BossCentral : MonoBehaviour
 
 
 				//Target the player with the higher score ~Adam
-				if(mScoreMan.mP1Score >= mScoreMan.mP2Score)
+				if(mScoreMan.mP1Score >= mScoreMan.mP2Score && mPlayer1.gameObject.activeInHierarchy)
 				{
 					mTargetedPlayer = mPlayer1;
+
 				}
-				else
+				else if(mPlayer2.gameObject.activeInHierarchy)
 				{
 					mTargetedPlayer = mPlayer2;
 				}
@@ -172,12 +182,12 @@ public class BossCentral : MonoBehaviour
 			killCounter.mKillCount = killCounter.mRequiredKills+1;
 
 			//Award points for death ~Adam
-			if(mScoreMan.mPlayerAvatar != null && mScoreMan.mPlayer2Avatar != null)
+			if(mScoreMan.mPlayerAvatar != null && mScoreMan.mPlayerAvatar.activeInHierarchy && mScoreMan.mPlayer2Avatar != null && mScoreMan.mPlayer2Avatar.activeInHierarchy)
 			{
 				mScoreMan.AdjustScore (mScoreValue/2, true);
 				mScoreMan.AdjustScore (mScoreValue/2, false);
 			}
-			else if(mScoreMan.mPlayerAvatar == null && mScoreMan.mPlayer2Avatar != null)
+			else if((mScoreMan.mPlayerAvatar == null || !mScoreMan.mPlayerAvatar.activeInHierarchy) && mScoreMan.mPlayer2Avatar != null && mScoreMan.mPlayer2Avatar.activeInHierarchy)
 			{
 				mScoreMan.AdjustScore (mScoreValue, false);
 			}

@@ -1066,6 +1066,11 @@ public class PlayerShipController : MonoBehaviour
 			break;
 		}
 	}
-
+	public virtual void Respawn()
+	{
+		mPlayerInputDevice = null;
+//		mPlayerInputMeta = "";
+		ManageInputDevice();
+	}
 	#endregion
 }//END of MonoBehavior

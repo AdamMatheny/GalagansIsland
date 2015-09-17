@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-
+using InControl;
+using XInputDotNetPure; // Required in C#
 
 public class ScoreManager : MonoBehaviour 
 {
@@ -70,6 +71,10 @@ public class ScoreManager : MonoBehaviour
 	[SerializeField] private Sprite mShieldEmblemSprite;
 	[SerializeField] private Sprite mTripleEmblemSprite;
 
+	public bool mInCoOpMode = false;
+	public int mP1Lives = 100;
+	public int mP2Lives = 0;
+
 	void StoreHighscore(int newHighscore)
 	{
 		int oldHighscore = PlayerPrefs.GetInt("highscore", 0);    
@@ -112,6 +117,9 @@ public class ScoreManager : MonoBehaviour
 
 
 		DontDestroyOnLoad (transform.gameObject);
+		DontDestroyOnLoad (mPlayerAvatar.gameObject);
+		DontDestroyOnLoad (mPlayer2Avatar.gameObject);
+
 		//Figure out how old this ScoreManager is ~Adam
 		if(mOriginalLevel == 0)
 		{
@@ -311,16 +319,80 @@ public class ScoreManager : MonoBehaviour
 
 		//If we're out of lives, wait a short bit for the player explosion to play, then clean up the objects that normally persist between levels
 		//Then go to the EndGame scene and delete this game object ~Adam
-		if(mLivesRemaining <= 0 && mPlayerSafeTime <= 0 && (mPlayer2Avatar == null || !mPlayer2Avatar.activeInHierarchy) && mPlayerAvatar == null)
+		if(mLivesRemaining <= 0 && mPlayerSafeTime <= 0 && (mPlayer2Avatar == null || !mPlayer2Avatar.activeInHierarchy) && (mPlayerAvatar == null || !mPlayerAvatar.activeInHierarchy))
 		{
 			
 			Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
 			mLevelInfoText.text = "\nGame Over";
 			GameObject.Find("PowerMeterCanvas").SetActive (false);
+			Destroy(mPlayerAvatar.gameObject);
+			Destroy(mPlayer2Avatar.gameObject);
 			Application.LoadLevel("EndGame");
 			this.enabled = false;
 			//Destroy(this.gameObject);
 			
+		}
+
+		//Let dead players borrow lives to repsawn in Co-Op mode ~Adam
+		//Only allow the repsawning in Co-Op mode while a player isn't invincible and there are still lives leftover ~Adam
+		if(mInCoOpMode && mPlayerSafeTime <= 0f && mLivesRemaining > 1)
+		{
+			//For player 1 coming back ~Adam
+			if(!mPlayerAvatar.activeInHierarchy && mPlayer2Avatar.activeInHierarchy)
+			{
+				if((InputManager.ActiveDevice.Action1.WasPressed || InputManager.ActiveDevice.Action4.WasPressed 
+				    && InputManager.ActiveDevice.Meta != mPlayer2Avatar.GetComponent<PlayerShipController>().mPlayerInputMeta) 
+				   || Input.GetButtonDown("FireGun") )
+				{
+					if(mP2Lives >= 10)
+					{
+						mP2Lives -= 5;
+						mP1Lives += 5;
+					}
+					else if(mP2Lives > 5)
+					{
+						mP2Lives -= 3;
+						mP1Lives += 3;
+					}
+					else
+					{
+						mP2Lives -= 1;
+						mP1Lives += 1;
+					}
+					mPlayerAvatar.transform.position = mPlayer2Avatar.transform.position;
+					mPlayerAvatar.SetActive(true);
+					mPlayerAvatar.GetComponent<PlayerShipController>().Respawn ();
+				}
+			}
+
+			//For player 2 coming back ~Adam
+			if(mPlayerAvatar.activeInHierarchy && !mPlayer2Avatar.activeInHierarchy)
+			{
+				if((InputManager.ActiveDevice.Action1.WasPressed || InputManager.ActiveDevice.Action4.WasPressed 
+				    && InputManager.ActiveDevice.Meta != mPlayer2Avatar.GetComponent<PlayerShipController>().mPlayerInputMeta) 
+				   || Input.GetButtonDown("FireGunP2") )
+				{
+					if(mP1Lives >= 10)
+					{
+						mP1Lives -= 5;
+						mP2Lives += 5;
+					}
+					else if(mP1Lives > 5)
+					{
+						mP1Lives -= 3;
+						mP2Lives += 3;
+					}
+					else
+					{
+						mP1Lives -= 1;
+						mP2Lives += 1;
+					}
+					mPlayer2Avatar.transform.position = mPlayerAvatar.transform.position;
+					mPlayer2Avatar.SetActive(true);
+					mPlayer2Avatar.GetComponent<PlayerShipController>().Respawn ();
+				}
+			}
+
 		}
 	}//END of Update()
 
@@ -367,7 +439,7 @@ public class ScoreManager : MonoBehaviour
 			{
 				Camera.main.GetComponent<CameraShaker> ().RumbleController(.1f, .2f);
 
-				if(mLivesRemaining == 1)
+				if(mP1Lives == 1)
 				{
 					GameObject playerDeathParticles;
 					playerDeathParticles = Instantiate(mPlayerDeathEffect, mPlayerAvatar.transform.position, Quaternion.identity) as GameObject;
@@ -396,6 +468,7 @@ public class ScoreManager : MonoBehaviour
 						mP2Score = 0;
 					}
 					mLivesRemaining--;
+					mP1Lives--;
 					mPlayerAvatar.GetComponent<PlayerShipController>().StartSpin();
 					mPlayerAvatar.GetComponent<PlayerShipController>().TakeStatDamage();
 					Camera.main.GetComponent<CameraShaker>().ShakeCameraDeath();
@@ -413,11 +486,12 @@ public class ScoreManager : MonoBehaviour
 			}
 
 			//If that wasn't the last life, go invulnerable, otherwise go back to the title screen
-			if(mLivesRemaining <= 0)
+			if(mP1Lives <= 0)
 			{
 
 				Camera.main.GetComponent<CameraShaker> ().RumbleController(.6f, 3.15f);
-				Destroy(mPlayerAvatar.gameObject);
+				//Destroy(mPlayerAvatar.gameObject);
+				mPlayerAvatar.gameObject.SetActive (false);
 				//mPlayerAvatar.gameObject.SetActive(false);
 				mPlayerSafeTime = 3f;
 
@@ -443,7 +517,7 @@ public class ScoreManager : MonoBehaviour
 			{
 				Camera.main.GetComponent<CameraShaker> ().RumbleController(.1f, .2f);
 
-				if(mLivesRemaining == 1)
+				if(mP2Lives == 1)
 				{
 					GameObject playerDeathParticles;
 					playerDeathParticles = Instantiate(mPlayer2DeathEffect, mPlayer2Avatar.transform.position, Quaternion.identity) as GameObject;
@@ -472,6 +546,7 @@ public class ScoreManager : MonoBehaviour
 						mP2Score = 0;
 					}
 					mLivesRemaining--;
+					mP2Lives--;
 					mPlayer2Avatar.GetComponent<PlayerShipController>().StartSpin();
 					mPlayer2Avatar.GetComponent<PlayerShipController>().TakeStatDamage();
 					Camera.main.GetComponent<CameraShaker>().ShakeCameraDeath();
@@ -489,11 +564,12 @@ public class ScoreManager : MonoBehaviour
 			}
 			
 			//If that wasn't the last life, go invulnerable, otherwise go back to the title screen
-			if(mLivesRemaining <= 0)
+			if(mP2Lives <= 0)
 			{
 
 				Camera.main.GetComponent<CameraShaker> ().RumbleController(3f, 2f);
-				Destroy(mPlayer2Avatar.gameObject);
+				//Destroy(mPlayer2Avatar.gameObject);
+				mPlayer2Avatar.gameObject.SetActive (false);
 				//mPlayer2Avatar.gameObject.SetActive(false);
 				mPlayerSafeTime = 3f;
 				
@@ -517,6 +593,15 @@ public class ScoreManager : MonoBehaviour
 		{
 			LosePlayerTwoLife ();
 		}
+	}
+
+	public void StartCoOpMode()
+	{
+		mInCoOpMode = true;
+		mMaxLives = 50;
+		mP1Lives = 50;
+		mP2Lives = 50;
+		mLivesRemaining = 100;
 	}
 
 }

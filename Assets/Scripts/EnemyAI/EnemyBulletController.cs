@@ -31,7 +31,7 @@ public class EnemyBulletController : MonoBehaviour
 			mPlayer = FindObjectOfType<PlayerShipController>().gameObject;
 		}
 		#region co-op mode stuff
-		if(mScoreController.mPlayer2Avatar != null && mScoreController.mPlayer2Avatar.activeInHierarchy)
+		if(mScoreController.mPlayer2Avatar != null)
 		{
 			mPlayerClone = mScoreController.mPlayer2Avatar;
 		}
@@ -50,7 +50,7 @@ public class EnemyBulletController : MonoBehaviour
 			Vector3 directionToPlayer = Vector3.down;
 			#region twin-stick clone stuff
 			//Fire at the clone ship if it is both present and closer -Adam
-			if (mPlayerClone != null && Vector3.Distance (transform.position, mPlayerClone.transform.position) <= Vector3.Distance (transform.position, mPlayer.transform.position)) 
+			if (mPlayerClone != null && mPlayerClone.activeInHierarchy && (Vector3.Distance (transform.position, mPlayerClone.transform.position) <= Vector3.Distance (transform.position, mPlayer.transform.position) || !mPlayer.activeInHierarchy)) 
 			{
 				directionToPlayer = mPlayerClone.transform.position - transform.position;
 				bulletForce = Vector3.Normalize (directionToPlayer) * mBulletSpeed;
@@ -73,7 +73,7 @@ public class EnemyBulletController : MonoBehaviour
 			Vector3 directionToPlayer = Vector3.down;
 			#region twin-stick clone stuff
 			//Fire at the clone ship if it is both present and closer -Adam
-			if (mPlayerClone != null && Vector3.Distance (transform.position, mPlayerClone.transform.position) <= Vector3.Distance (transform.position, mPlayer.transform.position)) 
+			if (mPlayerClone != null && mPlayerClone.activeInHierarchy && (Vector3.Distance (transform.position, mPlayerClone.transform.position) <= Vector3.Distance (transform.position, mPlayer.transform.position) || !mPlayer.activeInHierarchy)) 
 			{
 				directionToPlayer = mPlayerClone.transform.position - transform.position;
 				bulletForce = Vector3.Normalize (directionToPlayer) * mBulletSpeed;
@@ -94,7 +94,7 @@ public class EnemyBulletController : MonoBehaviour
 		else
 		{
 			#region twin-stick clone stuff
-			if(mPlayerClone != null && Vector3.Distance(transform.position,mPlayerClone.transform.position) <= Vector3.Distance(transform.position,mPlayer.transform.position) )
+			if(mPlayerClone != null && mPlayerClone.activeInHierarchy && (Vector3.Distance(transform.position,mPlayerClone.transform.position) <= Vector3.Distance(transform.position,mPlayer.transform.position) || !mPlayer.activeInHierarchy))
 			{
 				if (mPlayerClone.transform.position.y > transform.position.y)
 				{
@@ -148,7 +148,7 @@ public class EnemyBulletController : MonoBehaviour
 			Vector3 directionToPlayer = Vector3.down;
 			#region twin-stick clone stuff
 			//Fire at the clone ship if it is both present and closer -Adam
-			if (mPlayerClone != null && Vector3.Distance (transform.position, mPlayerClone.transform.position) <= Vector3.Distance (transform.position, mPlayer.transform.position)) 
+			if (mPlayerClone != null && mPlayerClone.activeInHierarchy && (Vector3.Distance (transform.position, mPlayerClone.transform.position) <= Vector3.Distance (transform.position, mPlayer.transform.position) || !mPlayer.activeInHierarchy)) 
 			{
 				directionToPlayer = mPlayerClone.transform.position - transform.position;
 				bulletForce = Vector3.Normalize (directionToPlayer) * mBulletSpeed;
@@ -159,7 +159,7 @@ public class EnemyBulletController : MonoBehaviour
 			else 
 			{
 				//fire at the player
-				if(mPlayer != null)
+				if(mPlayer != null && mPlayer.activeInHierarchy)
 				{
 					directionToPlayer = mPlayer.transform.position - transform.position;
 					bulletForce = Vector3.Normalize (directionToPlayer) * mBulletSpeed;
@@ -187,7 +187,7 @@ public class EnemyBulletController : MonoBehaviour
 		}
 
 		//Detect distance to player and slow down time if close but not quite hitting ~Adam
-		if (Vector3.Distance(this.transform.position, mPlayer.transform.position) <= 2.5f)
+		if (Vector3.Distance(this.transform.position, mPlayer.transform.position) <= 2.5f && mPlayer.activeInHierarchy)
 		{
 			if(FindObjectOfType<SlowTimeController>()!= null)
 			{
@@ -196,7 +196,7 @@ public class EnemyBulletController : MonoBehaviour
 		}
 
 		//Detect distance to player and kill the player and destroy self if close enough to "touch" ~Adam
-		if (Vector3.Distance(this.transform.position, mPlayer.transform.position) <= 1.5f)
+		if (Vector3.Distance(this.transform.position, mPlayer.transform.position) <= 1.5f && mPlayer.activeInHierarchy)
 		{
 
 			Debug.Log("The player was shot");
@@ -209,7 +209,8 @@ public class EnemyBulletController : MonoBehaviour
 
 		//If second ship is activated, extend the slow time down ~ Jonathan
 		//Also kill the ship FINALLY!!! ~ Jonathan
-		if (mPlayer.GetComponent<PlayerShipController> ().mShipRecovered) {
+		if (mPlayer.GetComponent<PlayerShipController> ().mShipRecovered && mPlayer.activeInHierarchy) 
+		{
 
 			if(Vector3.Distance(this.transform.position, mPlayer.GetComponent<PlayerShipController> ().mSecondShip.transform.position) <= 2.5f){
 
@@ -228,8 +229,18 @@ public class EnemyBulletController : MonoBehaviour
 		}
 
 		#region twin-stick clone stuff
+
+		//Detect distance to player2 and slow down time if close but not quite hitting ~Adam
+		if (Vector3.Distance(this.transform.position, mPlayerClone.transform.position) <= 2.5f && mPlayerClone.activeInHierarchy)
+		{
+			if(FindObjectOfType<SlowTimeController>()!= null)
+			{
+				FindObjectOfType<SlowTimeController>().SlowDownTime(0.4f,1f);
+			}
+		}
+
 		//Detect distance to player clone and kill the clone and destroy self if close enough to "touch" ~Adam
-		if(mPlayerClone != null)
+		if(mPlayerClone != null && mPlayerClone.activeInHierarchy)
 		{
 			if (Vector3.Distance(this.transform.position, mPlayerClone.transform.position) <= 1.5f)
 			{

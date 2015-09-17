@@ -49,6 +49,7 @@ public class CoOpSelector : MonoBehaviour
 					}
 
 				}
+				FindObjectOfType<ScoreManager>().StartCoOpMode();
 			}
 			else
 			{
