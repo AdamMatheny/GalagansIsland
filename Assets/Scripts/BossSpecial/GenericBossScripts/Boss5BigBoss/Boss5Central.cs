@@ -119,6 +119,7 @@ public class Boss5Central : BossCentral
 					GetComponent<BossRotator>().enabled = true;
 				}
 				mRamTimer -= Time.deltaTime;
+
 				if(mRamTimer <= 0f)
 				{
 					if(ramSection){
@@ -169,7 +170,14 @@ public class Boss5Central : BossCentral
 							//mDeathWeapon.GetComponentInChildren<BossRotator> ().gameObject.SetActive(false);
 						}
 					}
-					mRammingSphere.SetActive (false);
+					if(mRamTimer >0f && mRamTimer <1f)
+					{
+						mRammingSphere.SetActive (true);
+					}
+					else
+					{
+						mRammingSphere.SetActive (false);
+					}
 
 					mRammingSphere.GetComponent<BossHindrance> ().cameraShader.GetComponent<CameraShader> ().shader1.enabled = false;
 					mRammingSphere.GetComponent<BossHindrance> ().cameraShader.GetComponent<CameraShader> ().shader2.enabled = false;

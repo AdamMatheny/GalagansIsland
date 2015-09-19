@@ -68,7 +68,7 @@ public class RepairStation : MonoBehaviour
 			float xDist = other.transform.position.x-transform.position.x;
 			Debug.Log ("Player 1 entered, " + xDist);
 			//If the player went through the left (HP) door ~Adam
-			if(xDist < -5f && xDist > -12f)
+			if(xDist < -4.5f && xDist > -12f)
 			{
 				ScoreManager scoreMan = FindObjectOfType<ScoreManager>();
 				//Play animation ~Adam
@@ -96,21 +96,8 @@ public class RepairStation : MonoBehaviour
 //				}
 				mServicedP1 = true;
 			}
-			//If the player went through the center (Move Speed) door ~Adam
-			else if(xDist <= 5f && xDist >= -5f)
-			{
-				//Play animation ~Adam
-				mAnimator.Play ("MovementDoor");
-				//Upgrade Move speed ~Adam
-				other.GetComponent<PlayerShipController>().mMoveUpgrade += 0.25f;
-				if(other.GetComponent<PlayerShipController>().mMoveUpgrade > 1.2f)
-				{
-					other.GetComponent<PlayerShipController>().mMoveUpgrade = 1.2f;
-				}
-				mServicedP1 = true;
-			}
-			//If the player went through the right (Fire Speed) door ~Adam
-			else if(xDist > 5f && xDist < 12f)
+			//If the player went through the center (Fire Speed) door ~Adam
+			else if(xDist <= 4.5f && xDist >= -4.5f)
 			{
 				//Play animation ~Adam
 				mAnimator.Play ("FireDoor");
@@ -122,6 +109,19 @@ public class RepairStation : MonoBehaviour
 				}
 				mServicedP1 = true;
 			}
+			//If the player went through the right (Move Speed) door ~Adam
+			else if(xDist > 4.5f && xDist < 12f)
+			{
+				//Play animation ~Adam
+				mAnimator.Play ("MovementDoor");
+				//Upgrade Move speed ~Adam
+				other.GetComponent<PlayerShipController>().mMoveUpgrade += 0.25f;
+				if(other.GetComponent<PlayerShipController>().mMoveUpgrade > 1.2f)
+				{
+					other.GetComponent<PlayerShipController>().mMoveUpgrade = 1.2f;
+				}
+				mServicedP1 = true;
+			}
 		}
 		//If Player 2 goes through ~Adam
 		else if(other.GetComponent<PlayerTwoShipController>() != null && ! mServicedP2)
@@ -129,7 +129,7 @@ public class RepairStation : MonoBehaviour
 			Debug.Log ("Player 2 entered");
 			float xDist = other.transform.position.x-transform.position.x;
 			//If the player went through the left (HP) door ~Adam
-			if(xDist < -5f && xDist > -12f)
+			if(xDist < -4.5f && xDist > -12f)
 			{
 				ScoreManager scoreMan = FindObjectOfType<ScoreManager>();
 				//Play animation ~Adam
@@ -155,21 +155,8 @@ public class RepairStation : MonoBehaviour
 //				}
 				mServicedP2 = true;
 			}
-			//If the playe went through the center (Move Speed) door ~Adam
-			else if(xDist <= 5f && xDist >= -5f)
-			{
-				//Play animation ~Adam
-				mAnimator.Play ("MovementDoor");
-				//Upgrade Move speed ~Adam
-				other.GetComponent<PlayerTwoShipController>().mMoveUpgrade += 0.25f;
-				if(other.GetComponent<PlayerShipController>().mMoveUpgrade > 1.2f)
-				{
-					other.GetComponent<PlayerShipController>().mMoveUpgrade = 1.2f;
-				}
-				mServicedP2 = true;
-			}
-			//If the playe went through the right (Fire Speed) door ~Adam
-			else if(xDist > 5f && xDist < 12f)
+			//If the playe went through the center (Fire Speed) door ~Adam
+			else if(xDist <= 4.5f && xDist >= -4.5f)
 			{
 				//Play animation ~Adam
 				mAnimator.Play ("FireDoor");
@@ -178,6 +165,19 @@ public class RepairStation : MonoBehaviour
 				if(other.GetComponent<PlayerShipController>().mFireUpgrade > 1.2f)
 				{
 					other.GetComponent<PlayerShipController>().mFireUpgrade = 1.2f;
+				}
+				mServicedP2 = true;
+			}
+			//If the playe went through the right (Move Speed) door ~Adam
+			else if(xDist > 4.5f && xDist < 12f)
+			{
+				//Play animation ~Adam
+				mAnimator.Play ("MovementDoor");
+				//Upgrade Move speed ~Adam
+				other.GetComponent<PlayerTwoShipController>().mMoveUpgrade += 0.25f;
+				if(other.GetComponent<PlayerShipController>().mMoveUpgrade > 1.2f)
+				{
+					other.GetComponent<PlayerShipController>().mMoveUpgrade = 1.2f;
 				}
 				mServicedP2 = true;
 			}

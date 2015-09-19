@@ -119,6 +119,7 @@ public class BlobBossCentral : BossCentral
 		if(!mDying && mFightStarted && mCurrentHealth <= mDeathWeaponThreshhold)
 		{
 			mRamTimer -= Time.deltaTime;
+
 			if(mRamTimer <= 0f)
 			{
 				mRamming = true;
@@ -145,7 +146,14 @@ public class BlobBossCentral : BossCentral
 				{
 					weapon.SetActive (true);
 				}
-				mDeathWeapon.SetActive (false);
+				if(mRamTimer >0f && mRamTimer <1f)
+				{
+					mDeathWeapon.SetActive (true);
+				}
+				else
+				{
+					mDeathWeapon.SetActive (false);
+				}
 			}
 		}
 	}//END of Update()

@@ -24,11 +24,44 @@ public class BossWeaponCollision : MonoBehaviour
 	{
 		if(other.GetComponent<PlayerShipController>()!= null && mScoreMan.mPlayerSafeTime <= 0f)
 		{
-			for (int i = 0; i < mDamage-1;i++)
+			//Do extra damage ~Adam
+			if(mDamage > 1)
 			{
-				mScoreMan.HitAPlayer(other.gameObject);
-				mScoreMan.mPlayerSafeTime = -1f;
+				if(other.GetComponent<PlayerOneShipController>()!= null && !other.GetComponent<PlayerShipController>().mShielded)
+				{
+					mScoreMan.mP1Lives -= (mDamage-1);
+					mScoreMan.mLivesRemaining -= (mDamage-1);
+					//Don't remove more lives than the player has ~Adam
+					if(mScoreMan.mP1Lives <= 1)
+					{
+						mScoreMan.mP1Lives = 1;
+					}
+					if(mScoreMan.mLivesRemaining <= 1)
+					{
+						mScoreMan.mLivesRemaining = 1;
+					}
+				}
+				if(other.GetComponent<PlayerTwoShipController>()!= null && !other.GetComponent<PlayerShipController>().mShielded)
+				{
+					mScoreMan.mP2Lives -= (mDamage-1);
+					mScoreMan.mLivesRemaining -= (mDamage-1);
+					//Don't remove more lives than the player has ~Adam
+					if(mScoreMan.mP2Lives <= 1)
+					{
+						mScoreMan.mP2Lives = 1;
+					}
+					if(mScoreMan.mLivesRemaining <= 1)
+					{
+						mScoreMan.mLivesRemaining = 1;
+					}
+				}
 			}
+//			for (int i = 0; i < mDamage-1;i++)
+//			{
+//				mScoreMan.HitAPlayer(other.gameObject);
+//				mScoreMan.mPlayerSafeTime = -1f;
+//			}
+			//Do a minimum of 1 point of damage and do the usual stuff that happens when damaged ~Adam
 			mScoreMan.HitAPlayer(other.gameObject);
 			//Debug.Log("Visual Hindrance!");
 		}
