@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using InControl;
-using XInputDotNetPure; // Required in C#
+//using XInputDotNetPure; // Required in C#
 
 public class ScoreManager : MonoBehaviour 
 {
@@ -117,8 +117,8 @@ public class ScoreManager : MonoBehaviour
 
 
 		DontDestroyOnLoad (transform.gameObject);
-		DontDestroyOnLoad (mPlayerAvatar.gameObject);
-		DontDestroyOnLoad (mPlayer2Avatar.gameObject);
+//		DontDestroyOnLoad (mPlayerAvatar.gameObject);
+//		DontDestroyOnLoad (mPlayer2Avatar.gameObject);
 
 		//Figure out how old this ScoreManager is ~Adam
 		if(mOriginalLevel == 0)
@@ -199,12 +199,20 @@ public class ScoreManager : MonoBehaviour
 				if(mPowerUpScore < mShieldScore)
 				{
 					float barAdjust = 1f*(mPowerUpInterval-(mPowerUpScore-mScore))/mPowerUpInterval;
+					if(barAdjust < 0f)
+					{
+						barAdjust = 0f;
+					}
 					mPowerUpMeter.rectTransform.localScale = new Vector3(barAdjust, 1f,1f); 
 					//mPowerUpMeter.rectTransform.rect = new Rect(mPowerUpMeter.rectTransform.rect.x, mPowerUpMeter.rectTransform.rect.y, barAdjust, mPowerUpMeter.rectTransform.rect.height);
 				}
 				else
 				{
 					float barAdjust = 1f*(mShieldInterval-(mShieldScore-mScore))/mShieldInterval;
+					if(barAdjust < 0f)
+					{
+						barAdjust = 0f;
+					}
 					//Debug.Log(barAdjust);
 					mPowerUpMeter.rectTransform.localScale = new Vector3(barAdjust, 1f,1f); 
 				}
