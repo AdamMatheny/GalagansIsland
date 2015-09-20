@@ -231,7 +231,7 @@ public class EnemyBulletController : MonoBehaviour
 		#region twin-stick clone stuff
 
 		//Detect distance to player2 and slow down time if close but not quite hitting ~Adam
-		if (Vector3.Distance(this.transform.position, mPlayerClone.transform.position) <= 2.5f && mPlayerClone.activeInHierarchy)
+		if (mPlayerClone != null && Vector3.Distance(this.transform.position, mPlayerClone.transform.position) <= 2.5f && mPlayerClone.activeInHierarchy)
 		{
 			if(FindObjectOfType<SlowTimeController>()!= null)
 			{
