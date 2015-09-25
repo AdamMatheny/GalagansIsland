@@ -52,7 +52,7 @@ public class LDBossEye : LDBossWeakPoint
 			timerTemp = 1.1f;
 			mBossCentral.mChargeReady = false;
 			mBossCentral.mCurrentCharge = 0;
-			//mBossBody.mOverheated = true;
+			mBossBody.mOverheated = true;
 		}
 
 		if (timerTemp < 1) 
