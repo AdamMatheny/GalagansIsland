@@ -329,13 +329,24 @@ public class ScoreManager : MonoBehaviour
 		//Then go to the EndGame scene and delete this game object ~Adam
 		if(mLivesRemaining <= 0 && mPlayerSafeTime <= 0 && (mPlayer2Avatar == null || !mPlayer2Avatar.activeInHierarchy) && (mPlayerAvatar == null || !mPlayerAvatar.activeInHierarchy))
 		{
-			
-			Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
+
+			if(FindObjectOfType<LevelKillCounter>() != null)
+			{
+				Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
+			}
 			mLevelInfoText.text = "\nGame Over";
-			GameObject.Find("PowerMeterCanvas").SetActive (false);
-			Destroy(mPlayerAvatar.gameObject);
-			Destroy(mPlayer2Avatar.gameObject);
-			 
+			if(GameObject.Find("PowerMeterCanvas") != null)
+			{
+				GameObject.Find("PowerMeterCanvas").SetActive (false);
+			}
+			if(mPlayerAvatar != null)
+			{
+				Destroy(mPlayerAvatar.gameObject);
+			}
+			if(mPlayer2Avatar != null)
+			{
+				Destroy(mPlayer2Avatar.gameObject);
+			}
 			Application.LoadLevel("EndGame");
 			this.enabled = false;
 			//Destroy(this.gameObject);
