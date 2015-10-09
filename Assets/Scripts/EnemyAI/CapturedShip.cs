@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//When special Grabber type enemies hit the player, they will steal a copy of the player's ship that then becomes hostile to the player, shooting back at them
-//These ships are initially towed around by the enemy that captured them and then released to move back and forth on their own once the capturing ship is either destroyed or returns to its position in the swarm
+//When special Grabber type enemies hit the player, they will steal a copy of the player's ship that then becomes hostile to the player, shooting back at them ~Adam
+//These ships are initially towed around by the enemy that captured them and then released to move back and forth on their own once the capturing ship is either destroyed or returns to its position in the swarm ~Adam
 
 
 public class CapturedShip : MonoBehaviour 
@@ -25,6 +25,8 @@ public class CapturedShip : MonoBehaviour
 
 	bool mMovingRight = false;
 
+	[SerializeField] private GameObject mShieldBubble;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -36,7 +38,7 @@ public class CapturedShip : MonoBehaviour
 		//Randomly decide the direction the ship will move upon being released
 		mMovingRight = (Random.value < 0.5);
 
-		//Base the movement speed off of the players movement speed
+		//Base the movement speed off of the players movement speed ~Adam
 		mMovementSpeed = mPlayer.mMovementSpeed;
 
 		//Like the player, the later the level, the faster the captured ship shoots.
@@ -83,7 +85,7 @@ public class CapturedShip : MonoBehaviour
 				shipTrail.enableEmission = true;
 			}
 
-			//Staying within the bounds of the play space
+			//Staying within the bounds of the play space ~Adam
 			if (transform.position.x >= 19f)
 			{
 				mMovingRight = false;
@@ -112,14 +114,27 @@ public class CapturedShip : MonoBehaviour
 			}
 		}
 
-		//Shooting back at the player
+		//Shooting back at the player ~Adam
 		mShootTimer -= Time.deltaTime;
 		//Instantiate an enemy bullet if the player is below this enemy
-		if(Mathf.Abs(mPlayer.transform.position.x - transform.position.x) <= 2f  && mShootTimer <=0f && mCapturedShipBullet != null)
+		if( (Mathf.Abs(mPlayer.transform.position.x - transform.position.x) <= 2f  && mShootTimer <=0f && mCapturedShipBullet != null)
+		   && (mGrabbingEnemy == null || (mGrabbingEnemy != null && !mGrabbingEnemy.mInvincible) ) 
+		   && transform.position.y <33f)
 		{
 			GameObject enemyBullet;
 			enemyBullet = Instantiate(mCapturedShipBullet, transform.position, Quaternion.identity) as GameObject;
 			mShootTimer = mShootTimerDefault;
+		}
+
+
+		//Toggle visibility of shield bubble ~Adam
+		if(mGrabbingEnemy != null && mGrabbingEnemy.mInvincible)
+		{
+			mShieldBubble.SetActive (true);
+		}
+		else
+		{
+			mShieldBubble.SetActive (false);
 		}
 
 	}//END of Update()

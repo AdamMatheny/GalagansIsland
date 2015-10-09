@@ -285,7 +285,10 @@ public class PauseManager : MonoBehaviour
 					else //Ask for confirmation on returning to the Main Menu
 					{
 						//Ask the question ~Adam
-						GUI.Label (new Rect (Screen.width*0.395f, Screen.height*0.21f, Screen.width*0.21f, Screen.height*0.14f), mAskTex);//, mPauseMenuStyle);
+						mPauseMenuStyle.normal.background = null;
+						mPauseMenuStyle.hover.background = null;
+						mPauseMenuStyle.active.background = null;
+						GUI.Label (new Rect (Screen.width*0.395f, Screen.height*0.21f, Screen.width*0.21f, Screen.height*0.14f), mAskTex, mPauseMenuStyle);
 						//Say YES ~Adam
 						mPauseMenuStyle.normal.background = mYesTex;//Set what texture to display for the button ~Adam
 						mPauseMenuStyle.hover.background = mYesTexHighlight;
