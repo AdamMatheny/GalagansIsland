@@ -294,7 +294,7 @@ public class PlayerShipController : MonoBehaviour
 
 
 
-		
+	
 		if (isOverheated) 
 		{
 			mToggleFireOn = false;
@@ -458,7 +458,13 @@ public class PlayerShipController : MonoBehaviour
 				}
 			}
 		}
-		
+
+		//Keep from overheating during credits ~Adam
+		if(Application.loadedLevelName == "Credits")
+		{
+			heatLevel = 0;
+		}
+
 		if (heatLevel <= 0f) 
 		{
 			
