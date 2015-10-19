@@ -95,7 +95,7 @@ public class PlayerShipController : MonoBehaviour
 
 	//For spinning the ship around when the player gets hit ~Adam
 	protected float mSpinning = 0f;
-	protected float mSpinTimer = 0f;
+	[HideInInspector] public  float mSpinTimer = 0f;
 	protected float mSpinTimerDefault = 0.5f;
 	
 	//For Super Screen-Wiper powerup ~Adam
@@ -115,6 +115,11 @@ public class PlayerShipController : MonoBehaviour
 	public float mFireUpgrade = 1f;
 	public float mMoveUpgrade = 1f;
 	protected ScoreManager mScoreMan;
+
+
+	//For flipping the ship in co-op mode ~Adam
+	public float mFlipTimer = 1f;
+	public bool mFlipped = false;
 
 	// Use this for initialization
 	protected virtual void Start () 
@@ -593,6 +598,7 @@ public class PlayerShipController : MonoBehaviour
 		}
 
 
+		mFlipTimer -= Time.deltaTime;
 
 	}//END of Update()
 	
@@ -628,7 +634,34 @@ public class PlayerShipController : MonoBehaviour
 			mThreeBullet = false;
 		}
 	}//END of LateUpdate()
-	
+
+
+	//For flipping ships upside down in co-op mode ~Adam
+	public virtual void OnCollisionEnter(Collision collision)
+	{
+		if(collision.gameObject.GetComponent<PlayerBulletController>() != null)
+		{
+			if(collision.gameObject.GetComponent<PlayerBulletController>().mPlayerBulletNumber != 1 )
+			{
+				Destroy (collision.gameObject);
+				if(mFlipTimer <= 0f && mPlayerTwo.mSpinTimer <= 0f)
+				{
+					mFlipTimer = 1f;
+					mFlipped = !mFlipped;
+					if(!mFlipped)
+					{
+						mMainShip.transform.localRotation = Quaternion.Euler (new Vector3(0,0,180));
+					}
+					else
+					{
+						mMainShip.transform.localRotation = Quaternion.Euler (new Vector3(0,0,0));
+					}
+				}
+			}
+		}
+	}
+
+
 	public virtual void ToggleFire()
 	{
 		mToggleFireOn = !mToggleFireOn;
@@ -651,6 +684,8 @@ public class PlayerShipController : MonoBehaviour
 		{
 			mSpinning += 0.1f;
 		}
+
+
 	}//END of StartSpin()
 	
 

@@ -91,7 +91,30 @@ public class PlayerTwoShipController : PlayerShipController
 		base.LateUpdate ();
 	}//END of LateUpdate()
 	
-	
+	//For flipping ships upside down in co-op mode ~Adam
+	public override void OnCollisionEnter(Collision collision)
+	{
+		if(collision.gameObject.GetComponent<PlayerBulletController>() != null)
+		{
+			if(collision.gameObject.GetComponent<PlayerBulletController>().mPlayerBulletNumber != 2)
+			{
+				Destroy (collision.gameObject);
+				if(mFlipTimer <= 0f && mPlayerOne.mSpinTimer <= 0)
+				{
+					mFlipTimer = 1f;
+					mFlipped = !mFlipped;
+					if(!mFlipped)
+					{
+						mMainShip.transform.localRotation = Quaternion.Euler (new Vector3(0,0,180));
+					}
+					else
+					{
+						mMainShip.transform.localRotation = Quaternion.Euler (new Vector3(0,0,0));
+					}			
+				}
+			}
+		}
+	}
 	
 	public void StartSpin()
 	{

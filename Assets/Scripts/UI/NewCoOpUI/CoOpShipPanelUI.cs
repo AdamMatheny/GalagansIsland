@@ -19,6 +19,9 @@ public class CoOpShipPanelUI : MonoBehaviour
 
 	public Image mHealthBar;
 	public Image mShieldBar;
+	public Image mShieldCircleBar;
+
+
 	public Image mOverheatBar;
 	public Image mTripleTimerBar;
 
@@ -274,6 +277,7 @@ public class CoOpShipPanelUI : MonoBehaviour
 		//Set the bar sizes ~Adam
 		mHealthBar.rectTransform.localScale = new Vector3(mHealthValue, 1f,1f);
 		mShieldBar.rectTransform.localScale = new Vector3(mShieldValue, 1f,1f);
+		mShieldCircleBar.fillAmount = mShieldValue;
 		mOverheatBar.rectTransform.localScale = new Vector3(mOverheatValue, 1f,1f);
 		mTripleTimerBar.rectTransform.localScale = new Vector3(mTripleTimerValue, 1f,1f);
 	}

@@ -339,6 +339,8 @@ public class EnemyShipAI : MonoBehaviour
 //			Debug.Log(mAutoDeleteTimer.ToString());
 //			
 //			Debug.Log("Deleting for being offscreen");
+			mSwarmGridPosition.GetComponent<SwarmGridSlot>().mOccupied = false;
+
 			Destroy(this.gameObject);
 		}
 		if((transform.position.y > 25f) || (transform.position.y <-33f) || (transform.position.x > 20f) || (transform.position.x < -20f) || (mAutoDeleteTimer<=0f))

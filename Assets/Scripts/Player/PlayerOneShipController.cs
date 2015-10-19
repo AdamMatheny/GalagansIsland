@@ -72,8 +72,13 @@ public class PlayerOneShipController : PlayerShipController
 		base.LateUpdate ();
 	}//END of LateUpdate()
 	
-	
-	
+	//For flipping ships upside down in co-op mode ~Adam
+	public override void OnCollisionEnter(Collision collision)
+	{
+		base.OnCollisionEnter (collision);
+	}
+
+
 	public void StartSpin()
 	{
 		base.StartSpin ();
