@@ -18,9 +18,12 @@ public class CoOpShipPanelUI : MonoBehaviour
 	[SerializeField] private float mTripleTimerValue = 0f;
 
 	public Image mHealthBar;
-	public Image mShieldBar;
+	//public Image mShieldBar;
 	public Image mShieldCircleBar;
-
+	public Color mShieldFillColor;
+	public Color mShieldPulseColor;
+	float mShieldPulseTime;
+	public Text mShieldedLabel;
 
 	public Image mOverheatBar;
 	public Image mTripleTimerBar;
@@ -276,8 +279,36 @@ public class CoOpShipPanelUI : MonoBehaviour
 
 		//Set the bar sizes ~Adam
 		mHealthBar.rectTransform.localScale = new Vector3(mHealthValue, 1f,1f);
-		mShieldBar.rectTransform.localScale = new Vector3(mShieldValue, 1f,1f);
+		//mShieldBar.rectTransform.localScale = new Vector3(mShieldValue, 1f,1f);
 		mShieldCircleBar.fillAmount = mShieldValue;
+		if(mShieldValue > 0f)
+		{
+			mShieldedLabel.gameObject.SetActive (true);
+			mShieldPulseTime += Time.deltaTime/Time.timeScale;
+			if(mShieldPulseTime < 0.5f)
+			{
+				mShieldCircleBar.color = Color.Lerp(mShieldCircleBar.color, mShieldFillColor, 0.1f);
+			}
+			else if(mShieldPulseTime < 1f)
+			{
+				if(mShieldValue < 5f/30f)
+				{
+					mShieldCircleBar.color = Color.Lerp(mShieldCircleBar.color, Color.red, 0.1f);
+				}
+				else
+				{
+					mShieldCircleBar.color = Color.Lerp(mShieldCircleBar.color, mShieldPulseColor, 0.1f);
+				}
+			}
+			else
+			{
+				mShieldPulseTime = 0f;
+			}
+		}
+		else
+		{
+			mShieldedLabel.gameObject.SetActive (false);
+		}
 		mOverheatBar.rectTransform.localScale = new Vector3(mOverheatValue, 1f,1f);
 		mTripleTimerBar.rectTransform.localScale = new Vector3(mTripleTimerValue, 1f,1f);
 	}
