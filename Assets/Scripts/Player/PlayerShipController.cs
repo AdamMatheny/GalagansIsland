@@ -860,6 +860,20 @@ public class PlayerShipController : MonoBehaviour
 				mInputVertical = mPlayerInputDevice.LeftStick.Y;
 			}
 
+
+			//take in arrow keys if there's no player 2 ~Adam
+			if(mPlayerTwo == null || !mPlayerTwo.isActiveAndEnabled)
+			{
+				if(Input.GetKey(KeyCode.UpArrow))
+					mInputVertical = 1;
+				if(Input.GetKey(KeyCode.LeftArrow))
+					mInputHorizontal = -1;
+				if(Input.GetKey(KeyCode.DownArrow))
+					mInputVertical = -1;
+				if(Input.GetKey(KeyCode.RightArrow))
+					mInputHorizontal = 1;
+			}
+
 			//Doing straight keyboard bindings instead of input.getaxis because of conflicts with two gamepads
 			if(Input.GetKey(KeyCode.W))
 				mInputVertical = 1;
