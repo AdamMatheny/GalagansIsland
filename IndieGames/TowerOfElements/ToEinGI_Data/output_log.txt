@@ -1,0 +1,58 @@
+Initialize engine version: 5.2.1f1 (44735ea161b3)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: Intel(R) HD Graphics 5500 (ID=0x1616)
+    Vendor:   Intel
+    VRAM:     128 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\kietl\Desktop\ToEinGI_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\kietl\Desktop\ToEinGI_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\kietl\Desktop\ToEinGI_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\kietl\Desktop\ToEinGI_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\kietl\Desktop\ToEinGI_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\kietl\Desktop\ToEinGI_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\kietl\Desktop\ToEinGI_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\kietl\Desktop\ToEinGI_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\kietl\Desktop\ToEinGI_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\kietl\Desktop\ToEinGI_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\kietl\Desktop\ToEinGI_Data\Managed\SteamworksManaged.dll (this message is harmless)
+Loading C:\Users\kietl\Desktop\ToEinGI_Data\Managed\SteamworksManaged.dll into Unity Child Domain
+Platform assembly: C:\Users\kietl\Desktop\ToEinGI_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\kietl\Desktop\ToEinGI_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\kietl\Desktop\ToEinGI_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\kietl\Desktop\ToEinGI_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\kietl\Desktop\ToEinGI_Data\Managed\System.Core.dll (this message is harmless)
+- Completed reload, in  0.180 seconds
+<RI> Initializing input.
+<RI> Input initialized.
+desktop: 1920x1080 60Hz; virtual: 3000x1924 at 0,-844
+<RI> Initialized touch support.
+Platform assembly: C:\Users\kietl\Desktop\ToEinGI_Data\Managed\System.dll (this message is harmless)
+CHARTBOOST: You are using a Chartboost example App ID or App Signature! Go to the Chartboost dashboard and replace these with an App ID & App Signature from your account! If you need help, email us: support@chartboost.com
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
+Fallback handler could not load library C:/Users/kietl/Desktop/ToEinGI_Data/Mono/.\C:/Users/kietl/Desktop/ToEinGI_Data/Plugins/SteamworksNative.dll
+Fallback handler could not load library C:/Users/kietl/Desktop/ToEinGI_Data/Mono/.\C:/Users/kietl/Desktop/ToEinGI_Data/Plugins/SteamworksNative
+Fallback handler could not load library C:/Users/kietl/Desktop/ToEinGI_Data/Mono/libC:/Users/kietl/Desktop/ToEinGI_Data/Plugins/SteamworksNative.dll
+Fallback handler could not load library C:/Users/kietl/Desktop/ToEinGI_Data/Mono/.\libC:/Users/kietl/Desktop/ToEinGI_Data/Plugins/SteamworksNative.dll
+Fallback handler could not load library C:/Users/kietl/Desktop/ToEinGI_Data/Mono/libC:/Users/kietl/Desktop/ToEinGI_Data/Plugins/SteamworksNative.dll
+Fallback handler could not load library C:/Users/kietl/Desktop/ToEinGI_Data/Mono/.\C:/Users/kietl/Desktop/ToEinGI_Data/Plugins/SteamworksNative.dll
+Fallback handler could not load library C:/Users/kietl/Desktop/ToEinGI_Data/Mono/.\C:/Users/kietl/Desktop/ToEinGI_Data/Plugins/SteamworksNative
+Fallback handler could not load library C:/Users/kietl/Desktop/ToEinGI_Data/Mono/libC:/Users/kietl/Desktop/ToEinGI_Data/Plugins/SteamworksNative.dll
+Fallback handler could not load library C:/Users/kietl/Desktop/ToEinGI_Data/Mono/.\libC:/Users/kietl/Desktop/ToEinGI_Data/Plugins/SteamworksNative.dll
+Fallback handler could not load library C:/Users/kietl/Desktop/ToEinGI_Data/Mono/libC:/Users/kietl/Desktop/ToEinGI_Data/Plugins/SteamworksNative.dll
+DllNotFoundException: C:/Users/kietl/Desktop/ToEinGI_Data/Plugins/SteamworksNative.dll
+  at (wrapper managed-to-native) NativeMethods:Services_RestartAppIfNecessary (uint)
+  at ManagedSteam.Steam.RestartAppIfNecessary (UInt32 ownAppID) [0x00000] in <filename unknown>:0 
+  at Steamworks.Awake () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: 2d884 -> priority: 1 
+Chance was: 0.4499119 your posibility was: 0.02
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
+
