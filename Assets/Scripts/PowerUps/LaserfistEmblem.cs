@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.Scripts.Achievements;
 
 public class LaserfistEmblem : MonoBehaviour 
 {
@@ -40,11 +41,13 @@ public class LaserfistEmblem : MonoBehaviour
 		{
 			if(other.GetComponent<PlayerShipController>() != null)
 			{
+                AchievementManager.instance.UpgradesCollected.IncreseValue();
 				other.GetComponent<PlayerShipController>().mHaveLaserFist = true;
 				Destroy(this.gameObject);
 			}
 			if(other.GetComponent<PlayerTwoShipController>() != null)
 			{
+                AchievementManager.instance.UpgradesCollected.IncreseValue();
 				FindObjectOfType<PlayerTwoShipController>().mHaveLaserFist = true;
 				Destroy(this.gameObject);
 			}

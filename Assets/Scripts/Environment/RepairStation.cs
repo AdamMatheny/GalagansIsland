@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.Scripts.Achievements;
 
 public class RepairStation : MonoBehaviour 
 {
@@ -74,7 +75,13 @@ public class RepairStation : MonoBehaviour
 				//Play animation ~Adam
 				mAnimator.Play ("HealthDoor");
 
-				//Restore lives and make sure it doesn't go over the max life count ~Adam
+                //ACHIEVEMENTS
+                AchievementManager.instance.RepairShip100Times.IncreseValue();
+                if (scoreMan.mLivesRemaining <= scoreMan.mMaxLives * 0.1f) //Repaired with 10% life or less.
+                    AchievementManager.instance.PostAchievement("BackIntoTheGame");
+
+
+                //Restore lives and make sure it doesn't go over the max life count ~Adam
 				scoreMan.mLivesRemaining += scoreMan.mMaxLives/5;
 				scoreMan.mP1Lives += scoreMan.mMaxLives/5;
 				if(scoreMan.mP1Lives > scoreMan.mMaxLives)
@@ -101,6 +108,12 @@ public class RepairStation : MonoBehaviour
 			{
 				//Play animation ~Adam
 				mAnimator.Play ("FireDoor");
+
+                //ACHIEVEMENTS
+                AchievementManager.instance.UpgradeWeapons100Times.IncreseValue();
+                AchievementManager.instance.UpgradeOnlyWeapons.IncreseValue();
+                AchievementManager.instance.UpgradeOnlySpeed.ResetValue();
+
 				//Upgrade fire rate ~Adam
 				other.GetComponent<PlayerShipController>().mFireUpgrade += 0.3f;
 				if(other.GetComponent<PlayerShipController>().mFireUpgrade > 1.2f)
@@ -114,6 +127,12 @@ public class RepairStation : MonoBehaviour
 			{
 				//Play animation ~Adam
 				mAnimator.Play ("MovementDoor");
+
+                //ACHIEVEMENTS
+                AchievementManager.instance.UpgradeSpeed100Times.IncreseValue();
+                AchievementManager.instance.UpgradeOnlySpeed.IncreseValue();
+                AchievementManager.instance.UpgradeOnlyWeapons.ResetValue();
+
 				//Upgrade Move speed ~Adam
 				other.GetComponent<PlayerShipController>().mMoveUpgrade += 0.25f;
 				if(other.GetComponent<PlayerShipController>().mMoveUpgrade > 1.2f)

@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using InControl;
+using Assets.Scripts.Achievements;
 using XInputDotNetPure; // Required in C#
 
 public class PlayerShipController : MonoBehaviour 
@@ -121,6 +122,8 @@ public class PlayerShipController : MonoBehaviour
 	public float mFlipTimer = 1f;
 	public bool mFlipped = false;
 
+    bool achievementFriendOfMine;
+
 	// Use this for initialization
 	protected virtual void Start () 
 	{
@@ -177,6 +180,23 @@ public class PlayerShipController : MonoBehaviour
 			}
 		}
 
+        //ACHIEVEMENTS
+        if (mShipRecovered)
+        {
+            if (achievementFriendOfMine == false)
+            {
+                achievementFriendOfMine = true;
+                AchievementManager.instance.FriendOMine.StartTimer();
+            }
+        }
+        else
+        {
+            if (achievementFriendOfMine == true)
+            {
+                achievementFriendOfMine = false;
+                AchievementManager.instance.FriendOMine.StopTimer();
+            }
+        }
 
 
 
@@ -1040,6 +1060,11 @@ public class PlayerShipController : MonoBehaviour
 				{
 					mLaserFist.SetActive(true);
 					mHaveLaserFist = false;
+
+                    if (mShielded)
+                    {
+                        AchievementManager.instance.PostAchievement("EverythingIveGot");
+                    }
 					
 					Camera.main.GetComponent<CameraShaker> ().RumbleController(.3f, 5.5f);
 				}

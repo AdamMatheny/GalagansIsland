@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.Scripts.Achievements;
 
 public class TripleBulletEmblem : MonoBehaviour 
 {
@@ -23,19 +24,22 @@ public class TripleBulletEmblem : MonoBehaviour
 			
 			other.GetComponentInParent<PlayerShipController> ().mThreeBullet = true;
 			other.GetComponentInParent<PlayerShipController> ().mThreeBulletTimer = 30f;
+            AchievementManager.instance.UpgradesCollected.IncreseValue();
 			Destroy(this.gameObject);
 		}
 
 		if(other.GetComponent<PlayerShipController>() != null)
 		{
 			other.GetComponent<PlayerShipController>().mThreeBullet = true;
-			other.GetComponent<PlayerShipController>().mThreeBulletTimer = 30f; 
+			other.GetComponent<PlayerShipController>().mThreeBulletTimer = 30f;
+            AchievementManager.instance.UpgradesCollected.IncreseValue();
 			Destroy(this.gameObject);
 		}
 		if(other.GetComponent<PlayerTwoShipController>() != null)
 		{
 			FindObjectOfType<PlayerTwoShipController>().mThreeBullet = true;
 			FindObjectOfType<PlayerTwoShipController>().mThreeBulletTimer = 30f;
+            AchievementManager.instance.UpgradesCollected.IncreseValue();
 			Destroy(this.gameObject);
 		}
 	}

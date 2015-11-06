@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.Scripts.Achievements;
 
 public class ShieldEmblem : MonoBehaviour 
 {
@@ -57,6 +58,8 @@ public class ShieldEmblem : MonoBehaviour
 				}
 			}
 
+            AchievementManager.instance.IDontCare.ResetValue();
+            AchievementManager.instance.UpgradesCollected.IncreseValue();
 			Destroy(this.gameObject);
 		}
 

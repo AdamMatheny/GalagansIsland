@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.Scripts.Achievements;
 
 public class LaserFistPowerup : MonoBehaviour 
 {
@@ -95,6 +96,14 @@ public class LaserFistPowerup : MonoBehaviour
 		mDeathBox.size = mLaserSizeStart;
 		GetComponent<Animator>().SetBool("Expanding", false);
 		this.gameObject.SetActive(false);
+
+        //ACHIEVEMENTS
+        int lvl = Application.loadedLevel;
+        if (lvl == 6 || lvl == 12 || lvl == 19 || lvl == 24 || lvl == 30)
+        {
+            AchievementManager.instance.PostAchievement("TheArtofWar");
+        }
+
 	}//END StopLaserFist()
 
 	void OnTriggerEnter(Collider other)
@@ -112,6 +121,7 @@ public class LaserFistPowerup : MonoBehaviour
 		{
 			if(other.GetComponent<EnemyBulletController>().mShootable)
 			{
+                AchievementManager.instance.UpgradesCollected.IncreseValue();
 				Destroy(other.gameObject);
 			}
 		}

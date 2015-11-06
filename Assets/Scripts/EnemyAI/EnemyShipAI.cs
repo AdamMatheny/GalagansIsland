@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.Scripts.Achievements;
 
 //This is the script attached to all of the enemy ships in the game, dictating their AI behavior
 //This script was partially written before I joined the project.  Parts that I did not write or re-write are marked.
@@ -823,6 +824,24 @@ public class EnemyShipAI : MonoBehaviour
 		{
 			FindObjectOfType<SlowTimeController>().SlowDownTime(0.8f,1f);
 		}
+
+        //ACHIEVEMENTS
+        if (mPlayer.GetComponent<PlayerOneShipController>().enabled == true)
+        {
+            PlayerOneShipController controller = mPlayer.GetComponent<PlayerOneShipController>();
+
+            AchievementManager.instance.KillCounter1.IncreseValue();
+            AchievementManager.instance.KillCounter2.IncreseValue();
+            AchievementManager.instance.KillCounter3.IncreseValue();
+            AchievementManager.instance.KillCounter4.IncreseValue();
+            AchievementManager.instance.KillCounter5.IncreseValue();
+
+            if (controller.mShipRecovered && !controller.secondShipOnHip) //Backstab
+            {
+                AchievementManager.instance.BackStab.IncreseValue();
+            }
+        }
+
 		Destroy(gameObject);
 	}//END of EnemyShipDie()
 }

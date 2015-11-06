@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using InControl;
 using XInputDotNetPure; // Required in C#
+using Assets.Scripts.Achievements;
 
 
 public class PlayerTwoShipController : PlayerShipController 
@@ -64,6 +65,12 @@ public class PlayerTwoShipController : PlayerShipController
 	// Update is called once per frame
 	protected override void Update () 
 	{
+        //Achievements
+        if (Application.loadedLevel == 32)
+        {
+            AchievementManager.instance.PostAchievement("TeamWork");
+        }
+
 		if(mPlayerOne == null)
 		{
 			if(FindObjectOfType<PlayerOneShipController>()!=null)
