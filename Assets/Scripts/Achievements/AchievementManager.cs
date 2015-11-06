@@ -22,6 +22,9 @@ namespace Assets.Scripts.Achievements
         private int livesBeforeBoss;
         private ScoreManager scoreManager;
 
+        //overheat Achievement
+        public int numberOfOverheats;
+
         //RepairStation Dependent Stats
         [Header("Repair Station Stats")]
         public AchievementStatInt RepairShip100Times;
@@ -132,6 +135,7 @@ namespace Assets.Scripts.Achievements
                         if (scoreManager.mP1Lives == 100)
                         {
                             PostAchievement("CantTouchThis"); // No lifes lost till lvl 1.
+                            numberOfOverheats = 0;
                         }
                         break;
                     case 6:
@@ -188,6 +192,10 @@ namespace Assets.Scripts.Achievements
                         {
                             PostAchievement("A_Boss5F");
                         }
+                        if (numberOfOverheats == 0)
+                        {
+                            PostAchievement("CoolFire");
+                        }
                         break;
                 }
             }
@@ -201,7 +209,7 @@ namespace Assets.Scripts.Achievements
                 if (achiv.IsUnlocked) amountOfFinishedAchievements++;
             }
             
-            if (amountOfFinishedAchievements >= AchievementList.Count-2)
+            if (amountOfFinishedAchievements >= AchievementList.Count-1)
             {
                 PostAchievement("MasterofGalagan");
             }

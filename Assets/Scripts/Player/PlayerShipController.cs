@@ -322,6 +322,7 @@ public class PlayerShipController : MonoBehaviour
 	
 		if (isOverheated) 
 		{
+            AchievementManager.instance.numberOfOverheats++;
 			mToggleFireOn = false;
 			mMainShip.GetComponent<Renderer>().material.color = Color.Lerp(mMainShip.GetComponent<Renderer>().material.color,Color.red,0.05f);
 			mSecondShip.GetComponent<Renderer>().material.color = Color.Lerp(mSecondShip.GetComponent<Renderer>().material.color,Color.red,0.05f);
