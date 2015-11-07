@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System;
+using ManagedSteam;
 
 namespace Assets.Scripts.Achievements
 {
@@ -110,7 +111,7 @@ namespace Assets.Scripts.Achievements
             if (IsAchievementUnlocked(achievementID) == false)
             {
                 Debug.Log("Achievement " + achievementID + " has been Unlocked!");
-                //Steamworks.SteamInterface.Stats.SetAchievement(achievementID);
+                Steamworks.SteamInterface.Stats.SetAchievement(achievementID);
                 SetAchievementAsUnlocked(achievementID);
             }
         }
@@ -131,11 +132,14 @@ namespace Assets.Scripts.Achievements
                 currentLevel = Application.loadedLevel;
                 switch (currentLevel)
                 {
+					case 1:
+						numberOfOverheats = 0;
+						break;
                     case 2:
                         if (scoreManager.mP1Lives == 100)
                         {
                             PostAchievement("CantTouchThis"); // No lifes lost till lvl 1.
-                            numberOfOverheats = 0;
+                            //numberOfOverheats = 0;
                         }
                         break;
                     case 6:
