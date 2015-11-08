@@ -111,7 +111,14 @@ namespace Assets.Scripts.Achievements
             if (IsAchievementUnlocked(achievementID) == false)
             {
                 Debug.Log("Achievement " + achievementID + " has been Unlocked!");
-                Steamworks.SteamInterface.Stats.SetAchievement(achievementID);
+                try
+                {
+                    Steamworks.SteamInterface.Stats.SetAchievement(achievementID);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError("Count not sand Achievement to Steam: " + e.Message);
+                }
                 SetAchievementAsUnlocked(achievementID);
             }
         }

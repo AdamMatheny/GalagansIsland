@@ -30,6 +30,7 @@ namespace Assets.Scripts.Achievements
             if (IsRunning)
             {
                 currentValue += Time.deltaTime;
+                CheckProgress();
             }
         }
 
