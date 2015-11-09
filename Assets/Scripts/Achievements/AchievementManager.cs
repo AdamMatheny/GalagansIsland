@@ -20,7 +20,7 @@ namespace Assets.Scripts.Achievements
 
         //Level Dependent Achievements
         private int currentLevel = -1;
-        private int livesBeforeBoss;
+        [SerializeField] private int livesBeforeBoss;
         private ScoreManager scoreManager;
 
         //overheat Achievement
@@ -168,7 +168,7 @@ namespace Assets.Scripts.Achievements
                         break;
                     case 7:
                         PostAchievement("A_Boss1");
-                        if (livesBeforeBoss >= scoreManager.mLivesRemaining)
+                        if (livesBeforeBoss <= scoreManager.mLivesRemaining)
                         {
                             PostAchievement("A_Boss1F");
                         }
@@ -178,17 +178,17 @@ namespace Assets.Scripts.Achievements
                         break;
                     case 13:
                         PostAchievement("A_Boss2");
-                        if (livesBeforeBoss >= scoreManager.mLivesRemaining)
+                        if (livesBeforeBoss <= scoreManager.mLivesRemaining)
                         {
                             PostAchievement("A_Boss2F");
                         }
                         break;
-                    case 19:
+                    case 18:
                         livesBeforeBoss = scoreManager.mLivesRemaining;
                         break;
-                    case 20:
+                    case 19:
                         PostAchievement("A_Boss3");
-                        if (livesBeforeBoss >= scoreManager.mLivesRemaining)
+                        if (livesBeforeBoss <= scoreManager.mLivesRemaining)
                         {
                             PostAchievement("A_Boss3F");
                         }
@@ -198,7 +198,7 @@ namespace Assets.Scripts.Achievements
                         break;
                     case 25:
                         PostAchievement("A_Boss4");
-                        if (livesBeforeBoss >= scoreManager.mLivesRemaining)
+                        if (livesBeforeBoss <= scoreManager.mLivesRemaining)
                         {
                             PostAchievement("A_Boss4F");
                         }
@@ -209,7 +209,7 @@ namespace Assets.Scripts.Achievements
                     case 32:
                         PostAchievement("A_Boss5");
                         PostAchievement("ItsOverIsntIt");
-                        if (livesBeforeBoss >= scoreManager.mLivesRemaining)
+                        if (livesBeforeBoss <= scoreManager.mLivesRemaining)
                         {
                             PostAchievement("A_Boss5F");
                         }
