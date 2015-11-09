@@ -305,11 +305,23 @@ public class PlayerTwoShipController : PlayerShipController
 	protected override void TakeFiringInput()
 	{
 		//Keyboard and mouse input and InControl Gamepad input ~Adam
-		if( Input.GetButtonDown("FireGunP2") || (InputManager.Devices.Count >1 && (mPlayerInputDevice.Action1.WasPressed || mPlayerInputDevice.Action4.WasPressed) ) )
+		//Firing via toggle ~Adam
+//		if( Input.GetButtonDown("FireGunP2") || (InputManager.Devices.Count >1 && (mPlayerInputDevice.Action1.WasPressed || mPlayerInputDevice.Action4.WasPressed) ) )
+//		{
+//			Debug.Log("InControl button pressed");
+//			ToggleFire();
+//		}
+		
+		//Firing via hold-to-fire ~Adam
+		if( Input.GetButton("FireGunP2") || (InputManager.Devices.Count >1 && (mPlayerInputDevice.Action1.IsPressed || mPlayerInputDevice.Action4.IsPressed) ) )
 		{
-			Debug.Log("InControl button pressed");
-			ToggleFire();
+			mToggleFireOn = true;
 		}
+		else if(mToggleFireOn)
+		{
+			mToggleFireOn = false;
+		}
+
 		
 		//Fire held super weapon ~Adam
 		//Can hold multiple super weapons.  They fire in a priority order: Big Blast, then Laser Fist ~Adam

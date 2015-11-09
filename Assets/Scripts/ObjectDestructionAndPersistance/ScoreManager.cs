@@ -22,11 +22,11 @@ public class ScoreManager : MonoBehaviour
 	int mExtraLifeInteraval = 1000;
 
 	//For spawning an triple-bullet power-up every certain number of points ~Adam
-	int mPowerUpScore = 500;
-	int mPowerUpInterval = 500;
+	int mPowerUpScore = 300;
+	int mPowerUpInterval = 300;
 	[SerializeField] private GameObject mTripleBulletEmblem;
 	//For spawning a shield power-up every certain number of points ~Adam
-	int mShieldScore = 300;
+	int mShieldScore = 600;
 	int mShieldInterval = 300;
 	[SerializeField] private GameObject mShieldEmblem;
 
@@ -226,7 +226,7 @@ public class ScoreManager : MonoBehaviour
 			float spawnyPos = Random.Range(-17f,23f);
 			Instantiate(mTripleBulletEmblem, new Vector3(spawnXPos, spawnyPos, -2f), Quaternion.identity);
 			mPowerUpMeterBack.GetComponent<Animator>().Play("PowerPointMeterFlash_Anim");
-			mPowerUpScore += mPowerUpInterval;
+			mPowerUpScore += (mPowerUpInterval+mShieldInterval);
 		}
 		//Spawn a shield power up every 300 kills (assuming 1 point per kill) ~Adam
 		if(mScore >= mShieldScore)
@@ -235,7 +235,7 @@ public class ScoreManager : MonoBehaviour
 			float spawnyPos = Random.Range(-17f,23f);
 			Instantiate(mShieldEmblem, new Vector3(spawnXPos, spawnyPos, -2f), Quaternion.identity);
 			mPowerUpMeterBack.GetComponent<Animator>().Play("PowerPointMeterFlash_Anim");
-			mShieldScore += mShieldInterval;
+			mShieldScore += (mShieldInterval+mPowerUpInterval);
 		}
 
 		//Make sure we have a reference to the player's ship ~Adam

@@ -93,13 +93,13 @@ public class RepairStation : MonoBehaviour
 				//For if we want restoring lives to fix a little bit of movement/firing
 //				other.GetComponent<PlayerShipController>().mMoveUpgrade += 0.07f;
 //				other.GetComponent<PlayerShipController>().mFireUpgrade += 0.1f;
-//				if(other.GetComponent<PlayerShipController>().mFireUpgrade > 1.2f)
+//				if(other.GetComponent<PlayerShipController>().mFireUpgrade > 1.0f)
 //				{
-//					other.GetComponent<PlayerShipController>().mFireUpgrade = 1.2f;
+//					other.GetComponent<PlayerShipController>().mFireUpgrade = 1.0f;
 //				}
-//				if(other.GetComponent<PlayerShipController>().mMoveUpgrade > 1.2f)
+//				if(other.GetComponent<PlayerShipController>().mMoveUpgrade > 1.0f)
 //				{
-//					other.GetComponent<PlayerShipController>().mMoveUpgrade = 1.2f;
+//					other.GetComponent<PlayerShipController>().mMoveUpgrade = 1.0f;
 //				}
 				mServicedP1 = true;
 			}
@@ -116,9 +116,9 @@ public class RepairStation : MonoBehaviour
 
 				//Upgrade fire rate ~Adam
 				other.GetComponent<PlayerShipController>().mFireUpgrade += 0.3f;
-				if(other.GetComponent<PlayerShipController>().mFireUpgrade > 1.2f)
+				if(other.GetComponent<PlayerShipController>().mFireUpgrade > 1.0f)
 				{
-					other.GetComponent<PlayerShipController>().mFireUpgrade = 1.2f;
+					other.GetComponent<PlayerShipController>().mFireUpgrade = 1.0f;
 				}
 				mServicedP1 = true;
 			}
@@ -135,9 +135,9 @@ public class RepairStation : MonoBehaviour
 
 				//Upgrade Move speed ~Adam
 				other.GetComponent<PlayerShipController>().mMoveUpgrade += 0.25f;
-				if(other.GetComponent<PlayerShipController>().mMoveUpgrade > 1.2f)
+				if(other.GetComponent<PlayerShipController>().mMoveUpgrade > 1.0f)
 				{
-					other.GetComponent<PlayerShipController>().mMoveUpgrade = 1.2f;
+					other.GetComponent<PlayerShipController>().mMoveUpgrade = 1.0f;
 				}
 				mServicedP1 = true;
 			}
@@ -164,13 +164,13 @@ public class RepairStation : MonoBehaviour
 				//For if we want restoring lives to fix a little bit of movement/firing
 //				other.GetComponent<PlayerShipController>().mMoveUpgrade += 0.07f;
 //				other.GetComponent<PlayerShipController>().mFireUpgrade += 0.1f;
-//				if(other.GetComponent<PlayerShipController>().mFireUpgrade > 1.2f)
+//				if(other.GetComponent<PlayerShipController>().mFireUpgrade > 1.0f)
 //				{
-//					other.GetComponent<PlayerShipController>().mFireUpgrade = 1.2f;
+//					other.GetComponent<PlayerShipController>().mFireUpgrade = 1.0f;
 //				}
-//				if(other.GetComponent<PlayerShipController>().mMoveUpgrade > 1.2f)
+//				if(other.GetComponent<PlayerShipController>().mMoveUpgrade > 1.0f)
 //				{
-//					other.GetComponent<PlayerShipController>().mMoveUpgrade = 1.2f;
+//					other.GetComponent<PlayerShipController>().mMoveUpgrade = 1.0f;
 //				}
 				mServicedP2 = true;
 			}
@@ -181,9 +181,9 @@ public class RepairStation : MonoBehaviour
 				mAnimator.Play ("FireDoor");
 				//Upgrade fire rate ~Adam
 				other.GetComponent<PlayerTwoShipController>().mFireUpgrade += 0.3f;
-				if(other.GetComponent<PlayerShipController>().mFireUpgrade > 1.2f)
+				if(other.GetComponent<PlayerShipController>().mFireUpgrade > 1.0f)
 				{
-					other.GetComponent<PlayerShipController>().mFireUpgrade = 1.2f;
+					other.GetComponent<PlayerShipController>().mFireUpgrade = 1.0f;
 				}
 				mServicedP2 = true;
 			}
@@ -194,9 +194,9 @@ public class RepairStation : MonoBehaviour
 				mAnimator.Play ("MovementDoor");
 				//Upgrade Move speed ~Adam
 				other.GetComponent<PlayerTwoShipController>().mMoveUpgrade += 0.25f;
-				if(other.GetComponent<PlayerShipController>().mMoveUpgrade > 1.2f)
+				if(other.GetComponent<PlayerShipController>().mMoveUpgrade > 1.0f)
 				{
-					other.GetComponent<PlayerShipController>().mMoveUpgrade = 1.2f;
+					other.GetComponent<PlayerShipController>().mMoveUpgrade = 1.0f;
 				}
 				mServicedP2 = true;
 			}

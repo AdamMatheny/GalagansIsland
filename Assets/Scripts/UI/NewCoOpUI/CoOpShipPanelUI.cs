@@ -143,7 +143,7 @@ public class CoOpShipPanelUI : MonoBehaviour
 			{
 				mShipRightClaw.GetComponent<Animator>().SetInteger("UIFlashState", 2);
 			}
-			if(mP1Ship.mFireUpgrade < 0.6f)
+			if(mP1Ship.mFireUpgrade < 0.65f)
 			{
 				mShipLeftClaw.GetComponent<Animator>().SetInteger("UIFlashState", 2);
 			}
@@ -151,7 +151,7 @@ public class CoOpShipPanelUI : MonoBehaviour
 			{
 				mShipRightWing.GetComponent<Animator>().SetInteger("UIFlashState", 2);
 			}
-			if(mP1Ship.mMoveUpgrade < 0.6f)
+			if(mP1Ship.mMoveUpgrade < 0.65f)
 			{
 				mShipLeftWing.GetComponent<Animator>().SetInteger("UIFlashState", 2);
 			}
@@ -205,19 +205,19 @@ public class CoOpShipPanelUI : MonoBehaviour
 
 
 			//Adjust Claw/Wing graphics based on damage/upgrade status ~Adam
-			if(mP2Ship.mFireUpgrade < 0.9f)
+			if(mP2Ship.mFireUpgrade < 0.8f)
 			{
 				mShipRightClaw.GetComponent<Animator>().SetInteger("UIFlashState", 2);
 			}
-			if(mP2Ship.mFireUpgrade < 0.8f)
+			if(mP2Ship.mFireUpgrade < 0.65f)
 			{
 				mShipLeftClaw.GetComponent<Animator>().SetInteger("UIFlashState", 2);
 			}
-			if(mP2Ship.mMoveUpgrade < 0.9f)
+			if(mP2Ship.mMoveUpgrade < 0.8f)
 			{
 				mShipRightWing.GetComponent<Animator>().SetInteger("UIFlashState", 2);
 			}
-			if(mP2Ship.mMoveUpgrade < 0.8f)
+			if(mP2Ship.mMoveUpgrade < 0.65f)
 			{
 				mShipLeftWing.GetComponent<Animator>().SetInteger("UIFlashState", 2);
 			}

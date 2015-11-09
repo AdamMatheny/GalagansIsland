@@ -205,8 +205,9 @@ public class PlayerShipController : MonoBehaviour
 
 
 		//maxHeatLevel = mBaseHeatMax +  mBaseHeatMax * Application.loadedLevel/(Application.levelCount-3);//26f;
-		GetComponent<AudioSource>().volume = 0.18f*(30f-Application.loadedLevel)/30f;
-		
+		//GetComponent<AudioSource>().volume = 0.18f*(30f-Application.loadedLevel)/30f;
+		GetComponent<AudioSource>().volume = 0.18f*(30f-16f)/30f;
+
 		if (cheats) 
 		{
 			if(Input.GetKeyDown(KeyCode.Q))
@@ -282,8 +283,12 @@ public class PlayerShipController : MonoBehaviour
 		//Increase movement speed as we progress through levels ~Adam
 		if(Time.timeScale > 0f)
 		{
-		//	mMovementSpeed = ( mBaseMovementSpeed + (6f/25f*(Application.loadedLevel)) ) /Time.timeScale;
-			mMovementSpeed = ( mBaseMovementSpeed + (0.24f +5.76f*(Application.loadedLevel-1)/(Application.levelCount-4) ))*(mMoveUpgrade) /Time.timeScale;
+			//	mMovementSpeed = ( mBaseMovementSpeed + (6f/25f*(Application.loadedLevel)) ) /Time.timeScale;
+			
+//			mMovementSpeed = ( mBaseMovementSpeed + (0.24f +5.76f*(Application.loadedLevel-1)/(Application.levelCount-4) ))*(mMoveUpgrade) /Time.timeScale;
+			//Make the movement speed constant ~Adam
+			mMovementSpeed = ( mBaseMovementSpeed + (0.24f +5.76f*(16)/(25) ))*(mMoveUpgrade) /Time.timeScale;
+
 			//Placing a min and max on move speed based on the min/max before adding in damage and repair ~Adam
 			if(mMovementSpeed < mBaseMovementSpeed/2f)
 			{
@@ -430,11 +435,15 @@ public class PlayerShipController : MonoBehaviour
 							float bulletFireMod = 0.04f;
 							if(mFireUpgrade <1f)
 							{
-								bulletFireMod = ( (0.01f +.24f*(Application.loadedLevel-1)/(Application.levelCount-4)) *(mFireUpgrade*mFireUpgrade) );
+//								bulletFireMod = ( (0.01f +.24f*(Application.loadedLevel-1)/(Application.levelCount-4)) *(mFireUpgrade*mFireUpgrade) );
+								//Make fire rate constant ~Adam
+								bulletFireMod = ( (0.01f +.24f*(16)/(25)) *(mFireUpgrade*mFireUpgrade) );
 							}
 							else
 							{
-								bulletFireMod = ( (0.01f +.24f*(Application.loadedLevel-1)/(Application.levelCount-4)) *(mFireUpgrade) );
+//								bulletFireMod = ( (0.01f +.24f*(Application.loadedLevel-1)/(Application.levelCount-4)) *(mFireUpgrade) );
+								//Make fire rate constant ~Adam
+								bulletFireMod = ( (0.01f +.24f*(16)/(25)) *(mFireUpgrade*mFireUpgrade) );
 							}
 							//Add in a min/max bullet firing time based on paramaters from before when we added in damage/repair ~Adam
 							//Fastest possible firing ~Adam
@@ -543,8 +552,10 @@ public class PlayerShipController : MonoBehaviour
 		}
 
 		//Set ship animations ~Adam
-		mMainShipAnimator.speed = Application.loadedLevel/(Application.levelCount-3)*5f +1f;//Application.loadedLevel/5f+1f;
-		mSecondShipAnimator.speed = Application.loadedLevel/(Application.levelCount-3)*5f +1f;//Application.loadedLevel/5f+1f;
+//		mMainShipAnimator.speed = Application.loadedLevel/(Application.levelCount-3)*5f +1f;//Application.loadedLevel/5f+1f;
+//		mSecondShipAnimator.speed = Application.loadedLevel/(Application.levelCount-3)*5f +1f;//Application.loadedLevel/5f+1f;
+		mMainShipAnimator.speed = 16/(Application.levelCount-3)*5f +1f;//Application.loadedLevel/5f+1f;
+		mSecondShipAnimator.speed = 16/(Application.levelCount-3)*5f +1f;//Application.loadedLevel/5f+1f;
 		if(mToggleFireOn)
 		{
 			mMainShipAnimator.SetBool("IsFiring", true);
@@ -743,14 +754,14 @@ public class PlayerShipController : MonoBehaviour
 		mMoveUpgrade -= 0.01f;
 		mFireUpgrade -= 0.01f;
 
-		if(mMoveUpgrade < 0.5f)
+		if(mMoveUpgrade < 0.6f)
 		{
-			mMoveUpgrade = 0.5f;
+			mMoveUpgrade = 0.6f;
 		}
 
-		if(mFireUpgrade < 0.25f)
+		if(mFireUpgrade < 0.4f)
 		{
-			mFireUpgrade = 0.25f;
+			mFireUpgrade = 0.4f;
 		}
 	}//END of TakeStatDamage()
 
@@ -855,7 +866,8 @@ public class PlayerShipController : MonoBehaviour
 			if(!(mShipRecovered && !secondShipOnHip) )
 			{
 				//transform.position += new Vector3(0f,-0.00255f*Application.loadedLevel, 0f);
-				transform.position += new Vector3(0f,-0.06375f*Application.loadedLevel/(Application.levelCount-3), 0f);
+//				transform.position += new Vector3(0f,-0.06375f*Application.loadedLevel/(Application.levelCount-3), 0f);
+				transform.position += new Vector3(0f,-0.06375f*16/(Application.levelCount-3), 0f);
 			}
 			//Decrease the timer on triple bullets while firing ~Adam
 			mThreeBulletTimer -= Time.deltaTime;
@@ -1043,12 +1055,22 @@ public class PlayerShipController : MonoBehaviour
 	protected virtual void TakeFiringInput()
 	{
 		//Keyboard and mouse input and InControl Gamepad input ~Adam
-		if(mPlayerInputDevice.Action1.WasPressed || mPlayerInputDevice.Action4.WasPressed || Input.GetButtonDown("FireGun"))
-		{
-			Debug.Log("InControl button pressed");
-			ToggleFire();
-		}
+		//Fire is via toggle ~Adam
+//		if(mPlayerInputDevice.Action1.WasPressed || mPlayerInputDevice.Action4.WasPressed || Input.GetButtonDown("FireGun"))
+//		{
+//			Debug.Log("InControl button pressed");
+//			ToggleFire();
+//		}
 		
+		//Firing via hold-to-fire ~Adam
+		if(mPlayerInputDevice.Action1.IsPressed || mPlayerInputDevice.Action4.IsPressed || Input.GetButton("FireGun"))
+		{
+			mToggleFireOn = true;
+		}
+		else if(mToggleFireOn)
+		{
+			mToggleFireOn = false;
+		}
 		//Fire held super weapon ~Adam
 		//Can hold multiple super weapons.  They fire in a priority order: Laser Fist, then Big Blast ~Adam
 		//Have to wait for one to finish firing before firing another ~Adam
