@@ -57,6 +57,17 @@ namespace Assets.Scripts.Achievements
 
         void Start()
         {
+			if(PlayerPrefs.GetInt ("HasPlayedWithAchievements") != 17)
+			{
+				int highScore = PlayerPrefs.GetInt ("highscore");
+				float bgm = PlayerPrefs.GetFloat("BGMVolume");
+				float sfx = PlayerPrefs.GetFloat("SFXVolume");
+				PlayerPrefs.DeleteAll ();
+				PlayerPrefs.SetInt ("highscore", highScore);
+				PlayerPrefs.SetFloat ("BGMVolume", bgm);
+				PlayerPrefs.SetFloat ("SFXVolume", sfx);
+				PlayerPrefs.SetInt ("HasPlayedWithAchievements", 17);
+			}
             LoadAchievements();
         }
 
