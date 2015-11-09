@@ -154,63 +154,62 @@ namespace Assets.Scripts.Achievements
 						numberOfOverheats = 0;
 						break;
                     case 2:
-                        if (scoreManager.mP1Lives == 100)
+                        if (scoreManager.mLivesRemaining == 100)
                         {
                             PostAchievement("CantTouchThis"); // No lifes lost till lvl 1.
-                            //numberOfOverheats = 0;
                         }
                         break;
                     case 6:
-                        if (scoreManager.mP1Lives == 100)
+                        if (scoreManager.mLivesRemaining == 100)
                         {
                             PostAchievement("FasterThanLight"); // No lifes lost till lvl 5.
                         }
-                        livesBeforeBoss = scoreManager.mP1Lives;
+                        livesBeforeBoss = scoreManager.mLivesRemaining;
                         break;
                     case 7:
                         PostAchievement("A_Boss1");
-                        if (livesBeforeBoss >= scoreManager.mP1Lives)
+                        if (livesBeforeBoss >= scoreManager.mLivesRemaining)
                         {
                             PostAchievement("A_Boss1F");
                         }
                         break;
                     case 12:
-                        livesBeforeBoss = scoreManager.mP1Lives;
+                        livesBeforeBoss = scoreManager.mLivesRemaining;
                         break;
                     case 13:
                         PostAchievement("A_Boss2");
-                        if (livesBeforeBoss >= scoreManager.mP1Lives)
+                        if (livesBeforeBoss >= scoreManager.mLivesRemaining)
                         {
                             PostAchievement("A_Boss2F");
                         }
                         break;
                     case 19:
-                        livesBeforeBoss = scoreManager.mP1Lives;
+                        livesBeforeBoss = scoreManager.mLivesRemaining;
                         break;
                     case 20:
                         PostAchievement("A_Boss3");
-                        if (livesBeforeBoss >= scoreManager.mP1Lives)
+                        if (livesBeforeBoss >= scoreManager.mLivesRemaining)
                         {
                             PostAchievement("A_Boss3F");
                         }
                         break;
                     case 24:
-                        livesBeforeBoss = scoreManager.mP1Lives;
+                        livesBeforeBoss = scoreManager.mLivesRemaining;
                         break;
                     case 25:
                         PostAchievement("A_Boss4");
-                        if (livesBeforeBoss >= scoreManager.mP1Lives)
+                        if (livesBeforeBoss >= scoreManager.mLivesRemaining)
                         {
                             PostAchievement("A_Boss4F");
                         }
                         break;
                     case 30:
-                        livesBeforeBoss = scoreManager.mP1Lives;
+                        livesBeforeBoss = scoreManager.mLivesRemaining;
                         break;
                     case 32:
                         PostAchievement("A_Boss5");
                         PostAchievement("ItsOverIsntIt");
-                        if (livesBeforeBoss >= scoreManager.mP1Lives)
+                        if (livesBeforeBoss >= scoreManager.mLivesRemaining)
                         {
                             PostAchievement("A_Boss5F");
                         }
