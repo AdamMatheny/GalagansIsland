@@ -57,7 +57,7 @@ namespace Assets.Scripts.Achievements
 
         void Start()
         {
-			if(PlayerPrefs.GetInt ("HasPlayedWithAchievements") != 17)
+			if(PlayerPrefs.GetInt ("HasPlayedWithAchievements") != 42)
 			{
 				int highScore = PlayerPrefs.GetInt ("highscore");
 				float bgm = PlayerPrefs.GetFloat("BGMVolume");
@@ -66,7 +66,7 @@ namespace Assets.Scripts.Achievements
 				PlayerPrefs.SetInt ("highscore", highScore);
 				PlayerPrefs.SetFloat ("BGMVolume", bgm);
 				PlayerPrefs.SetFloat ("SFXVolume", sfx);
-				PlayerPrefs.SetInt ("HasPlayedWithAchievements", 17);
+				PlayerPrefs.SetInt ("HasPlayedWithAchievements", 42);
 			}
             LoadAchievements();
         }
@@ -207,20 +207,25 @@ namespace Assets.Scripts.Achievements
                         livesBeforeBoss = scoreManager.mLivesRemaining;
                         break;
                     case 32:
-                        PostAchievement("A_Boss5");
-                        PostAchievement("ItsOverIsntIt");
-                        if (livesBeforeBoss <= scoreManager.mLivesRemaining)
-                        {
-                            PostAchievement("A_Boss5F");
-                        }
-                        if (numberOfOverheats == 0)
-                        {
-                            PostAchievement("CoolFire");
-                        }
+
                         break;
                 }
             }
         }
+
+		public void LastBossCheck()
+		{
+			PostAchievement("A_Boss5");
+			PostAchievement("ItsOverIsntIt");
+			if (livesBeforeBoss <= scoreManager.mLivesRemaining)
+			{
+				PostAchievement("A_Boss5F");
+			}
+			if (numberOfOverheats == 0)
+			{
+				PostAchievement("CoolFire");
+			}
+		}
 
         private void HandleMasterOfGalangans()
         {

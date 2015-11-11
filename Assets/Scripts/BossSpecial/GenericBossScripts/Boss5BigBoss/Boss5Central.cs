@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Achievements;
 
 public class Boss5Central : BossCentral 
 {
@@ -254,6 +255,11 @@ public class Boss5Central : BossCentral
 			}
 			Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
 			//Destroy(FindObjectOfType<ScoreManager>().gameObject);
+			if(AchievementManager.instance != null)
+			{
+				AchievementManager.instance.LastBossCheck ();
+			}
+
 			Application.LoadLevel("Credits");
 
 			Destroy(this.gameObject);
