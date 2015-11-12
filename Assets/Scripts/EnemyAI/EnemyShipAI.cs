@@ -12,7 +12,14 @@ public class EnemyShipAI : MonoBehaviour
 //The Serialie Field private variables and public variables can be changed in the editor to assign different behaviors to multiple enemy prefabs, using a single script
 //Additionally, the public variables can be overwritten by in-editor settings on the enemy spawner prefab to adjust enemy behavior or difficulty on a level-by-level basis
 
+	public bool redEnemy;
+	public bool redEnemyShoot;
 
+	public GameObject redEnemySecondaryBullet;
+
+	//public float testChanceNumber;
+
+	public float redEnemyShootingChance;
 
 	public float secondaryExplosionChance = 25f;
 	public GameObject secondaryExplosion;
@@ -129,6 +136,19 @@ public class EnemyShipAI : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+		if (redEnemy) {
+
+			float redRand = Random.value;
+
+			//testChanceNumber = redRand;
+
+			if(redRand < (redEnemyShootingChance / 100)){
+
+				redEnemyShoot = true;
+				mAutoShoot = true;
+			}
+		}
+
 		//Find the other objects in the scene that we're going to be referencing
 		if(FindObjectOfType<PlayerOneShipController>() != null)
 		{
@@ -164,6 +184,12 @@ public class EnemyShipAI : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+
+		if (redEnemy) {
+
+			mAnimator = null;
+		}
+
 		if(mPlayer == null)
 		{
 			if(GameObject.FindGameObjectWithTag("Player")!= null)
@@ -357,6 +383,11 @@ public class EnemyShipAI : MonoBehaviour
 	//Tells this unit to go towards the assigned swarm
 	void ApproachSwarm()
 	{
+		//if (redEnemy) {
+
+
+		//}else
+
 		//Animation Control (Mostly for blue/grabber enemy) ~Adam
 		if(mAnimator != null)
 		{
@@ -469,6 +500,9 @@ public class EnemyShipAI : MonoBehaviour
 		//Animation Control (Mostly for blue/grabber enemy) ~Adam
 		if(mAnimator != null)
 		{
+
+			//if(!redEnemy){
+
 			mAnimator.SetBool("IsIdle", true);
 			mAnimator.SetBool("IsChasing", false);
 			mAnimator.SetBool("IsReturning", false);
@@ -477,6 +511,7 @@ public class EnemyShipAI : MonoBehaviour
 				mAnimator.SetBool("IsIdle", false);
 				mAnimator.SetBool("IsReturning", true);
 			}
+			//}
 		}
 		//Stop using the speed for the alternate speed for making the formation
 		if(mSpeed == mFormSpeed && mFormSpeed != mDefaultSpeed)
@@ -644,6 +679,12 @@ public class EnemyShipAI : MonoBehaviour
 		enemyBullet = Instantiate(mEnemyBullet, transform.position, Quaternion.identity) as GameObject;
 	}//End of ShootEnemyBullet()
 
+	public void ShootSecondaryEnemyBullet()
+	{
+		GameObject enemyBullet;
+		enemyBullet = Instantiate(redEnemySecondaryBullet, transform.position, Quaternion.identity) as GameObject;
+	}//End of ShootEnemyBullet()
+
 	void OnCollisionEnter(Collision other)
 	{
 
@@ -786,7 +827,7 @@ public class EnemyShipAI : MonoBehaviour
 			//For firing a shot upon death (i.e. red enemies) ~Adam
 			if(mDeathShooter && Application.loadedLevel != 0)
 			{
-				ShootEnemyBullet();
+				ShootSecondaryEnemyBullet();
 			}
 
 		}
