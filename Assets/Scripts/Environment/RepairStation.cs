@@ -76,10 +76,12 @@ public class RepairStation : MonoBehaviour
 				mAnimator.Play ("HealthDoor");
 
                 //ACHIEVEMENTS
-                AchievementManager.instance.RepairShip100Times.IncreseValue();
-                if (scoreMan.mLivesRemaining <= scoreMan.mMaxLives * 0.1f) //Repaired with 10% life or less.
-                    AchievementManager.instance.PostAchievement("BackIntoTheGame");
-
+				if(AchievementManager.instance != null)
+				{
+	                AchievementManager.instance.RepairShip100Times.IncreseValue();
+	                if (scoreMan.mLivesRemaining <= scoreMan.mMaxLives * 0.1f) //Repaired with 10% life or less.
+	                    AchievementManager.instance.PostAchievement("BackIntoTheGame");
+				}
 
                 //Restore lives and make sure it doesn't go over the max life count ~Adam
 				scoreMan.mLivesRemaining += scoreMan.mMaxLives/5;
@@ -110,10 +112,12 @@ public class RepairStation : MonoBehaviour
 				mAnimator.Play ("FireDoor");
 
                 //ACHIEVEMENTS
-                AchievementManager.instance.UpgradeWeapons100Times.IncreseValue();
-                AchievementManager.instance.UpgradeOnlyWeapons.IncreseValue();
-                AchievementManager.instance.UpgradeOnlySpeed.ResetValue();
-
+				if(AchievementManager.instance != null)
+				{
+	                AchievementManager.instance.UpgradeWeapons100Times.IncreseValue();
+	                AchievementManager.instance.UpgradeOnlyWeapons.IncreseValue();
+	                AchievementManager.instance.UpgradeOnlySpeed.ResetValue();
+				}
 				//Upgrade fire rate ~Adam
 				other.GetComponent<PlayerShipController>().mFireUpgrade += 0.3f;
 				if(other.GetComponent<PlayerShipController>().mFireUpgrade > 1.0f)
@@ -129,10 +133,12 @@ public class RepairStation : MonoBehaviour
 				mAnimator.Play ("MovementDoor");
 
                 //ACHIEVEMENTS
-                AchievementManager.instance.UpgradeSpeed100Times.IncreseValue();
-                AchievementManager.instance.UpgradeOnlySpeed.IncreseValue();
-                AchievementManager.instance.UpgradeOnlyWeapons.ResetValue();
-
+				if(AchievementManager.instance != null)
+				{
+	                AchievementManager.instance.UpgradeSpeed100Times.IncreseValue();
+	                AchievementManager.instance.UpgradeOnlySpeed.IncreseValue();
+	                AchievementManager.instance.UpgradeOnlyWeapons.ResetValue();
+				}
 				//Upgrade Move speed ~Adam
 				other.GetComponent<PlayerShipController>().mMoveUpgrade += 0.25f;
 				if(other.GetComponent<PlayerShipController>().mMoveUpgrade > 1.0f)

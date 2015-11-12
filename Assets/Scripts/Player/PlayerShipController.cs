@@ -181,22 +181,25 @@ public class PlayerShipController : MonoBehaviour
 		}
 
         //ACHIEVEMENTS
-        if (mShipRecovered)
-        {
-            if (achievementFriendOfMine == false)
-            {
-                achievementFriendOfMine = true;
-                AchievementManager.instance.FriendOMine.StartTimer();
-            }
-        }
-        else
-        {
-            if (achievementFriendOfMine == true)
-            {
-                achievementFriendOfMine = false;
-                AchievementManager.instance.FriendOMine.StopTimer();
-            }
-        }
+		if(AchievementManager.instance != null)
+		{
+	        if (mShipRecovered)
+	        {
+	            if (achievementFriendOfMine == false)
+	            {
+	                achievementFriendOfMine = true;
+	                AchievementManager.instance.FriendOMine.StartTimer();
+	            }
+	        }
+	        else
+	        {
+	            if (achievementFriendOfMine == true)
+	            {
+	                achievementFriendOfMine = false;
+	                AchievementManager.instance.FriendOMine.StopTimer();
+	            }
+	        }
+		}
 
 
 
@@ -362,7 +365,10 @@ public class PlayerShipController : MonoBehaviour
 					
 					heatLevel = maxHeatLevel;
 					isOverheated = true;
-					AchievementManager.instance.numberOfOverheats++;
+					if(AchievementManager.instance != null)
+					{
+						AchievementManager.instance.numberOfOverheats++;
+					}
 
 				}
 				
@@ -751,17 +757,17 @@ public class PlayerShipController : MonoBehaviour
 	//For taking weapon/movement damage ~Adam
 	public virtual void TakeStatDamage()
 	{
-		mMoveUpgrade -= 0.01f;
-		mFireUpgrade -= 0.01f;
+		mMoveUpgrade -= 0.005f;
+		mFireUpgrade -= 0.005f;
 
 		if(mMoveUpgrade < 0.6f)
 		{
 			mMoveUpgrade = 0.6f;
 		}
 
-		if(mFireUpgrade < 0.4f)
+		if(mFireUpgrade < 0.6f)
 		{
-			mFireUpgrade = 0.4f;
+			mFireUpgrade = 0.6f;
 		}
 	}//END of TakeStatDamage()
 
@@ -1085,7 +1091,7 @@ public class PlayerShipController : MonoBehaviour
 					mLaserFist.SetActive(true);
 					mHaveLaserFist = false;
 
-                    if (mShielded)
+					if (mShielded && AchievementManager.instance != null)
                     {
                         AchievementManager.instance.PostAchievement("EverythingIveGot");
                     }

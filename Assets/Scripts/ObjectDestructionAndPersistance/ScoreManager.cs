@@ -369,19 +369,28 @@ public class ScoreManager : MonoBehaviour
 					{
 						mP2Lives -= 5;
 						mP1Lives += 5;
-                        AchievementManager.instance.PostAchievement("Mortgage");
+						if(AchievementManager.instance != null)
+						{
+                        	AchievementManager.instance.PostAchievement("Mortgage");
+						}
 					}
 					else if(mP2Lives > 5)
 					{
 						mP2Lives -= 3;
                         mP1Lives += 3;
-                        AchievementManager.instance.PostAchievement("Mortgage");
+						if(AchievementManager.instance != null)
+						{
+							AchievementManager.instance.PostAchievement("Mortgage");
+						}
 					}
 					else
 					{
 						mP2Lives -= 1;
                         mP1Lives += 1;
-                        AchievementManager.instance.PostAchievement("Mortgage");
+						if(AchievementManager.instance != null)
+						{
+							AchievementManager.instance.PostAchievement("Mortgage");
+						}
 					}
 					mPlayerAvatar.transform.position = mPlayer2Avatar.transform.position;
 					mPlayerAvatar.SetActive(true);
@@ -400,19 +409,28 @@ public class ScoreManager : MonoBehaviour
 					{
 						mP1Lives -= 5;
                         mP2Lives += 5;
-                        AchievementManager.instance.PostAchievement("Mortgage");
+						if(AchievementManager.instance != null)
+						{
+							AchievementManager.instance.PostAchievement("Mortgage");
+						}
 					}
 					else if(mP1Lives > 5)
 					{
 						mP1Lives -= 3;
                         mP2Lives += 3;
-                        AchievementManager.instance.PostAchievement("Mortgage");
+						if(AchievementManager.instance != null)
+						{
+							AchievementManager.instance.PostAchievement("Mortgage");
+						}
 					}
 					else
 					{
 						mP1Lives -= 1;
                         mP2Lives += 1;
-                        AchievementManager.instance.PostAchievement("Mortgage");
+						if(AchievementManager.instance != null)
+						{
+							AchievementManager.instance.PostAchievement("Mortgage");
+						}
 					}
 					mPlayer2Avatar.transform.position = mPlayerAvatar.transform.position;
 					mPlayer2Avatar.SetActive(true);
@@ -508,8 +526,10 @@ public class ScoreManager : MonoBehaviour
 				//mScore -= 10;
 				mPlayerAvatar.GetComponent<PlayerShipController>().StartSpin();
 				Camera.main.GetComponent<CameraShaker>().ShakeCameraDeath();
-                AchievementManager.instance.IDontCare.IncreseValue();
-
+				if(AchievementManager.instance != null)
+				{
+					AchievementManager.instance.IDontCare.IncreseValue();
+				}
 			}
 
 			//If that wasn't the last life, go invulnerable, otherwise go back to the title screen

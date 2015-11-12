@@ -31,6 +31,15 @@ public class ShieldEmblem : MonoBehaviour
 
 		if(other.GetComponent<PlayerShipController>() != null)
 		{
+			if(AchievementManager.instance != null)
+			{
+				if(!other.GetComponent<PlayerShipController>().mShielded)
+				{
+					AchievementManager.instance.IDontCare.ResetValue();
+				}
+				AchievementManager.instance.UpgradesCollected.IncreseValue();
+			}
+
 			other.GetComponent<PlayerShipController>().mShielded = true;
 			other.GetComponent<PlayerShipController>().mShieldTimer = 30f; 
 
@@ -39,10 +48,12 @@ public class ShieldEmblem : MonoBehaviour
 				if(other.GetComponent<PlayerOneShipController>() != null)
 				{
 					FindObjectOfType<LevelKillCounter>().mP1ShieldTime = 30f;
+					other.GetComponent<PlayerShipController>().mShieldTimer = 30f; 
 				}
 				else if (other.GetComponent<PlayerTwoShipController>() != null)
 				{
 					FindObjectOfType<LevelKillCounter>().mP2ShieldTime = 30f;
+					other.GetComponent<PlayerShipController>().mShieldTimer = 30f; 
 				}
 			}
 
@@ -58,8 +69,7 @@ public class ShieldEmblem : MonoBehaviour
 				}
 			}
 
-            AchievementManager.instance.IDontCare.ResetValue();
-            AchievementManager.instance.UpgradesCollected.IncreseValue();
+
 			Destroy(this.gameObject);
 		}
 

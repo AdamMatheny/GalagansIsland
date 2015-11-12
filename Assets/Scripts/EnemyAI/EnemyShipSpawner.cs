@@ -50,7 +50,9 @@ public class EnemyShipSpawner : MonoBehaviour
 	//How long to make the overriden loops last
 	[SerializeField] private bool mOverridingShotFrequency = false;
 	[SerializeField] private float mShootingFrequencyOverrideTimeAmount = 2f;
-
+	[SerializeField] private bool mRandomFirstShotTime = false;
+	[SerializeField] private bool mLimitAutoShooters = false;
+	[SerializeField] private float mLimitedAuotShootRate = 0.3f;
 
 	[SerializeField] private float mMininumFirstAttackTimeOverride = 0f;
 
@@ -141,6 +143,12 @@ public class EnemyShipSpawner : MonoBehaviour
 			if(mOverridingShotFrequency)
 			{
 				NewEnemy.GetComponent<EnemyShipAI>().mShootTimerDefault = mShootingFrequencyOverrideTimeAmount;
+			}
+			NewEnemy.GetComponent<EnemyShipAI>().mRandomFirstShotTime = mRandomFirstShotTime;
+			if(mLimitAutoShooters)
+			{
+				NewEnemy.GetComponent<EnemyShipAI>().mLimitedAutoFire = true;
+				NewEnemy.GetComponent<EnemyShipAI>().mLimitedShootingChance = mLimitedAuotShootRate;
 			}
 
 			//If statements for overriding lifespan

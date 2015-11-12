@@ -12,14 +12,13 @@ public class EnemyShipAI : MonoBehaviour
 //The Serialie Field private variables and public variables can be changed in the editor to assign different behaviors to multiple enemy prefabs, using a single script
 //Additionally, the public variables can be overwritten by in-editor settings on the enemy spawner prefab to adjust enemy behavior or difficulty on a level-by-level basis
 
-	public bool redEnemy;
-	public bool redEnemyShoot;
+	public bool mLimitedAutoFire = false;  //If True, then only a certain percentage of spawned enemies will be able to auto-fire
+	public float mLimitedShootingChance;  //Range from 0 to 1.0.  The chance that this spawned enemy will be able to auto-fire if the above variable is true
 
-	public GameObject redEnemySecondaryBullet;
+	public GameObject mSecondaryBullet; //Fired upon death if a death shooter
 
-	//public float testChanceNumber;
 
-	public float redEnemyShootingChance;
+
 
 	public float secondaryExplosionChance = 25f;
 	public GameObject secondaryExplosion;
@@ -86,6 +85,7 @@ public class EnemyShipAI : MonoBehaviour
 	//How often to shoot `Adam
 	public float mShootTimerDefault = 1f;
 	float mShootTimer;
+	public bool mRandomFirstShotTime = false;
 	//the projectile that gets instantiated when shooting `Adam
 	[SerializeField] private GameObject mEnemyBullet;
 
@@ -136,16 +136,19 @@ public class EnemyShipAI : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		if (redEnemy) {
+		if (mLimitedAutoFire) 
+		{
 
-			float redRand = Random.value;
+			float shootRand = Random.value;
 
-			//testChanceNumber = redRand;
 
-			if(redRand < (redEnemyShootingChance / 100)){
-
-				redEnemyShoot = true;
+			if(shootRand < mLimitedShootingChance)
+			{
 				mAutoShoot = true;
+			}
+			else
+			{
+				mAutoShoot = false;
 			}
 		}
 
@@ -170,6 +173,10 @@ public class EnemyShipAI : MonoBehaviour
 		//Set timers to their default values
 		mAttackFrequencyTimer = mAttackFrequencyTimerDefault;
 		mShootTimer = mShootTimerDefault;
+		if(mRandomFirstShotTime)
+		{
+			mShootTimer *= Random.Range (1.0f,1.25f);
+		}
 
 		mDefaultSpeed = mSpeed;
 		mSpeed = mFormSpeed;
@@ -185,10 +192,7 @@ public class EnemyShipAI : MonoBehaviour
 	void Update () 
 	{
 
-		if (redEnemy) {
-
-			mAnimator = null;
-		}
+	
 
 		if(mPlayer == null)
 		{
@@ -314,6 +318,7 @@ public class EnemyShipAI : MonoBehaviour
 				//Play animation for firing (or skip straight to firing if no animation) ~Adam
 				if(mAnimator != null)
 				{
+					Debug.Log ("Playing shoot animation");
 					mAnimator.Play("Shoot");
 					if(mGrabber){ShootEnemyBullet();}
 				}
@@ -383,10 +388,7 @@ public class EnemyShipAI : MonoBehaviour
 	//Tells this unit to go towards the assigned swarm
 	void ApproachSwarm()
 	{
-		//if (redEnemy) {
 
-
-		//}else
 
 		//Animation Control (Mostly for blue/grabber enemy) ~Adam
 		if(mAnimator != null)
@@ -501,7 +503,7 @@ public class EnemyShipAI : MonoBehaviour
 		if(mAnimator != null)
 		{
 
-			//if(!redEnemy){
+	
 
 			mAnimator.SetBool("IsIdle", true);
 			mAnimator.SetBool("IsChasing", false);
@@ -511,7 +513,7 @@ public class EnemyShipAI : MonoBehaviour
 				mAnimator.SetBool("IsIdle", false);
 				mAnimator.SetBool("IsReturning", true);
 			}
-			//}
+	
 		}
 		//Stop using the speed for the alternate speed for making the formation
 		if(mSpeed == mFormSpeed && mFormSpeed != mDefaultSpeed)
@@ -681,8 +683,11 @@ public class EnemyShipAI : MonoBehaviour
 
 	public void ShootSecondaryEnemyBullet()
 	{
-		GameObject enemyBullet;
-		enemyBullet = Instantiate(redEnemySecondaryBullet, transform.position, Quaternion.identity) as GameObject;
+		if(mSecondaryBullet != null)
+		{
+			GameObject enemyBullet;
+			enemyBullet = Instantiate(mSecondaryBullet, transform.position, Quaternion.identity) as GameObject;
+		}
 	}//End of ShootEnemyBullet()
 
 	void OnCollisionEnter(Collision other)
@@ -871,16 +876,19 @@ public class EnemyShipAI : MonoBehaviour
         {
             PlayerOneShipController controller = mPlayer.GetComponent<PlayerOneShipController>();
 
-            AchievementManager.instance.KillCounter1.IncreseValue();
-            AchievementManager.instance.KillCounter2.IncreseValue();
-            AchievementManager.instance.KillCounter3.IncreseValue();
-            AchievementManager.instance.KillCounter4.IncreseValue();
-            AchievementManager.instance.KillCounter5.IncreseValue();
+			if(AchievementManager.instance != null)
+			{
+	            AchievementManager.instance.KillCounter1.IncreseValue();
+	            AchievementManager.instance.KillCounter2.IncreseValue();
+	            AchievementManager.instance.KillCounter3.IncreseValue();
+	            AchievementManager.instance.KillCounter4.IncreseValue();
+	            AchievementManager.instance.KillCounter5.IncreseValue();
 
-            if (controller.mShipRecovered && !controller.secondShipOnHip) //Backstab
-            {
-                AchievementManager.instance.BackStab.IncreseValue();
-            }
+	            if (controller.mShipRecovered && !controller.secondShipOnHip) //Backstab
+	            {
+	                AchievementManager.instance.BackStab.IncreseValue();
+	            }
+			}
         }
 
 		Destroy(gameObject);

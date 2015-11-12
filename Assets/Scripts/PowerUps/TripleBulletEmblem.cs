@@ -24,7 +24,10 @@ public class TripleBulletEmblem : MonoBehaviour
 			
 			other.GetComponentInParent<PlayerShipController> ().mThreeBullet = true;
 			other.GetComponentInParent<PlayerShipController> ().mThreeBulletTimer = 30f;
-            AchievementManager.instance.UpgradesCollected.IncreseValue();
+			if(AchievementManager.instance != null)
+			{
+            	AchievementManager.instance.UpgradesCollected.IncreseValue();
+			}
 			Destroy(this.gameObject);
 		}
 
@@ -32,14 +35,20 @@ public class TripleBulletEmblem : MonoBehaviour
 		{
 			other.GetComponent<PlayerShipController>().mThreeBullet = true;
 			other.GetComponent<PlayerShipController>().mThreeBulletTimer = 30f;
-            AchievementManager.instance.UpgradesCollected.IncreseValue();
+			if(AchievementManager.instance != null)
+			{
+				AchievementManager.instance.UpgradesCollected.IncreseValue();
+			}
 			Destroy(this.gameObject);
 		}
 		if(other.GetComponent<PlayerTwoShipController>() != null)
 		{
 			FindObjectOfType<PlayerTwoShipController>().mThreeBullet = true;
 			FindObjectOfType<PlayerTwoShipController>().mThreeBulletTimer = 30f;
-            AchievementManager.instance.UpgradesCollected.IncreseValue();
+			if(AchievementManager.instance != null)
+			{
+				AchievementManager.instance.UpgradesCollected.IncreseValue();
+			}
 			Destroy(this.gameObject);
 		}
 	}

@@ -98,11 +98,14 @@ public class LaserFistPowerup : MonoBehaviour
 		this.gameObject.SetActive(false);
 
         //ACHIEVEMENTS
-        int lvl = Application.loadedLevel;
-        if (lvl == 6 || lvl == 12 || lvl == 19 || lvl == 24 || lvl == 30)
-        {
-            AchievementManager.instance.PostAchievement("TheArtofWar");
-        }
+		if(AchievementManager.instance != null)
+		{
+	        int lvl = Application.loadedLevel;
+	        if (lvl == 6 || lvl == 12 || lvl == 19 || lvl == 24 || lvl == 30)
+	        {
+	            AchievementManager.instance.PostAchievement("TheArtofWar");
+	        }
+		}
 
 	}//END StopLaserFist()
 
@@ -121,7 +124,10 @@ public class LaserFistPowerup : MonoBehaviour
 		{
 			if(other.GetComponent<EnemyBulletController>().mShootable)
 			{
-                AchievementManager.instance.UpgradesCollected.IncreseValue();
+				if(AchievementManager.instance != null)
+				{
+					AchievementManager.instance.UpgradesCollected.IncreseValue();
+				}
 				Destroy(other.gameObject);
 			}
 		}
