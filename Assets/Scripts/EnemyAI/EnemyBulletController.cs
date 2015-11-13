@@ -99,6 +99,7 @@ public class EnemyBulletController : MonoBehaviour
 				if (mPlayerClone.transform.position.y > transform.position.y)
 				{
 					bulletForce = new Vector2(0.0f,mBulletSpeed);
+					transform.RotateAround(transform.position,Vector3.forward,180f);
 				}
 				else
 				{
@@ -112,6 +113,7 @@ public class EnemyBulletController : MonoBehaviour
 				if (mPlayer.transform.position.y > transform.position.y)
 				{
 					bulletForce = new Vector2(0.0f,mBulletSpeed);
+					transform.RotateAround(transform.position,Vector3.forward,180f);
 				}
 				else
 				{
