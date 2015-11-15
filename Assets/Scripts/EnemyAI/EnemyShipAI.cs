@@ -144,11 +144,11 @@ public class EnemyShipAI : MonoBehaviour
 
 			if(shootRand < mLimitedShootingChance)
 			{
-				mAutoShoot = true;
+				mShooter = true;
 			}
 			else
 			{
-				mAutoShoot = false;
+				mShooter = false;
 			}
 		}
 
@@ -310,7 +310,7 @@ public class EnemyShipAI : MonoBehaviour
 			}
 		}
 
-		if(mShootTimer <= 0f && mEnemyBullet != null && (transform.position.y <= 24f && transform.position.y >= -33f)&& (transform.position.x <= 20f && transform.position.y >= -20f))
+		if(mShootTimer <= 0f && mEnemyBullet != null && (transform.position.y <= 24f && transform.position.y >= -33f)&& (transform.position.x <= 24f && transform.position.y >= -24f))
 		{
 			//Fire automatically if set to do so ~Adam
 			if(mShooter && mAutoShoot && mPlayer.GetComponent<PlayerShipController>().enabled == true)
@@ -318,7 +318,6 @@ public class EnemyShipAI : MonoBehaviour
 				//Play animation for firing (or skip straight to firing if no animation) ~Adam
 				if(mAnimator != null)
 				{
-					Debug.Log ("Playing shoot animation");
 					mAnimator.Play("Shoot");
 					if(mGrabber){ShootEnemyBullet();}
 				}
@@ -375,7 +374,7 @@ public class EnemyShipAI : MonoBehaviour
 
 			Destroy(this.gameObject);
 		}
-		if((transform.position.y > 25f) || (transform.position.y <-33f) || (transform.position.x > 20f) || (transform.position.x < -20f) || (mAutoDeleteTimer<=0f))
+		if((transform.position.y > 25f) || (transform.position.y <-33f) || (transform.position.x > 24f) || (transform.position.x < -24f) || (mAutoDeleteTimer<=0f))
 		{
 			mAutoDeleteTimer-=Time.deltaTime;
 		}

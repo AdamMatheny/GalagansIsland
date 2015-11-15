@@ -126,7 +126,7 @@ public class CoOpShipPanelUI : MonoBehaviour
 				mOverheatValue = 0f;
 			}
 
-			mShieldValue = mP1Ship.mShieldTimer/30f;
+			mShieldValue = mP1Ship.mShieldTimer/25f;
 			if(mShieldValue < 0f)
 			{
 				mShieldValue = 0f;
@@ -189,20 +189,30 @@ public class CoOpShipPanelUI : MonoBehaviour
 			{
 				mOverheatValue = 0f;
 			}
+			if(mOverheatValue > 1f)
+			{
+				mOverheatValue = 1f;
+			}
 
 			mShieldValue = mP2Ship.mShieldTimer/30f;
 			if(mShieldValue < 0f)
 			{
 				mShieldValue = 0f;
 			}
-
+			if(mShieldValue > 1f)
+			{
+				mShieldValue = 1f;
+			}
 
 			mTripleTimerValue = mP2Ship.mThreeBulletTimer/30f;
 			if(mTripleTimerValue < 0f)
 			{
 				mTripleTimerValue = 0f;
 			}
-
+			else if(mTripleTimerValue > 1f)
+			{
+				mTripleTimerValue = 1f;
+			}
 
 			//Adjust Claw/Wing graphics based on damage/upgrade status ~Adam
 			if(mP2Ship.mFireUpgrade < 0.8f)

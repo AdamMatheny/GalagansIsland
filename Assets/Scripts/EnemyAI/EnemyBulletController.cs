@@ -19,6 +19,8 @@ public class EnemyBulletController : MonoBehaviour
 
 	public GameObject bulletExplosion;
 
+	public bool mDestroyedByBombs = true;
+
 	public void Start()
 	{
 		mScoreController = FindObjectOfType<ScoreManager>();

@@ -25,7 +25,7 @@ public class ShieldEmblem : MonoBehaviour
 		{
 
 			other.GetComponentInParent<PlayerShipController> ().mShielded = true;
-			other.GetComponentInParent<PlayerShipController> ().mShieldTimer = 30f;
+			other.GetComponentInParent<PlayerShipController> ().mShieldTimer = 25f;
 			Destroy(this.gameObject);
 		}
 
@@ -41,19 +41,19 @@ public class ShieldEmblem : MonoBehaviour
 			}
 
 			other.GetComponent<PlayerShipController>().mShielded = true;
-			other.GetComponent<PlayerShipController>().mShieldTimer = 30f; 
+			other.GetComponent<PlayerShipController>().mShieldTimer = 25f; 
 
 			if(FindObjectOfType<LevelKillCounter>() != null)
 			{
 				if(other.GetComponent<PlayerOneShipController>() != null)
 				{
-					FindObjectOfType<LevelKillCounter>().mP1ShieldTime = 30f;
-					other.GetComponent<PlayerShipController>().mShieldTimer = 30f; 
+					FindObjectOfType<LevelKillCounter>().mP1ShieldTime = 25f;
+					other.GetComponent<PlayerShipController>().mShieldTimer = 25f; 
 				}
 				else if (other.GetComponent<PlayerTwoShipController>() != null)
 				{
-					FindObjectOfType<LevelKillCounter>().mP2ShieldTime = 30f;
-					other.GetComponent<PlayerShipController>().mShieldTimer = 30f; 
+					FindObjectOfType<LevelKillCounter>().mP2ShieldTime = 25f;
+					other.GetComponent<PlayerShipController>().mShieldTimer = 25f; 
 				}
 			}
 
@@ -61,11 +61,11 @@ public class ShieldEmblem : MonoBehaviour
 			{
 				if(other.GetComponent<PlayerOneShipController>() != null)
 				{
-					FindObjectOfType<GetReady>().mP1ShieldTime = 30f;
+					FindObjectOfType<GetReady>().mP1ShieldTime = 25f;
 				}
 				else if (other.GetComponent<PlayerTwoShipController>() != null)
 				{
-					FindObjectOfType<GetReady>().mP2ShieldTime = 30f;
+					FindObjectOfType<GetReady>().mP2ShieldTime = 25f;
 				}
 			}
 

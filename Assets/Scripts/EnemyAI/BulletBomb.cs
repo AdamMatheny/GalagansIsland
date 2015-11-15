@@ -23,7 +23,7 @@ public class BulletBomb : MonoBehaviour
 				other.GetComponent<EnemyShipAI>().EnemyShipDie();
 			}
 		}
-		if(other.GetComponent<PlayerBulletController>() != null || other.GetComponent<EnemyBulletController>() != null)
+		if(other.GetComponent<PlayerBulletController>() != null || (other.GetComponent<EnemyBulletController>() != null && other.GetComponent<EnemyBulletController>().mDestroyedByBombs))
 		{
 			Destroy (other.gameObject);
 		}

@@ -468,7 +468,7 @@ public class PlayerShipController : MonoBehaviour
 						}
 						else
 						{
-							mBulletFireTime = Time.time + (bulletShootSpeed - (0.25f / 25f * 21f));
+							mBulletFireTime = Time.time + (bulletShootSpeed - (0.25f / 16f * 21f));
 						}
 					}
 					else
@@ -550,7 +550,7 @@ public class PlayerShipController : MonoBehaviour
 				if (mInputVertical == 0.0f)
 				{
 					mDriftDown = true;
-					mMoveDir = Vector3.Lerp(mMoveDir, new Vector3(mMoveDir.x,-mDropSpeed,mMoveDir.z), 0.2f);
+					mMoveDir = Vector3.Lerp(mMoveDir, new Vector3(mMoveDir.x,-mDropSpeed,mMoveDir.z), 0.9f);
 					mMoveDir = Vector3.Lerp(mMoveDir, new Vector3(0f,-mDropSpeed,0f), 0.03f);
 					
 				}
@@ -644,17 +644,17 @@ public class PlayerShipController : MonoBehaviour
 	protected virtual void LateUpdate () 
 	{
 		//Keep ship within screen bounds
-		if (transform.position.x < -16.5 && mShipRecovered && secondShipOnHip)// && Application.isMobilePlatform) (from when we were doing twin-stick
+		if (transform.position.x < -20.5 && mShipRecovered && secondShipOnHip)// && Application.isMobilePlatform) (from when we were doing twin-stick
 		{
-			transform.position = new Vector3(-16.5f, transform.position.y, transform.position.z);
+			transform.position = new Vector3(-20.5f, transform.position.y, transform.position.z);
 		}																							//Second ship is in new position now ~ Jonathan
-		else if(transform.position.x < -20f)
+		else if(transform.position.x < -24f)
 		{
-			transform.position = new Vector3(-20f, transform.position.y, transform.position.z);
+			transform.position = new Vector3(-24f, transform.position.y, transform.position.z);
 		}
-		if (transform.position.x > 20f)
+		if (transform.position.x > 24f)
 		{
-			transform.position = new Vector3(20f, transform.position.y, transform.position.z);
+			transform.position = new Vector3(24f, transform.position.y, transform.position.z);
 		}
 		if(transform.position.y < -29.5f && mShipRecovered && !secondShipOnHip) //Original is -33, but there is a new second ship position now ~ Jonathan
 		{
