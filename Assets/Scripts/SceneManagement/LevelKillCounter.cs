@@ -175,6 +175,15 @@ public class LevelKillCounter : MonoBehaviour
 //#else
 //            GUI.Box(new Rect(Screen.width*0.425f, Screen.height*0.4f, Screen.width*0.15f, Screen.height*0.05f), "", mLevelCompleteStyle);
 //#endif
+
+			//Fade out the audio ~Adam
+			if(FindObjectOfType<BGMVolumeController>() != null)
+			{
+				FindObjectOfType<BGMVolumeController>().GetComponent<AudioSource>().ignoreListenerVolume = false;
+				FindObjectOfType<BGMVolumeController>().enabled = false;
+			}
+			AudioListener.volume -=  0.0005f;
+
 			mLevelCompleteMessage.SetActive(true);
 		}
 	}
