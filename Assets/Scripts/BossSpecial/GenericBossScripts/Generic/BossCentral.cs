@@ -142,7 +142,7 @@ public class BossCentral : MonoBehaviour
 	protected virtual void BossEntry()
 	{
 		//Move to the center of the screen ~Adam
-		transform.position = Vector3.Lerp(transform.position, mMoveTarget, mMoveSpeed*0.001f * Time.timeScale);
+		transform.position = Vector3.Lerp(transform.position, mMoveTarget, mMoveSpeed*0.0005f * Time.timeScale);
 		mEntryTime -= Time.deltaTime;
 		//Start doing regular behavior, make the weak points vulnerable, and enable the weapons ~Adam
 		if(mEntryTime <= 0f)
