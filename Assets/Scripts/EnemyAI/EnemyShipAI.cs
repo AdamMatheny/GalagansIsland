@@ -12,6 +12,8 @@ public class EnemyShipAI : MonoBehaviour
 //The Serialie Field private variables and public variables can be changed in the editor to assign different behaviors to multiple enemy prefabs, using a single script
 //Additionally, the public variables can be overwritten by in-editor settings on the enemy spawner prefab to adjust enemy behavior or difficulty on a level-by-level basis
 
+	public Quaternion startingRotation;
+
 	public bool mLimitedAutoFire = false;  //If True, then only a certain percentage of spawned enemies will be able to auto-fire
 	public float mLimitedShootingChance;  //Range from 0 to 1.0.  The chance that this spawned enemy will be able to auto-fire if the above variable is true
 
@@ -136,6 +138,8 @@ public class EnemyShipAI : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+
+
 		if (mLimitedAutoFire) 
 		{
 
@@ -192,7 +196,7 @@ public class EnemyShipAI : MonoBehaviour
 	void Update () 
 	{
 
-	
+
 
 		if(mPlayer == null)
 		{
@@ -378,6 +382,9 @@ public class EnemyShipAI : MonoBehaviour
 		{
 			mAutoDeleteTimer-=Time.deltaTime;
 		}
+
+
+
 	}//END of Update()
 
 	void LateUpdate()
@@ -462,6 +469,8 @@ public class EnemyShipAI : MonoBehaviour
 			mAttackFrequencyTimer = mAttackFrequencyTimerDefault;
 		}
 		#endregion
+
+	
 
 	}//END of ApproachSwarm()
 

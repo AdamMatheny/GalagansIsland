@@ -22,11 +22,11 @@ public class ScoreManager : MonoBehaviour
 	int mExtraLifeInteraval = 1000;
 
 	//For spawning an triple-bullet power-up every certain number of points ~Adam
-	int mPowerUpScore = 300;
+	public int mPowerUpScore = 300;
 	int mPowerUpInterval = 300;
 	[SerializeField] private GameObject mTripleBulletEmblem;
 	//For spawning a shield power-up every certain number of points ~Adam
-	int mShieldScore = 600;
+	public int mShieldScore = 600;
 	int mShieldInterval = 300;
 	[SerializeField] private GameObject mShieldEmblem;
 
