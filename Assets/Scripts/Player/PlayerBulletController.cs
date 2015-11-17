@@ -11,7 +11,8 @@ public class PlayerBulletController : MonoBehaviour
 
 	public void Start()
 	{
-		bulletSpeed+= (30f/25f*Application.loadedLevel);
+		bulletSpeed+= (30f/25f*17f);
+		//bulletSpeed+= (30f/25f*Application.loadedLevel);
 		Vector3 bulletForce;
 		bulletForce = new Vector3(0.0f,bulletSpeed, 0f);
 		bulletForce = Quaternion.AngleAxis(transform.rotation.eulerAngles.z, Vector3.forward) * bulletForce;

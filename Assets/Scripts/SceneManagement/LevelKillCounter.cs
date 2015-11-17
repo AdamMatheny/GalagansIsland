@@ -180,9 +180,8 @@ public class LevelKillCounter : MonoBehaviour
 			if(FindObjectOfType<BGMVolumeController>() != null)
 			{
 				FindObjectOfType<BGMVolumeController>().GetComponent<AudioSource>().ignoreListenerVolume = false;
-				FindObjectOfType<BGMVolumeController>().enabled = false;
+				FindObjectOfType<BGMVolumeController>().mStartingVolume = Mathf.Lerp (FindObjectOfType<BGMVolumeController>().mStartingVolume, 0f, 0.005f);
 			}
-			AudioListener.volume -=  0.0005f;
 
 			mLevelCompleteMessage.SetActive(true);
 		}

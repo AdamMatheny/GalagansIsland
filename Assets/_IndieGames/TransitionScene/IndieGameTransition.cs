@@ -82,4 +82,9 @@ public class IndieGameTransition : MonoBehaviour
 
 		Application.LoadLevel(PlayerPrefs.GetInt ("MainLevelLeft"));
 	}//END of ReturnToMainGame()
+
+	public void DoScreenStatic()
+	{
+		Camera.main.GetComponent<CameraShader>().mShaderTimer = 2f;
+	}
 }

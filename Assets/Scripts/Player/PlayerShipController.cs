@@ -290,7 +290,7 @@ public class PlayerShipController : MonoBehaviour
 			
 //			mMovementSpeed = ( mBaseMovementSpeed + (0.24f +5.76f*(Application.loadedLevel-1)/(Application.levelCount-4) ))*(mMoveUpgrade) /Time.timeScale;
 			//Make the movement speed constant ~Adam
-			mMovementSpeed = ( mBaseMovementSpeed + (0.24f +5.76f*(16)/(25) ))*(mMoveUpgrade) /Time.timeScale;
+			mMovementSpeed = ( mBaseMovementSpeed + (0.24f +5.76f*(18)/(25) ))*(mMoveUpgrade) /Time.timeScale;
 
 			//Placing a min and max on move speed based on the min/max before adding in damage and repair ~Adam
 			if(mMovementSpeed < mBaseMovementSpeed/2f)
@@ -443,13 +443,13 @@ public class PlayerShipController : MonoBehaviour
 							{
 //								bulletFireMod = ( (0.01f +.24f*(Application.loadedLevel-1)/(Application.levelCount-4)) *(mFireUpgrade*mFireUpgrade) );
 								//Make fire rate constant ~Adam
-								bulletFireMod = ( (0.01f +.24f*(16)/(25)) *(mFireUpgrade*mFireUpgrade) );
+								bulletFireMod = ( (0.01f +.24f*(17)/(25)) *(mFireUpgrade*mFireUpgrade) );
 							}
 							else
 							{
 //								bulletFireMod = ( (0.01f +.24f*(Application.loadedLevel-1)/(Application.levelCount-4)) *(mFireUpgrade) );
 								//Make fire rate constant ~Adam
-								bulletFireMod = ( (0.01f +.24f*(16)/(25)) *(mFireUpgrade*mFireUpgrade) );
+								bulletFireMod = ( (0.01f +.24f*(17)/(25)) *(mFireUpgrade*mFireUpgrade) );
 							}
 							//Add in a min/max bullet firing time based on paramaters from before when we added in damage/repair ~Adam
 							//Fastest possible firing ~Adam
