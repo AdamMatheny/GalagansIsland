@@ -36,7 +36,7 @@ namespace TowerOfElements
 		{
 
 			//Right Green pressed
-			if(Input.GetKeyDown(KeyCode.K) || InputManager.ActiveDevice.RightStickButton.WasPressed)
+			if(Input.GetKeyDown(KeyCode.K) || InputManager.ActiveDevice.RightStickButton.WasPressed || InputManager.ActiveDevice.RightTrigger.WasPressed)
 			{
 				mAudioSource.PlayOneShot(mEarthSpell);
 				mAnimator.Play ("MageEarth");
@@ -59,7 +59,7 @@ namespace TowerOfElements
 				}
 			}
 			//Left Green pressed
-			if(Input.GetKeyDown(KeyCode.S) || InputManager.ActiveDevice.LeftStickButton.WasPressed)
+			if(Input.GetKeyDown(KeyCode.S) || InputManager.ActiveDevice.LeftStickButton.WasPressed || InputManager.ActiveDevice.LeftTrigger.WasPressed)
 			{
 				mAudioSource.PlayOneShot(mEarthSpell);
 				mAnimator.Play ("MageEarth");

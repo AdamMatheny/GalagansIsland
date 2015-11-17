@@ -44,6 +44,9 @@ public class GetSome : MonoBehaviour
 	[SerializeField] private GameObject mControlsScreen;
 	void Start()
 	{
+		//For managing mini games ~Adam
+		PlayerPrefs.SetInt("GoingToGame", 0);
+
 		GetComponent<Renderer>().material.color = new Color(0f,0f,0f,0f);
 //		gameObject.GetComponent<SpriteRenderer> ().sprite = mGetSomeSprite1;
 //		transform.position = new Vector3(-0.3f, -34f, -16.5f);
