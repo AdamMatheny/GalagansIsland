@@ -47,8 +47,8 @@ namespace TowerOfElements
 			}
 
 			//Set the score UI stuff
-			mScoreText.text = mScore.ToString();
-			mComboText.text = mCombo.ToString();
+			mScoreText.text = "Score: " + mScore.ToString();
+			mComboText.text = "Combo: " + mCombo.ToString();
 			mMultiplierImage.sprite = mMultiplierSprites[mMultiplier-1];
 			if(mScore > PlayerPrefs.GetInt ("ToEHighScore"))
 			{

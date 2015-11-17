@@ -194,7 +194,7 @@ public class CoOpShipPanelUI : MonoBehaviour
 				mOverheatValue = 1f;
 			}
 
-			mShieldValue = mP2Ship.mShieldTimer/30f;
+			mShieldValue = mP2Ship.mShieldTimer/25f;
 			if(mShieldValue < 0f)
 			{
 				mShieldValue = 0f;

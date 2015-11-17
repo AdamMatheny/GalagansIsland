@@ -5,14 +5,22 @@ using Assets.Scripts.IndieGamesLauncher;
 public class IndieGameCollider : MonoBehaviour 
 {
 	ScoreManager mScoreMan;
-	public string mGameTitle;
+	//public string mGameTitle;
+	public int mIndieGameNumber;
+		//1: Tower of Elements
+		//2: 
+		//3: 
 	public float mDriftSpeed = 5.47f;
 
 	// Use this for initialization
 	void Start () 
 	{
 		transform.position = new Vector3(Random.Range (-10,10), Random.Range (-20,20), -2);
-
+		if(PlayerPrefs.GetInt("GoingToGame") != 0)
+		{
+			PlayerPrefs.SetInt("GoingToGame", 0);
+			Destroy(this.gameObject);
+		}
 	}
 	
 	// Update is called once per frame
@@ -34,9 +42,11 @@ public class IndieGameCollider : MonoBehaviour
 	{
 		if(other.GetComponent<PlayerOneShipController>() != null)
 		{
-			other.GetComponent<PauseManager>().Pause ();
-			IndieGamesManager.instance.StartGame(mGameTitle);
-			Destroy (this.gameObject);
+			PlayerPrefs.SetInt("MainLevelLeft", Application.loadedLevel);
+			PlayerPrefs.SetInt("IndieGameKey", mIndieGameNumber);
+
+			Application.LoadLevel("IndieGameTransition");
+	
 		}
 	}
 }

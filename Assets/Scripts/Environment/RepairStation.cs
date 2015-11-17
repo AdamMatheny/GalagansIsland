@@ -40,7 +40,7 @@ public class RepairStation : MonoBehaviour
 
 		transform.Translate (Vector3.down* mDriftSpeed*Time.deltaTime);
 		//Activate the GetReady object once the repair station goes off-screen ~Adam
-		if(transform.position.y < -46f)
+		if(transform.position.y < -48f)
 		{
 			if(mReadyGetter != null)
 			{
@@ -69,7 +69,7 @@ public class RepairStation : MonoBehaviour
 			float xDist = other.transform.position.x-transform.position.x;
 			Debug.Log ("Player 1 entered, " + xDist);
 			//If the player went through the left (HP) door ~Adam
-			if(xDist < -4.5f && xDist > -12f)
+			if(xDist < -5.25f && xDist > -13f)
 			{
 				ScoreManager scoreMan = FindObjectOfType<ScoreManager>();
 				//Play animation ~Adam
@@ -106,7 +106,7 @@ public class RepairStation : MonoBehaviour
 				mServicedP1 = true;
 			}
 			//If the player went through the center (Fire Speed) door ~Adam
-			else if(xDist <= 4.5f && xDist >= -4.5f)
+			else if(xDist <= 5.25f && xDist >= -5.25f)
 			{
 				//Play animation ~Adam
 				mAnimator.Play ("FireDoor");
@@ -127,7 +127,7 @@ public class RepairStation : MonoBehaviour
 				mServicedP1 = true;
 			}
 			//If the player went through the right (Move Speed) door ~Adam
-			else if(xDist > 4.5f && xDist < 12f)
+			else if(xDist > 5.25f && xDist < 13f)
 			{
 				//Play animation ~Adam
 				mAnimator.Play ("MovementDoor");
@@ -154,7 +154,7 @@ public class RepairStation : MonoBehaviour
 			Debug.Log ("Player 2 entered");
 			float xDist = other.transform.position.x-transform.position.x;
 			//If the player went through the left (HP) door ~Adam
-			if(xDist < -4.5f && xDist > -12f)
+			if(xDist < -5.25f && xDist > -13f)
 			{
 				ScoreManager scoreMan = FindObjectOfType<ScoreManager>();
 				//Play animation ~Adam
@@ -181,7 +181,7 @@ public class RepairStation : MonoBehaviour
 				mServicedP2 = true;
 			}
 			//If the playe went through the center (Fire Speed) door ~Adam
-			else if(xDist <= 4.5f && xDist >= -4.5f)
+			else if(xDist <= 5.25f && xDist >= -5.25f)
 			{
 				//Play animation ~Adam
 				mAnimator.Play ("FireDoor");
@@ -194,7 +194,7 @@ public class RepairStation : MonoBehaviour
 				mServicedP2 = true;
 			}
 			//If the playe went through the right (Move Speed) door ~Adam
-			else if(xDist > 4.5f && xDist < 12f)
+			else if(xDist > 5.25f && xDist < 13f)
 			{
 				//Play animation ~Adam
 				mAnimator.Play ("MovementDoor");

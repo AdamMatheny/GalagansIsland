@@ -3,8 +3,9 @@ using System.Collections;
 
 public class BGMVolumeController : MonoBehaviour 
 {
-	float mStartingVolume;
-
+	[HideInInspector] public  float mStartingVolume;
+	float mFadeInVolume = 0f;
+	[SerializeField] private  bool mDoFadeIn = true;
 	// Use this for initialization
 	void Start () 
 	{
@@ -12,13 +13,29 @@ public class BGMVolumeController : MonoBehaviour
 //		PlayerPrefs.SetFloat("SFXVolume", 0.8f);
 //		PlayerPrefs.SetFloat("BGMVolume", 0.8f);
 		GetComponent<AudioSource>().ignoreListenerVolume = true;
-		GetComponent<AudioSource>().volume = mStartingVolume * PlayerPrefs.GetFloat("BGMVolume");
+		if(mDoFadeIn)
+		{
+			GetComponent<AudioSource>().volume = mFadeInVolume * PlayerPrefs.GetFloat("BGMVolume");
+		}
+		else
+		{
+			GetComponent<AudioSource>().volume = mStartingVolume * PlayerPrefs.GetFloat("BGMVolume");
+		}
+		GetComponent<AudioSource>().enabled = true;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		GetComponent<AudioSource>().volume = mStartingVolume * PlayerPrefs.GetFloat("BGMVolume");
+		mFadeInVolume = Mathf.Lerp (mFadeInVolume, mStartingVolume, 0.01f);
+		if(mFadeInVolume < mStartingVolume *0.95f && mDoFadeIn)
+		{
+			GetComponent<AudioSource>().volume = mFadeInVolume * PlayerPrefs.GetFloat("BGMVolume");
+		}
+		else
+		{
+			GetComponent<AudioSource>().volume = mStartingVolume * PlayerPrefs.GetFloat("BGMVolume");
+		}
 		AudioListener.volume = PlayerPrefs.GetFloat("SFXVolume");
 
 		//Mostly temporary, some people were complaining that the SFX were too loud and they were too lazy to turn them down ~ Jonathan

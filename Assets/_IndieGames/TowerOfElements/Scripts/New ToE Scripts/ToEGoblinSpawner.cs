@@ -44,12 +44,12 @@ namespace TowerOfElements
 					//Figure out which enemy to spawn
 					int indexOfEnemy = 0;
 					//Start with green enemy
-					if (mManager.mScore < 10)
+					if (mManager.mScore < 40)
 					{
 						indexOfEnemy = 0;
 					}
 					//Then add the blue enemy
-					else if (mManager.mScore < 40)
+					else if (mManager.mScore < 120)
 					{
 						indexOfEnemy = Random.Range(0, mEnemiesToSpawn.Count-1);
 					}
@@ -86,7 +86,7 @@ namespace TowerOfElements
 
 						var enemyComponent = newEnemy.GetComponent<ToEGoblin>();
 						
-						enemyComponent.mSpeed += mSpawnCounter / 30.0f;
+						enemyComponent.mSpeed += mSpawnCounter / 60.0f;
 						enemyComponent.mRightRope = true;
 						enemyComponent.mGoblinSpawner = this;
 						enemyComponent.mManager = mManager;
@@ -106,7 +106,7 @@ namespace TowerOfElements
 					}
 					else
 					{
-						mTimeThreshold = 0.5f - mSpawnCounter / 1000.0f;
+						mTimeThreshold = 0.5f - mSpawnCounter / 800.0f;
 						if (mTimeThreshold < 0.1f)
 						{
 							mTimeThreshold = 0.1f;
