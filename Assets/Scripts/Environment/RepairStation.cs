@@ -15,6 +15,8 @@ public class RepairStation : MonoBehaviour
 	public float mP1ShieldTime = 0f;
 	public float mP2ShieldTime = 0f;
 
+
+	float mStartTimer = 5f;
 	// Use this for initialization
 	void Start () 
 	{
@@ -38,7 +40,13 @@ public class RepairStation : MonoBehaviour
 			mScoreMan = FindObjectOfType<ScoreManager>();
 		}
 
-		transform.Translate (Vector3.down* mDriftSpeed*Time.deltaTime);
+
+		mStartTimer -= Time.deltaTime;
+		if(mStartTimer <= 0f)
+		{
+			transform.Translate (Vector3.down* mDriftSpeed*Time.deltaTime);
+		}
+
 		//Activate the GetReady object once the repair station goes off-screen ~Adam
 		if(transform.position.y < -48f)
 		{

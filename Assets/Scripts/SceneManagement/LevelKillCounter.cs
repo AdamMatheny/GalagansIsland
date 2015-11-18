@@ -33,6 +33,8 @@ public class LevelKillCounter : MonoBehaviour
 	public float mP1ShieldTime = 0f;
 	public float mP2ShieldTime = 0f;
 
+	float mAudioFadeInterval = 0.1f;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -74,6 +76,7 @@ public class LevelKillCounter : MonoBehaviour
 					{
 						mP2ShieldTime = FindObjectOfType<PlayerTwoShipController>().mShieldTimer;
 					}
+					mAudioFadeInterval = FindObjectOfType<BGMVolumeController>().mStartingVolume/5f;
 				}
 
 				mLevelComplete = true;
@@ -179,8 +182,7 @@ public class LevelKillCounter : MonoBehaviour
 			//Fade out the audio ~Adam
 			if(FindObjectOfType<BGMVolumeController>() != null)
 			{
-				FindObjectOfType<BGMVolumeController>().GetComponent<AudioSource>().ignoreListenerVolume = false;
-				FindObjectOfType<BGMVolumeController>().mStartingVolume = Mathf.Lerp (FindObjectOfType<BGMVolumeController>().mStartingVolume, 0f, 0.005f);
+				FindObjectOfType<BGMVolumeController>().mStartingVolume -= (mAudioFadeInterval*Time.deltaTime);
 			}
 
 			mLevelCompleteMessage.SetActive(true);

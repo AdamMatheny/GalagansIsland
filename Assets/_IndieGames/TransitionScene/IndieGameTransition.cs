@@ -2,17 +2,22 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using InControl;
 
 public class IndieGameTransition : MonoBehaviour 
 {
-	[SerializeField] private GameObject mPlayerShip;
-	[SerializeField] private GameObject mScoreManager;
-	[SerializeField] private GameObject mGameHUD;
-	[SerializeField] private GameObject mAsteroidspawn;
-	[SerializeField] private GameObject mIcicleStorm;
+	GameObject mPlayerShip;
+	GameObject mScoreManager;
+	GameObject mGameHUD;
+	GameObject mAsteroidspawn;
+	GameObject mIcicleStorm;
 
 	public Image mStartScreenImage;
 	public List<Sprite> mGameImages = new List<Sprite>();
+	[SerializeField] private GameObject mStaticEffect;
+	float mStaticTimer = 0f;
+	[SerializeField] private GameObject mPressStartMessage;
+	bool mWaitForInput = false;
 
 	// Use this for initialization
 	void Start () 
@@ -47,7 +52,30 @@ public class IndieGameTransition : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		
+		//For doing the screen static effect ~Adam
+		if(mStaticTimer > 0f)
+		{
+			mStaticEffect.SetActive (true);
+			mStaticTimer -= Time.deltaTime;
+		}
+		else
+		{
+			mStaticEffect.SetActive (false);
+		}
+
+		//For waiting for the player to press a button to start the minigame ~Adam
+		if (mWaitForInput)
+		{
+			mPressStartMessage.SetActive(true);
+			if(Input.anyKeyDown || InputManager.ActiveDevice.AnyButton.WasPressed)
+			{
+				GetComponent<Animator>().speed = 1f;
+				mWaitForInput = false;
+				mPressStartMessage.SetActive(false);
+
+			}
+		}
+
 	}//END of Update()
 
 	public void GoToIndieGame()
@@ -85,6 +113,13 @@ public class IndieGameTransition : MonoBehaviour
 
 	public void DoScreenStatic()
 	{
-		Camera.main.GetComponent<CameraShader>().mShaderTimer = 2f;
+		//Camera.main.GetComponent<CameraShader>().mShaderTimer = 2f;
+		mStaticTimer = 2f;
+	}
+
+	public void AnimationWait()
+	{
+		GetComponent<Animator>().speed = 0f;
+		mWaitForInput = true;
 	}
 }

@@ -16,11 +16,19 @@ public class IndieGameCollider : MonoBehaviour
 	void Start () 
 	{
 		transform.position = new Vector3(Random.Range (-10,10), Random.Range (-20,20), -2);
+		if(FindObjectOfType<PlayerShipController>() != null)
+		{
+			while(Vector3.Distance (transform.position, FindObjectOfType<PlayerShipController>().transform.position) < 5f)
+			{
+				transform.position = new Vector3(Random.Range (-10,10), Random.Range (-20,20), -2);
+			}
+		}
 		if(PlayerPrefs.GetInt("GoingToGame") != 0)
 		{
 			PlayerPrefs.SetInt("GoingToGame", 0);
 			Destroy(this.gameObject);
 		}
+		GetComponent<AudioSource>().enabled=true;
 	}
 	
 	// Update is called once per frame

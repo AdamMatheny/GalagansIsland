@@ -69,7 +69,7 @@ namespace TowerOfElements
 
 						var enemyComponent = newEnemy.GetComponent<ToEGoblin>();
 						
-						enemyComponent.mSpeed += mSpawnCounter / 30.0f;
+						enemyComponent.mSpeed += mSpawnCounter / 60.0f;
 						enemyComponent.mRightRope = false;
 						enemyComponent.mGoblinSpawner = this;
 						enemyComponent.mManager = mManager;
