@@ -142,7 +142,7 @@ public class IndieGameTransition : MonoBehaviour
 	public void DoScreenStatic()
 	{
 		//Camera.main.GetComponent<CameraShader>().mShaderTimer = 2f;
-		mStaticTimer = 2f;
+		mStaticTimer = 3f;
 
 	}
 

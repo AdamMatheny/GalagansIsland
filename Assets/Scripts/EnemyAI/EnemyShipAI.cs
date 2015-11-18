@@ -82,7 +82,7 @@ public class EnemyShipAI : MonoBehaviour
 	[SerializeField] private bool mLoopShooter = false; //For only shooting while doing a loop ~Adam
 	[SerializeField] private bool mRetreating = false; //For only shooting while doing a loop ~Adam
 	[SerializeField] private bool mDeathShooter = false; //For firing a shot on death ~Adam
-
+	[SerializeField] private bool mAttackShooter = true;//For whether or not it can shoot while moving towards the player ~Adam
 
 	//How often to shoot `Adam
 	public float mShootTimerDefault = 1f;
@@ -314,7 +314,10 @@ public class EnemyShipAI : MonoBehaviour
 			}
 		}
 
-		if(mShootTimer <= 0f && mEnemyBullet != null && (transform.position.y <= 24f && transform.position.y >= -33f)&& (transform.position.x <= 24f && transform.position.y >= -24f))
+		if(mShootTimer <= 0f && mEnemyBullet != null 
+		   && !(!mAttackShooter && mCurrentAIState == AIState.Attacking)
+		   && (transform.position.y <= 24f && transform.position.y >= -33f)
+		   && (transform.position.x <= 24f && transform.position.y >= -24f))
 		{
 			//Fire automatically if set to do so ~Adam
 			if(mShooter && mAutoShoot && mPlayer.GetComponent<PlayerShipController>().enabled == true)

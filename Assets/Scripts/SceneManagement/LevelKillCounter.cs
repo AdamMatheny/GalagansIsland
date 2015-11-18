@@ -76,7 +76,7 @@ public class LevelKillCounter : MonoBehaviour
 					{
 						mP2ShieldTime = FindObjectOfType<PlayerTwoShipController>().mShieldTimer;
 					}
-					mAudioFadeInterval = FindObjectOfType<BGMVolumeController>().mStartingVolume/5f;
+					mAudioFadeInterval = FindObjectOfType<BGMVolumeController>().mStartingVolume/10f;
 				}
 
 				mLevelComplete = true;
