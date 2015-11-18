@@ -468,7 +468,7 @@ public class PlayerShipController : MonoBehaviour
 						}
 						else
 						{
-							mBulletFireTime = Time.time + (bulletShootSpeed - (0.25f / 16f * 21f));
+							mBulletFireTime = Time.time + (bulletShootSpeed - ( (0.01f +.24f*(17)/(25)) ) );
 						}
 					}
 					else

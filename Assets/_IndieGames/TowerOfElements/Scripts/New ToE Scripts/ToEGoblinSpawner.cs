@@ -69,7 +69,7 @@ namespace TowerOfElements
 
 						var enemyComponent = newEnemy.GetComponent<ToEGoblin>();
 						
-						enemyComponent.mSpeed += mSpawnCounter / 60.0f;
+						enemyComponent.mSpeed += mSpawnCounter / 120.0f;
 						enemyComponent.mRightRope = false;
 						enemyComponent.mGoblinSpawner = this;
 						enemyComponent.mManager = mManager;
@@ -86,7 +86,7 @@ namespace TowerOfElements
 
 						var enemyComponent = newEnemy.GetComponent<ToEGoblin>();
 						
-						enemyComponent.mSpeed += mSpawnCounter / 60.0f;
+						enemyComponent.mSpeed += mSpawnCounter / 120.0f;
 						enemyComponent.mRightRope = true;
 						enemyComponent.mGoblinSpawner = this;
 						enemyComponent.mManager = mManager;
@@ -106,7 +106,7 @@ namespace TowerOfElements
 					}
 					else
 					{
-						mTimeThreshold = 0.5f - mSpawnCounter / 800.0f;
+						mTimeThreshold = 0.5f - mSpawnCounter / 1600.0f;
 						if (mTimeThreshold < 0.1f)
 						{
 							mTimeThreshold = 0.1f;

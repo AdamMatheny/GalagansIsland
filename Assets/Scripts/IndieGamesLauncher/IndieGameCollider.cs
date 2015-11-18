@@ -15,12 +15,12 @@ public class IndieGameCollider : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		transform.position = new Vector3(Random.Range (-10,10), Random.Range (-20,20), -2);
+		transform.position = new Vector3(Random.Range (-10,10), Random.Range (0,20), -2);
 		if(FindObjectOfType<PlayerShipController>() != null)
 		{
 			while(Vector3.Distance (transform.position, FindObjectOfType<PlayerShipController>().transform.position) < 5f)
 			{
-				transform.position = new Vector3(Random.Range (-10,10), Random.Range (-20,20), -2);
+				transform.position = new Vector3(Random.Range (-10,10), Random.Range (0,20), -2);
 			}
 		}
 		if(PlayerPrefs.GetInt("GoingToGame") != 0)

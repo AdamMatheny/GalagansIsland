@@ -16,8 +16,11 @@ public class IndieGameTransition : MonoBehaviour
 	public List<Sprite> mGameImages = new List<Sprite>();
 	[SerializeField] private GameObject mStaticEffect;
 	float mStaticTimer = 0f;
+	bool mPlayingStatic = false;
 	[SerializeField] private GameObject mPressStartMessage;
 	bool mWaitForInput = false;
+
+	[SerializeField] private Text mMiniGameHighScoreText;
 
 	// Use this for initialization
 	void Start () 
@@ -56,11 +59,36 @@ public class IndieGameTransition : MonoBehaviour
 		if(mStaticTimer > 0f)
 		{
 			mStaticEffect.SetActive (true);
+
+			if(!mPlayingStatic)
+			{	if(PlayerPrefs.GetInt("GoingToGame") == 0)
+				{
+					mStaticEffect.GetComponent<Animator>().Play ("StaticOn");
+				}
+				else
+				{
+					mStaticEffect.GetComponent<Animator>().Play ("StaticOff");
+				}
+			}
+			mPlayingStatic =true;
+
 			mStaticTimer -= Time.deltaTime;
 		}
 		else
 		{
 			mStaticEffect.SetActive (false);
+			mPlayingStatic = false;
+		}
+
+		//Show the high score of the game you're about to play ~Adam
+		switch (PlayerPrefs.GetInt ("IndieGameKey"))
+		{
+		case 1:
+			mMiniGameHighScoreText.text = "High Score: " + PlayerPrefs.GetInt ("ToEHighScore");
+			break;
+		default:
+			mMiniGameHighScoreText.text = "High Score: 0";
+			break;
 		}
 
 		//For waiting for the player to press a button to start the minigame ~Adam
@@ -115,6 +143,7 @@ public class IndieGameTransition : MonoBehaviour
 	{
 		//Camera.main.GetComponent<CameraShader>().mShaderTimer = 2f;
 		mStaticTimer = 2f;
+
 	}
 
 	public void AnimationWait()
