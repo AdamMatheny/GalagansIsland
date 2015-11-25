@@ -44,7 +44,7 @@ public class PlayerOneShipController : PlayerShipController
 			Destroy(this.gameObject);
 		}
 		
-		mLastFramePosition = transform.position;
+		//mLastFramePosition = transform.position;
 		
 	}//END of Start()
 	

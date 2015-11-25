@@ -69,14 +69,27 @@ public class VolumeControlSliders : MonoBehaviour
 
 			if(mUIFocusTimer > 0f)
 			{
-				if(Time.timeScale != 0)
+				if(Input.GetAxis ("Vertical") == 0)
 				{
-					mUIFocusTimer -= Time.deltaTime;
+					//mUIFocusTimer -= Time.deltaTime;
+					if(Input.GetAxis ("Horizontal") == 0)
+					{
+						mUIFocusTimer = -1f;
+					}
+
+					else
+					{
+						mUIFocusTimer -= 0.03f;
+					}
 				}
-				else
-				{
-					mUIFocusTimer -= 0.01f;
-				}
+//				if(Time.timeScale != 0)
+//				{
+//					mUIFocusTimer -= Time.deltaTime;
+//				}
+//				else
+//				{
+//					mUIFocusTimer -= 0.01f;
+//				}
 			}
 			if(!Application.isMobilePlatform)
 			{
@@ -110,7 +123,7 @@ public class VolumeControlSliders : MonoBehaviour
 							{
 								PlayerPrefs.SetFloat("SFXVolume", 1.0f);
 							}
-							mUIFocusTimer = 0.2f;
+							ResetFocusTimer();
 							break;
 						case 1:
 							PlayerPrefs.SetFloat("BGMVolume", PlayerPrefs.GetFloat("BGMVolume")+0.1f);
@@ -118,7 +131,7 @@ public class VolumeControlSliders : MonoBehaviour
 							{
 								PlayerPrefs.SetFloat("BGMVolume", 1.0f);
 							}
-							mUIFocusTimer = 0.2f;
+							ResetFocusTimer();
 							break;
 						case 2:
 							PlayerPrefs.SetInt("RumbleOn", 1);
@@ -142,7 +155,7 @@ public class VolumeControlSliders : MonoBehaviour
 							{
 								PlayerPrefs.SetFloat("SFXVolume", 0.0f);
 							}
-							mUIFocusTimer = 0.2f;
+							ResetFocusTimer();
 							break;
 						case 1:
 							PlayerPrefs.SetFloat("BGMVolume", PlayerPrefs.GetFloat("BGMVolume")-0.1f);
@@ -150,7 +163,7 @@ public class VolumeControlSliders : MonoBehaviour
 							{
 								PlayerPrefs.SetFloat("BGMVolume", 0.0f);
 							}
-							mUIFocusTimer = 0.2f;
+							ResetFocusTimer();
 							break;
 						case 2:
 							PlayerPrefs.SetInt("RumbleOn", 0);
@@ -170,7 +183,7 @@ public class VolumeControlSliders : MonoBehaviour
 						{
 						case 0:
 							mMenuFocus = 1;
-							mUIFocusTimer = 0.2f;
+							ResetFocusTimer();
 							break;
 						case 1:
 							//Skip the rumble option on Mac~Adam
@@ -183,11 +196,11 @@ public class VolumeControlSliders : MonoBehaviour
 							{
 								mMenuFocus = 2;
 							}
-							mUIFocusTimer = 0.2f;
+							ResetFocusTimer();
 							break;
 						case 2:
 							mMenuFocus = 3;
-							mUIFocusTimer = 0.2f;
+							ResetFocusTimer();
 							break;
 						case 3:
 							break;
@@ -205,11 +218,11 @@ public class VolumeControlSliders : MonoBehaviour
 							break;
 						case 1:
 							mMenuFocus = 0;
-							mUIFocusTimer = 0.2f;
+							ResetFocusTimer();
 							break;
 						case 2:
 							mMenuFocus = 1;
-							mUIFocusTimer = 0.2f;
+							ResetFocusTimer();
 							break;
 						case 3:
 							//Skip the rumble option on Mac~Adam
@@ -222,7 +235,7 @@ public class VolumeControlSliders : MonoBehaviour
 							{
 								mMenuFocus = 2;
 							}
-							mUIFocusTimer = 0.2f;
+							ResetFocusTimer();
 							break;
 						default:
 							break;
@@ -297,13 +310,21 @@ public class VolumeControlSliders : MonoBehaviour
 
 		if(Application.loadedLevel == 0)
 		{
-			FindObjectOfType<MainMenuGUIFocusController>().mUIFocusTimer+=0.2f;
+			FindObjectOfType<MainMenuGUIFocusController>().mUIFocusTimer=0.2f;
+			FindObjectOfType<MainMenuGUIFocusController>().mStartupTimer=0.2f;
 		}
 		else
 		{
-			FindObjectOfType<PauseManager>().mUIFocusTimer+=0.2f;
+			FindObjectOfType<PauseManager>().mUIFocusTimer=0.2f;
+			FindObjectOfType<PauseManager>().mStartupTimer=0.2f;
 		}
 
 		mMenuOpen = false;
+	}
+
+
+	void ResetFocusTimer()
+	{
+		mUIFocusTimer = 0.25f;
 	}
 }

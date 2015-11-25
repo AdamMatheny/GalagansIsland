@@ -87,9 +87,9 @@ public class PlayerShipController : MonoBehaviour
 	public bool mToggleFireOn = true;
 	
 	//For tracking where the ship was last frame so we can see how much/in what direction its moving ~Adam
-	public Vector3 mLastFramePosition;
-	public Vector3 mLastFrameDifference = Vector3.zero;
-	protected float mLastNonZeroHorizontalDifference;
+	//public Vector3 mLastFramePosition;
+	//public Vector3 mLastFrameDifference = Vector3.zero;
+	//movprotected float mLastNonZeroHorizontalDifference;
 	protected bool mDriftDown = true;
 	protected float mInputVertical = 0f;
 	protected float mInputHorizontal = 0f;
@@ -153,7 +153,7 @@ public class PlayerShipController : MonoBehaviour
 			}
 		}
 		
-		mLastFramePosition = transform.position;
+		//mLastFramePosition = transform.position;
 		
 	}//END of Start()
 	
@@ -534,7 +534,7 @@ public class PlayerShipController : MonoBehaviour
 				if (mInputVertical == 0.0f && !Input.GetMouseButton(0))
 				{
 					mDriftDown = true;
-					mMoveDir = Vector3.Lerp(mMoveDir, new Vector3(mMoveDir.x,-mDropSpeed,mMoveDir.z), 0.2f);
+					mMoveDir = Vector3.Lerp(mMoveDir, new Vector3(mMoveDir.x,-mDropSpeed,mMoveDir.z), 0.9f);
 					mMoveDir = Vector3.Lerp(mMoveDir, new Vector3(0f,-mDropSpeed,0f), 0.03f);
 					
 				}
@@ -553,6 +553,10 @@ public class PlayerShipController : MonoBehaviour
 					mMoveDir = Vector3.Lerp(mMoveDir, new Vector3(mMoveDir.x,-mDropSpeed,mMoveDir.z), 0.9f);
 					mMoveDir = Vector3.Lerp(mMoveDir, new Vector3(0f,-mDropSpeed,0f), 0.03f);
 					
+				}
+				if (mInputHorizontal == 0.0f)
+				{
+					mMoveDir = Vector3.Lerp(mMoveDir, new Vector3(0f,mMoveDir.y,0f), 0.4f);
 				}
 			}
 		}

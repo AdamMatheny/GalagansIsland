@@ -48,7 +48,9 @@ public class PauseManager : MonoBehaviour
 		mVolumeMenu = FindObjectOfType<VolumeControlSliders>();
 
 	}
-	
+	[SerializeField] private Texture2D mBlackBack;
+	[SerializeField] private GUIStyle mBlackBackStyle;
+	[HideInInspector] public float mStartupTimer = 0f;
 	// Update is called once per frame
 	void Update () 
 	{
@@ -65,9 +67,24 @@ public class PauseManager : MonoBehaviour
 			mVolumeMenu = FindObjectOfType<VolumeControlSliders>();
 		}
 
-		if(mUIFocusTimer > 0f)
+		if(mUIFocusTimer > 0f && Input.GetAxis ("Vertical") == 0)
 		{
-			mUIFocusTimer -= 0.01f;
+			//mUIFocusTimer -= Time.deltaTime;
+			if(mStartupTimer <= 0f)
+			{
+				mUIFocusTimer = -1f;
+			}
+			else
+			{
+				if(Time.timeScale != 0)
+				{
+					mStartupTimer -= Time.deltaTime;
+				}
+				else
+				{
+					mStartupTimer -= 0.01f;
+				}
+			}
 		}
 
 		if (Time.timeScale == 1) 
@@ -90,22 +107,22 @@ public class PauseManager : MonoBehaviour
 						{
 						case 1:
 							mPauseButtonFocus = 2;
-							mUIFocusTimer = 0.2f;
+							ResetFocusTimer();
 							break;
 						case 2:
 							mPauseButtonFocus = 3;
-							mUIFocusTimer = 0.2f;
+							ResetFocusTimer();
 							break;
 						case 3:
 							if(!mAskingForConfirm)
 							{
 								mPauseButtonFocus = 1;
-								mUIFocusTimer = 0.2f;
+								ResetFocusTimer();
 							}
 							else
 							{
 								mPauseButtonFocus = 2;
-								mUIFocusTimer = 0.2f;
+								ResetFocusTimer();
 							}
 							break;
 						default:
@@ -119,23 +136,23 @@ public class PauseManager : MonoBehaviour
 						{
 						case 1:
 							mPauseButtonFocus = 3;
-							mUIFocusTimer = 0.2f;
+							ResetFocusTimer();
 							break;
 						case 2:
 							if(!mAskingForConfirm)
 							{
 								mPauseButtonFocus =1;
-								mUIFocusTimer = 0.2f;
+								ResetFocusTimer();
 							}
 							else
 							{
 								mPauseButtonFocus = 3;
-								mUIFocusTimer = 0.2f;
+								ResetFocusTimer();
 							}
 							break;
 						case 3:
 							mPauseButtonFocus =2;
-							mUIFocusTimer = 0.2f;
+							ResetFocusTimer();
 							break;
 						default:
 							break;
@@ -157,7 +174,7 @@ public class PauseManager : MonoBehaviour
 					{
 						mAskingForConfirm = true;
 						mPauseButtonFocus = 3;
-						mUIFocusTimer = 0.2f;
+						ResetFocusTimer();
 					}
 					else
 					{
@@ -193,7 +210,7 @@ public class PauseManager : MonoBehaviour
 					{
 						mAskingForConfirm = false;
 						mPauseButtonFocus = 1;
-						mUIFocusTimer = 0.2f;
+						ResetFocusTimer();
 					}
 					break;
 				default:
@@ -248,6 +265,8 @@ public class PauseManager : MonoBehaviour
 				GUI.Box(new Rect(0,0, Screen.width,Screen.height),"");
 				if(mVolumeMenu == null || !mVolumeMenu.mMenuOpen)
 				{
+					GUI.Label(new Rect(Screen.width*0.39f, Screen.height*0.2f, Screen.width*0.22f, Screen.height*0.56f),"",mBlackBackStyle);
+
 					if(!mAskingForConfirm)
 					{
 						mPauseMenuStyle.normal.background = mContinueTex;//Set what texture to display for the button ~Adam
@@ -267,7 +286,7 @@ public class PauseManager : MonoBehaviour
 						{
 							mAskingForConfirm = true;
 							mPauseButtonFocus = 3;
-							mUIFocusTimer = 0.2f;
+							ResetFocusTimer();
 						}
 
 						mPauseMenuStyle.normal.background = mOptionsTex;//Set what texture to display for the button ~Adam
@@ -315,7 +334,7 @@ public class PauseManager : MonoBehaviour
 						{
 							mAskingForConfirm = false;
 							mPauseButtonFocus = 1;
-							mUIFocusTimer = 0.2f;
+							ResetFocusTimer();
 						}
 					}
 				}
@@ -352,7 +371,7 @@ public class PauseManager : MonoBehaviour
 		                {
 							mAskingForConfirm = true;
 							mPauseButtonFocus = 3;
-							mUIFocusTimer = 0.2f;
+							ResetFocusTimer();
 		                }
 		                mPauseMenuStyle.normal.background = mOptionsTex;
 		                mPauseMenuStyle.hover.background = mOptionsTexHighlight;
@@ -395,7 +414,7 @@ public class PauseManager : MonoBehaviour
 						{
 							mAskingForConfirm = false;
 							mPauseButtonFocus = 1;
-							mUIFocusTimer = 0.2f;
+							ResetFocusTimer();
 						}
 					}
 				}
@@ -495,5 +514,10 @@ public class PauseManager : MonoBehaviour
         }
         yield return null;
     }
+
+	void ResetFocusTimer()
+	{
+		mUIFocusTimer = 0.25f;
+	}
 
 }

@@ -18,6 +18,8 @@ public class MainMenuGUIFocusController : MonoBehaviour
 	//For opening/closing the volume control menu ~Adam
 	VolumeControlSliders mVolumeMenu;
 
+	[HideInInspector] public float mStartupTimer = 0f;
+
 	void Start()
 	{
 		mMainMenuButtonNames.Add("InsertCoin");//0
@@ -35,9 +37,24 @@ public class MainMenuGUIFocusController : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if(mUIFocusTimer > 0f)
+		if(mUIFocusTimer > 0f && Input.GetAxis ("Horizontal") == 0 && Input.GetAxis ("Vertical") == 0)
 		{
-			mUIFocusTimer -= Time.deltaTime;
+			//mUIFocusTimer -= Time.deltaTime;
+			if(mStartupTimer <= 0f)
+			{
+				mUIFocusTimer = -1f;
+			}
+			else
+			{
+				if(Time.timeScale != 0)
+				{
+					mStartupTimer -= Time.deltaTime;
+				}
+				else
+				{
+					mStartupTimer -= 0.01f;
+				}
+			}
 		}
 
 		if ( (Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Thrusters") || Input.GetButtonDown("FireGun") || (InputManager.ActiveDevice.Action1.IsPressed && mUIFocusTimer<=0f)) && !mVolumeMenu.mMenuOpen)
@@ -106,18 +123,18 @@ public class MainMenuGUIFocusController : MonoBehaviour
 				if(mMainMenuButtonFocus == 0 && mGameStarter.isActiveAndEnabled == true)
 				{
 					mMainMenuButtonFocus = 3;
-					mUIFocusTimer = 0.2f;
+					ResetFocusTimer();
 				}
 				//Move from Start Co-Op to Options
 				else if(mMainMenuButtonFocus == 2 && mGameStarter.isActiveAndEnabled == true)
 				{
 					mMainMenuButtonFocus = 3;
-					mUIFocusTimer = 0.2f;
+					ResetFocusTimer();
 				}//Move from Quit Game to Insert Coin ~Adam
 				else if (mMainMenuButtonFocus == 1)
 				{
 					mMainMenuButtonFocus = 0;
-					mUIFocusTimer = 0.2f;
+					ResetFocusTimer();
 				}
 			}
 
@@ -128,19 +145,19 @@ public class MainMenuGUIFocusController : MonoBehaviour
 				if(mMainMenuButtonFocus == 3 && mGameStarter.isActiveAndEnabled == true)
 				{
 					mMainMenuButtonFocus = 0;
-					mUIFocusTimer = 0.2f;
+					ResetFocusTimer();
 				}
 				//Move from Insert Coin to Quit Game ~Adam
 				else if(mMainMenuButtonFocus == 0)
 				{
 					mMainMenuButtonFocus = 1;
-					mUIFocusTimer = 0.2f;
+					ResetFocusTimer();
 				}
 				//Move from Start Co-Op to Quit Game ~Adam
 				else if(mMainMenuButtonFocus == 2)
 				{
 					mMainMenuButtonFocus = 1;
-					mUIFocusTimer = 0.2f;
+					ResetFocusTimer();
 				}
 			}
 
@@ -149,13 +166,13 @@ public class MainMenuGUIFocusController : MonoBehaviour
 			else if( ( (Input.GetAxis ("Vertical") < 0f || Input.GetAxis ("VerticalP2") < 0f || InputManager.ActiveDevice.DPadDown.IsPressed) && mUIFocusTimer<= 0f && mMainMenuButtonFocus == 0) && !Application.isMobilePlatform )
 			{
 				mMainMenuButtonFocus = 2;
-				mUIFocusTimer = 0.2f;
+				ResetFocusTimer();
 			}
 			//Move from focusing on CoOpStart to focusing on the "Insert Coin" (up) ~Adam
 			else if((Input.GetAxis ("Vertical") > 0f || Input.GetAxis ("VerticalP2") > 0f || InputManager.ActiveDevice.DPadUp.IsPressed) && mUIFocusTimer<= 0f && mMainMenuButtonFocus == 2)
 			{
 				mMainMenuButtonFocus = 0;
-				mUIFocusTimer = 0.2f;
+				ResetFocusTimer();
 			}
 
 
@@ -163,7 +180,7 @@ public class MainMenuGUIFocusController : MonoBehaviour
 			/*else if((Input.GetAxis ("Horizontal") < 0f || InputManager.ActiveDevice.DPadLeft.IsPressed) && mUIFocusTimer<= 0f && mMainMenuButtonFocus == 0)
 			{
 				mMainMenuButtonFocus = 2;
-				mUIFocusTimer = 0.2f;
+				ResetFocusTimer();
 			}*/
 
 			//Move from score reset to insert coin ~Adam
@@ -179,16 +196,21 @@ public class MainMenuGUIFocusController : MonoBehaviour
 				if(mMainMenuButtonFocus == 4)
 				{
 					mMainMenuButtonFocus = 5;
-					mUIFocusTimer = 0.2f;
+					ResetFocusTimer();
 				}
 				else if(mMainMenuButtonFocus == 5)
 				{
 					mMainMenuButtonFocus = 4;
-					mUIFocusTimer = 0.2f;
+					ResetFocusTimer();
 				}
 				
 			}*/
 		}
+	}//END of OnGUI()
+
+	void ResetFocusTimer()
+	{
+		mUIFocusTimer = 0.25f;
 	}
 
 }
