@@ -15,10 +15,10 @@ public class IndieGameCollider : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		transform.position = new Vector3(Random.Range (-10,10), Random.Range (0,20), -2);
+		transform.position = new Vector3(Random.Range (-10,10), Random.Range (0,20), -2); //Places at random position
 		if(FindObjectOfType<PlayerShipController>() != null)
 		{
-			while(Vector3.Distance (transform.position, FindObjectOfType<PlayerShipController>().transform.position) < 5f)
+			while(Vector3.Distance (transform.position, FindObjectOfType<PlayerShipController>().transform.position) < 5f) //Move down
 			{
 				transform.position = new Vector3(Random.Range (-10,10), Random.Range (0,20), -2);
 			}
@@ -42,7 +42,7 @@ public class IndieGameCollider : MonoBehaviour
 		{
 			Destroy(this.gameObject);
 		}
-		transform.Translate (Vector3.down* mDriftSpeed*Time.deltaTime);
+		transform.Translate (Vector3.down* mDriftSpeed*Time.deltaTime); //Move down
 
 	}
 
