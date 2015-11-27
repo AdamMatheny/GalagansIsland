@@ -7,6 +7,10 @@ using XInputDotNetPure; // Required in C#
 
 public class PlayerShipController : MonoBehaviour 
 {
+	public bool isHovering;
+
+	public bool isOnBottomY; //Just to check if on the bottom of the screen. If this takes up too much space, just remove this and where the floatiness is, just replace with the barrier statements.
+
 	public bool secondShipOnHip = true;
 
 	//For multiplayer co-op ~Adam
@@ -556,7 +560,14 @@ public class PlayerShipController : MonoBehaviour
 				}
 				if (mInputHorizontal == 0.0f)
 				{
-					mMoveDir = Vector3.Lerp(mMoveDir, new Vector3(0f,mMoveDir.y,0f), 0.4f);
+
+					if(isHovering || isOnBottomY){
+
+						mMoveDir = Vector3.Lerp(mMoveDir, new Vector3(0f,mMoveDir.y,0f), 0.4f);
+					}else{
+
+						mMoveDir = Vector3.Lerp(mMoveDir, new Vector3(0f,mMoveDir.y,0f), 0.1f);
+					}
 				}
 			}
 		}
@@ -660,12 +671,15 @@ public class PlayerShipController : MonoBehaviour
 		{
 			transform.position = new Vector3(24f, transform.position.y, transform.position.z);
 		}
-		if(transform.position.y < -29.5f && mShipRecovered && !secondShipOnHip) //Original is -33, but there is a new second ship position now ~ Jonathan
-		{
-			transform.position = new Vector3(transform.position.x, -29.5f, transform.position.z);
-		}else if(transform.position.y < -33f)
-		{
-			transform.position = new Vector3(transform.position.x, -33f, transform.position.z);
+		if (transform.position.y < -29.5f && mShipRecovered && !secondShipOnHip) { //Original is -33, but there is a new second ship position now ~ Jonathan
+			transform.position = new Vector3 (transform.position.x, -29.5f, transform.position.z);
+			isOnBottomY = true;
+		} else if (transform.position.y < -33f) {
+			isOnBottomY = true;
+			transform.position = new Vector3 (transform.position.x, -33f, transform.position.z);
+		} else {
+
+			isOnBottomY = false;
 		}
 		if (transform.position.y > 23f)
 		{
@@ -1117,44 +1131,37 @@ public class PlayerShipController : MonoBehaviour
 	//Thruster control for hovering ~Adam
 	protected virtual void TakeThrusterInput()
 	{
-		if(mPlayerInputDevice.Action2.IsPressed || mPlayerInputDevice.Action3.IsPressed || Input.GetButton("Thrusters"))
-		{
+		if (mPlayerInputDevice.Action2.IsPressed || mPlayerInputDevice.Action3.IsPressed || Input.GetButton ("Thrusters")) {
 			//Slow down movement while hovering~Adam
 			mMoveDir *= 0.95f;
+
+			isHovering = true;
 			
-			mDropSpeed -= mDropDeccelRate*3f;
-			if(mDropSpeed <= 0.01f)
-			{
+			mDropSpeed -= mDropDeccelRate * 3f;
+			if (mDropSpeed <= 0.01f) {
 				mDropSpeed = 0.00f;
 			}
 			
-			if(mMoveDir.y < -0.2f)
-			{
-				foreach (ParticleSystem shipTrail in this.GetComponentsInChildren<ParticleSystem>())
-				{
-					if(shipTrail.gameObject != mDamageParticles)
-					{
+			if (mMoveDir.y < -0.2f) {
+				foreach (ParticleSystem shipTrail in this.GetComponentsInChildren<ParticleSystem>()) {
+					if (shipTrail.gameObject != mDamageParticles) {
 						shipTrail.enableEmission = false;
 					}
 				}
-			}
-			else
-			{
-				foreach (ParticleSystem shipTrail in this.GetComponentsInChildren<ParticleSystem>())
-				{
-					if(shipTrail.gameObject != mDamageParticles)
-					{
-						if(!(mShipRecovered && !secondShipOnHip))
-						{
+			} else {
+				foreach (ParticleSystem shipTrail in this.GetComponentsInChildren<ParticleSystem>()) {
+					if (shipTrail.gameObject != mDamageParticles) {
+						if (!(mShipRecovered && !secondShipOnHip)) {
 							shipTrail.enableEmission = true;
-						}
-						else
-						{
+						} else {
 							shipTrail.enableEmission = false;
 						}
 					}
 				}
 			}
+		} else {
+
+			isHovering = false;
 		}
 		
 	}//END of TakeThrusterInput()

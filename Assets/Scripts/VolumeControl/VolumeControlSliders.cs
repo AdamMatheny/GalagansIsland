@@ -69,10 +69,10 @@ public class VolumeControlSliders : MonoBehaviour
 
 			if(mUIFocusTimer > 0f)
 			{
-				if(Input.GetAxis ("Vertical") == 0)
+				if(Input.GetAxis ("Vertical") == 0 && Input.GetAxis ("VerticalP2") == 0)
 				{
 					//mUIFocusTimer -= Time.deltaTime;
-					if(Input.GetAxis ("Horizontal") == 0)
+					if(Input.GetAxis ("Horizontal") == 0 && Input.GetAxis ("HorizontalP2") == 0)
 					{
 						mUIFocusTimer = -1f;
 					}

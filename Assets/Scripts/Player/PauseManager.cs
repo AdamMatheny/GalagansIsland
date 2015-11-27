@@ -67,7 +67,7 @@ public class PauseManager : MonoBehaviour
 			mVolumeMenu = FindObjectOfType<VolumeControlSliders>();
 		}
 
-		if(mUIFocusTimer > 0f && Input.GetAxis ("Vertical") == 0)
+		if(mUIFocusTimer > 0f && Input.GetAxisRaw ("Vertical") == 0 && Input.GetAxisRaw ("VerticalP2") == 0)
 		{
 			//mUIFocusTimer -= Time.deltaTime;
 			if(mStartupTimer <= 0f)

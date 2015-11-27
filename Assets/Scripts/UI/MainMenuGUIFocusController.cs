@@ -37,7 +37,7 @@ public class MainMenuGUIFocusController : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if(mUIFocusTimer > 0f && Input.GetAxis ("Horizontal") == 0 && Input.GetAxis ("Vertical") == 0)
+		if(mUIFocusTimer > 0f && Input.GetAxis ("Horizontal") == 0 && Input.GetAxis ("Vertical") == 0 && Input.GetAxis ("HorizontalP2") == 0 && Input.GetAxis ("VerticalP2") == 0)
 		{
 			//mUIFocusTimer -= Time.deltaTime;
 			if(mStartupTimer <= 0f)
