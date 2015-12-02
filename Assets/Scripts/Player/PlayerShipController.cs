@@ -659,17 +659,17 @@ public class PlayerShipController : MonoBehaviour
 	protected virtual void LateUpdate () 
 	{
 		//Keep ship within screen bounds
-		if (transform.position.x < -20.5 && mShipRecovered && secondShipOnHip)// && Application.isMobilePlatform) (from when we were doing twin-stick
+		if (transform.position.x < -23.5 && mShipRecovered && secondShipOnHip)// && Application.isMobilePlatform) (from when we were doing twin-stick
 		{
-			transform.position = new Vector3(-20.5f, transform.position.y, transform.position.z);
+			transform.position = new Vector3(-23.5f, transform.position.y, transform.position.z);
 		}																							//Second ship is in new position now ~ Jonathan
-		else if(transform.position.x < -24f)
+		else if(transform.position.x < -27f)
 		{
-			transform.position = new Vector3(-24f, transform.position.y, transform.position.z);
+			transform.position = new Vector3(-27f, transform.position.y, transform.position.z);
 		}
-		if (transform.position.x > 24f)
+		if (transform.position.x > 27f)
 		{
-			transform.position = new Vector3(24f, transform.position.y, transform.position.z);
+			transform.position = new Vector3(27f, transform.position.y, transform.position.z);
 		}
 		if (transform.position.y < -29.5f && mShipRecovered && !secondShipOnHip) { //Original is -33, but there is a new second ship position now ~ Jonathan
 			transform.position = new Vector3 (transform.position.x, -29.5f, transform.position.z);

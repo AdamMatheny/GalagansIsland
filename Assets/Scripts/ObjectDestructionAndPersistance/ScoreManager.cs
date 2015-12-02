@@ -297,7 +297,7 @@ public class ScoreManager : MonoBehaviour
 		default:
 			if(mLevelNames[Application.loadedLevel].Contains("Boss"))
 			{
-				mLevelInfoText.text =  "\n" + mLevelNames[Application.loadedLevel];
+				mLevelInfoText.text = mLevelNames[Application.loadedLevel];
 			}
 			else
 			{

@@ -23,10 +23,15 @@ public class ShieldEmblem : MonoBehaviour
 
 		if (other.tag == "SecondShip") 
 		{
-
+			if(FindObjectOfType<LevelKillCounter>() != null)
+			{
+				FindObjectOfType<LevelKillCounter>().mP1ShieldTime = 25f;
+				other.GetComponent<PlayerShipController>().mShieldTimer = 25f; 
+			}
 			other.GetComponentInParent<PlayerShipController> ().mShielded = true;
 			other.GetComponentInParent<PlayerShipController> ().mShieldTimer = 25f;
 			Destroy(this.gameObject);
+
 		}
 
 		if(other.GetComponent<PlayerShipController>() != null)
@@ -56,6 +61,7 @@ public class ShieldEmblem : MonoBehaviour
 					other.GetComponent<PlayerShipController>().mShieldTimer = 25f; 
 				}
 			}
+
 
 			if(FindObjectOfType<GetReady>() != null)
 			{
