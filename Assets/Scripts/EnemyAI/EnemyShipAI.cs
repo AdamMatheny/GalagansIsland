@@ -16,7 +16,7 @@ public class EnemyShipAI : MonoBehaviour
 
 	public bool mLimitedAutoFire = false;  //If True, then only a certain percentage of spawned enemies will be able to auto-fire
 	public float mLimitedShootingChance;  //Range from 0 to 1.0.  The chance that this spawned enemy will be able to auto-fire if the above variable is true
-
+	[SerializeField] private bool mFireWasLimited = false;
 	public GameObject mSecondaryBullet; //Fired upon death if a death shooter
 
 
@@ -149,10 +149,12 @@ public class EnemyShipAI : MonoBehaviour
 			if(shootRand < mLimitedShootingChance)
 			{
 				mShooter = true;
+				mFireWasLimited = false;
 			}
 			else
 			{
 				mShooter = false;
+				mFireWasLimited = true;
 			}
 		}
 
@@ -304,7 +306,7 @@ public class EnemyShipAI : MonoBehaviour
 		//For enemies that only fire while doing a loop(i.e. green) ~Adam
 		if(mLoopShooter)
 		{
-			if(mCurrentAIState == AIState.FlightLooping && mRetreating)
+			if(mCurrentAIState == AIState.FlightLooping && mRetreating && !mFireWasLimited )
 			{
 				mShooter = true;
 			}

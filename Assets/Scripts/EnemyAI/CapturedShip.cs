@@ -155,6 +155,8 @@ public class CapturedShip : MonoBehaviour
 			//Give the player a second ship, which can in turn be stolen back by grabber enemies -Adam
 			mPlayer.mShipStolen = false;
 			mPlayer.mShipRecovered = true;
+			mPlayer.mShieldTimer += 5f;
+			mPlayer.mShielded = true;
 			//Give a ship attached to the side of the main ship and make an effect as it spawns -Adam
 			Instantiate(mSecondShipSpawnEffect, mPlayer.mSecondShip.transform.position, Quaternion.identity);
 
