@@ -3,8 +3,11 @@ using System.Collections;
 
 public class SlowTimeController : MonoBehaviour 
 {
-	float mSlowTimeTimer = 0f; //how many FRAMES of slow time are left -Adam
-	bool mSlowTimeActive = false;
+	[HideInInspector] public float mSlowTimeTimer = 0f; //how many FRAMES of slow time are left -Adam
+	[HideInInspector] public bool mSlowTimeActive = false;
+
+	[HideInInspector] public float mSlowTimeScale = 1f;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -16,19 +19,22 @@ public class SlowTimeController : MonoBehaviour
 	{
 		if(mSlowTimeTimer <= 0f && mSlowTimeActive == true)
 		{
-			Time.timeScale = 1f;
+			//Time.timeScale = 1f;
+			mSlowTimeScale = 1f;
 			mSlowTimeActive = false;
 		}
 		else if (mSlowTimeActive)
 		{
-			mSlowTimeTimer -= 1f;
+			//mSlowTimeTimer -= 1f;
+			mSlowTimeTimer -= Time.deltaTime;
 		}
 	}
 
 	//Slow down the time scale for a certain number of FRAMES/Update() calls
 	public void SlowDownTime(float timeScaling, float slowDuration)
 	{
-		Time.timeScale = timeScaling;
+		//Time.timeScale = timeScaling;
+		mSlowTimeScale = timeScaling;
 		mSlowTimeTimer = slowDuration;
 		mSlowTimeActive = true;
 	}

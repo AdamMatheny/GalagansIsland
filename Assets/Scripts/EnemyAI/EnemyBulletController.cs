@@ -21,6 +21,11 @@ public class EnemyBulletController : MonoBehaviour
 
 	public bool mDestroyedByBombs = true;
 
+	//For handling slow-mo ~Adam
+	SlowTimeController mSlowTimeController = null; 
+	bool mIsSlow = false;
+	Vector3 standardVelocity = Vector3.zero;
+
 	public void Start()
 	{
 		mScoreController = FindObjectOfType<ScoreManager>();
@@ -39,6 +44,12 @@ public class EnemyBulletController : MonoBehaviour
 		}
 		#endregion
 		//Vector2 bulletForce;
+
+		//For slow-mo bullet dodging ~Adam
+		if(FindObjectOfType<SlowTimeController>() != null)
+		{
+			mSlowTimeController = FindObjectOfType<SlowTimeController>();
+		}
 
 		//Used for firing in a particular pattern (i.e. rotational pattern on boss horns)~Adam
 		if (mFixedFireDir) 
@@ -131,11 +142,19 @@ public class EnemyBulletController : MonoBehaviour
 
 
 		
-	}
+	}//END of Start()
 	
 	public virtual void Update()
 	{
 		mSelfDestructTimer -= Time.deltaTime;
+
+		//For slow-mo bullet dodging ~Adam
+		if(mSlowTimeController == null && FindObjectOfType<SlowTimeController>() != null)
+		{
+			mSlowTimeController = FindObjectOfType<SlowTimeController>();
+		}
+
+
 		if (mMoveTowardsPlayer) 
 		{
 
@@ -175,6 +194,22 @@ public class EnemyBulletController : MonoBehaviour
 
 		}
 
+		//Slow down for slow-mo dodge ~Adam
+		if(mSlowTimeController != null)
+		{
+			if(mSlowTimeController.mSlowTimeActive && !mIsSlow)
+			{
+				standardVelocity = GetComponent<Rigidbody>().velocity;
+				GetComponent<Rigidbody> ().velocity *= mSlowTimeController.mSlowTimeScale;
+				mIsSlow = true;
+			}
+			else if(!mSlowTimeController.mSlowTimeActive && mIsSlow)
+			{
+				GetComponent<Rigidbody>().velocity = standardVelocity;
+				mIsSlow = false;
+			}
+
+		}
 		//Self-destruct after a certain amount of time
 		if(mSelfDestructTimer<0.0f)
 		{
@@ -191,11 +226,11 @@ public class EnemyBulletController : MonoBehaviour
 		}
 
 		//Detect distance to player and slow down time if close but not quite hitting ~Adam
-		if (Vector3.Distance(this.transform.position, mPlayer.transform.position) <= 2.5f && mPlayer.activeInHierarchy)
+		if (Vector3.Distance(this.transform.position, mPlayer.transform.position) <= 3.5f && mPlayer.activeInHierarchy)
 		{
-			if(FindObjectOfType<SlowTimeController>()!= null)
+			if(mSlowTimeController!= null)
 			{
-				FindObjectOfType<SlowTimeController>().SlowDownTime(0.4f,1f);
+				mSlowTimeController.SlowDownTime(0.4f,1f);
 			}
 		}
 
@@ -216,11 +251,11 @@ public class EnemyBulletController : MonoBehaviour
 		if (mPlayer.GetComponent<PlayerShipController> ().mShipRecovered && mPlayer.activeInHierarchy) 
 		{
 
-			if(Vector3.Distance(this.transform.position, mPlayer.GetComponent<PlayerShipController> ().mSecondShip.transform.position) <= 2.5f){
+			if(Vector3.Distance(this.transform.position, mPlayer.GetComponent<PlayerShipController> ().mSecondShip.transform.position) <= 3.5f){
 
-				if(FindObjectOfType<SlowTimeController>()!= null)
+				if(mSlowTimeController!= null)
 				{
-					FindObjectOfType<SlowTimeController>().SlowDownTime(0.4f,1f);
+					mSlowTimeController.SlowDownTime(0.4f,1f);
 				}
 			}
 
