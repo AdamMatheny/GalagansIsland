@@ -24,7 +24,7 @@ public class EnemyBulletController : MonoBehaviour
 	//For handling slow-mo ~Adam
 	SlowTimeController mSlowTimeController = null; 
 	bool mIsSlow = false;
-	Vector3 standardVelocity = Vector3.zero;
+	Vector3 mStandardVelocity = Vector3.zero;
 
 	public void Start()
 	{
@@ -199,13 +199,13 @@ public class EnemyBulletController : MonoBehaviour
 		{
 			if(mSlowTimeController.mSlowTimeActive && !mIsSlow)
 			{
-				standardVelocity = GetComponent<Rigidbody>().velocity;
+				mStandardVelocity = GetComponent<Rigidbody>().velocity;
 				GetComponent<Rigidbody> ().velocity *= mSlowTimeController.mSlowTimeScale;
 				mIsSlow = true;
 			}
 			else if(!mSlowTimeController.mSlowTimeActive && mIsSlow)
 			{
-				GetComponent<Rigidbody>().velocity = standardVelocity;
+				GetComponent<Rigidbody>().velocity = mStandardVelocity;
 				mIsSlow = false;
 			}
 
@@ -226,7 +226,7 @@ public class EnemyBulletController : MonoBehaviour
 		}
 
 		//Detect distance to player and slow down time if close but not quite hitting ~Adam
-		if (Vector3.Distance(this.transform.position, mPlayer.transform.position) <= 3.5f && mPlayer.activeInHierarchy)
+		if (Vector3.Distance(this.transform.position, mPlayer.transform.position) <= 2.85f && mPlayer.activeInHierarchy)
 		{
 			if(mSlowTimeController!= null)
 			{
@@ -251,7 +251,7 @@ public class EnemyBulletController : MonoBehaviour
 		if (mPlayer.GetComponent<PlayerShipController> ().mShipRecovered && mPlayer.activeInHierarchy) 
 		{
 
-			if(Vector3.Distance(this.transform.position, mPlayer.GetComponent<PlayerShipController> ().mSecondShip.transform.position) <= 3.5f){
+			if(Vector3.Distance(this.transform.position, mPlayer.GetComponent<PlayerShipController> ().mSecondShip.transform.position) <= 2.85f){
 
 				if(mSlowTimeController!= null)
 				{

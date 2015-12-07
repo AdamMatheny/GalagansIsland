@@ -15,7 +15,7 @@ public class SlowTimeController : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () 
+	void FixedUpdate () 
 	{
 		if(mSlowTimeTimer <= 0f && mSlowTimeActive == true)
 		{
@@ -25,8 +25,8 @@ public class SlowTimeController : MonoBehaviour
 		}
 		else if (mSlowTimeActive)
 		{
-			//mSlowTimeTimer -= 1f;
-			mSlowTimeTimer -= Time.deltaTime;
+			mSlowTimeTimer -= .2f;
+			//mSlowTimeTimer -= Time.deltaTime;
 		}
 	}
 
