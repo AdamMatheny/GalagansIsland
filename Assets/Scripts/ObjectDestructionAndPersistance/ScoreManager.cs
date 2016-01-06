@@ -200,6 +200,12 @@ public class ScoreManager : MonoBehaviour
 				if(mPowerUpScore < mShieldScore)
 				{
 					float barAdjust = 1f*(mPowerUpInterval-(mPowerUpScore-mScore))/mPowerUpInterval;
+
+					if(mPowerUpScore == 400f)
+					{
+						barAdjust = 1f*((mScore))/mPowerUpScore;
+					}
+
 					if(barAdjust < 0f)
 					{
 						barAdjust = 0f;

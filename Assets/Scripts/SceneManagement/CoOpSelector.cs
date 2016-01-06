@@ -41,11 +41,18 @@ public class CoOpSelector : MonoBehaviour
 						Debug.Log("Activated Player 2");
 						GameObject.Find ("P1ShipEmotes").SetActive (false);
 						GameObject.Find("P2ShipUI").SetActive (true);
+						GameObject.Find("P1ShipUI").SetActive (true);
+						GameObject.Find("P1ShipUI_SPR").SetActive (false);
+						GameObject.Find("P1ShipUI_SPL").SetActive (false);
 					}
 					else
 					{
-						GameObject.Find ("P1ShipEmotes").SetActive (true);
+						Debug.Log ("No Player 2");
+						GameObject.Find ("P1ShipEmotes").SetActive (false);
 						GameObject.Find("P2ShipUI").SetActive (false);
+						GameObject.Find("P1ShipUI").SetActive (false);
+						GameObject.Find("P1ShipUI_SPR").SetActive (true);
+						GameObject.Find("P1ShipUI_SPL").SetActive (true);
 					}
 
 				}
@@ -53,8 +60,12 @@ public class CoOpSelector : MonoBehaviour
 			}
 			else
 			{
-				GameObject.Find ("P1ShipEmotes").SetActive (true);
+				Debug.Log ("No Player 2");
+				GameObject.Find ("P1ShipEmotes").SetActive (false);
 				GameObject.Find("P2ShipUI").SetActive (false);
+				GameObject.Find("P1ShipUI").SetActive (false);
+				GameObject.Find("P1ShipUI_SPR").SetActive (true);
+				GameObject.Find("P1ShipUI_SPL").SetActive (true);
 			}
 			//Delete self so that we don't get duplicate copies of the object piling up on the main menu scene ~Adam
 			Debug.Log("Destroying CoOp selector");

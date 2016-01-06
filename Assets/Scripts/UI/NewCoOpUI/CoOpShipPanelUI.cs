@@ -26,7 +26,11 @@ public class CoOpShipPanelUI : MonoBehaviour
 	public Text mShieldedLabel;
 
 	public Image mOverheatBar;
-	public Image mTripleTimerBar;
+	public Image[] mTripleTimerBar;
+	public Image mFireRateBar;
+	public Image mSpeedBar;
+
+
 
 	public Text mScoreText;
 
@@ -138,6 +142,9 @@ public class CoOpShipPanelUI : MonoBehaviour
 				mTripleTimerValue = 0f;
 			}
 
+			mFireRateBar.fillAmount = (mP1Ship.mFireUpgrade-0.6f)/0.4f;
+			mSpeedBar.fillAmount = (mP1Ship.mMoveUpgrade-0.6f)/0.4f;
+
 			//Adjust Claw/Wing graphics based on damage/upgrade status ~Adam
 			if(mP1Ship.mFireUpgrade < 0.8f)
 			{
@@ -214,6 +221,9 @@ public class CoOpShipPanelUI : MonoBehaviour
 				mTripleTimerValue = 1f;
 			}
 
+			mFireRateBar.fillAmount = (mP2Ship.mFireUpgrade-0.6f)/0.4f;
+			mSpeedBar.fillAmount = (mP2Ship.mMoveUpgrade-0.6f)/0.4f;
+
 			//Adjust Claw/Wing graphics based on damage/upgrade status ~Adam
 			if(mP2Ship.mFireUpgrade < 0.8f)
 			{
@@ -288,7 +298,8 @@ public class CoOpShipPanelUI : MonoBehaviour
 		}
 
 		//Set the bar sizes ~Adam
-		mHealthBar.rectTransform.localScale = new Vector3(mHealthValue, 1f,1f);
+		//mHealthBar.rectTransform.localScale = new Vector3(mHealthValue, 1f,1f);
+		mHealthBar.fillAmount = mHealthValue;
 		//mShieldBar.rectTransform.localScale = new Vector3(mShieldValue, 1f,1f);
 		mShieldCircleBar.fillAmount = mShieldValue;
 		if(mShieldValue > 0f)
@@ -319,7 +330,63 @@ public class CoOpShipPanelUI : MonoBehaviour
 		{
 			mShieldedLabel.gameObject.SetActive (false);
 		}
-		mOverheatBar.rectTransform.localScale = new Vector3(mOverheatValue, 1f,1f);
-		mTripleTimerBar.rectTransform.localScale = new Vector3(mTripleTimerValue, 1f,1f);
+		//mOverheatBar.rectTransform.localScale = new Vector3(mOverheatValue, 1f,1f);
+		mOverheatBar.fillAmount = mOverheatValue;
+		//mTripleTimerBar.rectTransform.localScale = new Vector3(mTripleTimerValue, 1f,1f);
+		if(mTripleTimerValue > 0.75f)
+		{
+			mTripleTimerBar[0].fillAmount = (mTripleTimerValue-0.75f)/0.25f;
+			mTripleTimerBar[1].fillAmount = (mTripleTimerValue-0.75f)/0.25f;
+			mTripleTimerBar[2].fillAmount = 1f;
+			mTripleTimerBar[3].fillAmount = 1f;
+			mTripleTimerBar[4].fillAmount = 1f;
+			mTripleTimerBar[5].fillAmount = 1f;
+			mTripleTimerBar[6].fillAmount = 1f;
+			mTripleTimerBar[7].fillAmount = 1f;
+		}
+		else if(mTripleTimerValue > 0.5f)
+		{
+			mTripleTimerBar[0].fillAmount = 0f;
+			mTripleTimerBar[1].fillAmount = 0f;
+			mTripleTimerBar[2].fillAmount = (mTripleTimerValue-0.5f)/0.25f;
+			mTripleTimerBar[3].fillAmount = (mTripleTimerValue-0.5f)/0.25f;
+			mTripleTimerBar[4].fillAmount = 1f;
+			mTripleTimerBar[5].fillAmount = 1f;
+			mTripleTimerBar[6].fillAmount = 1f;
+			mTripleTimerBar[7].fillAmount = 1f;
+		}
+		else if(mTripleTimerValue > 0.25f)
+		{
+			mTripleTimerBar[0].fillAmount = 0f;
+			mTripleTimerBar[1].fillAmount = 0f;
+			mTripleTimerBar[2].fillAmount = 0f;
+			mTripleTimerBar[3].fillAmount = 0f;
+			mTripleTimerBar[4].fillAmount = (mTripleTimerValue-0.25f)/0.25f;
+			mTripleTimerBar[5].fillAmount = (mTripleTimerValue-0.25f)/0.25f;
+			mTripleTimerBar[6].fillAmount = 1f;
+			mTripleTimerBar[7].fillAmount = 1f;
+		}
+		else if(mTripleTimerValue > 0f)
+		{
+			mTripleTimerBar[0].fillAmount = 0f;
+			mTripleTimerBar[1].fillAmount = 0f;
+			mTripleTimerBar[2].fillAmount = 0f;
+			mTripleTimerBar[3].fillAmount = 0f;
+			mTripleTimerBar[4].fillAmount = 0f;
+			mTripleTimerBar[5].fillAmount = 0f;
+			mTripleTimerBar[6].fillAmount = (mTripleTimerValue)/0.25f;
+			mTripleTimerBar[7].fillAmount = (mTripleTimerValue)/0.25f;
+		}
+		else
+		{
+			mTripleTimerBar[0].fillAmount = 0f;
+			mTripleTimerBar[1].fillAmount = 0f;
+			mTripleTimerBar[2].fillAmount = 0f;
+			mTripleTimerBar[3].fillAmount = 0f;
+			mTripleTimerBar[4].fillAmount = 0f;
+			mTripleTimerBar[5].fillAmount = 0f;
+			mTripleTimerBar[6].fillAmount = 0f;
+			mTripleTimerBar[7].fillAmount = 0f;
+		}
 	}
 }
