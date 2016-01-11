@@ -7,7 +7,8 @@ public class CoOpSelector : MonoBehaviour
 {
 	public bool mCoOpEnabled = false;
 
-	
+	public bool mTutorialSelector = false;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -23,7 +24,7 @@ public class CoOpSelector : MonoBehaviour
 	void Update () 
 	{
 		//Once we're actually in-game, enable the sencond player if co-op is enabled. ~Adam
-		if(Application.loadedLevel != 0)
+		if(Application.loadedLevel != 0 && !(mTutorialSelector && Application.loadedLevelName =="Tutorial") )
 		{
 			Debug.Log ("Not on title screen!");
 			if(mCoOpEnabled)

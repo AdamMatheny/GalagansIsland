@@ -23,7 +23,7 @@ public class LevelKillCounter : MonoBehaviour
 
 	[SerializeField] private GUIStyle mLevelCompleteStyle;
 
-	[SerializeField] private bool mRemainingEnemy;
+	public bool mRemainingEnemy;
 
 	//Keep levels from ending too early~Adam
 	[SerializeField] private float mMinimumLeaveTime = 20f;

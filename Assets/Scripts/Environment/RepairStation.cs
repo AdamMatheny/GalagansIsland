@@ -4,8 +4,8 @@ using Assets.Scripts.Achievements;
 
 public class RepairStation : MonoBehaviour 
 {
-	bool mServicedP1 = false;
-	bool mServicedP2 = false;
+	public bool mServicedP1 = false;
+	public bool mServicedP2 = false;
 	public float mDriftSpeed = 9.2f;
 	[SerializeField] private Animator mAnimator;
 	[SerializeField] private GameObject mReadyGetter;

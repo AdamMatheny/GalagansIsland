@@ -42,6 +42,9 @@ public class GetSome : MonoBehaviour
 
 	//For showing the controls screen as a "loading screen" during startup ~Adam
 	[SerializeField] private GameObject mControlsScreen;
+
+	[SerializeField] private GameObject mTutorialMenu;
+
 	void Start()
 	{
 		//For managing mini games ~Adam
@@ -52,6 +55,8 @@ public class GetSome : MonoBehaviour
 //		transform.position = new Vector3(-0.3f, -34f, -16.5f);
 		AudioListener.volume =  1f;
 		mVolumeMenu = FindObjectOfType<VolumeControlSliders>();
+		//PlayerPrefs.SetInt("PlayedTutorial", 0);
+
 	}
 
 	void Update()
@@ -66,13 +71,22 @@ public class GetSome : MonoBehaviour
 
 			if(mGameStartTimer <= 0f)
 			{
-
+				//Show the Controls Screen ~Adam
 				mControlsScreen.SetActive (true);
 
 				if(Input.GetButtonDown("FireGun") || Input.GetButtonDown("FireGunP2") ||InputManager.ActiveDevice.Action1.WasPressed ||InputManager.ActiveDevice.Action4.WasPressed)
 				{
 					Time.timeScale = 1f;
-					Application.LoadLevel(1);
+					//Decide whether or not to load the Tutorial ~Adam
+					if(FindObjectOfType<CoOpSelector>() != null && !FindObjectOfType<CoOpSelector>().mCoOpEnabled && !Application.isMobilePlatform && PlayerPrefs.GetInt ("PlayedTutorial") == 0)
+					{
+						mTutorialMenu.SetActive(true);
+						this.gameObject.SetActive (false);
+					}
+					else
+					{
+						Application.LoadLevel(1);
+					}
 				}
 			}
 		}

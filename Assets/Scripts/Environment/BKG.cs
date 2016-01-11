@@ -17,7 +17,7 @@ public class BKG : MonoBehaviour
 	//For making the scrolling persist between levels ~Adam
 	[SerializeField] private ScoreManager mScoreManager;
 	[SerializeField] private bool mCheckLastOffset = true;
-	[SerializeField] private bool mFadeAway = false;
+	public bool mFadeAway = false;
 	[SerializeField] private bool mFirstOfKind = false;
 
 	//For setting how far the background can scroll horizontally ~Adam
