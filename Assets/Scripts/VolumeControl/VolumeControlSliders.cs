@@ -15,7 +15,8 @@ public class VolumeControlSliders : MonoBehaviour
 		/* 0: SFX
 		 * 1: BGM
 		 * 2: Rumble
-		 * 3: Back
+		 * 3: Tutorial
+		 * 4: Back
 		 */
 	[SerializeField] private Text mSFXText;
 	[SerializeField] private Slider mSFXSliderBar;
@@ -28,6 +29,10 @@ public class VolumeControlSliders : MonoBehaviour
 	[SerializeField] private Text mRumbleSelect;
 	[SerializeField] private Text mRumbleOn;
 	[SerializeField] private Text mRumbleOff;
+
+
+	[SerializeField] private Text mTutorialText;
+	[SerializeField] private Image mTutorialBox;
 
 	[SerializeField] private Color mNormalColor;
 	[SerializeField] private Color mFocusColor;
@@ -99,16 +104,30 @@ public class VolumeControlSliders : MonoBehaviour
 
 
 				
-				//Control the "Back" button
 				if(mUIFocusTimer <= 0f)
 				{
+					//Control the "Back" button
 
-					if (Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Thrusters") || Input.GetButtonDown("FireGun") || (InputManager.ActiveDevice.Action1.IsPressed))
+					if (Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Thrusters") || Input.GetButtonDown("FireGun") || (InputManager.ActiveDevice.Action1.WasPressed))
 					{
-						if(mMenuFocus == 3)
+						if(mMenuFocus == 4)
 						{
 							CloseVolumeMenu();
 						}
+						if(mMenuFocus == 3)
+						{
+							if(PlayerPrefs.GetInt ("PlayedTutorial") == 0)
+							{
+								PlayerPrefs.SetInt ("PlayedTutorial", 1);
+							}
+							else
+							{
+								PlayerPrefs.SetInt ("PlayedTutorial", 0);
+								ResetFocusTimer();
+
+							}
+						}
+
 					}
 					
 					
@@ -137,6 +156,8 @@ public class VolumeControlSliders : MonoBehaviour
 							PlayerPrefs.SetInt("RumbleOn", 1);
 							break;
 						case 3:
+							break;
+						case 4:
 							break;
 						default:
 							break;
@@ -190,7 +211,7 @@ public class VolumeControlSliders : MonoBehaviour
 							if(Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.OSXWebPlayer
 							   || Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.OSXDashboardPlayer)
 							{
-								mMenuFocus = 3;
+								mMenuFocus = 4;
 							}
 							else
 							{
@@ -203,6 +224,10 @@ public class VolumeControlSliders : MonoBehaviour
 							ResetFocusTimer();
 							break;
 						case 3:
+							mMenuFocus = 4;
+							ResetFocusTimer();
+							break;
+						case 4:
 							break;
 						default:
 							break;
@@ -237,6 +262,10 @@ public class VolumeControlSliders : MonoBehaviour
 							}
 							ResetFocusTimer();
 							break;
+						case 4:
+							mMenuFocus = 3;
+							ResetFocusTimer();
+							break;
 						default:
 							break;
 						}	
@@ -253,6 +282,7 @@ public class VolumeControlSliders : MonoBehaviour
 						mBGMSliderFill.color = mNormalColor;
 						mBackButton.color = mNormalColor;
 						mRumbleSelect.color = mNormalColor;
+						mTutorialText.color = mNormalColor;
 						break;
 					case 1:
 						mSFXText.color = mNormalColor;
@@ -261,6 +291,7 @@ public class VolumeControlSliders : MonoBehaviour
 						mBGMSliderFill.color = mFocusColor;
 						mBackButton.color = mNormalColor;
 						mRumbleSelect.color = mNormalColor;
+						mTutorialText.color = mNormalColor;
 						break;
 					case 2:
 						mSFXText.color = mNormalColor;
@@ -269,14 +300,25 @@ public class VolumeControlSliders : MonoBehaviour
 						mBGMSliderFill.color = mNormalColor;
 						mBackButton.color = mNormalColor;
 						mRumbleSelect.color = mFocusColor;
+						mTutorialText.color = mNormalColor;
 						break;
 					case 3:
 						mSFXText.color = mNormalColor;
 						mSFXSliderFill.color = mNormalColor;
 						mBGMText.color = mNormalColor;
 						mBGMSliderFill.color = mNormalColor;
+						mBackButton.color = mNormalColor;
+						mRumbleSelect.color = mNormalColor;
+						mTutorialText.color = mFocusColor;
+						break;
+					case 4:
+						mSFXText.color = mNormalColor;
+						mSFXSliderFill.color = mNormalColor;
+						mBGMText.color = mNormalColor;
+						mBGMSliderFill.color = mNormalColor;
 						mBackButton.color = mFocusColor;
 						mRumbleSelect.color = mNormalColor;
+						mTutorialText.color = mNormalColor;
 						break;
 					default:
 						break;
@@ -291,6 +333,14 @@ public class VolumeControlSliders : MonoBehaviour
 				{
 					mRumbleOff.color = mNormalColor;
 					mRumbleOn.color = mFocusColor;
+				}
+				if(PlayerPrefs.GetInt ("PlayedTutorial") == 0)
+				{
+					mTutorialBox.enabled = true;
+				}
+				else
+				{
+					mTutorialBox.enabled = false;
 				}
 
 			}

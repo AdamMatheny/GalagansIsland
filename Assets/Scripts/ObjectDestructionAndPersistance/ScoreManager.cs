@@ -301,7 +301,7 @@ public class ScoreManager : MonoBehaviour
 			mLevelInfoText.text = " \nGame Over";
 			break;
 		default:
-			if(mLevelNames[Application.loadedLevel].Contains("Boss"))
+			if(mLevelNames.Length > Application.loadedLevel && mLevelNames[Application.loadedLevel].Contains("Boss"))
 			{
 				mLevelInfoText.text = mLevelNames[Application.loadedLevel];
 			}

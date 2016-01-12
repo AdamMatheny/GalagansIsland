@@ -4,7 +4,7 @@ using System.Collections;
 public class TutorialShipPositionTracker : MonoBehaviour 
 {
 	[SerializeField] private GameObject mP1Ship;
-	Vector3 mShipPos = Vector3.zero;
+	[SerializeField] private Vector3 mShipPos = Vector3.zero;
 
 	
 	// Update is called once per frame
@@ -27,11 +27,13 @@ public class TutorialShipPositionTracker : MonoBehaviour
 			else if (Application.loadedLevel == 1)
 			{
 				mP1Ship.transform.position = mShipPos;
+				Debug.Log ("Repositioned Ship");
 				Destroy (this.gameObject);
 			}
 		}
 		if(Application.loadedLevelName != "Tutorial" && Application.loadedLevel != 1)
 		{
+			Debug.Log ("Dying because wrong scene");
 			Destroy (this.gameObject);
 		}
 

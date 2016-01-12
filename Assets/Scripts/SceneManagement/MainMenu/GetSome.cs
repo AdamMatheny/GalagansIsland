@@ -80,8 +80,9 @@ public class GetSome : MonoBehaviour
 					//Decide whether or not to load the Tutorial ~Adam
 					if(FindObjectOfType<CoOpSelector>() != null && !FindObjectOfType<CoOpSelector>().mCoOpEnabled && !Application.isMobilePlatform && PlayerPrefs.GetInt ("PlayedTutorial") == 0)
 					{
-						mTutorialMenu.SetActive(true);
-						this.gameObject.SetActive (false);
+//						mTutorialMenu.SetActive(true);
+//						this.gameObject.SetActive (false);
+						Application.LoadLevel("Tutorial");
 					}
 					else
 					{
