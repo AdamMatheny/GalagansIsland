@@ -321,19 +321,9 @@ public class EnemyShipAI : MonoBehaviour
 		   && (transform.position.y <= 24f && transform.position.y >= -33f)
 		   && (transform.position.x <= 24f && transform.position.y >= -24f))
 		{
-			//Fire automatically if set to do so ~Adam
-			if(mShooter && mAutoShoot && mPlayer.GetComponent<PlayerShipController>().enabled == true)
+			//Limit the ability to shoot while attacking ~Adam
+			if( mAttackShooter && mCurrentAIState == AIState.Attacking && Random.value < 0.2f )
 			{
-				//Play animation for firing (or skip straight to firing if no animation) ~Adam
-				if(mAnimator != null)
-				{
-					mAnimator.Play("Shoot");
-					if(mGrabber){ShootEnemyBullet();}
-				}
-				else
-				{
-					ShootEnemyBullet();
-				}
 				//Whether the timer is randomized or not ~Adam
 				if(mRandomShootTimer)
 				{
@@ -344,28 +334,54 @@ public class EnemyShipAI : MonoBehaviour
 					mShootTimer = mShootTimerDefault;
 				}
 			}
-			//Otherwise, instantiate an enemy bullet if the player is below this enemy `Adam
-			else if (mShooter && Mathf.Abs(mPlayer.position.x - transform.position.x) <= 2f)
+			else
 			{
-				//Play animation for firing (or skip straight to firing if no animation) ~Adam
-				if(mAnimator != null)
+				//Fire automatically if set to do so ~Adam
+				if(mShooter && mAutoShoot && mPlayer.GetComponent<PlayerShipController>().enabled == true)
 				{
-					mAnimator.Play("Shoot");
-					if(mGrabber){ShootEnemyBullet();}
+					//Play animation for firing (or skip straight to firing if no animation) ~Adam
+					if(mAnimator != null)
+					{
+						mAnimator.Play("Shoot");
+						if(mGrabber){ShootEnemyBullet();}
+					}
+					else
+					{
+						ShootEnemyBullet();
+					}
+					//Whether the timer is randomized or not ~Adam
+					if(mRandomShootTimer)
+					{
+						mShootTimer = Random.Range(mShootTimerDefault/2f, mShootTimerDefault);
+					}
+					else
+					{
+						mShootTimer = mShootTimerDefault;
+					}
 				}
-				else
+				//Otherwise, instantiate an enemy bullet if the player is below this enemy `Adam
+				else if (mShooter && Mathf.Abs(mPlayer.position.x - transform.position.x) <= 2f)
 				{
-					ShootEnemyBullet();
+					//Play animation for firing (or skip straight to firing if no animation) ~Adam
+					if(mAnimator != null)
+					{
+						mAnimator.Play("Shoot");
+						if(mGrabber){ShootEnemyBullet();}
+					}
+					else
+					{
+						ShootEnemyBullet();
+					}
+					//Whether the timer is randomized or not `Adam
+					if(mRandomShootTimer)
+					{
+						mShootTimer = Random.Range(mShootTimerDefault/2f, mShootTimerDefault);
+					}
+					else
+					{
+						mShootTimer = mShootTimerDefault;
+					}			
 				}
-				//Whether the timer is randomized or not `Adam
-				if(mRandomShootTimer)
-				{
-					mShootTimer = Random.Range(mShootTimerDefault/2f, mShootTimerDefault);
-				}
-				else
-				{
-					mShootTimer = mShootTimerDefault;
-				}			
 			}
 		}
 	
