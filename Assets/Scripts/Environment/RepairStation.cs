@@ -127,7 +127,7 @@ public class RepairStation : MonoBehaviour
 	                AchievementManager.instance.UpgradeOnlySpeed.ResetValue();
 				}
 				//Upgrade fire rate ~Adam
-				other.GetComponent<PlayerShipController>().mFireUpgrade += 0.3f;
+				other.GetComponent<PlayerShipController>().mFireUpgrade += 0.25f;
 				if(other.GetComponent<PlayerShipController>().mFireUpgrade > 1.0f)
 				{
 					other.GetComponent<PlayerShipController>().mFireUpgrade = 1.0f;
@@ -194,7 +194,7 @@ public class RepairStation : MonoBehaviour
 				//Play animation ~Adam
 				mAnimator.Play ("FireDoor");
 				//Upgrade fire rate ~Adam
-				other.GetComponent<PlayerTwoShipController>().mFireUpgrade += 0.3f;
+				other.GetComponent<PlayerTwoShipController>().mFireUpgrade += 0.25f;
 				if(other.GetComponent<PlayerShipController>().mFireUpgrade > 1.0f)
 				{
 					other.GetComponent<PlayerShipController>().mFireUpgrade = 1.0f;

@@ -43,6 +43,7 @@ public class GetSome : MonoBehaviour
 	//For showing the controls screen as a "loading screen" during startup ~Adam
 	[SerializeField] private GameObject mControlsScreen;
 
+	[SerializeField] private GameObject mCheckPointMenu;
 	[SerializeField] private GameObject mTutorialMenu;
 
 	void Start()
@@ -77,17 +78,45 @@ public class GetSome : MonoBehaviour
 				if(Input.GetButtonDown("FireGun") || Input.GetButtonDown("FireGunP2") ||InputManager.ActiveDevice.Action1.WasPressed ||InputManager.ActiveDevice.Action4.WasPressed)
 				{
 					Time.timeScale = 1f;
-					//Decide whether or not to load the Tutorial ~Adam
-					if(FindObjectOfType<CoOpSelector>() != null && !FindObjectOfType<CoOpSelector>().mCoOpEnabled && !Application.isMobilePlatform && PlayerPrefs.GetInt ("PlayedTutorial") == 0)
+					#region Figure out which level to load first ~Adam
+
+					//If single player ~Adam
+					if(FindObjectOfType<CoOpSelector>() != null && !FindObjectOfType<CoOpSelector>().mCoOpEnabled)
 					{
-//						mTutorialMenu.SetActive(true);
-//						this.gameObject.SetActive (false);
-						Application.LoadLevel("Tutorial");
+
+						if(PlayerPrefs.GetInt("CheckPointedLevel") != 0)
+						{
+							mCheckPointMenu.SetActive (true);
+							this.gameObject.SetActive (false);
+							//Application.LoadLevel( PlayerPrefs.GetInt("CheckPointedLevel") );
+						}
+						//Load the tutorial if it's set to run ~Adam
+						else if(!Application.isMobilePlatform && PlayerPrefs.GetInt ("PlayedTutorial") == 0)
+						{
+							mTutorialMenu.SetActive(true);
+							this.gameObject.SetActive (false);
+							//Application.LoadLevel("Tutorial");
+						}
+						//Load level 1 if there isn't a checkpoint set ~Adam
+						else
+						{
+							Application.LoadLevel(1);
+						}
+						//Load the checkpointed level ~Adam
+
 					}
-					else
+					//If co-op mode, load level 1 ~Adam
+					else if(FindObjectOfType<CoOpSelector>() != null && FindObjectOfType<CoOpSelector>().mCoOpEnabled)
 					{
 						Application.LoadLevel(1);
 					}
+					//Default to loading Level 1 (this should never get triggered) ~Adam
+					else
+					{
+						Debug.Log ("CoOpSelector not found.  Something is wrong.");
+						Application.LoadLevel(1);
+					}
+					#endregion
 				}
 			}
 		}
@@ -126,24 +155,6 @@ public class GetSome : MonoBehaviour
 
 	void OnGUI()
 	{
-
-		//This is from when we used to flash the color for "Insert Coin"
-//		mTextColorTimer+= Time.deltaTime;
-//		if(mTextColorTimer >= 1.5f)
-//		{
-//			mTextColorTimer = 0f;
-//			mGetSomeStyle.normal.background = mBlueCoinText;
-//			mGetSomeStyle.hover.background = mBlueCoinTextBig;
-//			mGetSomeStyle.active.background = mBlueCoinTextBig;
-//			mGetSomeStyle.focused.background = mBlueCoinTextBig;
-//		}
-//		else if(mTextColorTimer >= 0.75f)
-//		{
-//			mGetSomeStyle.normal.background = mPinkCoinText;
-//			mGetSomeStyle.hover.background = mPinkCoinTextBig;
-//			mGetSomeStyle.active.background = mPinkCoinTextBig;
-//			mGetSomeStyle.focused.background = mPinkCoinTextBig;
-//		}
 
 		if(!mStartingGame)
 		{

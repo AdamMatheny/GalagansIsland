@@ -19,6 +19,8 @@ public class PlayerTwoShipController : PlayerShipController
 		if(FindObjectOfType<ScoreManager>() != null)
 		{
 			mScoreMan = FindObjectOfType<ScoreManager>();
+			mPauseMan = mScoreMan.gameObject.GetComponent<PauseManager>();
+
 		}
 
 
@@ -78,15 +80,15 @@ public class PlayerTwoShipController : PlayerShipController
 				mPlayerOne = FindObjectOfType<PlayerOneShipController>();
 			}
 		}
-		//Enable pausing if player one is dead ~Adam
-		if(mPlayerOne == null || !mPlayerOne.gameObject.activeInHierarchy)
-		{
-			GetComponent<PauseManager>().enabled = true;
-		}
-		else
-		{
-			GetComponent<PauseManager>().enabled = false;
-		}
+//		//Enable pausing if player one is dead ~Adam
+//		if(mPlayerOne == null || !mPlayerOne.gameObject.activeInHierarchy)
+//		{
+//			GetComponent<PauseManager>().enabled = true;
+//		}
+//		else
+//		{
+//			GetComponent<PauseManager>().enabled = false;
+//		}
 		base.Update();
 		
 

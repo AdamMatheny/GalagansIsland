@@ -54,371 +54,376 @@ public class PauseManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-//		if(Input.GetAxis ("Vertical") < 0)
-//		{
-//			Debug.Log("Down button pressed");
-//		}
-//		else if(Input.GetAxis ("Vertical") > 0)
-//		{
-//			Debug.Log("Up button pressed");
-//		}
-		if(mVolumeMenu == null)
+		if(this.enabled)
 		{
-			mVolumeMenu = FindObjectOfType<VolumeControlSliders>();
-		}
-
-		if(mUIFocusTimer > 0f && Input.GetAxisRaw ("Vertical") == 0 && Input.GetAxisRaw ("VerticalP2") == 0)
-		{
-			//mUIFocusTimer -= Time.deltaTime;
-			if(mStartupTimer <= 0f)
+	//		if(Input.GetAxis ("Vertical") < 0)
+	//		{
+	//			Debug.Log("Down button pressed");
+	//		}
+	//		else if(Input.GetAxis ("Vertical") > 0)
+	//		{
+	//			Debug.Log("Up button pressed");
+	//		}
+			if(mVolumeMenu == null)
 			{
-				mUIFocusTimer = -1f;
+				mVolumeMenu = FindObjectOfType<VolumeControlSliders>();
 			}
-			else
+
+			if(mUIFocusTimer > 0f && Input.GetAxisRaw ("Vertical") == 0 && Input.GetAxisRaw ("VerticalP2") == 0)
 			{
-				if(Time.timeScale != 0)
+				//mUIFocusTimer -= Time.deltaTime;
+				if(mStartupTimer <= 0f)
 				{
-					mStartupTimer -= Time.deltaTime;
+					mUIFocusTimer = -1f;
 				}
 				else
 				{
-					mStartupTimer -= 0.01f;
+					if(Time.timeScale != 0)
+					{
+						mStartupTimer -= Time.deltaTime;
+					}
+					else
+					{
+						mStartupTimer -= 0.01f;
+					}
 				}
 			}
-		}
 
-		if (Time.timeScale == 1) 
-		{
+			if (Time.timeScale == 1) 
+			{
 
-			//Cursor.visible = false;
-		} 
-		else if(Time.timeScale == 0 && (mVolumeMenu == null || !mVolumeMenu.mMenuOpen) )
-		{
+				//Cursor.visible = false;
+			} 
+			else if(Time.timeScale == 0 && (mVolumeMenu == null || !mVolumeMenu.mMenuOpen) )
+			{
 
-			//if(Input.GetButtonDown("Vertical"))
-			//{
-				//For using keyboard/Gamepad to navigate pause menu ~Adam
-				if(mUIFocusTimer <= 0f)
-				{
-				if(Input.GetAxisRaw ("Vertical") < 0 || Input.GetAxisRaw ("VerticalP2") < 0 || InputManager.ActiveDevice.DPadDown.WasPressed)
+				//if(Input.GetButtonDown("Vertical"))
+				//{
+					//For using keyboard/Gamepad to navigate pause menu ~Adam
+					if(mUIFocusTimer <= 0f)
 					{
-					Debug.Log("Down button pressed");
-						switch(mPauseButtonFocus)
+					if(Input.GetAxisRaw ("Vertical") < 0 || Input.GetAxisRaw ("VerticalP2") < 0 || InputManager.ActiveDevice.DPadDown.WasPressed)
 						{
-						case 1:
-							mPauseButtonFocus = 2;
-							ResetFocusTimer();
-							break;
-						case 2:
-							mPauseButtonFocus = 3;
-							ResetFocusTimer();
-							break;
-						case 3:
-							if(!mAskingForConfirm)
+						Debug.Log("Down button pressed");
+							switch(mPauseButtonFocus)
 							{
-								mPauseButtonFocus = 1;
-								ResetFocusTimer();
-							}
-							else
-							{
+							case 1:
 								mPauseButtonFocus = 2;
 								ResetFocusTimer();
-							}
-							break;
-						default:
-							break;
-						}
-					}
-				else if(Input.GetAxisRaw ("Vertical") > 0 || Input.GetAxisRaw ("VerticalP2") > 0 || InputManager.ActiveDevice.DPadUp.WasPressed)
-					{
-					Debug.Log("Up button pressed");
-					switch(mPauseButtonFocus)
-						{
-						case 1:
-							mPauseButtonFocus = 3;
-							ResetFocusTimer();
-							break;
-						case 2:
-							if(!mAskingForConfirm)
-							{
-								mPauseButtonFocus =1;
-								ResetFocusTimer();
-							}
-							else
-							{
+								break;
+							case 2:
 								mPauseButtonFocus = 3;
 								ResetFocusTimer();
+								break;
+							case 3:
+								if(!mAskingForConfirm)
+								{
+									mPauseButtonFocus = 1;
+									ResetFocusTimer();
+								}
+								else
+								{
+									mPauseButtonFocus = 2;
+									ResetFocusTimer();
+								}
+								break;
+							default:
+								break;
 							}
-							break;
-						case 3:
-							mPauseButtonFocus =2;
-							ResetFocusTimer();
-							break;
-						default:
-							break;
+						}
+					else if(Input.GetAxisRaw ("Vertical") > 0 || Input.GetAxisRaw ("VerticalP2") > 0 || InputManager.ActiveDevice.DPadUp.WasPressed)
+						{
+						Debug.Log("Up button pressed");
+						switch(mPauseButtonFocus)
+							{
+							case 1:
+								mPauseButtonFocus = 3;
+								ResetFocusTimer();
+								break;
+							case 2:
+								if(!mAskingForConfirm)
+								{
+									mPauseButtonFocus =1;
+									ResetFocusTimer();
+								}
+								else
+								{
+									mPauseButtonFocus = 3;
+									ResetFocusTimer();
+								}
+								break;
+							case 3:
+								mPauseButtonFocus =2;
+								ResetFocusTimer();
+								break;
+							default:
+								break;
+							}
 						}
 					}
-				}
-			//}
-			
-			
-			if(Input.GetButtonDown("Thrusters") || Input.GetButtonDown("FireGun") || InputManager.ActiveDevice.Action1.WasPressed)
-			{
-				switch(mPauseButtonFocus)
+				//}
+				
+				
+				if(Input.GetButtonDown("Thrusters") || Input.GetButtonDown("FireGun") || InputManager.ActiveDevice.Action1.WasPressed)
 				{
-				case 1:
-					UnPause();
-					break;
-				case 2:
-					if(!mAskingForConfirm)
+					switch(mPauseButtonFocus)
 					{
-						mAskingForConfirm = true;
-						mPauseButtonFocus = 3;
-						ResetFocusTimer();
+					case 1:
+						UnPause();
+						break;
+					case 2:
+						if(!mAskingForConfirm)
+						{
+							mAskingForConfirm = true;
+							mPauseButtonFocus = 3;
+							ResetFocusTimer();
+						}
+						else
+						{
+							Time.timeScale = 1;
+							if(FindObjectOfType<PlayerShipController>()!= null)
+							{
+								Destroy(FindObjectOfType<PlayerShipController>().gameObject);
+							}
+							if(FindObjectOfType<PlayerTwoShipController>()!= null)
+							{
+								Destroy(FindObjectOfType<PlayerTwoShipController>().gameObject);
+							}
+							if(FindObjectOfType<LevelKillCounter>()!= null)
+							{
+								Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
+							}
+							if(FindObjectOfType<ScoreManager>()!= null)
+							{
+								Destroy(FindObjectOfType<ScoreManager>().gameObject);
+							}
+							Application.LoadLevel(0);
+						}
+						break;
+					case 3:
+						if(!mAskingForConfirm)
+						{
+							if(mVolumeMenu!=null && mUIFocusTimer <=0f)
+							{
+								mVolumeMenu.mMenuOpen = true;
+							}
+						}
+						else
+						{
+							mAskingForConfirm = false;
+							mPauseButtonFocus = 1;
+							ResetFocusTimer();
+						}
+						break;
+					default:
+						break;
 					}
-					else
-					{
-						Time.timeScale = 1;
-						if(FindObjectOfType<PlayerShipController>()!= null)
-						{
-							Destroy(FindObjectOfType<PlayerShipController>().gameObject);
-						}
-						if(FindObjectOfType<PlayerTwoShipController>()!= null)
-						{
-							Destroy(FindObjectOfType<PlayerTwoShipController>().gameObject);
-						}
-						if(FindObjectOfType<LevelKillCounter>()!= null)
-						{
-							Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
-						}
-						if(FindObjectOfType<ScoreManager>()!= null)
-						{
-							Destroy(FindObjectOfType<ScoreManager>().gameObject);
-						}
-						Application.LoadLevel(0);
-					}
-					break;
-				case 3:
-					if(!mAskingForConfirm)
-					{
-						if(mVolumeMenu!=null && mUIFocusTimer <=0f)
-						{
-							mVolumeMenu.mMenuOpen = true;
-						}
-					}
-					else
-					{
-						mAskingForConfirm = false;
-						mPauseButtonFocus = 1;
-						ResetFocusTimer();
-					}
-					break;
-				default:
-					break;
 				}
+				//Cursor.visible = true;
 			}
-			//Cursor.visible = true;
-		}
 
-		//Press P to Pause/Unpause the game
-		if (Input.GetButtonDown ("PauseButton") && (mVolumeMenu == null || !mVolumeMenu.mMenuOpen))// || InputManager.ActiveDevice.MenuWasPressed) 
-		{
-			
-			if(Time.timeScale != 1)
+			//Press P to Pause/Unpause the game
+			if (Input.GetButtonDown ("PauseButton") && (mVolumeMenu == null || !mVolumeMenu.mMenuOpen))// || InputManager.ActiveDevice.MenuWasPressed) 
 			{
 				
-				UnPause();
+				if(Time.timeScale != 1)
+				{
+					
+					UnPause();
+				}
+				else 
+				{
+					Pause();
+				}
 			}
-			else 
-			{
-				Pause();
-			}
+
+	#if UNITY_ANDROID
+	        if (Application.loadedLevel > 0 && Application.loadedLevel < 27 )
+	        {
+	            if (Input.touchCount == 0 && !isPrePaused)
+	            {
+	                PrePause();
+	            }
+	            if (Input.touchCount == 1 && (isPaused || isPrePaused))
+	            {
+	                UnPause();
+	            }
+	        }
+
+
+	#endif
+
 		}
-
-#if UNITY_ANDROID
-        if (Application.loadedLevel > 0 && Application.loadedLevel < 27 )
-        {
-            if (Input.touchCount == 0 && !isPrePaused)
-            {
-                PrePause();
-            }
-            if (Input.touchCount == 1 && (isPaused || isPrePaused))
-            {
-                UnPause();
-            }
-        }
-
-
-#endif
-
-
 	}
 
 
 	void OnGUI()
 	{
-		mPauseMenuStyle.fontSize = Mathf.RoundToInt(Screen.width*0.01f);
-		if(!Application.isMobilePlatform)
+		if(this.enabled)
 		{
-			if (Time.timeScale == 0)
+			mPauseMenuStyle.fontSize = Mathf.RoundToInt(Screen.width*0.01f);
+			if(!Application.isMobilePlatform)
 			{
-				GUI.Box(new Rect(0,0, Screen.width,Screen.height),"");
-				if(mVolumeMenu == null || !mVolumeMenu.mMenuOpen)
+				if (Time.timeScale == 0)
 				{
-					GUI.Label(new Rect(Screen.width*0.39f, Screen.height*0.2f, Screen.width*0.22f, Screen.height*0.56f),"",mBlackBackStyle);
-
-					if(!mAskingForConfirm)
+					GUI.Box(new Rect(0,0, Screen.width,Screen.height),"");
+					if(mVolumeMenu == null || !mVolumeMenu.mMenuOpen)
 					{
-						mPauseMenuStyle.normal.background = mContinueTex;//Set what texture to display for the button ~Adam
-						mPauseMenuStyle.hover.background = mContinueTexHighlight;
-						mPauseMenuStyle.active.background = mContinueTexHighlight;
-						GUI.SetNextControlName("Continue");//Set the name of the button to refer to ~Adam
-						if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.21f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
-						{
-							UnPause();
-						}
+						GUI.Label(new Rect(Screen.width*0.39f, Screen.height*0.2f, Screen.width*0.22f, Screen.height*0.56f),"",mBlackBackStyle);
 
-						mPauseMenuStyle.normal.background = mReturnTex;//Set what texture to display for the button ~Adam
-						mPauseMenuStyle.hover.background = mReturnTexHighlight;
-						mPauseMenuStyle.active.background = mReturnTexHighlight;
-						GUI.SetNextControlName("ReturnToMenu");//Set the name of the button to refer to ~Adam
-						if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.41f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
+						if(!mAskingForConfirm)
 						{
-							mAskingForConfirm = true;
-							mPauseButtonFocus = 3;
-							ResetFocusTimer();
-						}
-
-						mPauseMenuStyle.normal.background = mOptionsTex;//Set what texture to display for the button ~Adam
-						mPauseMenuStyle.hover.background = mOptionsTexHighlight;
-						mPauseMenuStyle.active.background = mOptionsTexHighlight;
-						GUI.SetNextControlName("Options");//Set the name of the button to refer to ~Adam
-						if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.61f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
-						{
-							if(mVolumeMenu!=null && mUIFocusTimer <=0f)
+							mPauseMenuStyle.normal.background = mContinueTex;//Set what texture to display for the button ~Adam
+							mPauseMenuStyle.hover.background = mContinueTexHighlight;
+							mPauseMenuStyle.active.background = mContinueTexHighlight;
+							GUI.SetNextControlName("Continue");//Set the name of the button to refer to ~Adam
+							if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.21f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
 							{
-								mVolumeMenu.mMenuOpen = true;
+								UnPause();
+							}
+
+							mPauseMenuStyle.normal.background = mReturnTex;//Set what texture to display for the button ~Adam
+							mPauseMenuStyle.hover.background = mReturnTexHighlight;
+							mPauseMenuStyle.active.background = mReturnTexHighlight;
+							GUI.SetNextControlName("ReturnToMenu");//Set the name of the button to refer to ~Adam
+							if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.41f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
+							{
+								mAskingForConfirm = true;
+								mPauseButtonFocus = 3;
+								ResetFocusTimer();
+							}
+
+							mPauseMenuStyle.normal.background = mOptionsTex;//Set what texture to display for the button ~Adam
+							mPauseMenuStyle.hover.background = mOptionsTexHighlight;
+							mPauseMenuStyle.active.background = mOptionsTexHighlight;
+							GUI.SetNextControlName("Options");//Set the name of the button to refer to ~Adam
+							if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.61f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
+							{
+								if(mVolumeMenu!=null && mUIFocusTimer <=0f)
+								{
+									mVolumeMenu.mMenuOpen = true;
+								}
+							}
+						}
+						else //Ask for confirmation on returning to the Main Menu
+						{
+							//Ask the question ~Adam
+							mPauseMenuStyle.normal.background = null;
+							mPauseMenuStyle.hover.background = null;
+							mPauseMenuStyle.active.background = null;
+							GUI.Label (new Rect (Screen.width*0.395f, Screen.height*0.21f, Screen.width*0.21f, Screen.height*0.14f), mAskTex, mPauseMenuStyle);
+							//Say YES ~Adam
+							mPauseMenuStyle.normal.background = mYesTex;//Set what texture to display for the button ~Adam
+							mPauseMenuStyle.hover.background = mYesTexHighlight;
+							mPauseMenuStyle.active.background = mYesTexHighlight;
+							GUI.SetNextControlName("ReturnToMenu");//Set the name of the button to refer to ~Adam
+							if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.41f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
+							{
+								Time.timeScale = 1;
+								/*if(FindObjectOfType<PlayerTwoShipController>().gameObject != null)
+								{
+									Destroy(FindObjectOfType<PlayerTwoShipController>().gameObject);
+								}*/ //Causing an error ~ Jonathan
+								Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
+								Destroy(FindObjectOfType<ScoreManager>().gameObject);
+								Destroy(FindObjectOfType<PlayerShipController>().gameObject);
+								Application.LoadLevel(0);
+							}
+							//Say NO ~Adam
+							mPauseMenuStyle.normal.background = mNoTex;//Set what texture to display for the button ~Adam
+							mPauseMenuStyle.hover.background = mNoTexHighlight;
+							mPauseMenuStyle.active.background = mNoTexHighlight;
+							GUI.SetNextControlName("Options");//Set the name of the button to refer to ~Adam
+							if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.61f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
+							{
+								mAskingForConfirm = false;
+								mPauseButtonFocus = 1;
+								ResetFocusTimer();
 							}
 						}
 					}
-					else //Ask for confirmation on returning to the Main Menu
-					{
-						//Ask the question ~Adam
-						mPauseMenuStyle.normal.background = null;
-						mPauseMenuStyle.hover.background = null;
-						mPauseMenuStyle.active.background = null;
-						GUI.Label (new Rect (Screen.width*0.395f, Screen.height*0.21f, Screen.width*0.21f, Screen.height*0.14f), mAskTex, mPauseMenuStyle);
-						//Say YES ~Adam
-						mPauseMenuStyle.normal.background = mYesTex;//Set what texture to display for the button ~Adam
-						mPauseMenuStyle.hover.background = mYesTexHighlight;
-						mPauseMenuStyle.active.background = mYesTexHighlight;
-						GUI.SetNextControlName("ReturnToMenu");//Set the name of the button to refer to ~Adam
-						if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.41f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
-						{
-							Time.timeScale = 1;
-							/*if(FindObjectOfType<PlayerTwoShipController>().gameObject != null)
-							{
-								Destroy(FindObjectOfType<PlayerTwoShipController>().gameObject);
-							}*/ //Causing an error ~ Jonathan
-							Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
-							Destroy(FindObjectOfType<ScoreManager>().gameObject);
-							Destroy(FindObjectOfType<PlayerShipController>().gameObject);
-							Application.LoadLevel(0);
-						}
-						//Say NO ~Adam
-						mPauseMenuStyle.normal.background = mNoTex;//Set what texture to display for the button ~Adam
-						mPauseMenuStyle.hover.background = mNoTexHighlight;
-						mPauseMenuStyle.active.background = mNoTexHighlight;
-						GUI.SetNextControlName("Options");//Set the name of the button to refer to ~Adam
-						if (GUI.Button (new Rect (Screen.width*0.395f, Screen.height*0.61f, Screen.width*0.21f, Screen.height*0.14f), "", mPauseMenuStyle)) 
-						{
-							mAskingForConfirm = false;
-							mPauseButtonFocus = 1;
-							ResetFocusTimer();
-						}
-					}
 				}
+
+
+
+
+				GUI.FocusControl(mPauseMenuButtonNames[mPauseButtonFocus]);
 			}
 
+			//Change layout slightly for mobile portrait view ~Adam
+			else
+			{
+				if (Time.timeScale == 0)
+	            {
 
-
-
-			GUI.FocusControl(mPauseMenuButtonNames[mPauseButtonFocus]);
-		}
-
-		//Change layout slightly for mobile portrait view ~Adam
-		else
-		{
-			if (Time.timeScale == 0)
-            {
-
-                GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
-				if(mVolumeMenu == null || !mVolumeMenu.mMenuOpen)
-				{
-					if(!mAskingForConfirm)
+	                GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
+					if(mVolumeMenu == null || !mVolumeMenu.mMenuOpen)
 					{
-		                mPauseMenuStyle.normal.background = mContinueTex;
-		                mPauseMenuStyle.hover.background = mContinueTexHighlight;
-		                mPauseMenuStyle.active.background = mContinueTexHighlight;
-		                if (GUI.Button(new Rect(Screen.width * 0.2f, Screen.height * 0.21f, Screen.width * 0.6f, Screen.height * 0.14f), "", mPauseMenuStyle))
-		                {
-		                    UnPause();
-		                }
-		                mPauseMenuStyle.normal.background = mReturnTex;
-		                mPauseMenuStyle.hover.background = mReturnTexHighlight;
-		                mPauseMenuStyle.active.background = mReturnTexHighlight;
-		                if (GUI.Button(new Rect(Screen.width * 0.2f, Screen.height * 0.41f, Screen.width * 0.6f, Screen.height * 0.14f), "", mPauseMenuStyle))
-		                {
-							mAskingForConfirm = true;
-							mPauseButtonFocus = 3;
-							ResetFocusTimer();
-		                }
-		                mPauseMenuStyle.normal.background = mOptionsTex;
-		                mPauseMenuStyle.hover.background = mOptionsTexHighlight;
-		                mPauseMenuStyle.active.background = mOptionsTexHighlight;
-		                if (GUI.Button(new Rect(Screen.width * 0.2f, Screen.height * 0.61f, Screen.width * 0.6f, Screen.height * 0.14f), "", mPauseMenuStyle))
-		                {
-							if(mVolumeMenu!=null && mUIFocusTimer <=0f)
+						if(!mAskingForConfirm)
+						{
+			                mPauseMenuStyle.normal.background = mContinueTex;
+			                mPauseMenuStyle.hover.background = mContinueTexHighlight;
+			                mPauseMenuStyle.active.background = mContinueTexHighlight;
+			                if (GUI.Button(new Rect(Screen.width * 0.2f, Screen.height * 0.21f, Screen.width * 0.6f, Screen.height * 0.14f), "", mPauseMenuStyle))
+			                {
+			                    UnPause();
+			                }
+			                mPauseMenuStyle.normal.background = mReturnTex;
+			                mPauseMenuStyle.hover.background = mReturnTexHighlight;
+			                mPauseMenuStyle.active.background = mReturnTexHighlight;
+			                if (GUI.Button(new Rect(Screen.width * 0.2f, Screen.height * 0.41f, Screen.width * 0.6f, Screen.height * 0.14f), "", mPauseMenuStyle))
+			                {
+								mAskingForConfirm = true;
+								mPauseButtonFocus = 3;
+								ResetFocusTimer();
+			                }
+			                mPauseMenuStyle.normal.background = mOptionsTex;
+			                mPauseMenuStyle.hover.background = mOptionsTexHighlight;
+			                mPauseMenuStyle.active.background = mOptionsTexHighlight;
+			                if (GUI.Button(new Rect(Screen.width * 0.2f, Screen.height * 0.61f, Screen.width * 0.6f, Screen.height * 0.14f), "", mPauseMenuStyle))
+			                {
+								if(mVolumeMenu!=null && mUIFocusTimer <=0f)
+								{
+									mVolumeMenu.mMenuOpen = true;
+								}
+			                }
+						}
+						else //Ask for confirmation on returning to the Main Menu
+						{
+							//Ask the question ~Adam
+							GUI.Label (new Rect(Screen.width * 0.2f, Screen.height * 0.21f, Screen.width * 0.6f, Screen.height * 0.14f), mAskTex, mPauseMenuStyle);
+							//Say YES ~Adam
+							mPauseMenuStyle.normal.background = mYesTex;//Set what texture to display for the button ~Adam
+							mPauseMenuStyle.hover.background = mYesTexHighlight;
+							mPauseMenuStyle.active.background = mYesTexHighlight;
+							GUI.SetNextControlName("ReturnToMenu");//Set the name of the button to refer to ~Adam
+							if (GUI.Button(new Rect(Screen.width * 0.2f, Screen.height * 0.41f, Screen.width * 0.6f, Screen.height * 0.14f), "", mPauseMenuStyle))
 							{
-								mVolumeMenu.mMenuOpen = true;
+								Time.timeScale = 1;
+								/*if(FindObjectOfType<PlayerTwoShipController>().gameObject != null)
+								{
+									Destroy(FindObjectOfType<PlayerTwoShipController>().gameObject);
+								}*/ //Causing an error ~ Jonathan
+								Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
+								Destroy(FindObjectOfType<ScoreManager>().gameObject);
+								Destroy(FindObjectOfType<PlayerShipController>().gameObject);
+								Application.LoadLevel(0);
 							}
-		                }
-					}
-					else //Ask for confirmation on returning to the Main Menu
-					{
-						//Ask the question ~Adam
-						GUI.Label (new Rect(Screen.width * 0.2f, Screen.height * 0.21f, Screen.width * 0.6f, Screen.height * 0.14f), mAskTex, mPauseMenuStyle);
-						//Say YES ~Adam
-						mPauseMenuStyle.normal.background = mYesTex;//Set what texture to display for the button ~Adam
-						mPauseMenuStyle.hover.background = mYesTexHighlight;
-						mPauseMenuStyle.active.background = mYesTexHighlight;
-						GUI.SetNextControlName("ReturnToMenu");//Set the name of the button to refer to ~Adam
-						if (GUI.Button(new Rect(Screen.width * 0.2f, Screen.height * 0.41f, Screen.width * 0.6f, Screen.height * 0.14f), "", mPauseMenuStyle))
-						{
-							Time.timeScale = 1;
-							/*if(FindObjectOfType<PlayerTwoShipController>().gameObject != null)
+							//Say NO ~Adam
+							mPauseMenuStyle.normal.background = mNoTex;//Set what texture to display for the button ~Adam
+							mPauseMenuStyle.hover.background = mNoTexHighlight;
+							mPauseMenuStyle.active.background = mNoTexHighlight;
+							GUI.SetNextControlName("Options");//Set the name of the button to refer to ~Adam
+							if (GUI.Button(new Rect(Screen.width * 0.2f, Screen.height * 0.61f, Screen.width * 0.6f, Screen.height * 0.14f), "", mPauseMenuStyle))
 							{
-								Destroy(FindObjectOfType<PlayerTwoShipController>().gameObject);
-							}*/ //Causing an error ~ Jonathan
-							Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
-							Destroy(FindObjectOfType<ScoreManager>().gameObject);
-							Destroy(FindObjectOfType<PlayerShipController>().gameObject);
-							Application.LoadLevel(0);
-						}
-						//Say NO ~Adam
-						mPauseMenuStyle.normal.background = mNoTex;//Set what texture to display for the button ~Adam
-						mPauseMenuStyle.hover.background = mNoTexHighlight;
-						mPauseMenuStyle.active.background = mNoTexHighlight;
-						GUI.SetNextControlName("Options");//Set the name of the button to refer to ~Adam
-						if (GUI.Button(new Rect(Screen.width * 0.2f, Screen.height * 0.61f, Screen.width * 0.6f, Screen.height * 0.14f), "", mPauseMenuStyle))
-						{
-							mAskingForConfirm = false;
-							mPauseButtonFocus = 1;
-							ResetFocusTimer();
+								mAskingForConfirm = false;
+								mPauseButtonFocus = 1;
+								ResetFocusTimer();
+							}
 						}
 					}
-				}
-            }
+	            }
+			}
 		}
 	}//END of OnGUI
 

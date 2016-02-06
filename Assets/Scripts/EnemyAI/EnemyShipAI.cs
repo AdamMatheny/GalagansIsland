@@ -2,19 +2,19 @@
 using System.Collections;
 using Assets.Scripts.Achievements;
 
-//This is the script attached to all of the enemy ships in the game, dictating their AI behavior
-//This script was partially written before I joined the project.  Parts that I did not write or re-write are marked.
+//This is the script attached to all of the enemy ships in the game, dictating their AI behavior ~Adam
+//This script was partially written before I joined the project.  Parts that I did not write or re-write are marked. ~Adam
 
 
 public class EnemyShipAI : MonoBehaviour 
 {
 
-//The Serialie Field private variables and public variables can be changed in the editor to assign different behaviors to multiple enemy prefabs, using a single script
-//Additionally, the public variables can be overwritten by in-editor settings on the enemy spawner prefab to adjust enemy behavior or difficulty on a level-by-level basis
+//The Serialize Field private variables and public variables can be changed in the editor to assign different behaviors to multiple enemy prefabs, using a single script ~Adam
+//Additionally, the public variables can be overwritten by in-editor settings on the enemy spawner prefab to adjust enemy behavior or difficulty on a level-by-level basis ~Adam
 
 	public Quaternion startingRotation;
 
-	public bool mLimitedAutoFire = false;  //If True, then only a certain percentage of spawned enemies will be able to auto-fire
+	public bool mLimitedAutoFire = false;  //If True, then only a certain percentage of spawned enemies will be able to auto-fire ~Adam
 	public float mLimitedShootingChance;  //Range from 0 to 1.0.  The chance that this spawned enemy will be able to auto-fire if the above variable is true
 	[SerializeField] private bool mFireWasLimited = false;
 	public GameObject mSecondaryBullet; //Fired upon death if a death shooter
@@ -102,24 +102,24 @@ public class EnemyShipAI : MonoBehaviour
 	//A reference to the object that tracks enemy deaths per level for the purpose of spawning new waves of enemies and whether or not the level has been completed `Adam
 	LevelKillCounter mKillCounter;
 
-	//Is this enemy's death required to beat the level?  `Adam
+	//Is this enemy's death required to beat the level?  ~Adam
 	//Mainly used to distinguish between enemies that are part of the main swarm and enemies that fly across the screen and then destroy themselves once off-screen. `Adam
 	public bool mDeathRequired = true;
 
-	//Transform that is used for stealing copies of the player ship `Adam
+	//Transform that is used for stealing copies of the player ship ~Adam
 	public Transform mTowPoint;
-	//Prefab for ship to spawn set in-editor `Adam
+	//Prefab for ship to spawn set in-editor ~Adam
 	[SerializeField] GameObject mCapturedShip;
 	public GameObject mShipInTow;
 
-	//For enemies that we just want to fly across the screen and then disappear `Adam
+	//For enemies that we just want to fly across the screen and then disappear ~Adam
 	public bool mLimitedLifespan = false;
 	public float mLifespanLength = 10f;
 
 	//For keeping the enemies in formation at the start
 	public float mMinimumFirstAttackTime = 0f;
 
-	//For making the Grabbers invincible while attacking `Adam
+	//For making the Grabbers invincible while attacking ~Adam
 	public bool mInvincible = false;
 	[SerializeField] private GameObject mShieldBubble;
 
@@ -158,7 +158,7 @@ public class EnemyShipAI : MonoBehaviour
 			}
 		}
 
-		//Find the other objects in the scene that we're going to be referencing
+		//Find the other objects in the scene that we're going to be referencing ~Adam
 		if(FindObjectOfType<PlayerOneShipController>() != null)
 		{
 			mPlayer = FindObjectOfType<PlayerOneShipController>().gameObject.transform;
@@ -219,7 +219,6 @@ public class EnemyShipAI : MonoBehaviour
 					
 					Debug.Log("The second ship was shot");
 					mScoreManager.LoseALife();
-					Destroy(gameObject);
 				}
 			}
 		}
@@ -244,20 +243,18 @@ public class EnemyShipAI : MonoBehaviour
 			}
 		}
 
-		//Make the Grabber not invincible while not attacking or towing
+		//Make the Grabber not invincible while not attacking or towing ~Adam
 		if(mGrabber && !mShipInTow && mCurrentAIState != AIState.Attacking)
 		{
 			mInvincible = false;
-			//GetComponentInChildren<Renderer>().material.color = Color.white;
 			if(mShieldBubble != null)
 			{
 				mShieldBubble.SetActive(false);
 			}
 		}
-		//Toggle the visibilty of the shield bubble based on invincibility
+		//Toggle the visibilty of the shield bubble based on invincibility ~Adam
 		if(mInvincible)
 		{
-			//GetComponentInChildren<Renderer>().material.color = Color.magenta;
 			if(mShieldBubble != null)
 			{
 				mShieldBubble.SetActive(true);
@@ -359,7 +356,7 @@ public class EnemyShipAI : MonoBehaviour
 						mShootTimer = mShootTimerDefault;
 					}
 				}
-				//Otherwise, instantiate an enemy bullet if the player is below this enemy `Adam
+				//Otherwise, instantiate an enemy bullet if the player is below this enemy ~Adam
 				else if (mShooter && Mathf.Abs(mPlayer.position.x - transform.position.x) <= 2f)
 				{
 					//Play animation for firing (or skip straight to firing if no animation) ~Adam
@@ -372,7 +369,7 @@ public class EnemyShipAI : MonoBehaviour
 					{
 						ShootEnemyBullet();
 					}
-					//Whether the timer is randomized or not `Adam
+					//Whether the timer is randomized or not ~Adam
 					if(mRandomShootTimer)
 					{
 						mShootTimer = Random.Range(mShootTimerDefault/2f, mShootTimerDefault);
@@ -389,12 +386,6 @@ public class EnemyShipAI : MonoBehaviour
 		//Delete self is strangely far out of bounds for bug reasons ~Adam
 		if((transform.position.y > 60f) || (transform.position.y <-70f) || (transform.position.x > 60f) || (transform.position.x < -60f) || (mAutoDeleteTimer<=0f))
 		{
-//			Debug.Log(transform.position.y);
-//			Debug.Log(transform.position.x);
-//			
-//			Debug.Log(mAutoDeleteTimer.ToString());
-//			
-//			Debug.Log("Deleting for being offscreen");
 			mSwarmGridPosition.GetComponent<SwarmGridSlot>().mOccupied = false;
 
 			Destroy(this.gameObject);
@@ -528,12 +519,9 @@ public class EnemyShipAI : MonoBehaviour
 	//The behavior for moving around on top if this unit's swarm grid slot
 	void Swarm()
 	{
-		//Animation Control (Mostly for blue/grabber enemy) ~Adam
+		//Animation Control ~Adam
 		if(mAnimator != null)
 		{
-
-	
-
 			mAnimator.SetBool("IsIdle", true);
 			mAnimator.SetBool("IsChasing", false);
 			mAnimator.SetBool("IsReturning", false);
@@ -557,14 +545,11 @@ public class EnemyShipAI : MonoBehaviour
 		transform.position = mSwarmGridPosition.transform.position;
 		transform.up = mSwarmGridPosition.transform.up;
 
-//		Vector3 toPlayer;
-//		toPlayer = mPlayer.position - transform.position;
-//		toPlayer.Normalize();
 
 		#endregion
 
-		#region from when we were doing 2 players ~Adam
-		//Find the direction to the player (or the clone if it's closer) ~Adam
+		#region For when we are doing 2 players ~Adam
+		//Find the direction to the player (or player 2 if it's closer) ~Adam
 		Vector3 toPlayer = Vector3.down;
 		if(mPlayer != null && mPlayer.gameObject.activeInHierarchy)
 		{
@@ -586,7 +571,7 @@ public class EnemyShipAI : MonoBehaviour
 
 
 
-		//Switch to attack mode if the attack timer has run out
+		//Switch to attack mode if the attack timer has run out ~Adam
 		if (mAttackFrequencyTimer <= 0.0f && (mMinimumFirstAttackTime < Time.time))
 		{
 			mCurrentAIState = AIState.Attacking;
@@ -599,7 +584,7 @@ public class EnemyShipAI : MonoBehaviour
 
 	void AttackPlayer()
 	{
-		//Animation Control (Mostly for blue/grabber enemy) ~Adam
+		//Animation Control ~Adam
 		if(mAnimator != null)
 		{
 			mAnimator.SetBool("IsIdle", false);
@@ -611,8 +596,8 @@ public class EnemyShipAI : MonoBehaviour
 				mAnimator.SetBool("IsReturning", true);
 			}}
 
-		#region From when we were doing 2 player mode ~Adam
-		//Find the direction to the player (or the clone if it's closer) ~Adam
+		#region For when we are doing 2 player mode ~Adam
+		//Find the direction to the player (or player 2 if it's closer) ~Adam
 		Vector3 toPlayer = Vector3.down;
 
 		if(mPlayer != null && mPlayer.gameObject.activeInHierarchy)
@@ -639,8 +624,7 @@ public class EnemyShipAI : MonoBehaviour
 
 		#region Basic enemy movement was already written by Jonathan when I joined the project.  Before I joined, enemies would move toward the player for a few seconds, then move back to the swarm without actually affecting the player.
 
-//		Vector3 toPlayer = mPlayer.position - transform.position;
-//		toPlayer.Normalize();
+
 		Vector3 vel = transform.gameObject.GetComponent<Rigidbody>().velocity;
 		
 		vel += toPlayer;
@@ -651,7 +635,7 @@ public class EnemyShipAI : MonoBehaviour
 		transform.gameObject.GetComponent<Rigidbody>().velocity = vel;
 		#endregion
 
-		//Make the Grabber enemies invincible while attacking
+		//Make the Grabber enemies invincible while attacking ~Adam
 		if(mGrabber && !mPlayer.GetComponent<PlayerOneShipController>().mShipRecovered && !mPlayer.GetComponent<PlayerOneShipController>().mShipStolen )
 		{
 			mInvincible = true;
@@ -673,7 +657,7 @@ public class EnemyShipAI : MonoBehaviour
 			{
 				if (mPostAttackLoop && mAttackLengthTimerDefault > 0.0f)
 				{
-					//For making all green enemies retreatloop one way, teal the other way, and blue alternate
+					//For making all green enemies retreatloop one way, teal the other way, and blue alternate ~Adam
 					if(mGrabber)
 					{
 						mLoopCircleTightness *= -1f;
@@ -722,24 +706,8 @@ public class EnemyShipAI : MonoBehaviour
 	void OnCollisionEnter(Collision other)
 	{
 
-//		if (other.gameObject.GetComponent<BulletLeft>() != null || other.gameObject.GetComponent<BulletRight>() != null) { //If collide w/ Left/Right Bullet
-//
-//			if(!mInvincible)
-//			{
-//				if(Random.value <= LRBulletChance)
-//				{
-//					EnemyShipDie();
-//				}
-//				else
-//				{
-//					Instantiate(bulletExplosion, transform.position, Quaternion.identity);
-//				}
-//			}
-//
-//			Destroy(other.gameObject);
-//		}
 
-		//Get destroyed when colliding with a bullet
+		//Get destroyed when colliding with a bullet ~Adam
 		if (other.gameObject.GetComponent<PlayerBulletController>() != null)
 		{
 
@@ -790,19 +758,16 @@ public class EnemyShipAI : MonoBehaviour
 			 
 		}
 
-		//Make the player lose a life on contact with an enemy
+		//Make the player lose a life on contact with an enemy ~Adam
 		if (other.gameObject.GetComponent<PlayerOneShipController>() != null)
 		{
 			Debug.Log ("Made contact with player 1");
-			//mScoreManager.HalfScore();
 			if(!(mGrabber && !mPlayer.GetComponent<PlayerShipController>().mShipStolen) || (mGrabber && mPlayerClone != null) )
 			{
 				mScoreManager.HitAPlayer(other.gameObject);
 			}
-			//A debug log for tracking which enemy hit the player
-			//Debug.Log("Player was hit by the enemy at grid slot " + mSwarmGridPosition.name +" in grid " + mSwarmGrid.name + "!!!");
 
-			//If the enemy that hit the player is a Grabber, and it's not 2-player mode, and there is not currently a stolen ship in play, steal a ship from the player
+			//If the enemy that hit the player is a Grabber, and it's not 2-player mode, and there is not currently a stolen ship in play, steal a ship from the player ~Adam
 			else if(mGrabber && mPlayer != null && !mPlayer.GetComponent<PlayerShipController>().mShipStolen  &&!mPlayer.GetComponent<PlayerShipController>().mShipRecovered && mTowPoint != null)
 			{
 				mPlayer.GetComponent<PlayerShipController>().mShipStolen = true;
@@ -828,21 +793,14 @@ public class EnemyShipAI : MonoBehaviour
 
 		}
 
-		//Make Player-2 lose a life on contact with an enemy
+		//Make Player-2 lose a life on contact with an enemy ~Adam
 		if (other.gameObject.GetComponent<PlayerTwoShipController>() != null)
 		{
 			Debug.Log ("Made contact with player 2");
 
 			mScoreManager.HitAPlayer(other.gameObject);
 		}
-		#region from when we were doing the clone/twin-stick ship
-//		//Kill a player clone ship on contact
-//		if (other.gameObject.GetComponent<PlayerShipCloneController>() != null)
-//		{
-//			Debug.Log("Hit a clone ship");
-//			other.gameObject.GetComponent<PlayerShipCloneController>().CloneShipDie();
-//		}
-		#endregion
+
 
 	}//END of OnCollisionEnter()
 
@@ -870,24 +828,18 @@ public class EnemyShipAI : MonoBehaviour
 			GameObject deathParticles = Instantiate(mDeathEffect, transform.position + new Vector3(0f, 0f, -1f), Quaternion.identity) as GameObject;
 		}
 
-		//Shake the camera on death
+		//Shake the camera on death ~Adam
 		if (Camera.main.GetComponent<CameraShaker>() != null)
 		{
 			Camera.main.GetComponent<CameraShaker>().ShakeCameraEnemy();
-		//
-			if(mGrabber){
-		//
+
+			if(mGrabber)
+			{
 				Camera.main.GetComponent<CameraShaker> ().RumbleController(.5f, .5f);
 			}
 		}
-//		if(Random.value < 0.05f)
-//		{
-//			deathParticles.GetComponent<ParticleSystem>().startLifetime += 0.05f;
-//			if(deathParticles.GetComponent<AudioSource>() != null)
-//			{
-//				deathParticles.GetComponent<AudioSource>().volume += 0.05f;
-//			}
-//		}
+
+
 		mSwarmGridPosition.GetComponent<SwarmGridSlot>().mOccupied = false;
 		mScoreManager.AdjustScore(mPointValue, mKillerNumber <= 1);
 		
@@ -900,7 +852,7 @@ public class EnemyShipAI : MonoBehaviour
 			FindObjectOfType<SlowTimeController>().SlowDownTime(0.8f,1f);
 		}
 
-        //ACHIEVEMENTS
+		#region ACHIEVEMENTS by Mateusz
         if (mPlayer.GetComponent<PlayerOneShipController>().enabled == true)
         {
             PlayerOneShipController controller = mPlayer.GetComponent<PlayerOneShipController>();
@@ -919,6 +871,7 @@ public class EnemyShipAI : MonoBehaviour
 	            }
 			}
         }
+		#endregion
 
 		Destroy(gameObject);
 	}//END of EnemyShipDie()

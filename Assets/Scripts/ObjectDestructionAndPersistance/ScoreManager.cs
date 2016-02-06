@@ -5,6 +5,10 @@ using InControl;
 using Assets.Scripts.Achievements;
 //using XInputDotNetPure; // Required in C#
 
+//This script tracks and modifies player scores, player life counts, and several elements of the game's HUD.
+
+//It makes use of the open source version of the InControl Unity plugin for taking game pade input.  This plugin may be found at: "https://github.com/pbhogan/InControl" ~Adam
+
 public class ScoreManager : MonoBehaviour 
 {
 	[SerializeField] private Texture2D mSideDisplayTex;
@@ -15,9 +19,9 @@ public class ScoreManager : MonoBehaviour
 	public int mScore = 0;
 	public int mLivesRemaining = 24;
     public int mMaxLives = 24;
-	public int mCurrentLevel; //Changed this variable name to be consistent with the rest of the naming schem ~Adam
+	public int mCurrentLevel; 
 	public int mOriginalLevel = 0;
-	//For giving the player an extra life every certain number of points ~Adam
+	//For giving the player an extra life every certain number of points (no longer used) ~Adam
 	int mExtraLifeScore = 1000;
 	int mExtraLifeInteraval = 1000;
 
@@ -35,8 +39,9 @@ public class ScoreManager : MonoBehaviour
 	[SerializeField] private GameObject mPowerUpMeterBack;
 	public Text mPowerUpMeterScoreDisplay;
 
+	//Time that the player is invincible after getting hit ~Adam
 	public float mPlayerSafeTime = 0f;
-	// Use this for initialization
+
 	public GameObject mPlayerAvatar;
 	public GameObject mPlayerDeathEffect;
 
@@ -58,7 +63,7 @@ public class ScoreManager : MonoBehaviour
 	//For using the new UI system so we can use an image for a font ~Adam
 	public Text mLevelInfoText;
 	public Text mHighScoreText;
-
+	
     public Canvas mHighscoreCanvas;
 
 
@@ -76,6 +81,7 @@ public class ScoreManager : MonoBehaviour
 	public int mP1Lives = 100;
 	public int mP2Lives = 0;
 
+	//For keepign the high score up to date via Unity's PlayerPrefs ~Adam
 	void StoreHighscore(int newHighscore)
 	{
 		int oldHighscore = PlayerPrefs.GetInt("highscore", 0);    
@@ -92,11 +98,7 @@ public class ScoreManager : MonoBehaviour
             mLivesRemaining = 25;
             mMaxLives = 25;
         }
-//		//Get rid of self if we're back on the title screen
-//		if (Application.loadedLevel == 0)
-//		{
-//			Destroy(this.gameObject);
-//		}
+
 
 		//Delete self if there's already a score manager to prevent duplicates (this only seems to delete the new ones, which is what we want)
         foreach (var canv in gameObject.GetComponentsInChildren<Canvas>())
@@ -118,8 +120,7 @@ public class ScoreManager : MonoBehaviour
 
 
 		DontDestroyOnLoad (transform.gameObject);
-//		DontDestroyOnLoad (mPlayerAvatar.gameObject);
-//		DontDestroyOnLoad (mPlayer2Avatar.gameObject);
+
 
 		//Figure out how old this ScoreManager is ~Adam
 		if(mOriginalLevel == 0)
@@ -152,37 +153,14 @@ public class ScoreManager : MonoBehaviour
 
 		mCurrentLevel = Application.loadedLevel; //Wasn't affected in either Awake() or Start()
 
-		#region Mateusz, why did you add this? It make the high score box and level info box go away. ~Adam
-//        if (mCurrentLevel == 0)
-//        {
-//            mHighscoreCanvas.enabled = false;
-//        }
-		#endregion
-
-		//We already had a method of switching between levels that gave us a lag time in which to actually play a player death animation ~Adam
-//		if (mLivesRemaining <= 0) {
-//
-//			Application.LoadLevel("EndGame");
-//			Destroy(shipDeath);
-//		}
 
 
 
 		mPlayerSafeTime-=Time.deltaTime;
 
-		/*if(mScore < 0)
-		{
-			mScore = 0;
-		}*/
 
-//		//Grant an extra life every 1000 kills (assuming 1 point per kill) ~Adam
-//		if(mScore >= mExtraLifeScore)
-//		{
-//			mLivesRemaining++;
-//			mExtraLifeScore += mExtraLifeInteraval;
-//		}
 
-		//For showing the meter that says how close the player is to a power up
+		//For showing the meter that says how close the player is to a power up ~Adam
 		if(mPowerUpMeterScoreDisplay != null && mPowerUpMeter != null && mPowerUpMeterBack != null)
 		{
 
@@ -211,7 +189,6 @@ public class ScoreManager : MonoBehaviour
 						barAdjust = 0f;
 					}
 					mPowerUpMeter.rectTransform.localScale = new Vector3(barAdjust, 1f,1f); 
-					//mPowerUpMeter.rectTransform.rect = new Rect(mPowerUpMeter.rectTransform.rect.x, mPowerUpMeter.rectTransform.rect.y, barAdjust, mPowerUpMeter.rectTransform.rect.height);
 				}
 				else
 				{
@@ -220,7 +197,6 @@ public class ScoreManager : MonoBehaviour
 					{
 						barAdjust = 0f;
 					}
-					//Debug.Log(barAdjust);
 					mPowerUpMeter.rectTransform.localScale = new Vector3(barAdjust, 1f,1f); 
 				}
 			}
@@ -251,7 +227,7 @@ public class ScoreManager : MonoBehaviour
 			
 		}
 
-		//Color the player while invincible
+		//Play particle effect and overlay over the player while invincible ~Adam
 		if(mPlayerAvatar != null && mPlayerAvatar.GetComponent<PlayerShipController>() != null)
 		{
 			if(mPlayerSafeTime > 0)
@@ -289,23 +265,24 @@ public class ScoreManager : MonoBehaviour
 			}
 		}
 
+		//Say what shows up in the UI box for the level name ~Adam
 		switch(Application.loadedLevelName)
 		{
 		case "Level26_Boss":
-			mLevelInfoText.text = " \nGame Over";
+			mLevelInfoText.text = "Game Over";
 			break;
 		case "Credits":
 			mLevelInfoText.text = "Thank you for playing!";
 			break;
 		case "EndGame":
-			mLevelInfoText.text = " \nGame Over";
+			mLevelInfoText.text = "Game Over";
 			break;
 		default:
 			if(mLevelNames.Length > Application.loadedLevel && mLevelNames[Application.loadedLevel].Contains("Boss"))
 			{
 				mLevelInfoText.text = mLevelNames[Application.loadedLevel];
 			}
-			else
+			else if (mLevelNames.Length > Application.loadedLevel)
 			{
 				mLevelInfoText.text = "Level "+ (Application.loadedLevel-Application.loadedLevel/6) + ":\n" + mLevelNames[Application.loadedLevel];
 			}
@@ -313,9 +290,8 @@ public class ScoreManager : MonoBehaviour
 		}
 
 
-
+		//Display High Score ~Adam
 		mHighScoreText.text = "High Score:\n" + PlayerPrefs.GetInt("highscore", 0);
-		//mHighScoreText.text = "Return to Wayward Pines!";
 
 		StoreHighscore (mScore);
 
@@ -332,7 +308,7 @@ public class ScoreManager : MonoBehaviour
 			}
 		}
 
-		//If we're out of lives, wait a short bit for the player explosion to play, then clean up the objects that normally persist between levels
+		//If we're out of lives, wait a short bit for the player explosion to play, then clean up the objects that normally persist between levels ~Adam
 		//Then go to the EndGame scene and delete this game object ~Adam
 		if(mLivesRemaining <= 0 && mPlayerSafeTime <= 0 && (mPlayer2Avatar == null || !mPlayer2Avatar.activeInHierarchy) && (mPlayerAvatar == null || !mPlayerAvatar.activeInHierarchy))
 		{
@@ -478,6 +454,8 @@ public class ScoreManager : MonoBehaviour
 	{
 		mScore *= 2;
 	}
+
+	//Handle damage to Player 1 ~Adam
 	public void LoseALife()
 	{
 		if(mPlayerSafeTime<=0f)
@@ -543,28 +521,26 @@ public class ScoreManager : MonoBehaviour
 			{
 
 				Camera.main.GetComponent<CameraShaker> ().RumbleController(.6f, 3.15f);
-				//Destroy(mPlayerAvatar.gameObject);
+
 				mPlayerAvatar.gameObject.SetActive (false);
-				//mPlayerAvatar.gameObject.SetActive(false);
+
 				mPlayerSafeTime = 3f;
 
 			}
 			else
 			{
 				mPlayerSafeTime = 2f;
-				//Application.LoadLevel(Application.loadedLevel);
 			}
 
 		}
 	}//END of LoseALife()
 
+	//Handle damage to Player 2 ~Adam
 	public void LosePlayerTwoLife()
 	{
 		if(mPlayerSafeTime<=0f)
 		{
-			
-			
-			
+
 			//Lose a life if the player isn't shielded ~Adam
 			if(!mPlayer2Avatar.GetComponent<PlayerShipController>().mShielded)
 			{
@@ -580,8 +556,6 @@ public class ScoreManager : MonoBehaviour
 					mPlayer2Avatar.GetComponent<PlayerShipController>().mShipRecovered = false;
 					mPlayer2Avatar.GetComponent<PlayerShipController>().StartSpin();
 					Camera.main.GetComponent<CameraShaker>().ShakeCameraDeath();
-
-
 				}
 				else
 				{
@@ -603,39 +577,36 @@ public class ScoreManager : MonoBehaviour
 					mPlayer2Avatar.GetComponent<PlayerShipController>().StartSpin();
 					mPlayer2Avatar.GetComponent<PlayerShipController>().TakeStatDamage();
 					Camera.main.GetComponent<CameraShaker>().ShakeCameraDeath();
-
-
 				}
 			}
 			else
 			{
-				//mScore -= 10;
 				mPlayer2Avatar.GetComponent<PlayerShipController>().StartSpin();
 				Camera.main.GetComponent<CameraShaker>().ShakeCameraDeath();
 
 			
 			}
 			
-			//If that wasn't the last life, go invulnerable, otherwise go back to the title screen
+			//If that wasn't the last life, go invulnerable, otherwise go back to the title screen ~Adam
 			if(mP2Lives <= 0)
 			{
 
 				Camera.main.GetComponent<CameraShaker> ().RumbleController(3f, 2f);
-				//Destroy(mPlayer2Avatar.gameObject);
+
 				mPlayer2Avatar.gameObject.SetActive (false);
-				//mPlayer2Avatar.gameObject.SetActive(false);
+
 				mPlayerSafeTime = 3f;
 				
 			}
 			else
 			{
 				mPlayerSafeTime = 2f;
-				//Application.LoadLevel(Application.loadedLevel);
 			}
 			
 		}
 	}//END of LosePlayerTwoLife()
 
+	//This gets called when a player gets hit and then checks to see which player's score and lives to modify ~Adam
 	public void HitAPlayer(GameObject playerHit)
 	{
 		if(playerHit == mPlayerAvatar)
@@ -648,6 +619,7 @@ public class ScoreManager : MonoBehaviour
 		}
 	}
 
+	//Redistribute lives between Player 1 and Player 2 for Co-Op mode ~Adam
 	public void StartCoOpMode()
 	{
 		mInCoOpMode = true;

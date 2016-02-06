@@ -57,7 +57,7 @@ public class TutorialController : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		
+		PlayerPrefs.SetInt ("CheckPointedLevel", 0);
 	}
 	
 	// Update is called once per frame
@@ -303,6 +303,17 @@ public class TutorialController : MonoBehaviour
 			if(mTutStepTimer <=0f)
 			{
 				mTutStepTimer = 6f;
+				mTutorialStep++;
+			}
+			break;
+			#endregion
+
+			#region Talk about setting Checkpoints ~Adam
+		case 19:
+			mMainTutorialText.text = "Hold one of the Set Checkpoint Buttons to spend movement or gun speed to make a Checkpoint.";
+			if(mPlayer1.GetComponent<PlayerOneShipController>().mCheckPointsRemaining < 3)
+			{
+				mTutStepTimer = 6f;
 				mMainTutorialBox.SetActive (false);
 				mMainMeterTut.SetActive (true);
 				mTutorialStep++;
@@ -311,7 +322,7 @@ public class TutorialController : MonoBehaviour
 			#endregion
 
 			#region Damage and Repair Tutorial ~Adam
-		case 19://Talk about the Health and Damage meters ~Adam
+		case 20://Talk about the Health and Damage meters ~Adam
 
 			if(mTutStepTimer <=0f)
 			{
@@ -322,7 +333,7 @@ public class TutorialController : MonoBehaviour
 				mTutorialStep++;
 			}
 			break;
-		case 20:
+		case 21:
 			mMainTutorialText.text = "Repair station ahead.\n\nChoose repair area to prioritize.";
 			if(mTutStepTimer <=0f)
 			{
@@ -337,7 +348,7 @@ public class TutorialController : MonoBehaviour
 				mTutorialStep++;
 			}
 			break;
-		case 21:
+		case 22:
 			mGetReady.gameObject.SetActive (false);
 
 			if(mRepairStation != null && mRepairStation.GetComponent<RepairStation>().mServicedP1 == true)
@@ -434,7 +445,7 @@ public class TutorialController : MonoBehaviour
 			#endregion
 
 			#region End of tutorial ~Adam
-		case 22:
+		case 23:
 			mMainTutorialText.text = "Runtime Calibrations Complete!";
 			if(mTutStepTimer <= 0f)
 			{
@@ -442,7 +453,7 @@ public class TutorialController : MonoBehaviour
 				mTutorialStep++;
 			}
 			break;
-		case 23:
+		case 24:
 			mMainTutorialText.text = "Entering Hostile Territory...";
 			mIcicleStorm.SetActive(true);
 			if(mTutStepTimer <= 0f)
@@ -451,7 +462,7 @@ public class TutorialController : MonoBehaviour
 				mTutorialStep++;
 			}
 			break;
-		case 24:
+		case 25:
 			mMainTutorialText.text = "Get Ready!";
 			if(mTutStepTimer <= 0f)
 			{

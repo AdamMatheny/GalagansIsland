@@ -4,6 +4,12 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using InControl;
 
+//This script was originally created as a UI menu to independantly modify sound effects and BGM volumes.
+//It was later expanded to be an overall options menu, controlling the enabling of controller rumble and toggling of whether to launch the tutorial at the start of the game.
+
+//It makes use of the open source version of the InControl Unity plugin for taking game pade input.  This plugin may be found at: "https://github.com/pbhogan/InControl" ~Adam
+
+
 public class VolumeControlSliders : MonoBehaviour 
 {
 	//For showing/hiding the panel ~Adam
@@ -36,14 +42,16 @@ public class VolumeControlSliders : MonoBehaviour
 
 	[SerializeField] private Color mNormalColor;
 	[SerializeField] private Color mFocusColor;
-	public float mUIFocusTimer = 0.2f;
+	public float mUIFocusTimer = 0.2f; //Timer to make sure button inputs stay discrete ~Adam
 
 	// Use this for initialization
 	void Start () 
 	{
+		//Set the volume to the last setting it was on ~Adam
 		mSFXSliderBar.value = PlayerPrefs.GetFloat("SFXVolume");
 		mBGMSliderBar.value = PlayerPrefs.GetFloat("BGMVolume");
 
+		//Set default volume if this is the first time playing the game ~Adam
 		if(PlayerPrefs.GetInt("FirstTimeVolumeSetup")==0)
 		{
 			PlayerPrefs.SetFloat("BGMVolume", 0.4f);
@@ -67,7 +75,9 @@ public class VolumeControlSliders : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		//Turn the visibility of the panel on and off ~Adam
 		mSliderPanel.SetActive(mMenuOpen);
+
 
 		if(mMenuOpen)
 		{
@@ -87,14 +97,7 @@ public class VolumeControlSliders : MonoBehaviour
 						mUIFocusTimer -= 0.03f;
 					}
 				}
-//				if(Time.timeScale != 0)
-//				{
-//					mUIFocusTimer -= Time.deltaTime;
-//				}
-//				else
-//				{
-//					mUIFocusTimer -= 0.01f;
-//				}
+
 			}
 			if(!Application.isMobilePlatform)
 			{
@@ -106,14 +109,15 @@ public class VolumeControlSliders : MonoBehaviour
 				
 				if(mUIFocusTimer <= 0f)
 				{
-					//Control the "Back" button
-
+					//Control the "Back" button and Tutorial Toggle ~Adam
 					if (Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Thrusters") || Input.GetButtonDown("FireGun") || (InputManager.ActiveDevice.Action1.WasPressed))
 					{
+						//The "Back button ~Adam
 						if(mMenuFocus == 4)
 						{
 							CloseVolumeMenu();
 						}
+						//Tutorial Toggle ~Adam
 						if(mMenuFocus == 3)
 						{
 							if(PlayerPrefs.GetInt ("PlayedTutorial") == 0)
@@ -152,6 +156,7 @@ public class VolumeControlSliders : MonoBehaviour
 							}
 							ResetFocusTimer();
 							break;
+							//Turn Rumble on ~Adam
 						case 2:
 							PlayerPrefs.SetInt("RumbleOn", 1);
 							break;
@@ -186,6 +191,7 @@ public class VolumeControlSliders : MonoBehaviour
 							}
 							ResetFocusTimer();
 							break;
+							//Turn Rumble off ~Adam
 						case 2:
 							PlayerPrefs.SetInt("RumbleOn", 0);
 							break;
@@ -272,7 +278,7 @@ public class VolumeControlSliders : MonoBehaviour
 					}
 					
 					
-					//Control menu colors
+					//Control menu colors ~Adam
 					switch(mMenuFocus)
 					{
 					case 0:
@@ -353,11 +359,13 @@ public class VolumeControlSliders : MonoBehaviour
 		}
 	}//END of Update()
 
+
 	public void CloseVolumeMenu()
 	{
 		mUIFocusTimer+=0.2f;
 		mMenuFocus = 0;
 
+		//Adjust input timers on higher-level menus when this one is closed ~Adam
 		if(Application.loadedLevel == 0)
 		{
 			FindObjectOfType<MainMenuGUIFocusController>().mUIFocusTimer=0.2f;

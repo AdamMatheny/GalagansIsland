@@ -7,7 +7,6 @@ using System.Collections;
 
 public class CapturedShip : MonoBehaviour 
 {
-	[SerializeField] private GameObject mCloneShip; //The clone ship that gets spawned on death
 
 	public bool mInTow = true;
 	PlayerShipController mPlayer;
@@ -35,17 +34,17 @@ public class CapturedShip : MonoBehaviour
 		{
 			mPlayer.mShipStolen = true;
 		}
-		//Randomly decide the direction the ship will move upon being released
+		//Randomly decide the direction the ship will move upon being released ~Adam
 		mMovingRight = (Random.value < 0.5);
 
 		//Base the movement speed off of the players movement speed ~Adam
 		mMovementSpeed = mPlayer.mMovementSpeed;
 
-		//Like the player, the later the level, the faster the captured ship shoots.
-		//mShootTimerDefault = 0.25f-(0.15f/25f*Application.loadedLevel);
+
 		mShootTimerDefault = 5f;
 		mShootTimer = mShootTimerDefault;
 
+		//Don't exist in Co-Op mode ~Adam
 		if(FindObjectOfType<PlayerTwoShipController>()!= null)
 		{
 			Destroy (this.gameObject);
@@ -63,7 +62,7 @@ public class CapturedShip : MonoBehaviour
 				mPlayer.mShipStolen = true;
 			}
 		}
-		//Being towed away by the grabbing enemy
+		//Being towed away by the grabbing enemy ~Adam
 		if(mGrabbingEnemy != null && mInTow == true)
 		{
 			transform.position = mGrabbingEnemy.mTowPoint.position;
@@ -73,7 +72,7 @@ public class CapturedShip : MonoBehaviour
 				shipTrail.enableEmission = false;
 			}
 		}
-		//Moving left and right once no longer being towed
+		//Moving left and right once no longer being towed ~Adam
 		else
 		{
 			if (transform.position.z != -2)
@@ -116,7 +115,7 @@ public class CapturedShip : MonoBehaviour
 
 		//Shooting back at the player ~Adam
 		mShootTimer -= Time.deltaTime;
-		//Instantiate an enemy bullet if the player is below this enemy
+		//Instantiate an enemy bullet if the player is below this enemy ~Adam
 		if( (Mathf.Abs(mPlayer.transform.position.x - transform.position.x) <= 2f  && mShootTimer <=0f && mCapturedShipBullet != null)
 		   && (mGrabbingEnemy == null || (mGrabbingEnemy != null && !mGrabbingEnemy.mInvincible) ) 
 		   && transform.position.y <33f)
@@ -144,7 +143,7 @@ public class CapturedShip : MonoBehaviour
 
 		//Get destroyed when colliding with a bullet -Adam
 		//Invulnerable while still being towed around -Adam
-		//Upon destruction, the player is awarded with a second ship that stays attached to their main ship, enabling them to fire double the amount of projectiles, and is destroyed in the place of losing a life the next time the player is hit -Ada,
+		//Upon destruction, the player is awarded with a second ship that stays attached to their main ship, enabling them to fire double the amount of projectiles, and is destroyed in the place of losing a life the next time the player is hit -Adam
 		if (other.gameObject.tag == "Player Bullet" && (!mInTow || mGrabbingEnemy == null || !mGrabbingEnemy.mInvincible) )
 		{
 			//Create a particle death effect -Adam
@@ -160,18 +159,7 @@ public class CapturedShip : MonoBehaviour
 			//Give a ship attached to the side of the main ship and make an effect as it spawns -Adam
 			Instantiate(mSecondShipSpawnEffect, mPlayer.mSecondShip.transform.position, Quaternion.identity);
 
-			//other.gameObject.transform.rotation = new Quaternion(0, 0, 180, 0);
 
-			#region for twin-stick clone spawning
-//			//If not mobile, spawn a clone ship next to the player and make an effect as it spawns -Adam
-//			else
-//			{
-//				GameObject newClone = Instantiate(mCloneShip,mPlayer.transform.position + Vector3.right*2f, Quaternion.identity) as GameObject;
-//				newClone.GetComponent<PlayerShipCloneController>().mOriginalShip = mPlayer.GetComponent<PlayerShipController>();
-//				Instantiate(mSecondShipSpawnEffect, newClone.transform.position, Quaternion.identity);
-//				mPlayer.mPlayerClone = newClone;
-//			}
-			#endregion
 			Destroy(this.gameObject);
 
 		}

@@ -27,6 +27,8 @@ public class CreditsSpawner : MonoBehaviour
 	{
 		GetComponent<Renderer>().material.color = new Color(0f,0f,0f,0f);
 		AudioListener.volume = 1;
+		PlayerPrefs.SetInt ("CheckPointedLevel", 0); //Reset the Checkpoints
+
 	}
 	
 	// Update is called once per frame

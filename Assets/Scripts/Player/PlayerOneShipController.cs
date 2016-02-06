@@ -9,8 +9,10 @@ public class PlayerOneShipController : PlayerShipController
 {
 	
 	
+	float mFireCheckpointTimer = 0f;
+	float mMoveCheckpointTimer = 0f;
+	public int mCheckPointsRemaining = 3;
 
-	
 	// Use this for initialization
 	protected override void Start () 
 	{
@@ -18,6 +20,8 @@ public class PlayerOneShipController : PlayerShipController
 		if(FindObjectOfType<ScoreManager>() != null)
 		{
 			mScoreMan = FindObjectOfType<ScoreManager>();
+			mPauseMan = mScoreMan.gameObject.GetComponent<PauseManager>();
+
 		}
 		
 		//Adjust speed and scale for mobile ~Adam
@@ -64,7 +68,7 @@ public class PlayerOneShipController : PlayerShipController
 		
 		base.Update();
 		
-		
+		TakeCheckpointInput();
 	}//END of Update()
 	
 	void LateUpdate () 
@@ -146,7 +150,81 @@ public class PlayerOneShipController : PlayerShipController
 	{
 		base.TakeThrusterInput ();
 	}//END of TakeThrusterInput()
-	
+
+	void TakeCheckpointInput()
+	{
+		if(Time.timeScale > 0f 
+		   && Application.loadedLevel != PlayerPrefs.GetInt ("CheckPointedLevel") 
+		   && mCheckPointsRemaining > 0 && Application.loadedLevelName != "Credits")
+		{
+			//Hold the Right Bumper to spend Movement Speed to place a checkpoint ~Adam 
+			if((mPlayerInputDevice.RightBumper.IsPressed || Input.GetKey(KeyCode.E)) && mMoveUpgrade > 0.6f)
+			{
+				Debug.Log ("Holding Rgiht Bumper");
+				mMoveCheckpointTimer += Time.deltaTime;
+				if(mMoveCheckpointTimer >= 3f)
+				{
+					mMoveUpgrade-= 0.3f;
+					if(mMoveUpgrade < 0.6f)
+					{
+						mMoveUpgrade = 0.6f;
+					}
+					SaveCheckPointStats();
+				}
+			}
+			//Hold the Right Bumper to spend Rate of Fire to place a checkpoint ~Adam 
+			else if( (mPlayerInputDevice.LeftBumper.IsPressed || Input.GetKey(KeyCode.Q)) && mFireUpgrade > 0.6f)
+			{
+				Debug.Log ("Holding Left Bumper");
+				mFireCheckpointTimer += Time.deltaTime;
+				if(mFireCheckpointTimer >= 3f)
+				{
+					mFireUpgrade-= 0.3f;
+					if(mFireUpgrade < 0.6f)
+					{
+						mFireUpgrade = 0.6f;
+					}
+					SaveCheckPointStats();
+				}
+			}
+			//Reset timers when bumpers are released ~Adam
+			if(mPlayerInputDevice.RightBumper.WasReleased || Input.GetKeyUp(KeyCode.E))
+			{
+				mMoveCheckpointTimer = 0f;
+			}
+			if(mPlayerInputDevice.LeftBumper.WasReleased || Input.GetKeyUp(KeyCode.Q))
+			{
+				mFireCheckpointTimer = 0f;
+			}
+		}
+	}//END of TakeCheckpointInput()
+
+	//Set all the stats for a Checkpoint being placed ~Adam
+	void SaveCheckPointStats()
+	{
+		mCheckPointsRemaining -= 1;
+		Debug.Log ("Saving Checkpoint stats at time, " + Time.time);
+		if(Application.loadedLevelName != "Tutorial" && Application.loadedLevelName != "Credits")
+		{
+			PlayerPrefs.SetInt ("CheckPointedLevel", Application.loadedLevel);
+
+
+			PlayerPrefs.SetInt("CheckPointedLivesRemaining", mScoreMan.mLivesRemaining);
+			PlayerPrefs.SetInt("CheckPointedP1Lives", mScoreMan.mP1Lives);
+
+			PlayerPrefs.SetFloat("CheckPointedP1FireUpgrade", mFireUpgrade);
+			PlayerPrefs.SetFloat("CheckPointedP1MoveUpgrade", mMoveUpgrade);
+			PlayerPrefs.SetFloat("CheckPointedP1ShieldTime", mShieldTimer);
+			PlayerPrefs.SetFloat("CheckPointedP1SpreadTime", mThreeBulletTimer);
+			PlayerPrefs.SetInt ("CheckPointedCheckPointsRemaining", mCheckPointsRemaining);
+		}
+		//Don't actually set checkpoints on the Tutorial or Credits ~Adam
+		else
+		{
+			PlayerPrefs.SetInt ("CheckPointedLevel", 0);
+		}
+	}//END of SetCheckPointStats()
+
 	#endregion
 	
 }//END of MonoBehavior

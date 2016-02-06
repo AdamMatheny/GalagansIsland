@@ -5,11 +5,15 @@ using InControl;
 using Assets.Scripts.Achievements;
 using XInputDotNetPure; // Required in C#
 
+//This is the main script for controlling the player character. ~Adam
+//It makes use of the open source version of the InControl Unity plugin for taking game pade input.  This plugin may be found at: "https://github.com/pbhogan/InControl" ~Adam
+
+
 public class PlayerShipController : MonoBehaviour 
 {
 	public bool isHovering;
 
-	public bool isOnBottomY; //Just to check if on the bottom of the screen. If this takes up too much space, just remove this and where the floatiness is, just replace with the barrier statements.
+	public bool isOnBottomY; //Just to check if on the bottom of the screen. If this takes up too much space, just remove this and where the floatiness is, just replace with the barrier statements. ~Jonathan
 
 	public bool secondShipOnHip = true;
 
@@ -56,7 +60,7 @@ public class PlayerShipController : MonoBehaviour
 	//The game objects that are our ship sprites ~Adam
 	public GameObject mMainShip;
 	public GameObject mSecondShip;
-	//Where our bullets spawn from `Adam
+	//Where our bullets spawn from ~Adam
 	//indexes:
 		//0: Main ship, main bullet
 		//1: Second ship, main bullet
@@ -119,7 +123,7 @@ public class PlayerShipController : MonoBehaviour
 	//For altering movement and firing speed with damage and repair ~Adam
 	public float mFireUpgrade = 1f;
 	public float mMoveUpgrade = 1f;
-	protected ScoreManager mScoreMan;
+	[SerializeField] protected ScoreManager mScoreMan;
 
 
 	//For flipping the ship in co-op mode ~Adam
@@ -128,6 +132,9 @@ public class PlayerShipController : MonoBehaviour
 
     bool achievementFriendOfMine;
 
+	//For the PauseManager being a component of the ScoreManager rather than of the ship ~Adam
+	[SerializeField] protected PauseManager mPauseMan;
+
 	// Use this for initialization
 	protected virtual void Start () 
 	{
@@ -135,6 +142,7 @@ public class PlayerShipController : MonoBehaviour
 		if(FindObjectOfType<ScoreManager>() != null)
 		{
 			mScoreMan = FindObjectOfType<ScoreManager>();
+			mPauseMan = mScoreMan.gameObject.GetComponent<PauseManager>();
 		}
 
 		//Adjust speed and scale for mobile ~Adam
@@ -157,8 +165,7 @@ public class PlayerShipController : MonoBehaviour
 			}
 		}
 		
-		//mLastFramePosition = transform.position;
-		
+
 	}//END of Start()
 	
 	
@@ -181,10 +188,11 @@ public class PlayerShipController : MonoBehaviour
 			if(FindObjectOfType<ScoreManager>() != null)
 			{
 				mScoreMan = FindObjectOfType<ScoreManager>();
+				mPauseMan = mScoreMan.gameObject.GetComponent<PauseManager>();
 			}
 		}
 
-        //ACHIEVEMENTS
+		#region ACHIEVEMENTS by Mateusz
 		if(AchievementManager.instance != null)
 		{
 	        if (mShipRecovered)
@@ -204,6 +212,7 @@ public class PlayerShipController : MonoBehaviour
 	            }
 	        }
 		}
+		#endregion
 
 
 
@@ -211,26 +220,26 @@ public class PlayerShipController : MonoBehaviour
 		ManageInputDevice();
 
 
-		//maxHeatLevel = mBaseHeatMax +  mBaseHeatMax * Application.loadedLevel/(Application.levelCount-3);//26f;
-		//GetComponent<AudioSource>().volume = 0.18f*(30f-Application.loadedLevel)/30f;
 		GetComponent<AudioSource>().volume = 0.18f*(30f-16f)/30f;
 
+		//Level skip for development and testing purposes ~Jonathan
+		//cheats should always be set to "false" in the published build
 		if (cheats) 
 		{
-			if(Input.GetKeyDown(KeyCode.Q))
+			if(Input.GetKeyDown(KeyCode.Alpha1))
 			{
 				Application.LoadLevel(Application.loadedLevel + 1);
 				mShipStolen = false;
 			}
 			
-			if(Input.GetKeyDown(KeyCode.R))
+			if(Input.GetKeyDown(KeyCode.Alpha2))
 			{
 				Application.LoadLevel(Application.loadedLevel - 1);
 				mShipStolen = false;
 			}
 		}
 		
-		//Spin the ships when hit
+		//Spin the ships when hit ~Ada,
 		if(mSpinning != 0f)
 		{
 			SpinControl();
@@ -245,7 +254,7 @@ public class PlayerShipController : MonoBehaviour
 			
 			mMainShipShieldSprite.enabled = true;
 			mMainShipShieldSprite.GetComponent<Light>().enabled = true;
-			if(mShipRecovered)// && Application.isMobilePlatform) (mobile part is from when we were doing twin-stick)
+			if(mShipRecovered)
 			{
 				mSecondShipShieldSprite.enabled = true;
 				mSecondShipShieldSprite.GetComponent<Light>().enabled = true;
@@ -287,12 +296,14 @@ public class PlayerShipController : MonoBehaviour
 			
 		}
 		
-		//Increase movement speed as we progress through levels ~Adam
+		//We used to increase movement speed as we progress through levels. ~Adam
+		//The code from that setup is being preserved via commenting in the event that our game design changes back to use that at a later day ~Adam
 		if(Time.timeScale > 0f)
 		{
-			//	mMovementSpeed = ( mBaseMovementSpeed + (6f/25f*(Application.loadedLevel)) ) /Time.timeScale;
+			//mMovementSpeed = ( mBaseMovementSpeed + (6f/25f*(Application.loadedLevel)) ) /Time.timeScale;
 			
-//			mMovementSpeed = ( mBaseMovementSpeed + (0.24f +5.76f*(Application.loadedLevel-1)/(Application.levelCount-4) ))*(mMoveUpgrade) /Time.timeScale;
+			//mMovementSpeed = ( mBaseMovementSpeed + (0.24f +5.76f*(Application.loadedLevel-1)/(Application.levelCount-4) ))*(mMoveUpgrade) /Time.timeScale;
+
 			//Make the movement speed constant ~Adam
 			mMovementSpeed = ( mBaseMovementSpeed + (0.24f +5.76f*(18)/(25) ))*(mMoveUpgrade) /Time.timeScale;
 
@@ -315,23 +326,19 @@ public class PlayerShipController : MonoBehaviour
 
 		//Make the player drift toward the bottom of the screen
 		DriftDown();
-		
-
-		
 
 		//Default keyboard/gamepad stick input ~Adam
 		TakeDirectionalInput();
-
-
 		//END of Movement Control Input
-		
+
+
 		//Toggle bullet firing ~Adam
 		TakeFiringInput();
 
 
 
 
-	
+		//Recolor the ship sprite when overheating ~Adam
 		if (isOverheated) 
 		{
 			mToggleFireOn = false;
@@ -350,10 +357,10 @@ public class PlayerShipController : MonoBehaviour
 			mSecondShip.GetComponent<Renderer>().material.color = Color.Lerp(mSecondShip.GetComponent<Renderer>().material.color,Color.white,0.1f);
 		}
 		
-		//firing bullets
+		//firing bullets while the fire button is held
 		if (mToggleFireOn) 
 		{
-			
+			//Increase the overheat level while firing ~Adam
 			if(!isOverheated)
 			{
 				if(heatLevel < maxHeatLevel)
@@ -363,7 +370,7 @@ public class PlayerShipController : MonoBehaviour
 						heatLevel += Time.deltaTime/Time.timeScale;
 					}
 				}
-				
+				//Lock the gun down when the heat levels get too high ~Adam
 				if(heatLevel >= maxHeatLevel)
 				{
 					
@@ -384,16 +391,17 @@ public class PlayerShipController : MonoBehaviour
 					GameObject newBullet = Instantiate (mBulletPrefab, mBulletSpawns[0].position, mMainShip.transform.rotation * Quaternion.Euler (0f,0f,Random.Range(-3.0f,3.0f))) as GameObject;
 					SetBulletNumber (newBullet.GetComponent<PlayerBulletController>());
 
+					//Fire extra bullets if we have the spread-fire powerup ~Adam
 					if (mThreeBullet) 
 					{
-						
-						if(!mShipRecovered)// || !Application.isMobilePlatform) (mobile part is from when we were doing twin-stick)
+
+						if(!mShipRecovered)
 						{
 							GameObject tripBullet1 = Instantiate (mSideBullet, mBulletSpawns[2].position, mMainShip.transform.rotation * Quaternion.Euler (0f, 0f, 8f) * Quaternion.Euler (0f,0f,Random.Range(-4.0f,4.0f))) as GameObject;
 							SetBulletNumber (tripBullet1.GetComponent<PlayerBulletController>());
 						}
 						//Adjust triple-bullet firing when you have the double/side ship ~Adam
-						else if(mShipRecovered)// && Application.isMobilePlatform)
+						else if(mShipRecovered)
 						{
 							GameObject tripBullet1 = Instantiate (mSideBullet, mBulletSpawns[2].position, mMainShip.transform.rotation * Quaternion.Euler (0f, 0f, 5f) * Quaternion.Euler (0f,0f,Random.Range(-8.0f,3.0f))) as GameObject;
 							SetBulletNumber (tripBullet1.GetComponent<PlayerBulletController>());
@@ -405,8 +413,8 @@ public class PlayerShipController : MonoBehaviour
 					//Play bullet-firing sound effect ~Adam
 					GetComponent<AudioSource> ().Play ();
 			
-					//Do side ship bullets
-					if (mShipRecovered)// && Application.isMobilePlatform)  (mobile part is from when we were doing twin-stick)
+					//Do side ship bullets if the player has double ships from destroying a hostile copy of themselves ~Ada
+					if (mShipRecovered)
 					{
 
 
@@ -436,7 +444,9 @@ public class PlayerShipController : MonoBehaviour
 							}
 						}
 					}
-					//Reset the timer to fire bullets.  The later the level, the smaller the time between shots
+					//Reset the timer to fire bullets. ~Adam
+					//Originally, the later the level, the smaller the time between shots ~Adam
+					//It now instead is based on the mFireUpgrade variable which fluctuates as the ship is damaged and gets repaired ~Adam
 					if(mSpinning == 0)
 					{
 						//Scale firing rate based on what level we're on ~Adam
@@ -475,6 +485,7 @@ public class PlayerShipController : MonoBehaviour
 							mBulletFireTime = Time.time + (bulletShootSpeed - ( (0.01f +.24f*(17)/(25)) ) );
 						}
 					}
+					//Fire faster while spinning ~Adam
 					else
 					{
 						mBulletFireTime = Time.time + (bulletShootSpeed - 0.25f)/3f;
@@ -482,27 +493,10 @@ public class PlayerShipController : MonoBehaviour
 				}
 			}
 		}
-		else 
+		//When not firing, lower the overheat amount ~Adam
+		else if(heatLevel > 0 &&Time.timeScale != 0)
 		{
-			
-			if(heatLevel > 0)
-			{
-				
-				if(isOverheated)
-				{
-					if(Time.timeScale != 0)
-					{
-						heatLevel -= Time.deltaTime * maxHeatLevel/5f/Time.timeScale;
-					}
-				}
-				else
-				{
-					if(Time.timeScale != 0)
-					{
-						heatLevel -= Time.deltaTime * maxHeatLevel/5f/Time.timeScale;
-					}
-				}
-			}
+			heatLevel -= Time.deltaTime * maxHeatLevel/5f/Time.timeScale;
 		}
 
 		//Keep from overheating during credits ~Adam
@@ -573,8 +567,6 @@ public class PlayerShipController : MonoBehaviour
 		}
 
 		//Set ship animations ~Adam
-//		mMainShipAnimator.speed = Application.loadedLevel/(Application.levelCount-3)*5f +1f;//Application.loadedLevel/5f+1f;
-//		mSecondShipAnimator.speed = Application.loadedLevel/(Application.levelCount-3)*5f +1f;//Application.loadedLevel/5f+1f;
 		mMainShipAnimator.speed = 16/(Application.levelCount-3)*5f +1f;//Application.loadedLevel/5f+1f;
 		mSecondShipAnimator.speed = 16/(Application.levelCount-3)*5f +1f;//Application.loadedLevel/5f+1f;
 		if(mToggleFireOn)
@@ -626,6 +618,7 @@ public class PlayerShipController : MonoBehaviour
 			}
 		}
 
+		//Flip the side ship between facing up and facing down
 		if (Input.GetKeyDown (KeyCode.V) || mPlayerInputDevice.LeftTrigger.WasPressed) 
 		{
 			
@@ -658,7 +651,7 @@ public class PlayerShipController : MonoBehaviour
 	
 	protected virtual void LateUpdate () 
 	{
-		//Keep ship within screen bounds
+		//Keep ship within screen bounds ~Adam
 		if (transform.position.x < -23.5 && mShipRecovered && secondShipOnHip)// && Application.isMobilePlatform) (from when we were doing twin-stick
 		{
 			transform.position = new Vector3(-23.5f, transform.position.y, transform.position.z);
@@ -718,12 +711,14 @@ public class PlayerShipController : MonoBehaviour
 		}
 	}
 
-
+	//Toggle firing on and off ~Adam
 	public virtual void ToggleFire()
 	{
 		mToggleFireOn = !mToggleFireOn;
 	}//END of ToggleFire()
-	
+
+
+
 	protected virtual void OnLevelWasLoaded()
 	{
 		Input.ResetInputAxes();
@@ -732,7 +727,7 @@ public class PlayerShipController : MonoBehaviour
 	}//END of OnLevelWasLoaded()
 	
 
-	
+	#region For spinning the ship around when hit ~Adam
 	public virtual void StartSpin()
 	{
 		mSpinTimer = mSpinTimerDefault;
@@ -761,7 +756,8 @@ public class PlayerShipController : MonoBehaviour
 		}
 		
 	}//END of SpinShip()
-	
+	#endregion
+
 	//For getting hit by boss beams ~Adam
 	protected virtual void OnParticleCollision(GameObject other)
 	{
@@ -889,8 +885,9 @@ public class PlayerShipController : MonoBehaviour
 			//Don't drift down from firing if you have a second ship pointing down (because it would be pushing you back up) ~Adam
 			if(!(mShipRecovered && !secondShipOnHip) )
 			{
+				//Commented lines leftover from when rate of fire scaled with level number ~Adam
 				//transform.position += new Vector3(0f,-0.00255f*Application.loadedLevel, 0f);
-//				transform.position += new Vector3(0f,-0.06375f*Application.loadedLevel/(Application.levelCount-3), 0f);
+				//transform.position += new Vector3(0f,-0.06375f*Application.loadedLevel/(Application.levelCount-3), 0f);
 				transform.position += new Vector3(0f,-0.06375f*16/(Application.levelCount-3), 0f);
 			}
 			//Decrease the timer on triple bullets while firing ~Adam
@@ -905,7 +902,7 @@ public class PlayerShipController : MonoBehaviour
 		mInputVertical = 0f;
 		
 		//If statement for avoiding getting NaN returns when paused
-		if(!GetComponent<PauseManager>().isPaused && !GetComponent<PauseManager>().isPrePaused)
+		if(!mPauseMan.isPaused && !mPauseMan.isPrePaused)
 		{
 
 			
@@ -941,14 +938,7 @@ public class PlayerShipController : MonoBehaviour
 				mInputVertical = -1;
 			if(Input.GetKey(KeyCode.D))
 					mInputHorizontal = 1;
-//			if(Input.GetAxis ("Vertical") != 0f)
-//			{
-//				mInputVertical = Input.GetAxis ("Vertical");
-//			}
-//			if(Input.GetAxis ("Horizontal") != 0f)
-//			{
-//				mInputHorizontal = Input.GetAxis ("Horizontal");
-//			}
+
 			
 			
 			//Gamepad D-Pad input ~Adam
@@ -975,14 +965,14 @@ public class PlayerShipController : MonoBehaviour
 		mSecondShipAnimator.SetInteger("Direction", Mathf.RoundToInt(mInputHorizontal));
 		
 		
-		//Delete the ship if we've returned to the title screen
+		//Delete the ship if we've returned to the title screen ~Adam
 		if(Application.loadedLevel == 0)
 		{
 			Destroy(this.gameObject);
 		}
 		
 		
-		//For making the ship drift down when not trying to go up
+		//For making the ship drift down when not trying to go up ~Adam
 		if(mInputVertical > 0f)
 		{
 			mDriftDown = false;
@@ -1033,42 +1023,42 @@ public class PlayerShipController : MonoBehaviour
 		{
 			
 			
-			//Left
+			//Left ~Adam
 			if (horizontal < 0.0f && vertical == 0.0f)
 			{
 				mMoveDir = Vector3.Lerp(mMoveDir, new Vector3((2f*mMovementSpeed * -1.0f) * Time.deltaTime, 0.0f, 0.0f), 0.08f);
 			}
-			//Right
+			//Right ~Adam
 			else if (horizontal > 0.0f && vertical == 0.0f)
 			{
 				mMoveDir = Vector3.Lerp(mMoveDir,new Vector3(2f*mMovementSpeed * Time.deltaTime, 0.0f, 0.0f), 0.08f);
 			}
-			//Down
+			//Down ~Adam
 			else if (vertical < 0.0f && horizontal == 0.0f)
 			{ 
 				mMoveDir = Vector3.Lerp(mMoveDir, new Vector3(0.0f, (2f*mMovementSpeed * -1.0f) * Time.deltaTime, 0.0f), 0.08f);
 			}
-			//Up
+			//Up ~Adam
 			else if (vertical > 0.0f && horizontal == 0.0f)
 			{
 				mMoveDir = Vector3.Lerp(mMoveDir, new Vector3(0.0f, 2f*mMovementSpeed * Time.deltaTime, 0.0f), 0.08f);
 			}
-			//Up+Right
+			//Up+Right ~Adam
 			else if (vertical > 0.0f && horizontal > 0.0f)
 			{
 				mMoveDir = Vector3.Lerp(mMoveDir, Vector3.Normalize(new Vector3(1f,1f,0))*2f*mMovementSpeed * Time.deltaTime , 0.08f);
 			}
-			//Up+Left
+			//Up+Left ~Adam
 			else if (vertical > 0.0f && horizontal < 0.0f)
 			{
 				mMoveDir = Vector3.Lerp(mMoveDir, Vector3.Normalize(new Vector3(-1f,1f,0))*2f*mMovementSpeed * Time.deltaTime , 0.08f);
 			}
-			//Down+Right
+			//Down+Right ~Adam
 			else if (vertical < 0.0f && horizontal > 0.0f)
 			{
 				mMoveDir = Vector3.Lerp(mMoveDir, Vector3.Normalize(new Vector3(1f,-1f,0))*2f*mMovementSpeed * Time.deltaTime, 0.08f);
 			}
-			//Down+Left
+			//Down+Left ~Adam
 			else if (vertical < 0.0f && horizontal < 0.0f)
 			{
 				mMoveDir = Vector3.Lerp(mMoveDir, Vector3.Normalize(new Vector3(-1f,-1f,0))*2f*mMovementSpeed * Time.deltaTime, 0.08f);
@@ -1079,7 +1069,7 @@ public class PlayerShipController : MonoBehaviour
 	protected virtual void TakeFiringInput()
 	{
 		//Keyboard and mouse input and InControl Gamepad input ~Adam
-		//Fire is via toggle ~Adam
+		//Fire used to be via toggle ~Adam
 //		if(mPlayerInputDevice.Action1.WasPressed || mPlayerInputDevice.Action4.WasPressed || Input.GetButtonDown("FireGun"))
 //		{
 //			Debug.Log("InControl button pressed");

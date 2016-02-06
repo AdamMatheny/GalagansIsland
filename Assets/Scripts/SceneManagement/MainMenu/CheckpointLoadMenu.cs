@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using InControl;
 
-public class TutorialLaunchMenu : MonoBehaviour 
+public class CheckpointLoadMenu : MonoBehaviour 
 {
 
 	//For what part of the menu is being highlighted ~Adam
@@ -43,14 +43,36 @@ public class TutorialLaunchMenu : MonoBehaviour
 		{
 			if (Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Thrusters") || Input.GetButtonDown("FireGun") || (InputManager.ActiveDevice.Action1.IsPressed))
 			{
-				if(mUIFocus)
+				if(Application.loadedLevelName != "EndGame")
 				{
-					Application.LoadLevel("Tutorial");
+					if(mUIFocus)
+					{
+						Application.LoadLevel(PlayerPrefs.GetInt ("CheckPointedLevel") );
+					}
+					else
+					{
+						PlayerPrefs.SetInt ("CheckPointedLevel", 0);
+
+						Application.LoadLevel(1);
+					}
 				}
 				else
 				{
-					PlayerPrefs.SetInt ("PlayedTutorial",1);
-					Application.LoadLevel(1);
+					if(mUIFocus)
+					{
+						if(FindObjectOfType<EndGame>()!= null)
+						{
+							FindObjectOfType<EndGame>().ReloadGame();
+						}
+					}
+					else
+					{
+						PlayerPrefs.SetInt ("CheckPointedLevel", 0);
+						if(FindObjectOfType<EndGame>()!= null)
+						{
+							FindObjectOfType<EndGame>().ReloadGame();
+						}
+					}
 				}
 			}
 
