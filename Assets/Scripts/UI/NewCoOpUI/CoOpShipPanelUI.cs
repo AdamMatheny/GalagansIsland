@@ -34,14 +34,16 @@ public class CoOpShipPanelUI : MonoBehaviour
 
 	public Text mScoreText;
 
+	#region Leftover from when we used to display and flash ship parts
 	//UI Ship pieces ~Adam
-	public GameObject mShipHull;
-	public GameObject mShipLeftWing;
-	public GameObject mShipRightWing;
-	public GameObject mShipLeftClaw;
-	public GameObject mShipRightClaw;
-	public GameObject mShipLeftGun;
-	public GameObject mShipRightGun;
+//	public GameObject mShipHull;
+//	public GameObject mShipLeftWing;
+//	public GameObject mShipRightWing;
+//	public GameObject mShipLeftClaw;
+//	public GameObject mShipRightClaw;
+//	public GameObject mShipLeftGun;
+//	public GameObject mShipRightGun;
+	#endregion
 
 	//For playing the overheat whistle noise
 	public bool mCanPlaySteamNoise = true;
@@ -92,25 +94,28 @@ public class CoOpShipPanelUI : MonoBehaviour
 				mHealthValue = mScoreMan.mP2Lives/(mScoreMan.mMaxLives+.00001f);
 			}
 
+			#region Leftover from when we used to display and flash ship parts
 			//Flash the ship parts ~Adam
-			if(mScoreMan.mPlayerSafeTime >0f)
-			{
-				mShipHull.GetComponent<Animator>().SetInteger("UIFlashState", 1);
-				mShipLeftWing.GetComponent<Animator>().SetInteger("UIFlashState", 1);
-				mShipRightWing.GetComponent<Animator>().SetInteger("UIFlashState", 1);
-				mShipLeftClaw.GetComponent<Animator>().SetInteger("UIFlashState", 1);
-				mShipRightClaw.GetComponent<Animator>().SetInteger("UIFlashState", 1);
-			}
-			else
-			{
-				mShipHull.GetComponent<Animator>().SetInteger("UIFlashState", 0);
-				mShipLeftWing.GetComponent<Animator>().SetInteger("UIFlashState", 0);
-				mShipRightWing.GetComponent<Animator>().SetInteger("UIFlashState", 0);
-				mShipLeftClaw.GetComponent<Animator>().SetInteger("UIFlashState", 0);
-				mShipRightClaw.GetComponent<Animator>().SetInteger("UIFlashState", 0);
-			}
+//			if(mScoreMan.mPlayerSafeTime >0f)
+//			{
+//				mShipHull.GetComponent<Animator>().SetInteger("UIFlashState", 1);
+//				mShipLeftWing.GetComponent<Animator>().SetInteger("UIFlashState", 1);
+//				mShipRightWing.GetComponent<Animator>().SetInteger("UIFlashState", 1);
+//				mShipLeftClaw.GetComponent<Animator>().SetInteger("UIFlashState", 1);
+//				mShipRightClaw.GetComponent<Animator>().SetInteger("UIFlashState", 1);
+//			}
+//			else
+//			{
+//				mShipHull.GetComponent<Animator>().SetInteger("UIFlashState", 0);
+//				mShipLeftWing.GetComponent<Animator>().SetInteger("UIFlashState", 0);
+//				mShipRightWing.GetComponent<Animator>().SetInteger("UIFlashState", 0);
+//				mShipLeftClaw.GetComponent<Animator>().SetInteger("UIFlashState", 0);
+//				mShipRightClaw.GetComponent<Animator>().SetInteger("UIFlashState", 0);
+//			}
+			#endregion
 		}
 
+		#region Leftover from when we used to display and flash ship parts
 //		if(mHealthValue<0.8f)
 //		{
 //			mShipRightClaw.GetComponent<Animator>().SetInteger("UIFlashState", 2);
@@ -127,6 +132,7 @@ public class CoOpShipPanelUI : MonoBehaviour
 //		{
 //			mShipLeftWing.GetComponent<Animator>().SetInteger("UIFlashState", 2);
 //		}
+		#endregion
 		if(mHealthValue < 0f)
 		{
 			mHealthValue = 0f;
@@ -157,46 +163,48 @@ public class CoOpShipPanelUI : MonoBehaviour
 			mFireRateBar.fillAmount = (mP1Ship.mFireUpgrade-0.6f)/0.4f;
 			mSpeedBar.fillAmount = (mP1Ship.mMoveUpgrade-0.6f)/0.4f;
 
+			#region Leftover from when we used to display and flash ship parts
 			//Adjust Claw/Wing graphics based on damage/upgrade status ~Adam
-			if(mP1Ship.mFireUpgrade < 0.8f)
-			{
-				mShipRightClaw.GetComponent<Animator>().SetInteger("UIFlashState", 2);
-			}
-			if(mP1Ship.mFireUpgrade < 0.65f)
-			{
-				mShipLeftClaw.GetComponent<Animator>().SetInteger("UIFlashState", 2);
-			}
-			if(mP1Ship.mMoveUpgrade < 0.8f)
-			{
-				mShipRightWing.GetComponent<Animator>().SetInteger("UIFlashState", 2);
-			}
-			if(mP1Ship.mMoveUpgrade < 0.65f)
-			{
-				mShipLeftWing.GetComponent<Animator>().SetInteger("UIFlashState", 2);
-			}
-
-			//Flash the ship gun parts ~Adam
-			if(mScoreMan != null)
-			{
-				if(mP1Ship.mThreeBullet)
-				{
-					if(mScoreMan.mPlayerSafeTime >0f)
-					{
-						mShipLeftGun.GetComponent<Animator>().SetInteger("UIFlashState", 1);
-						mShipRightGun.GetComponent<Animator>().SetInteger("UIFlashState", 1);
-					}
-					else
-					{
-						mShipLeftGun.GetComponent<Animator>().SetInteger("UIFlashState", 0);
-						mShipRightGun.GetComponent<Animator>().SetInteger("UIFlashState", 0);
-					}
-				}
-				else
-				{
-					mShipLeftGun.GetComponent<Animator>().SetInteger("UIFlashState", 2);
-					mShipRightGun.GetComponent<Animator>().SetInteger("UIFlashState", 2);
-				}
-			}
+//			if(mP1Ship.mFireUpgrade < 0.8f)
+//			{
+//				mShipRightClaw.GetComponent<Animator>().SetInteger("UIFlashState", 2);
+//			}
+//			if(mP1Ship.mFireUpgrade < 0.65f)
+//			{
+//				mShipLeftClaw.GetComponent<Animator>().SetInteger("UIFlashState", 2);
+//			}
+//			if(mP1Ship.mMoveUpgrade < 0.8f)
+//			{
+//				mShipRightWing.GetComponent<Animator>().SetInteger("UIFlashState", 2);
+//			}
+//			if(mP1Ship.mMoveUpgrade < 0.65f)
+//			{
+//				mShipLeftWing.GetComponent<Animator>().SetInteger("UIFlashState", 2);
+//			}
+//
+//			//Flash the ship gun parts ~Adam
+//			if(mScoreMan != null)
+//			{
+//				if(mP1Ship.mThreeBullet)
+//				{
+//					if(mScoreMan.mPlayerSafeTime >0f)
+//					{
+//						mShipLeftGun.GetComponent<Animator>().SetInteger("UIFlashState", 1);
+//						mShipRightGun.GetComponent<Animator>().SetInteger("UIFlashState", 1);
+//					}
+//					else
+//					{
+//						mShipLeftGun.GetComponent<Animator>().SetInteger("UIFlashState", 0);
+//						mShipRightGun.GetComponent<Animator>().SetInteger("UIFlashState", 0);
+//					}
+//				}
+//				else
+//				{
+//					mShipLeftGun.GetComponent<Animator>().SetInteger("UIFlashState", 2);
+//					mShipRightGun.GetComponent<Animator>().SetInteger("UIFlashState", 2);
+//				}
+//			}
+			#endregion
 			//Show this player's individual score ~Adam
 			mScoreText.text = "P1 Score: " + mScoreMan.mP1Score;
 		}
@@ -236,47 +244,48 @@ public class CoOpShipPanelUI : MonoBehaviour
 			mFireRateBar.fillAmount = (mP2Ship.mFireUpgrade-0.6f)/0.4f;
 			mSpeedBar.fillAmount = (mP2Ship.mMoveUpgrade-0.6f)/0.4f;
 
-			//Adjust Claw/Wing graphics based on damage/upgrade status ~Adam
-			if(mP2Ship.mFireUpgrade < 0.8f)
-			{
-				mShipRightClaw.GetComponent<Animator>().SetInteger("UIFlashState", 2);
-			}
-			if(mP2Ship.mFireUpgrade < 0.65f)
-			{
-				mShipLeftClaw.GetComponent<Animator>().SetInteger("UIFlashState", 2);
-			}
-			if(mP2Ship.mMoveUpgrade < 0.8f)
-			{
-				mShipRightWing.GetComponent<Animator>().SetInteger("UIFlashState", 2);
-			}
-			if(mP2Ship.mMoveUpgrade < 0.65f)
-			{
-				mShipLeftWing.GetComponent<Animator>().SetInteger("UIFlashState", 2);
-			}
-
-			//Flash the ship gun parts ~Adam
-			if(mScoreMan != null)
-			{
-				if(mP2Ship.mThreeBullet)
-				{
-					if(mScoreMan.mPlayerSafeTime >0f)
-					{
-						mShipLeftGun.GetComponent<Animator>().SetInteger("UIFlashState", 1);
-						mShipRightGun.GetComponent<Animator>().SetInteger("UIFlashState", 1);
-					}
-					else
-					{
-						mShipLeftGun.GetComponent<Animator>().SetInteger("UIFlashState", 0);
-						mShipRightGun.GetComponent<Animator>().SetInteger("UIFlashState", 0);
-					}
-				}
-				else
-				{
-					mShipLeftGun.GetComponent<Animator>().SetInteger("UIFlashState", 2);
-					mShipRightGun.GetComponent<Animator>().SetInteger("UIFlashState", 2);
-				}
-			}
-
+			#region Leftover from when we used to display and flash ship parts ~Adam
+//			//Adjust Claw/Wing graphics based on damage/upgrade status ~Adam
+//			if(mP2Ship.mFireUpgrade < 0.8f)
+//			{
+//				mShipRightClaw.GetComponent<Animator>().SetInteger("UIFlashState", 2);
+//			}
+//			if(mP2Ship.mFireUpgrade < 0.65f)
+//			{
+//				mShipLeftClaw.GetComponent<Animator>().SetInteger("UIFlashState", 2);
+//			}
+//			if(mP2Ship.mMoveUpgrade < 0.8f)
+//			{
+//				mShipRightWing.GetComponent<Animator>().SetInteger("UIFlashState", 2);
+//			}
+//			if(mP2Ship.mMoveUpgrade < 0.65f)
+//			{
+//				mShipLeftWing.GetComponent<Animator>().SetInteger("UIFlashState", 2);
+//			}
+//
+//			//Flash the ship gun parts ~Adam
+//			if(mScoreMan != null)
+//			{
+//				if(mP2Ship.mThreeBullet)
+//				{
+//					if(mScoreMan.mPlayerSafeTime >0f)
+//					{
+//						mShipLeftGun.GetComponent<Animator>().SetInteger("UIFlashState", 1);
+//						mShipRightGun.GetComponent<Animator>().SetInteger("UIFlashState", 1);
+//					}
+//					else
+//					{
+//						mShipLeftGun.GetComponent<Animator>().SetInteger("UIFlashState", 0);
+//						mShipRightGun.GetComponent<Animator>().SetInteger("UIFlashState", 0);
+//					}
+//				}
+//				else
+//				{
+//					mShipLeftGun.GetComponent<Animator>().SetInteger("UIFlashState", 2);
+//					mShipRightGun.GetComponent<Animator>().SetInteger("UIFlashState", 2);
+//				}
+//			}
+			#endregion
 			//Show this player's individual score ~Adam
 			mScoreText.text = "P2 Score: " + mScoreMan.mP2Score;
 		}
@@ -425,7 +434,6 @@ public class CoOpShipPanelUI : MonoBehaviour
 
 	public void UpdateCheckpointCount()
 	{
-		Debug.Log("Updating Checkpoint Count!");
 
 		if(mP1Ship != null && mCheckpointCounter != null)
 		{

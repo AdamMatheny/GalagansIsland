@@ -14,10 +14,14 @@ public class GameStartObjectPointer : MonoBehaviour
 	public GameObject mAsteroidSpawner;
 	public GameObject mIcicleStorm;
 
+	[SerializeField] bool mDebugStart = false;
 	// Use this for initialization
 	void Start () 
 	{
-	
+		if(mDebugStart)
+		{
+			ActivateSinglePlayer();
+		}
 	}
 	
 	// Update is called once per frame
