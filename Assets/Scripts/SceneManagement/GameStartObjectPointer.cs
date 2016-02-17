@@ -60,6 +60,7 @@ public class GameStartObjectPointer : MonoBehaviour
 		GameObject.Find("P1ShipUI").SetActive (false);
 		GameObject.Find("P1ShipUI_SPR").SetActive (true);
 		GameObject.Find("P1ShipUI_SPL").SetActive (true);
+		mP1Ship.GetComponent<PlayerOneShipController>().SetPlayerOneUI(GameObject.Find("P1ShipUI_SPL").GetComponent<CoOpShipPanelUI>());
 
 
 	}
@@ -97,6 +98,8 @@ public class GameStartObjectPointer : MonoBehaviour
 		GameObject.Find("P1ShipUI").SetActive (true);
 		GameObject.Find("P1ShipUI_SPR").SetActive (false);
 		GameObject.Find("P1ShipUI_SPL").SetActive (false);
+		mP1Ship.GetComponent<PlayerOneShipController>().SetPlayerOneUI(GameObject.Find("P1ShipUI").GetComponent<CoOpShipPanelUI>());
+
 	}
 
 	//Restore player statistics to the last checkpointed state ~Adam

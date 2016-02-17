@@ -181,21 +181,26 @@ public class PauseManager : MonoBehaviour
 						else
 						{
 							Time.timeScale = 1;
-							if(FindObjectOfType<PlayerShipController>()!= null)
+							PlayerOneShipController p1Ship = FindObjectOfType<PlayerOneShipController>();
+							PlayerTwoShipController p2Ship = FindObjectOfType<PlayerTwoShipController>();
+							LevelKillCounter killCounter = FindObjectOfType<LevelKillCounter>();
+							ScoreManager scoreManager = FindObjectOfType<ScoreManager>();
+
+							if(p1Ship != null)
 							{
-								Destroy(FindObjectOfType<PlayerShipController>().gameObject);
+								Destroy(p1Ship.gameObject);
 							}
-							if(FindObjectOfType<PlayerTwoShipController>()!= null)
+							if(p2Ship!= null)
 							{
-								Destroy(FindObjectOfType<PlayerTwoShipController>().gameObject);
+								Destroy(p2Ship.gameObject);
 							}
-							if(FindObjectOfType<LevelKillCounter>()!= null)
+							if(killCounter!= null)
 							{
-								Destroy(FindObjectOfType<LevelKillCounter>().gameObject);
+								Destroy(killCounter.gameObject);
 							}
-							if(FindObjectOfType<ScoreManager>()!= null)
+							if(scoreManager!= null)
 							{
-								Destroy(FindObjectOfType<ScoreManager>().gameObject);
+								Destroy(scoreManager.gameObject);
 							}
 							Application.LoadLevel(0);
 						}

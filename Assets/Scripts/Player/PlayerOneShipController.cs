@@ -12,6 +12,10 @@ public class PlayerOneShipController : PlayerShipController
 	float mFireCheckpointTimer = 0f;
 	float mMoveCheckpointTimer = 0f;
 	public int mCheckPointsRemaining = 3;
+	[SerializeField] private SpriteRenderer mFireCheckGlow;
+	[SerializeField] private SpriteRenderer mSpeedCheckGlow;
+
+	CoOpShipPanelUI mPlayer1UIPanel;
 
 	// Use this for initialization
 	protected override void Start () 
@@ -67,8 +71,11 @@ public class PlayerOneShipController : PlayerShipController
 	{
 		
 		base.Update();
-		
-		TakeCheckpointInput();
+
+		if(!mScoreMan.mInCoOpMode)
+		{
+			TakeCheckpointInput();
+		}
 	}//END of Update()
 	
 	void LateUpdate () 
@@ -157,11 +164,28 @@ public class PlayerOneShipController : PlayerShipController
 		   && Application.loadedLevel != PlayerPrefs.GetInt ("CheckPointedLevel") 
 		   && mCheckPointsRemaining > 0 && Application.loadedLevelName != "Credits")
 		{
+
+			//Play error noise if button was pressed without enough upgrade to spend ~Adam
+			if( (mPlayerInputDevice.RightBumper.WasPressed && mMoveUpgrade <= 0.6f) || (mPlayerInputDevice.LeftBumper.WasPressed && mFireUpgrade <= 0.6f) )
+			{
+				if(mPlayer1UIPanel != null)
+				{
+					mPlayer1UIPanel.CheckPointAudioStop();
+					mPlayer1UIPanel.CheckPointAudioFailure();
+				}
+			}
+
 			//Hold the Right Bumper to spend Movement Speed to place a checkpoint ~Adam 
 			if((mPlayerInputDevice.RightBumper.IsPressed || Input.GetKey(KeyCode.E)) && mMoveUpgrade > 0.6f)
 			{
-				Debug.Log ("Holding Rgiht Bumper");
+				Debug.Log ("Holding Right Bumper");
 				mMoveCheckpointTimer += Time.deltaTime;
+				mSpeedCheckGlow.color = Color.Lerp(mSpeedCheckGlow.color,Color.white,Time.deltaTime/3f);
+					if(mPlayer1UIPanel != null)
+				{
+					mPlayer1UIPanel.DoCheckpointGlow(false);
+					mPlayer1UIPanel.CheckPointAudioCharge();
+				}
 				if(mMoveCheckpointTimer >= 3f)
 				{
 					mMoveUpgrade-= 0.3f;
@@ -169,6 +193,7 @@ public class PlayerOneShipController : PlayerShipController
 					{
 						mMoveUpgrade = 0.6f;
 					}
+					ResetTimers();
 					SaveCheckPointStats();
 				}
 			}
@@ -177,6 +202,12 @@ public class PlayerOneShipController : PlayerShipController
 			{
 				Debug.Log ("Holding Left Bumper");
 				mFireCheckpointTimer += Time.deltaTime;
+				mFireCheckGlow.color = Color.Lerp(mFireCheckGlow.color,Color.white,Time.deltaTime/3f);
+				if(mPlayer1UIPanel != null)
+				{
+					mPlayer1UIPanel.DoCheckpointGlow(true);
+					mPlayer1UIPanel.CheckPointAudioCharge();
+					}
 				if(mFireCheckpointTimer >= 3f)
 				{
 					mFireUpgrade-= 0.3f;
@@ -184,17 +215,42 @@ public class PlayerOneShipController : PlayerShipController
 					{
 						mFireUpgrade = 0.6f;
 					}
+					ResetTimers();
 					SaveCheckPointStats();
 				}
 			}
 			//Reset timers when bumpers are released ~Adam
 			if(mPlayerInputDevice.RightBumper.WasReleased || Input.GetKeyUp(KeyCode.E))
 			{
-				mMoveCheckpointTimer = 0f;
+				ResetTimers();
+				if(mPlayer1UIPanel != null)
+				{
+					GlowOff();
+					mPlayer1UIPanel.CheckPointAudioStop();
+				}
 			}
 			if(mPlayerInputDevice.LeftBumper.WasReleased || Input.GetKeyUp(KeyCode.Q))
 			{
-				mFireCheckpointTimer = 0f;
+				ResetTimers();
+				if(mPlayer1UIPanel != null)
+				{
+					GlowOff();
+					mPlayer1UIPanel.CheckPointAudioStop();
+				}
+			}
+		}
+		//Play error noise when trying to place checkpoints when out of checkpoints or on a level that already has one ~Adam
+		else if(Time.timeScale > 0f && 
+			(Application.loadedLevel == PlayerPrefs.GetInt ("CheckPointedLevel") || mCheckPointsRemaining <= 0) && 
+			Application.loadedLevelName != "Credits")
+		{
+			if(mPlayerInputDevice.RightBumper.WasPressed || mPlayerInputDevice.LeftBumper.WasPressed)
+			{
+				if(mPlayer1UIPanel != null)
+				{
+					mPlayer1UIPanel.CheckPointAudioStop();
+					mPlayer1UIPanel.CheckPointAudioFailure();
+				}
 			}
 		}
 	}//END of TakeCheckpointInput()
@@ -223,8 +279,33 @@ public class PlayerOneShipController : PlayerShipController
 		{
 			PlayerPrefs.SetInt ("CheckPointedLevel", 0);
 		}
-	}//END of SetCheckPointStats()
 
+		if(mPlayer1UIPanel != null)
+		{
+			mPlayer1UIPanel.CheckPointAudioStop();
+			mPlayer1UIPanel.CheckPointAudioSuccess();
+			GlowOff();
+		}
+	}//END of SetCheckPointStats()
+		
 	#endregion
-	
+
+	public void SetPlayerOneUI(CoOpShipPanelUI p1UI)
+	{
+		mPlayer1UIPanel = p1UI;
+	}
+
+	void GlowOff()
+	{
+		mPlayer1UIPanel.CheckpointGlowOff();
+		mSpeedCheckGlow.color = Color.clear;
+		mFireCheckGlow.color = Color.clear;
+	}
+
+	void ResetTimers()
+	{
+		mFireCheckpointTimer = 0f;
+		mMoveCheckpointTimer = 0f;
+	}
+
 }//END of MonoBehavior

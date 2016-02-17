@@ -46,6 +46,16 @@ public class CoOpShipPanelUI : MonoBehaviour
 	//For playing the overheat whistle noise
 	public bool mCanPlaySteamNoise = true;
 
+	[SerializeField] private Image mFireCheckGlow;
+	[SerializeField] private Image mSpeedCheckGlow;
+	[SerializeField] private Text mCheckpointCounter;
+
+	//Sound effects for checkpoint placement
+	[SerializeField] private AudioSource mCheckPointAudioSource;
+	[SerializeField] private AudioClip mCheckpointSoundCharge;
+	[SerializeField] private AudioClip mCheckpointSoundSuccess;
+	[SerializeField] private AudioClip mCheckpointSoundFailure;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -62,8 +72,10 @@ public class CoOpShipPanelUI : MonoBehaviour
 		{
 			mP2Ship = FindObjectOfType<PlayerTwoShipController>();
 		}
+		UpdateCheckpointCount();
 	}
-	
+		
+
 	// Update is called once per frame
 	void Update () 
 	{
@@ -388,5 +400,72 @@ public class CoOpShipPanelUI : MonoBehaviour
 			mTripleTimerBar[6].fillAmount = 0f;
 			mTripleTimerBar[7].fillAmount = 0f;
 		}
+	}
+
+	public void DoCheckpointGlow(bool fireCheck)
+	{
+		if(fireCheck && mFireCheckGlow != null)
+		{
+			mFireCheckGlow.color = Color.Lerp(mFireCheckGlow.color, Color.white,Time.deltaTime/3f);
+		}
+		else if (mSpeedCheckGlow != null)
+		{
+			mSpeedCheckGlow.color = Color.Lerp(mSpeedCheckGlow.color, Color.white,Time.deltaTime/3f);
+		}
+	}
+
+	public void CheckpointGlowOff()
+	{
+		if(mFireCheckGlow != null && mSpeedCheckGlow != null)
+		{
+			mFireCheckGlow.color = Color.clear;
+			mSpeedCheckGlow.color = Color.clear;
+		}
+	}
+
+	public void UpdateCheckpointCount()
+	{
+		Debug.Log("Updating Checkpoint Count!");
+
+		if(mP1Ship != null && mCheckpointCounter != null)
+		{
+			mCheckpointCounter.text = "CHECKPOINTS\nREMAINING: " + mP1Ship.mCheckPointsRemaining;
+			if(mP1Ship.mCheckPointsRemaining < 0)
+			{
+				mCheckpointCounter.text = "CHECKPOINTS\nREMAINING: 0";
+			}
+		}
+
+	}
+
+	public void CheckPointAudioStop()
+	{
+		mCheckPointAudioSource.Stop();
+	}
+	public void CheckPointAudioCharge()
+	{
+		if(!mCheckPointAudioSource.isPlaying)
+		{
+			mCheckPointAudioSource.clip = mCheckpointSoundCharge;
+			mCheckPointAudioSource.Play();
+		}
+	}
+	public void CheckPointAudioSuccess()
+	{
+		StartCoroutine(CheckPointPlacedMessage());
+		mCheckPointAudioSource.PlayOneShot(mCheckpointSoundSuccess);
+	}
+	public void CheckPointAudioFailure()
+	{
+		mCheckPointAudioSource.PlayOneShot(mCheckpointSoundFailure);
+	}
+
+	IEnumerator CheckPointPlacedMessage()
+	{
+		mCheckpointCounter.text = "CHECKPOINT\nPLACED!";
+
+		yield return new WaitForSeconds(3f);
+		UpdateCheckpointCount();
+
 	}
 }
