@@ -761,7 +761,7 @@ public class EnemyShipAI : MonoBehaviour
 		//Make the player lose a life on contact with an enemy ~Adam
 		if (other.gameObject.GetComponent<PlayerOneShipController>() != null)
 		{
-			Debug.Log ("Made contact with player 1");
+			//Debug.Log ("Made contact with player 1");
 			if(!(mGrabber && !mPlayer.GetComponent<PlayerShipController>().mShipStolen) || (mGrabber && mPlayerClone != null) )
 			{
 				mScoreManager.HitAPlayer(other.gameObject);

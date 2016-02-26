@@ -135,6 +135,10 @@ public class PlayerShipController : MonoBehaviour
 	//For the PauseManager being a component of the ScoreManager rather than of the ship ~Adam
 	[SerializeField] protected PauseManager mPauseMan;
 
+
+	//For toggling the ability to hover externally ~Adam
+	protected bool mHoverDisabled;
+
 	// Use this for initialization
 	protected virtual void Start () 
 	{
@@ -230,12 +234,14 @@ public class PlayerShipController : MonoBehaviour
 			{
 				Application.LoadLevel(Application.loadedLevel + 1);
 				mShipStolen = false;
+				EnableHover();
 			}
 			
 			if(Input.GetKeyDown(KeyCode.Alpha2))
 			{
 				Application.LoadLevel(Application.loadedLevel - 1);
 				mShipStolen = false;
+				EnableHover();
 			}
 		}
 		
@@ -1121,7 +1127,7 @@ public class PlayerShipController : MonoBehaviour
 	//Thruster control for hovering ~Adam
 	protected virtual void TakeThrusterInput()
 	{
-		if (mPlayerInputDevice.Action2.IsPressed || mPlayerInputDevice.Action3.IsPressed || Input.GetButton ("Thrusters")) {
+		if ( (mPlayerInputDevice.Action2.IsPressed || mPlayerInputDevice.Action3.IsPressed || Input.GetButton ("Thrusters")) && !mHoverDisabled) {
 			//Slow down movement while hovering~Adam
 			mMoveDir *= 0.95f;
 
@@ -1184,4 +1190,31 @@ public class PlayerShipController : MonoBehaviour
 		ManageInputDevice();
 	}
 	#endregion
+
+	#region Code for externally toggling the ability to hover.  Was first put in for the "Flappy Bird" parody level ~Adam
+	public void DisableHover(bool temp, float disableTime)
+	{
+		if(temp)
+		{
+			StartCoroutine(HoverDisableTimer(disableTime));
+		}
+		else
+		{
+			mHoverDisabled = true;
+		}
+	}
+
+	public void EnableHover()
+	{
+		mHoverDisabled = false;
+	}
+
+	protected IEnumerator HoverDisableTimer(float disableTime)
+	{
+		mHoverDisabled = true;
+		yield return new WaitForSeconds(disableTime);
+		mHoverDisabled = false;
+	}
+	#endregion
+
 }//END of MonoBehavior

@@ -347,7 +347,7 @@ public class PlayerTwoShipController : PlayerShipController
 	//Thruster control for hovering ~Adam
 	protected override void TakeThrusterInput()
 	{
-		if( (InputManager.Devices.Count >1 && (mPlayerInputDevice.Action2.IsPressed || mPlayerInputDevice.Action3.IsPressed) ) || Input.GetButton("ThrustersP2"))
+		if( !mHoverDisabled && (InputManager.Devices.Count >1 && (mPlayerInputDevice.Action2.IsPressed || mPlayerInputDevice.Action3.IsPressed) ) || Input.GetButton("ThrustersP2"))
 		{
 			//Slow down movement while hovering~Adam
 			mMoveDir *= 0.95f;

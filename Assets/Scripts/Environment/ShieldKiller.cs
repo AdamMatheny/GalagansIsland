@@ -11,6 +11,7 @@ public class ShieldKiller : MonoBehaviour
 	[SerializeField] bool mMoveActive;
 
 	[SerializeField] float[] mBounds;
+	[SerializeField] float mZPos = -2.5f;
 	Vector3 mMoveTarget;
 	public float mMoveSpeed = 15f;
 
@@ -75,7 +76,7 @@ public class ShieldKiller : MonoBehaviour
 			if(mRotateRandom)
 			{
 				transform.localRotation = Quaternion.Euler (new Vector3(0,0, Random.Range (0,360)));
-				if(Random.Range (-1,1) <0)
+				if(Random.Range (-1f,1f) <0f)
 				{
 					mSpinSpeed *= -1f;
 				}
@@ -84,7 +85,7 @@ public class ShieldKiller : MonoBehaviour
 			//Appear next time at a new position ~Adam
 			if(mTeleports && mBounds.Length >= 4)
 			{
-				transform.position = new Vector3(Random.Range (mBounds[0],mBounds[1]),Random.Range (mBounds[2],mBounds[3]), -2.5f);
+				transform.position = new Vector3(Random.Range (mBounds[0],mBounds[1]),Random.Range (mBounds[2],mBounds[3]), mZPos);
 			}
 
 			mTimer = 0f;
@@ -100,7 +101,7 @@ public class ShieldKiller : MonoBehaviour
 		
 		if(Vector3.Distance (transform.position, mMoveTarget) < 7f && mBounds.Length >= 4)
 		{
-			mMoveTarget = new Vector3(Random.Range (mBounds[0],mBounds[1]), Random.Range (mBounds[2],mBounds[3]),-2f);
+			mMoveTarget = new Vector3(Random.Range (mBounds[0],mBounds[1]), Random.Range (mBounds[2],mBounds[3]),mZPos);
 		}
 	}//END of BowMovement()
 }
