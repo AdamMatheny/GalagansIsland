@@ -4,7 +4,7 @@ using System.Collections;
 public class SwarmGrid : MonoBehaviour 
 {
 	//An array of all the GridSlot game object that this is going to have as children
-	[SerializeField] private SwarmGridSlot[] mGridSlots;
+	public SwarmGridSlot[] mGridSlots;
 	
 	//The spot that the grid's hub moves around
 	[SerializeField] private bool mOverrideFocusPoint = false;
@@ -175,5 +175,11 @@ public class SwarmGrid : MonoBehaviour
 		}
 
 	}//END of ChangeFormation()
-	
+
+
+	//For accessing what formation number is currently being used ~Adam
+	public int GetFormationNumber()
+	{
+		return mFormationUsed;
+	}
 }
