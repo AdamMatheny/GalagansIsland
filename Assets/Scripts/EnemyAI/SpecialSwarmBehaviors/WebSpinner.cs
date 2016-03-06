@@ -20,25 +20,28 @@ public class WebSpinner : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		mSpinTimer += Time.deltaTime;
+		if(Time.timeScale > 0.01f)
+		{
+			mSpinTimer += Time.deltaTime;
 
-		//Spin the Web ~Adam
-		if(mSpinTimer >= 20f)
-		{
-			transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler (transform.localRotation.eulerAngles+ Vector3.back*mSpinDir), 0.05f);
-		}
-		//Reverse Direction ~Adam
-		if(mSpinTimer > 60f+mReverseTime)
-		{
-			mSpinDir *= -1f;
-			mSpinTimer = 20f;
-			mReverseTime = Random.Range(10,40);
-		}
+			//Spin the Web ~Adam
+			if(mSpinTimer >= 20f)
+			{
+				transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler (transform.localRotation.eulerAngles+ Vector3.back*mSpinDir), 0.05f);
+			}
+			//Reverse Direction ~Adam
+			if(mSpinTimer > 60f+mReverseTime)
+			{
+				mSpinDir *= -1f;
+				mSpinTimer = 20f;
+				mReverseTime = Random.Range(10,40);
+			}
 
-		//Keep swarm grid slots all facing the same way ~Adam
-		foreach(SwarmGridSlot gridSlot in FindObjectsOfType<SwarmGridSlot>())
-		{
-			gridSlot.gameObject.transform.rotation = Quaternion.Euler(Vector3.zero);
+			//Keep swarm grid slots all facing the same way ~Adam
+			foreach(SwarmGridSlot gridSlot in FindObjectsOfType<SwarmGridSlot>())
+			{
+				gridSlot.gameObject.transform.rotation = Quaternion.Euler(Vector3.zero);
+			}
 		}
 	}
 }

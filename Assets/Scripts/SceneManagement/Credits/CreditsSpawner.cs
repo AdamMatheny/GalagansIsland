@@ -79,9 +79,23 @@ public class CreditsSpawner : MonoBehaviour
 			{
 				Destroy(laser);
 
-				if(FindObjectOfType<ScoreManager> () != null){
+				ScoreManager scoreMan = FindObjectOfType<ScoreManager>();
 
-					Destroy(FindObjectOfType<ScoreManager>().gameObject);
+				PlayerOneShipController p1Ship = FindObjectOfType<PlayerOneShipController>();
+				PlayerTwoShipController p2Ship = FindObjectOfType<PlayerTwoShipController>();
+
+
+				if(scoreMan != null)
+				{
+					Destroy(scoreMan.gameObject);
+				}
+				if(p1Ship != null)
+				{
+					Destroy(p1Ship.gameObject);
+				}
+				if(p2Ship != null)
+				{
+					Destroy(p2Ship.gameObject);
 				}
 
 				Application.LoadLevel(0);

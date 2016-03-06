@@ -291,7 +291,7 @@ public class CoOpShipPanelUI : MonoBehaviour
 		}
 
 		//Control the overheat whistle noise
-		if(mOverheatValue  < 0.9f && GetComponent<AudioSource>().isPlaying)
+		if( (mOverheatValue  < 0.9f && GetComponent<AudioSource>().isPlaying) || mOverheatValue < 0.05f)
 		{
 			mCanPlaySteamNoise = true;
 		}
@@ -454,8 +454,8 @@ public class CoOpShipPanelUI : MonoBehaviour
 	{
 		if(!mCheckPointAudioSource.isPlaying)
 		{
-			mCheckPointAudioSource.clip = mCheckpointSoundCharge;
-			mCheckPointAudioSource.Play();
+			mCheckPointAudioSource.PlayOneShot(mCheckpointSoundCharge);
+			//mCheckPointAudioSource.Play();
 		}
 	}
 	public void CheckPointAudioSuccess()
