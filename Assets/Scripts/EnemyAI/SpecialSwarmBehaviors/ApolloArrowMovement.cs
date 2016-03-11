@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ApolloArrowMovement : MonoBehaviour 
 {
-	public ApolloBowMovement mBow;
+	//public ApolloBowMovement mBow;
 	public Transform mBowTransform;
 	public bool mShooting = false;
 	Vector3 mFireDir;

@@ -82,7 +82,7 @@ public class ApolloBowMovement : MonoBehaviour
 		if(mActionTimer > -0.5f && mActionTimer < 0f)
 		{
 			mActionTimer = mArrowTime;
-			if(!mShieldKiller.activeInHierarchy)
+			if(mShieldKiller != null && !mShieldKiller.activeInHierarchy)
 			{
 				mShieldKiller.SetActive (true);
 			}
@@ -96,30 +96,49 @@ public class ApolloBowMovement : MonoBehaviour
 			//Move around the play field ~Adam
 			BowMovement();
 
+
 			if(mActionTimer < mArrowTime)
 			{
-				mArrowPortal.SetActive (false);
-				mArrowSpawner.mSpawnCounter = 0;
-				mArrowSpawner.mSpawning = true;
+				if(mArrowPortal != null && mArrowSpawner != null)
+				{
+					mArrowPortal.SetActive (false);
+					mArrowSpawner.mSpawnCounter = 0;
+					mArrowSpawner.mSpawning = true;
+				}
 			}
 			else
 			{
-				mArrowPortal.SetActive (true);
-				mArrowMover.mShooting = false;
+				if(mArrowPortal != null)
+				{
+					mArrowPortal.SetActive (true);
+				}
+				if(mArrowMover != null)
+				{
+					mArrowMover.mShooting = false;
+				}
 			}
 			if(mActionTimer < mDrawTime)
 			{
-				mBowHaft.ChangeFormation (0);
-				mBowString.ChangeFormation (0);
+				if(mBowHaft != null && mBowString != null)
+				{
+					mBowHaft.ChangeFormation (0);
+					mBowString.ChangeFormation (0);
+				}
 			}
 			else
 			{
-				mBowHaft.ChangeFormation (1);
-				mBowString.ChangeFormation (1);
+				if(mBowHaft != null && mBowString != null)
+				{
+					mBowHaft.ChangeFormation (1);
+					mBowString.ChangeFormation (1);
+				}
 			}
 			if(mActionTimer > mFireTime)
 			{
-				mArrowMover.mShooting = true;
+				if(mArrowMover != null)
+				{
+					mArrowMover.mShooting = true;
+				}
 				mActionTimer = 0f;
 			}
 		}

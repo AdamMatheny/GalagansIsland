@@ -1210,7 +1210,7 @@ public class PlayerShipController : MonoBehaviour
 	}
 
 	protected IEnumerator HoverDisableTimer(float disableTime)
-	{
+	{				
 		mHoverDisabled = true;
 		yield return new WaitForSeconds(disableTime);
 		mHoverDisabled = false;

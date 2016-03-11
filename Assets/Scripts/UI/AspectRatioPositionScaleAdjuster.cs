@@ -50,10 +50,15 @@ public class AspectRatioPositionScaleAdjuster : MonoBehaviour
 			GetComponent<RectTransform>().localPosition = mNineBySixteenPos;
 			GetComponent<RectTransform>().localScale = mNineBySixteenScale;
 		}
-		else
+		else if(System.Math.Round(Camera.main.aspect,2) == System.Math.Round(4f/3f,2))
 		{
 			GetComponent<RectTransform>().localPosition = mFourByThreePos;
 			GetComponent<RectTransform>().localScale = mFourByThreeScale;
+		}
+		else
+		{
+			GetComponent<RectTransform>().localPosition = mSixteenByNinePos;
+			GetComponent<RectTransform>().localScale = mSixteenByNineScale;
 		}
 
 	}
