@@ -58,8 +58,9 @@ namespace Assets.Scripts.Achievements
 
         void Start()
         {
-			if(PlayerPrefs.GetInt ("HasPlayedWithAchievements") != 42)
+			if(PlayerPrefs.GetInt ("HasPlayedWithAchievements") != 23)
 			{
+				Debug.Log("Reseting PlayerPrefs!");
 				int highScore = PlayerPrefs.GetInt ("highscore");
 				float bgm = PlayerPrefs.GetFloat("BGMVolume");
 				float sfx = PlayerPrefs.GetFloat("SFXVolume");
@@ -67,7 +68,26 @@ namespace Assets.Scripts.Achievements
 				PlayerPrefs.SetInt ("highscore", highScore);
 				PlayerPrefs.SetFloat ("BGMVolume", bgm);
 				PlayerPrefs.SetFloat ("SFXVolume", sfx);
-				PlayerPrefs.SetInt ("HasPlayedWithAchievements", 42);
+
+				RepairShip100Times.ResetValue();
+				UpgradeWeapons100Times.ResetValue();
+				UpgradeSpeed100Times.ResetValue();
+				UpgradeOnlyWeapons.ResetValue();
+				UpgradeOnlySpeed.ResetValue();
+
+				KillCounter1.ResetValue();
+				KillCounter2.ResetValue();
+				KillCounter3.ResetValue();
+				KillCounter4.ResetValue();
+				KillCounter5.ResetValue();
+
+				BackStab.ResetValue();
+				FriendOMine.ResetValue();
+				UpgradesCollected.ResetValue();
+				IDontCare.ResetValue();
+
+				Debug.Log("PlayerPrefs Reset!");
+				PlayerPrefs.SetInt ("HasPlayedWithAchievements", 23);
 			}
             LoadAchievements();
         }
